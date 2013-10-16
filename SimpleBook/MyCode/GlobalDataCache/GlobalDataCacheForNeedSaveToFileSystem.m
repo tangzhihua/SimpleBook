@@ -141,9 +141,7 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
   BOOL isNeedShowBeginnerGuide = [userDefaults boolForKey:kLocalCacheDataName_BeginnerGuide];
   [GlobalDataCacheForMemorySingleton sharedInstance].isNeedShowBeginnerGuide = isNeedShowBeginnerGuide;
   
-  // 服务器主机名
-  NSString *hostName = [userDefaults stringForKey:kLocalCacheDataName_HostName];
-  [GlobalDataCacheForMemorySingleton sharedInstance].hostName = hostName;
+  
 }
 
 + (void)readLocalBookListToGlobalDataCacheForMemorySingleton {
@@ -203,11 +201,7 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
   BOOL isNeedShowBeginnerGuide = [GlobalDataCacheForMemorySingleton sharedInstance].isNeedShowBeginnerGuide;
   [userDefaults setBool:isNeedShowBeginnerGuide forKey:kLocalCacheDataName_BeginnerGuide];
   
-  // 服务器主机名
-  NSString *hostName = [GlobalDataCacheForMemorySingleton sharedInstance].hostName;
-  if ([hostName isEqualToString:kUrlConstant_MainUrl]) {
-    [userDefaults setObject:hostName forKey:kLocalCacheDataName_HostName];
-  }
+  
 }
 
 + (void)writeLocalBookshelfCategoriesToFileSystem {

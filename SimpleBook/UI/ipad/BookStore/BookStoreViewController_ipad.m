@@ -8,6 +8,7 @@
 #import "BookStoreViewController_ipad.h"
 
 //
+#import "MKStoreManager.h"
 #import "MKNetworkKit.h"
 #import "Reachability.h"
 #import "GlobalDataCacheForMemorySingleton.h"
@@ -81,7 +82,7 @@
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
     // Custom initialization
-
+    
     //
     _netRequestIndexForGetBookListInBookstores = NETWORK_REQUEST_ID_OF_IDLE;
     _netRequestIndexForGetBookDownloadUrl = NETWORK_REQUEST_ID_OF_IDLE;
@@ -93,7 +94,7 @@
 }
 
 -(void)dealloc {
-
+  
 }
 
 - (void)viewDidLoad {
@@ -101,23 +102,23 @@
   
   // 判断当前界面是否是 "公共账号"
   self.isPublicAccount = [[GlobalDataCacheForMemorySingleton sharedInstance].usernameForLastSuccessfulLogon isEqualToString:PUBLIC_USERNAME] ;
+  
+  // 对iOS7以下版本来标题更换图片，重新布局
+  if (!IS_IOS7) {
+    CGRect frame = self.headerView.frame;
+    frame.size.height -= 20.0f;
+    self.headerView.frame = frame;
     
-    // 对iOS7以下版本来标题更换图片，重新布局
-    if (!IS_IOS7) {
-        CGRect frame = self.headerView.frame;
-        frame.size.height -= 20.0f;
-        self.headerView.frame = frame;
-        
-        frame = self.imgviewHeader.frame;
-        frame.size.height -= 20.0f;
-        self.imgviewHeader.frame = frame;
-        
-        frame = self.bookTableView.frame;
-        frame.size.height += 20.0f;
-        frame.origin.y -= 20.0f;
-        self.bookTableView.frame = frame;
-    }
+    frame = self.imgviewHeader.frame;
+    frame.size.height -= 20.0f;
+    self.imgviewHeader.frame = frame;
     
+    frame = self.bookTableView.frame;
+    frame.size.height += 20.0f;
+    frame.origin.y -= 20.0f;
+    self.bookTableView.frame = frame;
+  }
+  
   // 请求书城书籍列表
   [self requestBookListInBookstores];
 }
@@ -135,19 +136,19 @@
   if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
     // 竖屏
     imageNameOfViewHeader = self.isPublicAccount ? @"d_jrsy.png" : @"d_qysy.png";
-      [self.imgviewFooter setImage:[UIImage imageNamed:@"ddh.png"]];
-      //对iOS7以下版本来标题更换图片
-      if (!IS_IOS7) {
-          imageNameOfViewHeader = self.isPublicAccount ? @"d_jrsy_6" : @"d_qysy_6";
-      }
+    [self.imgviewFooter setImage:[UIImage imageNamed:@"ddh.png"]];
+    //对iOS7以下版本来标题更换图片
+    if (!IS_IOS7) {
+      imageNameOfViewHeader = self.isPublicAccount ? @"d_jrsy_6" : @"d_qysy_6";
+    }
   } else {
     // 横屏
     imageNameOfViewHeader = self.isPublicAccount ? @"d_jrsy_H.png" : @"d_qysy_H.png";
-       [self.imgviewFooter setImage:[UIImage imageNamed:@"ddh.png"]];
-      //对iOS7以下版本来标题更换图片
-      if (!IS_IOS7) {
-          imageNameOfViewHeader = self.isPublicAccount ? @"d_jrsy_6_H.png" : @"d_qysy_6_H.png";
-      }
+    [self.imgviewFooter setImage:[UIImage imageNamed:@"ddh.png"]];
+    //对iOS7以下版本来标题更换图片
+    if (!IS_IOS7) {
+      imageNameOfViewHeader = self.isPublicAccount ? @"d_jrsy_6_H.png" : @"d_qysy_6_H.png";
+    }
   }
   [self.imgviewHeader setImage:[UIImage imageNamed:imageNameOfViewHeader]];
 }
@@ -182,26 +183,26 @@
   NSLog(@"willRotateToInterfaceOrientation ifOrientation=%d", toInterfaceOrientation);
   
   [self.bookTableView reloadData];
-    
+  
   NSString *imageNameOfViewHeader = nil;
   if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
-      // 竖屏
-      imageNameOfViewHeader = self.isPublicAccount ? @"d_jrsy.png" : @"d_qysy.png";
-      [self.imgviewFooter setImage:[UIImage imageNamed:@"ddh.png"]];
-      //对iOS7以下版本来标题更换图片
-      if (!IS_IOS7) {
-          imageNameOfViewHeader = self.isPublicAccount ? @"d_jrsy_6" : @"d_qysy_6";
-      }
+    // 竖屏
+    imageNameOfViewHeader = self.isPublicAccount ? @"d_jrsy.png" : @"d_qysy.png";
+    [self.imgviewFooter setImage:[UIImage imageNamed:@"ddh.png"]];
+    //对iOS7以下版本来标题更换图片
+    if (!IS_IOS7) {
+      imageNameOfViewHeader = self.isPublicAccount ? @"d_jrsy_6" : @"d_qysy_6";
+    }
   } else {
-      // 横屏
-      imageNameOfViewHeader = self.isPublicAccount ? @"d_jrsy_H.png" : @"d_qysy_H.png";
-      [self.imgviewFooter setImage:[UIImage imageNamed:@"ddh.png"]];
-      //对iOS7以下版本来标题更换图片
-      if (!IS_IOS7) {
-          imageNameOfViewHeader = self.isPublicAccount ? @"d_jrsy_6_H.png" : @"d_qysy_6_H.png";
-      }
+    // 横屏
+    imageNameOfViewHeader = self.isPublicAccount ? @"d_jrsy_H.png" : @"d_qysy_H.png";
+    [self.imgviewFooter setImage:[UIImage imageNamed:@"ddh.png"]];
+    //对iOS7以下版本来标题更换图片
+    if (!IS_IOS7) {
+      imageNameOfViewHeader = self.isPublicAccount ? @"d_jrsy_6_H.png" : @"d_qysy_6_H.png";
+    }
   }
-    [self.imgviewHeader setImage:[UIImage imageNamed:imageNameOfViewHeader]];
+  [self.imgviewHeader setImage:[UIImage imageNamed:imageNameOfViewHeader]];
   
 }
 
@@ -434,19 +435,15 @@
         
       case kBookStateEnum_Unpaid:{
         
-//        if ([[StoreManager sharedInstance] canMakePayments]) {
-//          [[StoreManager sharedInstance] purchaseProductWithIdentifier:book.bookInfo.productid];
-//          // 更新状态->支付中...
-//          book.bookStateEnum = kBookStateEnum_Paiding;
-//        } else {
-//          UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
-//                                                              message:@"您的设备不支持应用内付费购买"
-//                                                             delegate:nil
-//                                                    cancelButtonTitle:@"确定"
-//                                                    otherButtonTitles:nil, nil];
-//          [alertView show];
-//          
-//        }
+        [[MKStoreManager sharedManager] buyFeature:kFeatureAId
+                                        onComplete:^(NSString* purchasedFeature,
+                                                     NSData* purchasedReceipt,
+                                                     NSArray* availableDownloads) {
+                                          NSLog(@"Purchased: %@", purchasedFeature);
+                                        } onCancelled:^ {
+                                          NSLog(@"User Cancelled Transaction");
+                                        }];
+        
         
       }break;
         
@@ -471,7 +468,6 @@
         
       case kBookStateEnum_Pause:{
         if (NETWORK_REQUEST_ID_OF_IDLE == _netRequestIndexForGetBookDownloadUrl) {
-          //[book startDownloadBookWithURLString:nil];
           [weakSelf requestBookDownlaodUrlWithContentID:book.bookInfo.content_id];
         }
       }break;

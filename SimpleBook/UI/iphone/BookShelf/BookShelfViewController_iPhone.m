@@ -94,12 +94,6 @@
   
 }
 
-// 输入法控件群 tag枚举
-typedef NS_ENUM(NSInteger, TextFieldTagEnum) {
-  // 搜索输入框
-  kTextFieldTagEnum_Search = 0
-};
-
 #pragma mark -
 #pragma mark Controller 生命周期
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {

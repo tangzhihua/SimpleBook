@@ -10,11 +10,7 @@
 
 #import "GlobalDataCacheForMemorySingleton.h"
 #import "GlobalDataCacheForNeedSaveToFileSystem.h"
-
-
-#import "MKNetworkKit.h"
-#import "MKNetworkEngineSingletonForUpAndDownLoadFile.h"
-
+ 
 #import "LocalCacheDataPathConstant.h"
 
 
@@ -36,7 +32,7 @@
 
 
 @implementation CommandForGetImportantInfoFromServer {
-  MKNetworkOperation *_testServerURL;
+  
 }
 
 /**
@@ -48,25 +44,7 @@
   if (!self.isExecuted) {
 		self.isExecuted = YES;
 		
-    if (![kUrlConstant_MainUrl isEqualToString:[GlobalDataCacheForMemorySingleton sharedInstance].hostName]) {
-      _testServerURL = [[MKNetworkEngineSingletonForUpAndDownLoadFile sharedInstance] operationWithURLString:@"https://dreambook.retechcorp.com/dreambook/testcon.txt"];
-      [_testServerURL setShouldContinueWithInvalidCertificate:YES];
-      [_testServerURL addHeaders:@{@"User-Agent": [ToolsFunctionForThisProgect getUserAgent]}];
-      
-      NSString *filePath = [NSString stringWithFormat:@"%@/%@", [LocalCacheDataPathConstant importantDataCachePath], @"testcon.txt"];
-      [_testServerURL addDownloadStream:[NSOutputStream outputStreamToFileAtPath:filePath append:NO]];
-      [_testServerURL addCompletionHandler:^(MKNetworkOperation* completedRequest) {
-        NSString *responseString = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:NULL];
-        if ([responseString isEqualToString:@"dreambook"]) {
-          // 服务器域名 http://dreambook.retechcorp.com/dreambook 有效
-          [GlobalDataCacheForMemorySingleton sharedInstance].hostName = kUrlConstant_MainUrl;
-        }
-      } errorHandler:^(MKNetworkOperation *errorOp, NSError* error) {
-        
-        
-      }];
-      [[MKNetworkEngineSingletonForUpAndDownLoadFile sharedInstance] enqueueOperation:_testServerURL];
-    }
+    
   }
 }
 
@@ -88,7 +66,7 @@
   if ((self = [super init])) {
     // 初始化代码
     _isExecuted = NO;
-		_testServerURL = nil;
+		 
   }
   
   return self;

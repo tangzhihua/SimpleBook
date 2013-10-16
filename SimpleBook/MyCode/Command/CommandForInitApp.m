@@ -15,7 +15,7 @@
 
 #import "MKNetworkEngineSingletonForUpAndDownLoadFile.h"
  
-
+#import "MKStoreManager.h"
 
 
 
@@ -62,6 +62,8 @@
     // 创建本地缓存目录
     [LocalCacheDataPathConstant createLocalCacheDirectories];
    
+    //
+    [MKStoreManager sharedManager];
     
     
   }

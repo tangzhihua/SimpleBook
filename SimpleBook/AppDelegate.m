@@ -8,14 +8,82 @@
 
 #import "AppDelegate.h"
 
+#import "BookShelfViewController_ipad.h"
+#import "BookShelfViewController_iPhone.h"
+
+#import "MKStoreManager.h"
+//
+#import "GlobalDataCacheForNeedSaveToFileSystem.h"
+#import "LocalCacheDataPathConstant.h"
+#import "MKNetworkEngineSingletonForUpAndDownLoadFile.h"
+
+///
+#import "CommandInvokerSingleton.h"
+//
+#import "CommandForInitApp.h"
+#import "CommandForPrintDeviceInfo.h"
+#import "CommandForGetImportantInfoFromServer.h"
+#import "CommandForInitMobClick.h"
+#import "CommandForNewAppVersionCheck.h"
+#import "CommandForLoadingLocalCacheData.h"
+
 @implementation AppDelegate
+
++ (AppDelegate *) sharedAppDelegate {
+	return (AppDelegate *) [UIApplication sharedApplication].delegate;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
-    return YES;
+  PRPLog(@">>>>>>>>>>>>>>     应用程序启动      <<<<<<<<<<<<<<<<<");
+  PRPLog(@">>>>>>>>>>>>>>     application:didFinishLaunchingWithOptions:      <<<<<<<<<<<<<<<<<");
+  PRPLog(@"launchOptions=%@", launchOptions);
+	
+  
+  
+  id command = nil;
+	
+  // 初始化App, 一定要保证首先调用
+  command = [CommandForInitApp commandForCommandForInitApp];
+  [[CommandInvokerSingleton sharedInstance] runCommandWithCommandObject:command];
+  
+  // 加载本地缓存的数据, 一定要保证其次调用 (有一部分本地缓存的数据, 是必须同步加载完才能进入App的.)
+  command = [CommandForLoadingLocalCacheData commandForLoadingLocalCacheData];
+  [[CommandInvokerSingleton sharedInstance] runCommandWithCommandObject:command];
+  
+  // 打印当前设备的信息
+  command = [CommandForPrintDeviceInfo commandForPrintDeviceInfo];
+  [[CommandInvokerSingleton sharedInstance] runCommandWithCommandObject:command];
+  
+	// 从服务器获取重要的信息
+  command = [CommandForGetImportantInfoFromServer commandForGetImportantInfoFromServer];
+  [[CommandInvokerSingleton sharedInstance] runCommandWithCommandObject:command];
+  
+  // 启动友盟SDK
+  command = [CommandForInitMobClick commandForInitMobClick];
+  [[CommandInvokerSingleton sharedInstance] runCommandWithCommandObject:command];
+  
+	// 启动 "新版本信息检测" 子线程
+  command = [CommandForNewAppVersionCheck commandForNewAppVersionCheck];
+  [[CommandInvokerSingleton sharedInstance] runCommandWithCommandObject:command];
+
+  
+  // 判断当前设备 iPhone or iPad 之后加载相对应的nib文件
+  UIViewController *rootViewController = nil;
+  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+    rootViewController = (UIViewController *)[[BookShelfViewController_iPhone alloc] initWithNibName:@"BookShelfViewController_iPhone" bundle:nil];
+  } else {
+    rootViewController = (UIViewController *)[[BookShelfViewController_ipad alloc] initWithNibName:@"BookShelfViewController_ipad" bundle:nil];
+  }
+  
+  // window
+  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  self.window.rootViewController = rootViewController;
+  [self.window makeKeyAndVisible];
+
+  return YES;
 }
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
   // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -24,7 +92,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-  // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+  // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
   // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 

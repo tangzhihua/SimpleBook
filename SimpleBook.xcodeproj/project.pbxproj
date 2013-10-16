@@ -38,6 +38,7 @@
 		753BF921180E2145005DECCA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 753BF900180E2145005DECCA /* UIKit.framework */; };
 		753BF929180E2145005DECCA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 753BF927180E2145005DECCA /* InfoPlist.strings */; };
 		753BF92B180E2145005DECCA /* SimpleBookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 753BF92A180E2145005DECCA /* SimpleBookTests.m */; };
+		7586E433180E9D5C007E6BAA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7586E432180E9D5C007E6BAA /* Localizable.strings */; };
 		75E49BD9180E30CA0050F1B9 /* icon_100x100.png in Resources */ = {isa = PBXBuildFile; fileRef = 75E49B0E180E30C90050F1B9 /* icon_100x100.png */; };
 		75E49BDA180E30CA0050F1B9 /* icon_1024x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 75E49B0F180E30C90050F1B9 /* icon_1024x1024.png */; };
 		75E49BDB180E30CA0050F1B9 /* icon_114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = 75E49B10180E30C90050F1B9 /* icon_114x114.png */; };
@@ -358,6 +359,7 @@
 		753BF926180E2145005DECCA /* SimpleBookTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SimpleBookTests-Info.plist"; sourceTree = "<group>"; };
 		753BF928180E2145005DECCA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		753BF92A180E2145005DECCA /* SimpleBookTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimpleBookTests.m; sourceTree = "<group>"; };
+		7586E432180E9D5C007E6BAA /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		75E49B0E180E30C90050F1B9 /* icon_100x100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_100x100.png; sourceTree = "<group>"; };
 		75E49B0F180E30C90050F1B9 /* icon_1024x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_1024x1024.png; sourceTree = "<group>"; };
 		75E49B10180E30C90050F1B9 /* icon_114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_114x114.png; sourceTree = "<group>"; };
@@ -820,6 +822,73 @@
 			path = BookStore;
 			sourceTree = "<group>";
 		};
+		752A43C4180E6DCF00BAE854 /* 自定义命令 */ = {
+			isa = PBXGroup;
+			children = (
+				752A43C5180E6DFC00BAE854 /* 初始化App */,
+				752A43C7180E6E1100BAE854 /* 加载文件系统中缓存的数据 */,
+				752A43C6180E6E0600BAE854 /* 打印设备信息(仅用于调试) */,
+				752A43C8180E6E1B00BAE854 /* 从服务器获取重要信息 */,
+				752A43CA180E6E2D00BAE854 /* app新版本检测 */,
+				752A43C9180E6E2500BAE854 /* 加载友盟插件 */,
+			);
+			name = "自定义命令";
+			sourceTree = "<group>";
+		};
+		752A43C5180E6DFC00BAE854 /* 初始化App */ = {
+			isa = PBXGroup;
+			children = (
+				75E49CD8180E3C3B0050F1B9 /* CommandForInitApp.h */,
+				75E49CD9180E3C3B0050F1B9 /* CommandForInitApp.m */,
+			);
+			name = "初始化App";
+			sourceTree = "<group>";
+		};
+		752A43C6180E6E0600BAE854 /* 打印设备信息(仅用于调试) */ = {
+			isa = PBXGroup;
+			children = (
+				75E49CE0180E3C3B0050F1B9 /* CommandForPrintDeviceInfo.h */,
+				75E49CE1180E3C3B0050F1B9 /* CommandForPrintDeviceInfo.m */,
+			);
+			name = "打印设备信息(仅用于调试)";
+			sourceTree = "<group>";
+		};
+		752A43C7180E6E1100BAE854 /* 加载文件系统中缓存的数据 */ = {
+			isa = PBXGroup;
+			children = (
+				75E49CDC180E3C3B0050F1B9 /* CommandForLoadingLocalCacheData.h */,
+				75E49CDD180E3C3B0050F1B9 /* CommandForLoadingLocalCacheData.m */,
+			);
+			name = "加载文件系统中缓存的数据";
+			sourceTree = "<group>";
+		};
+		752A43C8180E6E1B00BAE854 /* 从服务器获取重要信息 */ = {
+			isa = PBXGroup;
+			children = (
+				75E49CD6180E3C3B0050F1B9 /* CommandForGetImportantInfoFromServer.h */,
+				75E49CD7180E3C3B0050F1B9 /* CommandForGetImportantInfoFromServer.m */,
+			);
+			name = "从服务器获取重要信息";
+			sourceTree = "<group>";
+		};
+		752A43C9180E6E2500BAE854 /* 加载友盟插件 */ = {
+			isa = PBXGroup;
+			children = (
+				75E49CDA180E3C3B0050F1B9 /* CommandForInitMobClick.h */,
+				75E49CDB180E3C3B0050F1B9 /* CommandForInitMobClick.m */,
+			);
+			name = "加载友盟插件";
+			sourceTree = "<group>";
+		};
+		752A43CA180E6E2D00BAE854 /* app新版本检测 */ = {
+			isa = PBXGroup;
+			children = (
+				75E49CDE180E3C3B0050F1B9 /* CommandForNewAppVersionCheck.h */,
+				75E49CDF180E3C3B0050F1B9 /* CommandForNewAppVersionCheck.m */,
+			);
+			name = "app新版本检测";
+			sourceTree = "<group>";
+		};
 		753BF8F0180E2145005DECCA = {
 			isa = PBXGroup;
 			children = (
@@ -879,6 +948,7 @@
 				75E49B1D180E30C90050F1B9 /* Images */,
 				753BF904180E2145005DECCA /* SimpleBook-Info.plist */,
 				753BF905180E2145005DECCA /* InfoPlist.strings */,
+				7586E432180E9D5C007E6BAA /* Localizable.strings */,
 				753BF908180E2145005DECCA /* main.m */,
 				753BF90A180E2145005DECCA /* SimpleBook-Prefix.pch */,
 			);
@@ -1246,20 +1316,9 @@
 			isa = PBXGroup;
 			children = (
 				75E49CD5180E3C3B0050F1B9 /* Command.h */,
-				75E49CD6180E3C3B0050F1B9 /* CommandForGetImportantInfoFromServer.h */,
-				75E49CD7180E3C3B0050F1B9 /* CommandForGetImportantInfoFromServer.m */,
-				75E49CD8180E3C3B0050F1B9 /* CommandForInitApp.h */,
-				75E49CD9180E3C3B0050F1B9 /* CommandForInitApp.m */,
-				75E49CDA180E3C3B0050F1B9 /* CommandForInitMobClick.h */,
-				75E49CDB180E3C3B0050F1B9 /* CommandForInitMobClick.m */,
-				75E49CDC180E3C3B0050F1B9 /* CommandForLoadingLocalCacheData.h */,
-				75E49CDD180E3C3B0050F1B9 /* CommandForLoadingLocalCacheData.m */,
-				75E49CDE180E3C3B0050F1B9 /* CommandForNewAppVersionCheck.h */,
-				75E49CDF180E3C3B0050F1B9 /* CommandForNewAppVersionCheck.m */,
-				75E49CE0180E3C3B0050F1B9 /* CommandForPrintDeviceInfo.h */,
-				75E49CE1180E3C3B0050F1B9 /* CommandForPrintDeviceInfo.m */,
 				75E49CE2180E3C3B0050F1B9 /* CommandInvokerSingleton.h */,
 				75E49CE3180E3C3B0050F1B9 /* CommandInvokerSingleton.m */,
+				752A43C4180E6DCF00BAE854 /* 自定义命令 */,
 			);
 			path = Command;
 			sourceTree = "<group>";
@@ -1622,6 +1681,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "唐志华";
 				TargetAttributes = {
+					753BF8F8180E2145005DECCA = {
+						DevelopmentTeam = AWG439VQT4;
+					};
 					753BF91C180E2145005DECCA = {
 						TestTargetID = 753BF8F8180E2145005DECCA;
 					};
@@ -1736,6 +1798,7 @@
 				75E49C64180E30CA0050F1B9 /* iphone_x.png in Resources */,
 				75E49BD9180E30CA0050F1B9 /* icon_100x100.png in Resources */,
 				75E49BFD180E30CA0050F1B9 /* d_qysy_6@2x.png in Resources */,
+				7586E433180E9D5C007E6BAA /* Localizable.strings in Resources */,
 				752A43A8180E60B500BAE854 /* BookStoreTableCell_ipad.xib in Resources */,
 				752A43A6180E60B500BAE854 /* BookShelfViewController_ipad.xib in Resources */,
 				75E49C93180E30CA0050F1B9 /* sy_touch_iphone@2x.png in Resources */,
@@ -2120,6 +2183,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SimpleBook/SimpleBook-Prefix.pch";
 				INFOPLIST_FILE = "SimpleBook/SimpleBook-Info.plist";
@@ -2135,6 +2199,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SimpleBook/SimpleBook-Prefix.pch";
 				INFOPLIST_FILE = "SimpleBook/SimpleBook-Info.plist";

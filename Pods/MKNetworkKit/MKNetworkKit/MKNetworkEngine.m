@@ -584,6 +584,10 @@ static NSOperationQueue *_sharedNetworkQueue;
 
 -(void) saveCacheData:(NSData*) data forKey:(NSString*) cacheDataKey
 {
+  if (data == nil) {
+    // 入参错误, 这里要容错
+    return;
+  }
   dispatch_async(self.backgroundCacheQueue, ^{
     
     (self.memoryCache)[cacheDataKey] = data;

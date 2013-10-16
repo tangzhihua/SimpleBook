@@ -50,11 +50,6 @@
 // 本地书籍分类
 @property (nonatomic, strong) LocalBookshelfCategoriesNetRespondBean *localBookshelfCategoriesNetRespondBean;
 
-// TODO
-// 当前可用的主机名(因为目前https网站还未配置完成, 所以临时还使用 https://61.177.139.215:8443 这个地址, 但是会判断https://dreambook.retechcorp.com 是否可用.
-// 这里的设计是临时存在的, 将来还是要固定使用 https://dreambook.retechcorp.com
-@property (nonatomic, copy) NSString *hostName;
-
 #pragma mark -
 #pragma mark 单例
 + (GlobalDataCacheForMemorySingleton *) sharedInstance;

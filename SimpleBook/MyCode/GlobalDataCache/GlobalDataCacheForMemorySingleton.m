@@ -201,12 +201,5 @@
   }
 }
 
-#pragma mark -
-
--(NSString *)hostName {
-  if ([NSString isEmpty:_hostName]) {
-    _hostName = @"https://61.177.139.215:8443";
-  }
-  return _hostName;
-}
+ 
 @end
