@@ -67,6 +67,7 @@
   // 获取本地书籍分类列表 网络请求
   NSInteger _netRequestIndexForUserLocalBookshelfCategories;
 }
+
 -(UINib *)bookListTableCellNib {
   return [BookShelfTableCell_ipad nib];
 }
