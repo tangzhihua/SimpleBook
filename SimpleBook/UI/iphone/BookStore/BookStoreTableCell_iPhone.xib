@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment defaultVersion="1280" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="BookStoreTableCell_iPhone" id="UmP-pm-2me" customClass="BookStoreTableCell_iPhone">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="111"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UmP-pm-2me" id="mFn-Q2-sm5">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="sk_iphone.png" id="g8A-OT-Iee" userLabel="Image View - 封皮背景图片">
+                        <rect key="frame" x="34" y="11" width="64" height="89"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="iphone_sp.png" id="DuQ-i5-xrp" userLabel="Image View - 封皮图片">
+                        <rect key="frame" x="36" y="12" width="62" height="80"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="iphone_x.png" id="uQG-ar-914" userLabel="Image View - 信息描述图片">
+                        <rect key="frame" x="108" y="38" width="52" height="69"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                    </imageView>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="9" id="YPb-zI-7lm" userLabel="Label - 书名">
+                        <rect key="frame" x="111" y="22" width="172" height="19"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="0.0" alpha="0.75" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="9" id="9Au-xH-NAY" userLabel="Label - 有效期">
+                        <rect key="frame" x="168" y="44" width="100" height="10"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="9" id="qq3-qj-jKW" userLabel="Label - 发行日">
+                        <rect key="frame" x="168" y="59" width="79" height="10"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="9" id="Z4R-Ky-XN8" userLabel="Label - 作者">
+                        <rect key="frame" x="168" y="71" width="79" height="13"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="9" id="FtG-5a-oNl" userLabel="Label - 出版社">
+                        <rect key="frame" x="168" y="88" width="100" height="10"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" style="white" id="IA2-oi-9GW">
+                        <rect key="frame" x="57" y="42" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                    </activityIndicatorView>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7.22M" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CIf-oh-ac9" userLabel="Label - 文件大小">
+                        <rect key="frame" x="241" y="68" width="73" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <inset key="insetFor6xAndEarlier" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.51000000000000001" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="hc4-KF-xb6" userLabel="Button - 功能按钮">
+                        <rect key="frame" x="245" y="33" width="64" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                        <state key="normal" backgroundImage="k_iphone.png">
+                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <state key="highlighted" backgroundImage="k_touch_iphone.png">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="functionButtonOnClickListener:" destination="UmP-pm-2me" eventType="touchUpInside" id="XZC-VH-LSy"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="authorLabel" destination="Z4R-Ky-XN8" id="YGF-Rl-fGi"/>
+                <outlet property="bookCoverDownloadIndicator" destination="IA2-oi-9GW" id="Hzj-q6-4c7"/>
+                <outlet property="bookCoverImageView" destination="DuQ-i5-xrp" id="c6l-WF-x3f"/>
+                <outlet property="expiredLabel" destination="qq3-qj-jKW" id="m8z-MN-D1Q"/>
+                <outlet property="functionButton" destination="hc4-KF-xb6" id="0py-iK-oFt"/>
+                <outlet property="nameLabel" destination="YPb-zI-7lm" id="1xI-Nc-uNV"/>
+                <outlet property="publishedLabel" destination="9Au-xH-NAY" id="f9Q-Hh-4ee"/>
+                <outlet property="publisherLabel" destination="FtG-5a-oNl" id="ZVr-vl-tIw"/>
+                <outlet property="sizeLabel" destination="CIf-oh-ac9" id="bG0-kD-hYK"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="iphone_sp.png" width="62" height="80"/>
+        <image name="iphone_x.png" width="52" height="69"/>
+        <image name="k_iphone.png" width="64" height="30"/>
+        <image name="k_touch_iphone.png" width="64" height="30"/>
+        <image name="sk_iphone.png" width="64" height="89"/>
+    </resources>
+</document>

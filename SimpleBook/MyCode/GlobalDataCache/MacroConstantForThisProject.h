@@ -49,6 +49,11 @@ typedef NS_ENUM(NSInteger, NewVersionDetectStateEnum) {
   kNewVersionDetectStateEnum_LocalAppIsTheLatest
 };
 
- 
+// public account
+#define PUBLIC_USERNAME         @"public"
+#define PUBLIC_PASSWORD         @"pwpublic"
+
+#define IS_IOS7             ([[UIDevice currentDevice].systemVersion floatValue] >= 7.0)
+#define CURRENT_IOS_VERSION [[UIDevice currentDevice].systemVersion floatValue]
 
 #endif

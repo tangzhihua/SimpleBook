@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment defaultVersion="1280" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="BookStoreTableCell_ipad" id="AOi-1Q-Rpe" customClass="BookStoreTableCell_ipad">
+            <rect key="frame" x="0.0" y="0.0" width="768" height="244"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AOi-1Q-Rpe" id="qji-JY-pqS">
+                <rect key="frame" x="0.0" y="0.0" width="768" height="243"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="ht.png" id="ZL9-0o-SlP" userLabel="Image View - Cell背景图片">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="260"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="sk.png" id="Q6H-63-lsh" userLabel="Image View - 书籍封面之下的衬托背景图">
+                        <rect key="frame" x="70" y="29" width="135" height="185"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="ipad_sp.png" id="AYW-Pq-z6B" userLabel="outlet->Image View - 书籍封面图片">
+                        <rect key="frame" x="74" y="32" width="127" height="165"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="x.png" id="QV5-7U-iB4" userLabel="Image View - 发行日/有效期/作者/出版社 等图片">
+                        <rect key="frame" x="225" y="97" width="93" height="116"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="书籍名称" lineBreakMode="tailTruncation" minimumFontSize="10" id="gbY-5I-Kx6" userLabel="outlet->Label - 书籍名称">
+                        <rect key="frame" x="231" y="71" width="344" height="27"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.75" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="00.00.00" lineBreakMode="tailTruncation" minimumFontSize="10" id="fkr-4f-mWV" userLabel="outlet->Label - 发行日">
+                        <rect key="frame" x="341" y="106" width="243" height="21"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.26000000000000001" colorSpace="calibratedRGB"/>
+                        <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="00.00.00" lineBreakMode="tailTruncation" minimumFontSize="10" id="CRV-17-2Uu" userLabel="outlet->Label - 有效期">
+                        <rect key="frame" x="341" y="131" width="243" height="21"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.26000000000000001" colorSpace="calibratedRGB"/>
+                        <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="作者名称" lineBreakMode="tailTruncation" minimumFontSize="10" id="fcm-FH-Dph" userLabel="outlet->Label - 作者">
+                        <rect key="frame" x="341" y="156" width="243" height="21"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.26000000000000001" colorSpace="calibratedRGB"/>
+                        <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="出版社名称" lineBreakMode="tailTruncation" minimumFontSize="10" id="miD-Lx-BuF" userLabel="outlet->Label - 出版社">
+                        <rect key="frame" x="341" y="181" width="243" height="21"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.26000000000000001" colorSpace="calibratedRGB"/>
+                        <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0000.00KB" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RzQ-wG-Thb" userLabel="outlet->Label - 书籍zip资源包大小">
+                        <rect key="frame" x="661" y="131" width="88" height="25"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" white="0.0" alpha="0.59999999999999998" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" style="whiteLarge" id="Swo-8g-Tw9" userLabel="outlet->Indicator - 下载书籍封面图片时的活动指示器">
+                        <rect key="frame" x="119" y="90" width="37" height="37"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </activityIndicatorView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="c9E-Nj-D1V" userLabel="outlet->Button - 功能按钮">
+                        <rect key="frame" x="664" y="83" width="82" height="36"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <state key="normal" title="Button">
+                            <color key="titleColor" red="0.41960784313725491" green="0.70588235294117641" blue="0.81176470588235294" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="functionButtonOnClickListener:" destination="AOi-1Q-Rpe" eventType="touchUpInside" id="Xmc-2i-Q5O"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="authorLabel" destination="fcm-FH-Dph" id="Z77-lp-Nub"/>
+                <outlet property="bookCoverDownloadIndicator" destination="Swo-8g-Tw9" id="qte-Ml-qR2"/>
+                <outlet property="bookCoverImageView" destination="AYW-Pq-z6B" id="03D-rS-9VK"/>
+                <outlet property="expiredLabel" destination="CRV-17-2Uu" id="7mI-UA-0cN"/>
+                <outlet property="functionButton" destination="c9E-Nj-D1V" id="3cB-jt-ajZ"/>
+                <outlet property="nameLabel" destination="gbY-5I-Kx6" id="ZQe-Pe-B66"/>
+                <outlet property="publishedLabel" destination="fkr-4f-mWV" id="A27-ZM-lbV"/>
+                <outlet property="publisherLabel" destination="miD-Lx-BuF" id="ACP-Xh-k4E"/>
+                <outlet property="sizeLabel" destination="RzQ-wG-Thb" id="qTb-iJ-aeU"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="ht.png" width="768" height="199"/>
+        <image name="ipad_sp.png" width="127" height="165"/>
+        <image name="sk.png" width="135" height="185"/>
+        <image name="x.png" width="93" height="116"/>
+    </resources>
+</document>

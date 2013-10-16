@@ -7,6 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		752A43A2180E60B500BAE854 /* BookShelfTableCell_ipad.m in Sources */ = {isa = PBXBuildFile; fileRef = 752A436B180E60B500BAE854 /* BookShelfTableCell_ipad.m */; };
+		752A43A3180E60B500BAE854 /* BookShelfTableCell_ipad_horizontal.xib in Resources */ = {isa = PBXBuildFile; fileRef = 752A436C180E60B500BAE854 /* BookShelfTableCell_ipad_horizontal.xib */; };
+		752A43A4180E60B500BAE854 /* BookShelfTableCell_ipad_vertical.xib in Resources */ = {isa = PBXBuildFile; fileRef = 752A436D180E60B500BAE854 /* BookShelfTableCell_ipad_vertical.xib */; };
+		752A43A5180E60B500BAE854 /* BookShelfViewController_ipad.m in Sources */ = {isa = PBXBuildFile; fileRef = 752A436F180E60B500BAE854 /* BookShelfViewController_ipad.m */; };
+		752A43A6180E60B500BAE854 /* BookShelfViewController_ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 752A4370180E60B500BAE854 /* BookShelfViewController_ipad.xib */; };
+		752A43A7180E60B500BAE854 /* BookStoreTableCell_ipad.m in Sources */ = {isa = PBXBuildFile; fileRef = 752A4373180E60B500BAE854 /* BookStoreTableCell_ipad.m */; };
+		752A43A8180E60B500BAE854 /* BookStoreTableCell_ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 752A4374180E60B500BAE854 /* BookStoreTableCell_ipad.xib */; };
+		752A43A9180E60B500BAE854 /* BookStoreViewController_ipad.m in Sources */ = {isa = PBXBuildFile; fileRef = 752A4376180E60B500BAE854 /* BookStoreViewController_ipad.m */; };
+		752A43AA180E60B500BAE854 /* BookStoreViewController_ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 752A4377180E60B500BAE854 /* BookStoreViewController_ipad.xib */; };
+		752A43B4180E60B500BAE854 /* BookShelfTableCell_iPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 752A4389180E60B500BAE854 /* BookShelfTableCell_iPhone.m */; };
+		752A43B5180E60B500BAE854 /* BookShelfTableCell_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 752A438A180E60B500BAE854 /* BookShelfTableCell_iPhone.xib */; };
+		752A43B6180E60B500BAE854 /* BookShelfViewController_iPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 752A438C180E60B500BAE854 /* BookShelfViewController_iPhone.m */; };
+		752A43B7180E60B500BAE854 /* BookShelfViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 752A438D180E60B500BAE854 /* BookShelfViewController_iPhone.xib */; };
+		752A43B8180E60B500BAE854 /* BookStoreTableCell_iPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 752A4390180E60B500BAE854 /* BookStoreTableCell_iPhone.m */; };
+		752A43B9180E60B500BAE854 /* BookStoreTableCell_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 752A4391180E60B500BAE854 /* BookStoreTableCell_iPhone.xib */; };
+		752A43BA180E60B500BAE854 /* BookStoreViewController_iPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 752A4393180E60B500BAE854 /* BookStoreViewController_iPhone.m */; };
+		752A43BB180E60B500BAE854 /* BookStoreViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 752A4394180E60B500BAE854 /* BookStoreViewController_iPhone.xib */; };
 		753BF8FD180E2145005DECCA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 753BF8FC180E2145005DECCA /* Foundation.framework */; };
 		753BF8FF180E2145005DECCA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 753BF8FE180E2145005DECCA /* CoreGraphics.framework */; };
 		753BF901180E2145005DECCA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 753BF900180E2145005DECCA /* UIKit.framework */; };
@@ -298,6 +315,31 @@
 
 /* Begin PBXFileReference section */
 		6D1313E480E94B469D148D87 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		752A436A180E60B500BAE854 /* BookShelfTableCell_ipad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookShelfTableCell_ipad.h; sourceTree = "<group>"; };
+		752A436B180E60B500BAE854 /* BookShelfTableCell_ipad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookShelfTableCell_ipad.m; sourceTree = "<group>"; };
+		752A436C180E60B500BAE854 /* BookShelfTableCell_ipad_horizontal.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookShelfTableCell_ipad_horizontal.xib; sourceTree = "<group>"; };
+		752A436D180E60B500BAE854 /* BookShelfTableCell_ipad_vertical.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookShelfTableCell_ipad_vertical.xib; sourceTree = "<group>"; };
+		752A436E180E60B500BAE854 /* BookShelfViewController_ipad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookShelfViewController_ipad.h; sourceTree = "<group>"; };
+		752A436F180E60B500BAE854 /* BookShelfViewController_ipad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookShelfViewController_ipad.m; sourceTree = "<group>"; };
+		752A4370180E60B500BAE854 /* BookShelfViewController_ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookShelfViewController_ipad.xib; sourceTree = "<group>"; };
+		752A4372180E60B500BAE854 /* BookStoreTableCell_ipad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookStoreTableCell_ipad.h; sourceTree = "<group>"; };
+		752A4373180E60B500BAE854 /* BookStoreTableCell_ipad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookStoreTableCell_ipad.m; sourceTree = "<group>"; };
+		752A4374180E60B500BAE854 /* BookStoreTableCell_ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookStoreTableCell_ipad.xib; sourceTree = "<group>"; };
+		752A4375180E60B500BAE854 /* BookStoreViewController_ipad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookStoreViewController_ipad.h; sourceTree = "<group>"; };
+		752A4376180E60B500BAE854 /* BookStoreViewController_ipad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookStoreViewController_ipad.m; sourceTree = "<group>"; };
+		752A4377180E60B500BAE854 /* BookStoreViewController_ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookStoreViewController_ipad.xib; sourceTree = "<group>"; };
+		752A4388180E60B500BAE854 /* BookShelfTableCell_iPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookShelfTableCell_iPhone.h; sourceTree = "<group>"; };
+		752A4389180E60B500BAE854 /* BookShelfTableCell_iPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookShelfTableCell_iPhone.m; sourceTree = "<group>"; };
+		752A438A180E60B500BAE854 /* BookShelfTableCell_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookShelfTableCell_iPhone.xib; sourceTree = "<group>"; };
+		752A438B180E60B500BAE854 /* BookShelfViewController_iPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookShelfViewController_iPhone.h; sourceTree = "<group>"; };
+		752A438C180E60B500BAE854 /* BookShelfViewController_iPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookShelfViewController_iPhone.m; sourceTree = "<group>"; };
+		752A438D180E60B500BAE854 /* BookShelfViewController_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookShelfViewController_iPhone.xib; sourceTree = "<group>"; };
+		752A438F180E60B500BAE854 /* BookStoreTableCell_iPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookStoreTableCell_iPhone.h; sourceTree = "<group>"; };
+		752A4390180E60B500BAE854 /* BookStoreTableCell_iPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookStoreTableCell_iPhone.m; sourceTree = "<group>"; };
+		752A4391180E60B500BAE854 /* BookStoreTableCell_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookStoreTableCell_iPhone.xib; sourceTree = "<group>"; };
+		752A4392180E60B500BAE854 /* BookStoreViewController_iPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookStoreViewController_iPhone.h; sourceTree = "<group>"; };
+		752A4393180E60B500BAE854 /* BookStoreViewController_iPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookStoreViewController_iPhone.m; sourceTree = "<group>"; };
+		752A4394180E60B500BAE854 /* BookStoreViewController_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookStoreViewController_iPhone.xib; sourceTree = "<group>"; };
 		753BF8F9180E2145005DECCA /* SimpleBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		753BF8FC180E2145005DECCA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		753BF8FE180E2145005DECCA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -698,6 +740,86 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		752A4367180E60B500BAE854 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				752A4368180E60B500BAE854 /* ipad */,
+				752A4386180E60B500BAE854 /* iphone */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		752A4368180E60B500BAE854 /* ipad */ = {
+			isa = PBXGroup;
+			children = (
+				752A4369180E60B500BAE854 /* BookShelf */,
+				752A4371180E60B500BAE854 /* BookStore */,
+			);
+			path = ipad;
+			sourceTree = "<group>";
+		};
+		752A4369180E60B500BAE854 /* BookShelf */ = {
+			isa = PBXGroup;
+			children = (
+				752A436A180E60B500BAE854 /* BookShelfTableCell_ipad.h */,
+				752A436B180E60B500BAE854 /* BookShelfTableCell_ipad.m */,
+				752A436C180E60B500BAE854 /* BookShelfTableCell_ipad_horizontal.xib */,
+				752A436D180E60B500BAE854 /* BookShelfTableCell_ipad_vertical.xib */,
+				752A436E180E60B500BAE854 /* BookShelfViewController_ipad.h */,
+				752A436F180E60B500BAE854 /* BookShelfViewController_ipad.m */,
+				752A4370180E60B500BAE854 /* BookShelfViewController_ipad.xib */,
+			);
+			path = BookShelf;
+			sourceTree = "<group>";
+		};
+		752A4371180E60B500BAE854 /* BookStore */ = {
+			isa = PBXGroup;
+			children = (
+				752A4372180E60B500BAE854 /* BookStoreTableCell_ipad.h */,
+				752A4373180E60B500BAE854 /* BookStoreTableCell_ipad.m */,
+				752A4374180E60B500BAE854 /* BookStoreTableCell_ipad.xib */,
+				752A4375180E60B500BAE854 /* BookStoreViewController_ipad.h */,
+				752A4376180E60B500BAE854 /* BookStoreViewController_ipad.m */,
+				752A4377180E60B500BAE854 /* BookStoreViewController_ipad.xib */,
+			);
+			path = BookStore;
+			sourceTree = "<group>";
+		};
+		752A4386180E60B500BAE854 /* iphone */ = {
+			isa = PBXGroup;
+			children = (
+				752A4387180E60B500BAE854 /* BookShelf */,
+				752A438E180E60B500BAE854 /* BookStore */,
+			);
+			path = iphone;
+			sourceTree = "<group>";
+		};
+		752A4387180E60B500BAE854 /* BookShelf */ = {
+			isa = PBXGroup;
+			children = (
+				752A4388180E60B500BAE854 /* BookShelfTableCell_iPhone.h */,
+				752A4389180E60B500BAE854 /* BookShelfTableCell_iPhone.m */,
+				752A438A180E60B500BAE854 /* BookShelfTableCell_iPhone.xib */,
+				752A438B180E60B500BAE854 /* BookShelfViewController_iPhone.h */,
+				752A438C180E60B500BAE854 /* BookShelfViewController_iPhone.m */,
+				752A438D180E60B500BAE854 /* BookShelfViewController_iPhone.xib */,
+			);
+			path = BookShelf;
+			sourceTree = "<group>";
+		};
+		752A438E180E60B500BAE854 /* BookStore */ = {
+			isa = PBXGroup;
+			children = (
+				752A438F180E60B500BAE854 /* BookStoreTableCell_iPhone.h */,
+				752A4390180E60B500BAE854 /* BookStoreTableCell_iPhone.m */,
+				752A4391180E60B500BAE854 /* BookStoreTableCell_iPhone.xib */,
+				752A4392180E60B500BAE854 /* BookStoreViewController_iPhone.h */,
+				752A4393180E60B500BAE854 /* BookStoreViewController_iPhone.m */,
+				752A4394180E60B500BAE854 /* BookStoreViewController_iPhone.xib */,
+			);
+			path = BookStore;
+			sourceTree = "<group>";
+		};
 		753BF8F0180E2145005DECCA = {
 			isa = PBXGroup;
 			children = (
@@ -737,6 +859,7 @@
 		753BF902180E2145005DECCA /* SimpleBook */ = {
 			isa = PBXGroup;
 			children = (
+				752A4367180E60B500BAE854 /* UI */,
 				75E49CBE180E3C3B0050F1B9 /* MyCode */,
 				75E49C9B180E39B60050F1B9 /* ThirdPartyLibraries */,
 				753BF90B180E2145005DECCA /* AppDelegate.h */,
@@ -1542,7 +1665,9 @@
 				75E49C3D180E30CA0050F1B9 /* fl_xx_hb.png in Resources */,
 				75E49C07180E30CA0050F1B9 /* fl_xx@2x.png in Resources */,
 				75E49C23180E30CA0050F1B9 /* d_jrsy_H@2x.png in Resources */,
+				752A43A3180E60B500BAE854 /* BookShelfTableCell_ipad_horizontal.xib in Resources */,
 				75E49C79180E30CA0050F1B9 /* d_jrsy_6iphone@2x.png in Resources */,
+				752A43A4180E60B500BAE854 /* BookShelfTableCell_ipad_vertical.xib in Resources */,
 				75E49C5C180E30CA0050F1B9 /* ddh_iphone.png in Resources */,
 				75E49C4F180E30CA0050F1B9 /* xz.png in Resources */,
 				75E49C2B180E30CA0050F1B9 /* fl_ty_hb_H@2x.png in Resources */,
@@ -1561,6 +1686,7 @@
 				75E49C3E180E30CA0050F1B9 /* ht.png in Resources */,
 				75E49C2E180E30CA0050F1B9 /* ht_H@2x.png in Resources */,
 				75E49C0E180E30CA0050F1B9 /* sc@2x.png in Resources */,
+				752A43AA180E60B500BAE854 /* BookStoreViewController_ipad.xib in Resources */,
 				75E49BDC180E30CA0050F1B9 /* icon_120x120.png in Resources */,
 				75E49C7E180E30CA0050F1B9 /* d_wdsj_iphone@2x.png in Resources */,
 				75E49BF0180E30CA0050F1B9 /* d_wdsj_6_H.png in Resources */,
@@ -1584,6 +1710,7 @@
 				75E49C19180E30CA0050F1B9 /* x@2x.png in Resources */,
 				75E49C0D180E30CA0050F1B9 /* qy_touch@2x.png in Resources */,
 				75E49C3C180E30CA0050F1B9 /* fl_xc_hb.png in Resources */,
+				752A43BB180E60B500BAE854 /* BookStoreViewController_iPhone.xib in Resources */,
 				75E49C4D180E30CA0050F1B9 /* tcdl.png in Resources */,
 				75E49C94180E30CA0050F1B9 /* tcdl_iphone@2x.png in Resources */,
 				75E49BE5180E30CA0050F1B9 /* icon_72x72.png in Resources */,
@@ -1609,6 +1736,8 @@
 				75E49C64180E30CA0050F1B9 /* iphone_x.png in Resources */,
 				75E49BD9180E30CA0050F1B9 /* icon_100x100.png in Resources */,
 				75E49BFD180E30CA0050F1B9 /* d_qysy_6@2x.png in Resources */,
+				752A43A8180E60B500BAE854 /* BookStoreTableCell_ipad.xib in Resources */,
+				752A43A6180E60B500BAE854 /* BookShelfViewController_ipad.xib in Resources */,
 				75E49C93180E30CA0050F1B9 /* sy_touch_iphone@2x.png in Resources */,
 				75E49C97180E30CA0050F1B9 /* yd_iphone@2x.png in Resources */,
 				75E49C37180E30CA0050F1B9 /* d_wdsj_6.png in Resources */,
@@ -1621,6 +1750,7 @@
 				75E49C7A180E30CA0050F1B9 /* d_jrsy_iphone@2x.png in Resources */,
 				75E49C14180E30CA0050F1B9 /* sx_touch@2x.png in Resources */,
 				75E49C81180E30CA0050F1B9 /* fh_touch_iphone@2x.png in Resources */,
+				752A43B7180E60B500BAE854 /* BookShelfViewController_iPhone.xib in Resources */,
 				75E49C83180E30CA0050F1B9 /* fl_xc_iphone@2x.png in Resources */,
 				75E49C41180E30CA0050F1B9 /* k_touch.png in Resources */,
 				75E49C76180E30CA0050F1B9 /* zt_iphone.png in Resources */,
@@ -1650,6 +1780,7 @@
 				75E49C02180E30CA0050F1B9 /* fh_touch@2x.png in Resources */,
 				75E49C46180E30CA0050F1B9 /* ss.png in Resources */,
 				75E49C25180E30CA0050F1B9 /* d_qysy_6_H@2x.png in Resources */,
+				752A43B5180E60B500BAE854 /* BookShelfTableCell_iPhone.xib in Resources */,
 				75E49BF6180E30CA0050F1B9 /* ht_H.png in Resources */,
 				75E49BE6180E30CA0050F1B9 /* icon_76x76.png in Resources */,
 				75E49BE1180E30CA0050F1B9 /* icon_50x50.png in Resources */,
@@ -1710,6 +1841,7 @@
 				75E49C3A180E30CA0050F1B9 /* fh_touch.png in Resources */,
 				75E49C22180E30CA0050F1B9 /* d_jrsy_6_H@2x.png in Resources */,
 				75E49C17180E30CA0050F1B9 /* tcdl@2x.png in Resources */,
+				752A43B9180E60B500BAE854 /* BookStoreTableCell_iPhone.xib in Resources */,
 				75E49C32180E30CA0050F1B9 /* d_jrsy.png in Resources */,
 				75E49C42180E30CA0050F1B9 /* qy.png in Resources */,
 				75E49C63180E30CA0050F1B9 /* iphone_sp.png in Resources */,
@@ -1774,7 +1906,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				75E49DA3180E3C3B0050F1B9 /* DomainBeanNetworkEngineSingleton.m in Sources */,
+				752A43A9180E60B500BAE854 /* BookStoreViewController_ipad.m in Sources */,
 				75E49DAF180E3C3B0050F1B9 /* ServerRespondDataTestForDreamBook.m in Sources */,
+				752A43A5180E60B500BAE854 /* BookShelfViewController_ipad.m in Sources */,
 				75E49D96180E3C3B0050F1B9 /* LocalBookshelfCategoriesParseNetRespondDictionaryToDomainBean.m in Sources */,
 				75E49DA1180E3C3B0050F1B9 /* UrlConstantForThisProject.m in Sources */,
 				75E49DB3180E3C3B0050F1B9 /* SimpleFolderTools.m in Sources */,
@@ -1803,6 +1937,7 @@
 				75E49D9E180E3C3B0050F1B9 /* GlobalDataCacheForMemorySingleton.m in Sources */,
 				75E49D7F180E3C3B0050F1B9 /* CommandForNewAppVersionCheck.m in Sources */,
 				75E49D74180E3C3B0050F1B9 /* NSObject+Serialization.m in Sources */,
+				752A43B6180E60B500BAE854 /* BookShelfViewController_iPhone.m in Sources */,
 				75E49D9A180E3C3B0050F1B9 /* LogonNetRespondBean.m in Sources */,
 				75E49D87180E3C3B0050F1B9 /* BookListInBookstoresDomainBeanToolsFactory.m in Sources */,
 				75E49DA7180E3C3B0050F1B9 /* NetRequestErrorBean.m in Sources */,
@@ -1811,21 +1946,26 @@
 				75E49DA8180E3C3B0050F1B9 /* StrategyClassNameMappingBase.m in Sources */,
 				75E49D8D180E3C3B0050F1B9 /* GetBookDownloadUrlNetRequestBean.m in Sources */,
 				75E49D93180E3C3B0050F1B9 /* LocalBookshelfCategoriesDomainBeanToolsFactory.m in Sources */,
+				752A43A2180E60B500BAE854 /* BookShelfTableCell_ipad.m in Sources */,
 				75E49D8B180E3C3B0050F1B9 /* DomainBeanHelperClassNameMapping.m in Sources */,
 				75E49D84180E3C3B0050F1B9 /* PRPSmartTableViewCell.m in Sources */,
 				75E49D8E180E3C3B0050F1B9 /* GetBookDownloadUrlNetRespondBean.m in Sources */,
 				75E49DB1180E3C3B0050F1B9 /* DeviceInformation.m in Sources */,
 				75E49D8C180E3C3B0050F1B9 /* GetBookDownloadUrlDomainBeanToolsFactory.m in Sources */,
+				752A43BA180E60B500BAE854 /* BookStoreViewController_iPhone.m in Sources */,
 				75E49D9F180E3C3B0050F1B9 /* GlobalDataCacheForNeedSaveToFileSystem.m in Sources */,
 				75E49D8F180E3C3B0050F1B9 /* GetBookDownloadUrlParseDomainBeanToDD.m in Sources */,
 				75E49DA2180E3C3B0050F1B9 /* MKNetworkEngineSingletonForUpAndDownLoadFile.m in Sources */,
+				752A43B8180E60B500BAE854 /* BookStoreTableCell_iPhone.m in Sources */,
 				75E49DAC180E3C3B0050F1B9 /* NetRequestEntityDataPackageForDreamBook.m in Sources */,
 				75E49D91180E3C3B0050F1B9 /* LocalBook.m in Sources */,
 				75E49D79180E3C3B0050F1B9 /* UIImage+ImageCompression.m in Sources */,
+				752A43A7180E60B500BAE854 /* BookStoreTableCell_ipad.m in Sources */,
 				75E49D92180E3C3B0050F1B9 /* LocalBookList.m in Sources */,
 				75E49D95180E3C3B0050F1B9 /* LocalBookshelfCategoriesNetRespondBean.m in Sources */,
 				75E49D78180E3C3B0050F1B9 /* UIColor+ColorSchemes.m in Sources */,
 				75E49D97180E3C3B0050F1B9 /* LocalBookshelfCategory.m in Sources */,
+				752A43B4180E60B500BAE854 /* BookShelfTableCell_iPhone.m in Sources */,
 				75E49D7A180E3C3B0050F1B9 /* UIImageView+MKNetworkKitAdditions.m in Sources */,
 				75E49D82180E3C3B0050F1B9 /* FastCell.m in Sources */,
 				75E49D89180E3C3B0050F1B9 /* BookListInBookstoresNetRespondBean.m in Sources */,
