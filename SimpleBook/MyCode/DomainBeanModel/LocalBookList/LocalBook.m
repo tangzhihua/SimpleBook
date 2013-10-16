@@ -223,7 +223,7 @@
     
     self.bookDownloadOperation = [[MKNetworkEngineSingletonForUpAndDownLoadFile sharedInstance] operationWithURLString:urlString];
     [self.bookDownloadOperation setShouldContinueWithInvalidCertificate:YES];
-    [self.bookDownloadOperation addHeader:@"User-Agent" withValue:[ToolsFunctionForThisProgect getUserAgent]];
+    [self.bookDownloadOperation addHeaders:@{@"User-Agent": [ToolsFunctionForThisProgect getUserAgent]}];
     //
     __weak LocalBook *weakSelf = self;
     
@@ -257,7 +257,7 @@
         } else {
           if (fileSize > 0) {
             NSString *headerRange = [NSString stringWithFormat:@"bytes=%llu-", fileSize];
-            [self.bookDownloadOperation addHeader:@"Range" withValue:headerRange];
+            [self.bookDownloadOperation addHeaders:@{@"Range": headerRange}];
           }
         }
       }

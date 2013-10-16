@@ -19,6 +19,7 @@
   NSString *errorMessage = @"OK";
   
   NSError *error = nil;
+  
   NSDictionary *xmlDataNSDictionary = [TBXML dictionaryWithXMLString:serverRespondDataOfUTF8String error:&error];
   NSDictionary *response = [xmlDataNSDictionary objectForKey:@"response"];
   if ([response isKindOfClass:[NSDictionary class]]) {

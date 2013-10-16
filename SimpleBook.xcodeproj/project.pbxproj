@@ -93,7 +93,6 @@
 		75E49C1E180E30CA0050F1B9 /* zt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 75E49B57180E30C90050F1B9 /* zt@2x.png */; };
 		75E49C1F180E30CA0050F1B9 /* zt_touch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 75E49B58180E30C90050F1B9 /* zt_touch@2x.png */; };
 		75E49C20180E30CA0050F1B9 /* bj_H@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 75E49B5A180E30C90050F1B9 /* bj_H@2x.png */; };
-		75E49C21180E30CA0050F1B9 /* d_jrsy_6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 75E49B5B180E30C90050F1B9 /* d_jrsy_6@2x.png */; };
 		75E49C22180E30CA0050F1B9 /* d_jrsy_6_H@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 75E49B5C180E30C90050F1B9 /* d_jrsy_6_H@2x.png */; };
 		75E49C23180E30CA0050F1B9 /* d_jrsy_H@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 75E49B5D180E30C90050F1B9 /* d_jrsy_H@2x.png */; };
 		75E49C24180E30CA0050F1B9 /* d_qysy_6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 75E49B5E180E30C90050F1B9 /* d_qysy_6@2x.png */; };
@@ -221,6 +220,74 @@
 		75E49CB9180E3AF10050F1B9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75E49CB8180E3AF10050F1B9 /* SystemConfiguration.framework */; };
 		75E49CBB180E3AF90050F1B9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75E49CBA180E3AF90050F1B9 /* Security.framework */; };
 		75E49CBD180E3B020050F1B9 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75E49CBC180E3B020050F1B9 /* ImageIO.framework */; };
+		75E49D71180E3C3B0050F1B9 /* NSDictionary+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CC1180E3C3B0050F1B9 /* NSDictionary+Helper.m */; };
+		75E49D72180E3C3B0050F1B9 /* NSDictionary+SafeValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CC3180E3C3B0050F1B9 /* NSDictionary+SafeValue.m */; };
+		75E49D73180E3C3B0050F1B9 /* NSObject+DeepCopyingSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CC5180E3C3B0050F1B9 /* NSObject+DeepCopyingSupport.m */; };
+		75E49D74180E3C3B0050F1B9 /* NSObject+Serialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CC7180E3C3B0050F1B9 /* NSObject+Serialization.m */; };
+		75E49D75180E3C3B0050F1B9 /* NSString+isEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CC9180E3C3B0050F1B9 /* NSString+isEmpty.m */; };
+		75E49D76180E3C3B0050F1B9 /* String+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CCB180E3C3B0050F1B9 /* String+Helper.m */; };
+		75E49D77180E3C3B0050F1B9 /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CCD180E3C3B0050F1B9 /* UIAlertView+Blocks.m */; };
+		75E49D78180E3C3B0050F1B9 /* UIColor+ColorSchemes.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CCF180E3C3B0050F1B9 /* UIColor+ColorSchemes.m */; };
+		75E49D79180E3C3B0050F1B9 /* UIImage+ImageCompression.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CD1180E3C3B0050F1B9 /* UIImage+ImageCompression.m */; };
+		75E49D7A180E3C3B0050F1B9 /* UIImageView+MKNetworkKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CD3180E3C3B0050F1B9 /* UIImageView+MKNetworkKitAdditions.m */; };
+		75E49D7B180E3C3B0050F1B9 /* CommandForGetImportantInfoFromServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CD7180E3C3B0050F1B9 /* CommandForGetImportantInfoFromServer.m */; };
+		75E49D7C180E3C3B0050F1B9 /* CommandForInitApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CD9180E3C3B0050F1B9 /* CommandForInitApp.m */; };
+		75E49D7D180E3C3B0050F1B9 /* CommandForInitMobClick.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CDB180E3C3B0050F1B9 /* CommandForInitMobClick.m */; };
+		75E49D7E180E3C3B0050F1B9 /* CommandForLoadingLocalCacheData.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CDD180E3C3B0050F1B9 /* CommandForLoadingLocalCacheData.m */; };
+		75E49D7F180E3C3B0050F1B9 /* CommandForNewAppVersionCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CDF180E3C3B0050F1B9 /* CommandForNewAppVersionCheck.m */; };
+		75E49D80180E3C3B0050F1B9 /* CommandForPrintDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CE1180E3C3B0050F1B9 /* CommandForPrintDeviceInfo.m */; };
+		75E49D81180E3C3B0050F1B9 /* CommandInvokerSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CE3180E3C3B0050F1B9 /* CommandInvokerSingleton.m */; };
+		75E49D82180E3C3B0050F1B9 /* FastCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CE8180E3C3B0050F1B9 /* FastCell.m */; };
+		75E49D83180E3C3B0050F1B9 /* PRPNibBasedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CEB180E3C3B0050F1B9 /* PRPNibBasedTableViewCell.m */; };
+		75E49D84180E3C3B0050F1B9 /* PRPSmartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CED180E3C3B0050F1B9 /* PRPSmartTableViewCell.m */; };
+		75E49D85180E3C3B0050F1B9 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CF0180E3C3B0050F1B9 /* BaseModel.m */; };
+		75E49D86180E3C3B0050F1B9 /* BookInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CF3180E3C3B0050F1B9 /* BookInfo.m */; };
+		75E49D87180E3C3B0050F1B9 /* BookListInBookstoresDomainBeanToolsFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CF6180E3C3B0050F1B9 /* BookListInBookstoresDomainBeanToolsFactory.m */; };
+		75E49D88180E3C3B0050F1B9 /* BookListInBookstoresNetRequestBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CF8180E3C3B0050F1B9 /* BookListInBookstoresNetRequestBean.m */; };
+		75E49D89180E3C3B0050F1B9 /* BookListInBookstoresNetRespondBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CFA180E3C3B0050F1B9 /* BookListInBookstoresNetRespondBean.m */; };
+		75E49D8A180E3C3B0050F1B9 /* BookListInBookstoresParseNetRespondDictionaryToDomainBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49CFC180E3C3B0050F1B9 /* BookListInBookstoresParseNetRespondDictionaryToDomainBean.m */; };
+		75E49D8B180E3C3B0050F1B9 /* DomainBeanHelperClassNameMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D00180E3C3B0050F1B9 /* DomainBeanHelperClassNameMapping.m */; };
+		75E49D8C180E3C3B0050F1B9 /* GetBookDownloadUrlDomainBeanToolsFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D04180E3C3B0050F1B9 /* GetBookDownloadUrlDomainBeanToolsFactory.m */; };
+		75E49D8D180E3C3B0050F1B9 /* GetBookDownloadUrlNetRequestBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D06180E3C3B0050F1B9 /* GetBookDownloadUrlNetRequestBean.m */; };
+		75E49D8E180E3C3B0050F1B9 /* GetBookDownloadUrlNetRespondBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D08180E3C3B0050F1B9 /* GetBookDownloadUrlNetRespondBean.m */; };
+		75E49D8F180E3C3B0050F1B9 /* GetBookDownloadUrlParseDomainBeanToDD.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D0A180E3C3B0050F1B9 /* GetBookDownloadUrlParseDomainBeanToDD.m */; };
+		75E49D90180E3C3B0050F1B9 /* GetBookDownloadUrlParseNetRespondDictionaryToDomainBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D0C180E3C3B0050F1B9 /* GetBookDownloadUrlParseNetRespondDictionaryToDomainBean.m */; };
+		75E49D91180E3C3B0050F1B9 /* LocalBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D0F180E3C3B0050F1B9 /* LocalBook.m */; };
+		75E49D92180E3C3B0050F1B9 /* LocalBookList.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D11180E3C3B0050F1B9 /* LocalBookList.m */; };
+		75E49D93180E3C3B0050F1B9 /* LocalBookshelfCategoriesDomainBeanToolsFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D15180E3C3B0050F1B9 /* LocalBookshelfCategoriesDomainBeanToolsFactory.m */; };
+		75E49D94180E3C3B0050F1B9 /* LocalBookshelfCategoriesNetRequestBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D17180E3C3B0050F1B9 /* LocalBookshelfCategoriesNetRequestBean.m */; };
+		75E49D95180E3C3B0050F1B9 /* LocalBookshelfCategoriesNetRespondBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D19180E3C3B0050F1B9 /* LocalBookshelfCategoriesNetRespondBean.m */; };
+		75E49D96180E3C3B0050F1B9 /* LocalBookshelfCategoriesParseNetRespondDictionaryToDomainBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D1B180E3C3B0050F1B9 /* LocalBookshelfCategoriesParseNetRespondDictionaryToDomainBean.m */; };
+		75E49D97180E3C3B0050F1B9 /* LocalBookshelfCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D1D180E3C3B0050F1B9 /* LocalBookshelfCategory.m */; };
+		75E49D98180E3C3B0050F1B9 /* LogonDomainBeanToolsFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D21180E3C3B0050F1B9 /* LogonDomainBeanToolsFactory.m */; };
+		75E49D99180E3C3B0050F1B9 /* LogonNetRequestBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D23180E3C3B0050F1B9 /* LogonNetRequestBean.m */; };
+		75E49D9A180E3C3B0050F1B9 /* LogonNetRespondBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D25180E3C3B0050F1B9 /* LogonNetRespondBean.m */; };
+		75E49D9B180E3C3B0050F1B9 /* LogonParseDomainBeanToDD.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D27180E3C3B0050F1B9 /* LogonParseDomainBeanToDD.m */; };
+		75E49D9C180E3C3B0050F1B9 /* LogonParseNetRespondDictionaryToDomainBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D29180E3C3B0050F1B9 /* LogonParseNetRespondDictionaryToDomainBean.m */; };
+		75E49D9D180E3C3B0050F1B9 /* VersionNetRespondBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D2D180E3C3B0050F1B9 /* VersionNetRespondBean.m */; };
+		75E49D9E180E3C3B0050F1B9 /* GlobalDataCacheForMemorySingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D31180E3C3B0050F1B9 /* GlobalDataCacheForMemorySingleton.m */; };
+		75E49D9F180E3C3B0050F1B9 /* GlobalDataCacheForNeedSaveToFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D33180E3C3B0050F1B9 /* GlobalDataCacheForNeedSaveToFileSystem.m */; };
+		75E49DA0180E3C3B0050F1B9 /* LocalCacheDataPathConstant.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D35180E3C3B0050F1B9 /* LocalCacheDataPathConstant.m */; };
+		75E49DA1180E3C3B0050F1B9 /* UrlConstantForThisProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D38180E3C3B0050F1B9 /* UrlConstantForThisProject.m */; };
+		75E49DA2180E3C3B0050F1B9 /* MKNetworkEngineSingletonForUpAndDownLoadFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D3B180E3C3B0050F1B9 /* MKNetworkEngineSingletonForUpAndDownLoadFile.m */; };
+		75E49DA3180E3C3B0050F1B9 /* DomainBeanNetworkEngineSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D3F180E3C3B0050F1B9 /* DomainBeanNetworkEngineSingleton.m */; };
+		75E49DA4180E3C3B0050F1B9 /* Errors_en_US.plist in Resources */ = {isa = PBXBuildFile; fileRef = 75E49D40180E3C3B0050F1B9 /* Errors_en_US.plist */; };
+		75E49DA5180E3C3B0050F1B9 /* Errors_zh_CN.plist in Resources */ = {isa = PBXBuildFile; fileRef = 75E49D41180E3C3B0050F1B9 /* Errors_zh_CN.plist */; };
+		75E49DA6180E3C3B0050F1B9 /* MKNetworkOperationForDomainBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D43180E3C3B0050F1B9 /* MKNetworkOperationForDomainBean.m */; };
+		75E49DA7180E3C3B0050F1B9 /* NetRequestErrorBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D45180E3C3B0050F1B9 /* NetRequestErrorBean.m */; };
+		75E49DA8180E3C3B0050F1B9 /* StrategyClassNameMappingBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D48180E3C3B0050F1B9 /* StrategyClassNameMappingBase.m */; };
+		75E49DA9180E3C3B0050F1B9 /* DomainBeanAbstractFactoryCacheSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D4B180E3C3B0050F1B9 /* DomainBeanAbstractFactoryCacheSingleton.m */; };
+		75E49DAA180E3C3B0050F1B9 /* MKNetworkEngineSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D52180E3C3B0050F1B9 /* MKNetworkEngineSingleton.m */; };
+		75E49DAB180E3C3B0050F1B9 /* NetEntityDataToolsFactoryMethodSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D5B180E3C3B0050F1B9 /* NetEntityDataToolsFactoryMethodSingleton.m */; };
+		75E49DAC180E3C3B0050F1B9 /* NetRequestEntityDataPackageForDreamBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D5E180E3C3B0050F1B9 /* NetRequestEntityDataPackageForDreamBook.m */; };
+		75E49DAD180E3C3B0050F1B9 /* NetRespondDataToNSDictionaryForDreamBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D60180E3C3B0050F1B9 /* NetRespondDataToNSDictionaryForDreamBook.m */; };
+		75E49DAE180E3C3B0050F1B9 /* NetRespondEntityDataUnpackForDreamBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D62180E3C3B0050F1B9 /* NetRespondEntityDataUnpackForDreamBook.m */; };
+		75E49DAF180E3C3B0050F1B9 /* ServerRespondDataTestForDreamBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D64180E3C3B0050F1B9 /* ServerRespondDataTestForDreamBook.m */; };
+		75E49DB0180E3C3B0050F1B9 /* OrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D67180E3C3B0050F1B9 /* OrderedDictionary.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		75E49DB1180E3C3B0050F1B9 /* DeviceInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D6A180E3C3B0050F1B9 /* DeviceInformation.m */; };
+		75E49DB2180E3C3B0050F1B9 /* SimpleCookieSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D6C180E3C3B0050F1B9 /* SimpleCookieSingleton.m */; };
+		75E49DB3180E3C3B0050F1B9 /* SimpleFolderTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D6E180E3C3B0050F1B9 /* SimpleFolderTools.m */; };
+		75E49DB4180E3C3B0050F1B9 /* ToolsFunctionForThisProgect.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D70180E3C3B0050F1B9 /* ToolsFunctionForThisProgect.m */; };
 		78CABC247BB84DD1B01FA9A9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2BF2DF3DA43BC929A3EBF /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -326,7 +393,6 @@
 		75E49B57180E30C90050F1B9 /* zt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zt@2x.png"; sourceTree = "<group>"; };
 		75E49B58180E30C90050F1B9 /* zt_touch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zt_touch@2x.png"; sourceTree = "<group>"; };
 		75E49B5A180E30C90050F1B9 /* bj_H@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bj_H@2x.png"; sourceTree = "<group>"; };
-		75E49B5B180E30C90050F1B9 /* d_jrsy_6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "d_jrsy_6@2x.png"; sourceTree = "<group>"; };
 		75E49B5C180E30C90050F1B9 /* d_jrsy_6_H@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "d_jrsy_6_H@2x.png"; sourceTree = "<group>"; };
 		75E49B5D180E30C90050F1B9 /* d_jrsy_H@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "d_jrsy_H@2x.png"; sourceTree = "<group>"; };
 		75E49B5E180E30C90050F1B9 /* d_qysy_6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "d_qysy_6@2x.png"; sourceTree = "<group>"; };
@@ -459,6 +525,157 @@
 		75E49CB8180E3AF10050F1B9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		75E49CBA180E3AF90050F1B9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		75E49CBC180E3B020050F1B9 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		75E49CC0180E3C3B0050F1B9 /* NSDictionary+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Helper.h"; sourceTree = "<group>"; };
+		75E49CC1180E3C3B0050F1B9 /* NSDictionary+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Helper.m"; sourceTree = "<group>"; };
+		75E49CC2180E3C3B0050F1B9 /* NSDictionary+SafeValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+SafeValue.h"; sourceTree = "<group>"; };
+		75E49CC3180E3C3B0050F1B9 /* NSDictionary+SafeValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+SafeValue.m"; sourceTree = "<group>"; };
+		75E49CC4180E3C3B0050F1B9 /* NSObject+DeepCopyingSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DeepCopyingSupport.h"; sourceTree = "<group>"; };
+		75E49CC5180E3C3B0050F1B9 /* NSObject+DeepCopyingSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DeepCopyingSupport.m"; sourceTree = "<group>"; };
+		75E49CC6180E3C3B0050F1B9 /* NSObject+Serialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Serialization.h"; sourceTree = "<group>"; };
+		75E49CC7180E3C3B0050F1B9 /* NSObject+Serialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Serialization.m"; sourceTree = "<group>"; };
+		75E49CC8180E3C3B0050F1B9 /* NSString+isEmpty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+isEmpty.h"; sourceTree = "<group>"; };
+		75E49CC9180E3C3B0050F1B9 /* NSString+isEmpty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+isEmpty.m"; sourceTree = "<group>"; };
+		75E49CCA180E3C3B0050F1B9 /* String+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "String+Helper.h"; sourceTree = "<group>"; };
+		75E49CCB180E3C3B0050F1B9 /* String+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "String+Helper.m"; sourceTree = "<group>"; };
+		75E49CCC180E3C3B0050F1B9 /* UIAlertView+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Blocks.h"; sourceTree = "<group>"; };
+		75E49CCD180E3C3B0050F1B9 /* UIAlertView+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Blocks.m"; sourceTree = "<group>"; };
+		75E49CCE180E3C3B0050F1B9 /* UIColor+ColorSchemes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ColorSchemes.h"; sourceTree = "<group>"; };
+		75E49CCF180E3C3B0050F1B9 /* UIColor+ColorSchemes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ColorSchemes.m"; sourceTree = "<group>"; };
+		75E49CD0180E3C3B0050F1B9 /* UIImage+ImageCompression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageCompression.h"; sourceTree = "<group>"; };
+		75E49CD1180E3C3B0050F1B9 /* UIImage+ImageCompression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageCompression.m"; sourceTree = "<group>"; };
+		75E49CD2180E3C3B0050F1B9 /* UIImageView+MKNetworkKitAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+MKNetworkKitAdditions.h"; sourceTree = "<group>"; };
+		75E49CD3180E3C3B0050F1B9 /* UIImageView+MKNetworkKitAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+MKNetworkKitAdditions.m"; sourceTree = "<group>"; };
+		75E49CD5180E3C3B0050F1B9 /* Command.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Command.h; sourceTree = "<group>"; };
+		75E49CD6180E3C3B0050F1B9 /* CommandForGetImportantInfoFromServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandForGetImportantInfoFromServer.h; sourceTree = "<group>"; };
+		75E49CD7180E3C3B0050F1B9 /* CommandForGetImportantInfoFromServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandForGetImportantInfoFromServer.m; sourceTree = "<group>"; };
+		75E49CD8180E3C3B0050F1B9 /* CommandForInitApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandForInitApp.h; sourceTree = "<group>"; };
+		75E49CD9180E3C3B0050F1B9 /* CommandForInitApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandForInitApp.m; sourceTree = "<group>"; };
+		75E49CDA180E3C3B0050F1B9 /* CommandForInitMobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandForInitMobClick.h; sourceTree = "<group>"; };
+		75E49CDB180E3C3B0050F1B9 /* CommandForInitMobClick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandForInitMobClick.m; sourceTree = "<group>"; };
+		75E49CDC180E3C3B0050F1B9 /* CommandForLoadingLocalCacheData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandForLoadingLocalCacheData.h; sourceTree = "<group>"; };
+		75E49CDD180E3C3B0050F1B9 /* CommandForLoadingLocalCacheData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandForLoadingLocalCacheData.m; sourceTree = "<group>"; };
+		75E49CDE180E3C3B0050F1B9 /* CommandForNewAppVersionCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandForNewAppVersionCheck.h; sourceTree = "<group>"; };
+		75E49CDF180E3C3B0050F1B9 /* CommandForNewAppVersionCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandForNewAppVersionCheck.m; sourceTree = "<group>"; };
+		75E49CE0180E3C3B0050F1B9 /* CommandForPrintDeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandForPrintDeviceInfo.h; sourceTree = "<group>"; };
+		75E49CE1180E3C3B0050F1B9 /* CommandForPrintDeviceInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandForPrintDeviceInfo.m; sourceTree = "<group>"; };
+		75E49CE2180E3C3B0050F1B9 /* CommandInvokerSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandInvokerSingleton.h; sourceTree = "<group>"; };
+		75E49CE3180E3C3B0050F1B9 /* CommandInvokerSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandInvokerSingleton.m; sourceTree = "<group>"; };
+		75E49CE5180E3C3B0050F1B9 /* CustomControlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomControlDelegate.h; sourceTree = "<group>"; };
+		75E49CE7180E3C3B0050F1B9 /* FastCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastCell.h; sourceTree = "<group>"; };
+		75E49CE8180E3C3B0050F1B9 /* FastCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FastCell.m; sourceTree = "<group>"; };
+		75E49CEA180E3C3B0050F1B9 /* PRPNibBasedTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRPNibBasedTableViewCell.h; sourceTree = "<group>"; };
+		75E49CEB180E3C3B0050F1B9 /* PRPNibBasedTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRPNibBasedTableViewCell.m; sourceTree = "<group>"; };
+		75E49CEC180E3C3B0050F1B9 /* PRPSmartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRPSmartTableViewCell.h; sourceTree = "<group>"; };
+		75E49CED180E3C3B0050F1B9 /* PRPSmartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRPSmartTableViewCell.m; sourceTree = "<group>"; };
+		75E49CEF180E3C3B0050F1B9 /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
+		75E49CF0180E3C3B0050F1B9 /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModel.m; sourceTree = "<group>"; };
+		75E49CF2180E3C3B0050F1B9 /* BookInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookInfo.h; sourceTree = "<group>"; };
+		75E49CF3180E3C3B0050F1B9 /* BookInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookInfo.m; sourceTree = "<group>"; };
+		75E49CF4180E3C3B0050F1B9 /* BookListInBookstoresDatabaseFieldsConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookListInBookstoresDatabaseFieldsConstant.h; sourceTree = "<group>"; };
+		75E49CF5180E3C3B0050F1B9 /* BookListInBookstoresDomainBeanToolsFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookListInBookstoresDomainBeanToolsFactory.h; sourceTree = "<group>"; };
+		75E49CF6180E3C3B0050F1B9 /* BookListInBookstoresDomainBeanToolsFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookListInBookstoresDomainBeanToolsFactory.m; sourceTree = "<group>"; };
+		75E49CF7180E3C3B0050F1B9 /* BookListInBookstoresNetRequestBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookListInBookstoresNetRequestBean.h; sourceTree = "<group>"; };
+		75E49CF8180E3C3B0050F1B9 /* BookListInBookstoresNetRequestBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookListInBookstoresNetRequestBean.m; sourceTree = "<group>"; };
+		75E49CF9180E3C3B0050F1B9 /* BookListInBookstoresNetRespondBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookListInBookstoresNetRespondBean.h; sourceTree = "<group>"; };
+		75E49CFA180E3C3B0050F1B9 /* BookListInBookstoresNetRespondBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookListInBookstoresNetRespondBean.m; sourceTree = "<group>"; };
+		75E49CFB180E3C3B0050F1B9 /* BookListInBookstoresParseNetRespondDictionaryToDomainBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookListInBookstoresParseNetRespondDictionaryToDomainBean.h; sourceTree = "<group>"; };
+		75E49CFC180E3C3B0050F1B9 /* BookListInBookstoresParseNetRespondDictionaryToDomainBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookListInBookstoresParseNetRespondDictionaryToDomainBean.m; sourceTree = "<group>"; };
+		75E49CFF180E3C3B0050F1B9 /* DomainBeanHelperClassNameMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DomainBeanHelperClassNameMapping.h; sourceTree = "<group>"; };
+		75E49D00180E3C3B0050F1B9 /* DomainBeanHelperClassNameMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DomainBeanHelperClassNameMapping.m; sourceTree = "<group>"; };
+		75E49D02180E3C3B0050F1B9 /* GetBookDownloadUrlDatabaseFieldsConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetBookDownloadUrlDatabaseFieldsConstant.h; sourceTree = "<group>"; };
+		75E49D03180E3C3B0050F1B9 /* GetBookDownloadUrlDomainBeanToolsFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetBookDownloadUrlDomainBeanToolsFactory.h; sourceTree = "<group>"; };
+		75E49D04180E3C3B0050F1B9 /* GetBookDownloadUrlDomainBeanToolsFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetBookDownloadUrlDomainBeanToolsFactory.m; sourceTree = "<group>"; };
+		75E49D05180E3C3B0050F1B9 /* GetBookDownloadUrlNetRequestBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetBookDownloadUrlNetRequestBean.h; sourceTree = "<group>"; };
+		75E49D06180E3C3B0050F1B9 /* GetBookDownloadUrlNetRequestBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetBookDownloadUrlNetRequestBean.m; sourceTree = "<group>"; };
+		75E49D07180E3C3B0050F1B9 /* GetBookDownloadUrlNetRespondBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetBookDownloadUrlNetRespondBean.h; sourceTree = "<group>"; };
+		75E49D08180E3C3B0050F1B9 /* GetBookDownloadUrlNetRespondBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetBookDownloadUrlNetRespondBean.m; sourceTree = "<group>"; };
+		75E49D09180E3C3B0050F1B9 /* GetBookDownloadUrlParseDomainBeanToDD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetBookDownloadUrlParseDomainBeanToDD.h; sourceTree = "<group>"; };
+		75E49D0A180E3C3B0050F1B9 /* GetBookDownloadUrlParseDomainBeanToDD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetBookDownloadUrlParseDomainBeanToDD.m; sourceTree = "<group>"; };
+		75E49D0B180E3C3B0050F1B9 /* GetBookDownloadUrlParseNetRespondDictionaryToDomainBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetBookDownloadUrlParseNetRespondDictionaryToDomainBean.h; sourceTree = "<group>"; };
+		75E49D0C180E3C3B0050F1B9 /* GetBookDownloadUrlParseNetRespondDictionaryToDomainBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetBookDownloadUrlParseNetRespondDictionaryToDomainBean.m; sourceTree = "<group>"; };
+		75E49D0E180E3C3B0050F1B9 /* LocalBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalBook.h; sourceTree = "<group>"; };
+		75E49D0F180E3C3B0050F1B9 /* LocalBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalBook.m; sourceTree = "<group>"; };
+		75E49D10180E3C3B0050F1B9 /* LocalBookList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalBookList.h; sourceTree = "<group>"; };
+		75E49D11180E3C3B0050F1B9 /* LocalBookList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalBookList.m; sourceTree = "<group>"; };
+		75E49D13180E3C3B0050F1B9 /* LocalBookshelfCategoriesDatabaseFieldsConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalBookshelfCategoriesDatabaseFieldsConstant.h; sourceTree = "<group>"; };
+		75E49D14180E3C3B0050F1B9 /* LocalBookshelfCategoriesDomainBeanToolsFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalBookshelfCategoriesDomainBeanToolsFactory.h; sourceTree = "<group>"; };
+		75E49D15180E3C3B0050F1B9 /* LocalBookshelfCategoriesDomainBeanToolsFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalBookshelfCategoriesDomainBeanToolsFactory.m; sourceTree = "<group>"; };
+		75E49D16180E3C3B0050F1B9 /* LocalBookshelfCategoriesNetRequestBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalBookshelfCategoriesNetRequestBean.h; sourceTree = "<group>"; };
+		75E49D17180E3C3B0050F1B9 /* LocalBookshelfCategoriesNetRequestBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalBookshelfCategoriesNetRequestBean.m; sourceTree = "<group>"; };
+		75E49D18180E3C3B0050F1B9 /* LocalBookshelfCategoriesNetRespondBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalBookshelfCategoriesNetRespondBean.h; sourceTree = "<group>"; };
+		75E49D19180E3C3B0050F1B9 /* LocalBookshelfCategoriesNetRespondBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalBookshelfCategoriesNetRespondBean.m; sourceTree = "<group>"; };
+		75E49D1A180E3C3B0050F1B9 /* LocalBookshelfCategoriesParseNetRespondDictionaryToDomainBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalBookshelfCategoriesParseNetRespondDictionaryToDomainBean.h; sourceTree = "<group>"; };
+		75E49D1B180E3C3B0050F1B9 /* LocalBookshelfCategoriesParseNetRespondDictionaryToDomainBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalBookshelfCategoriesParseNetRespondDictionaryToDomainBean.m; sourceTree = "<group>"; };
+		75E49D1C180E3C3B0050F1B9 /* LocalBookshelfCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalBookshelfCategory.h; sourceTree = "<group>"; };
+		75E49D1D180E3C3B0050F1B9 /* LocalBookshelfCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalBookshelfCategory.m; sourceTree = "<group>"; };
+		75E49D1F180E3C3B0050F1B9 /* LogonDatabaseFieldsConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogonDatabaseFieldsConstant.h; sourceTree = "<group>"; };
+		75E49D20180E3C3B0050F1B9 /* LogonDomainBeanToolsFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogonDomainBeanToolsFactory.h; sourceTree = "<group>"; };
+		75E49D21180E3C3B0050F1B9 /* LogonDomainBeanToolsFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogonDomainBeanToolsFactory.m; sourceTree = "<group>"; };
+		75E49D22180E3C3B0050F1B9 /* LogonNetRequestBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogonNetRequestBean.h; sourceTree = "<group>"; };
+		75E49D23180E3C3B0050F1B9 /* LogonNetRequestBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogonNetRequestBean.m; sourceTree = "<group>"; };
+		75E49D24180E3C3B0050F1B9 /* LogonNetRespondBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogonNetRespondBean.h; sourceTree = "<group>"; };
+		75E49D25180E3C3B0050F1B9 /* LogonNetRespondBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogonNetRespondBean.m; sourceTree = "<group>"; };
+		75E49D26180E3C3B0050F1B9 /* LogonParseDomainBeanToDD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogonParseDomainBeanToDD.h; sourceTree = "<group>"; };
+		75E49D27180E3C3B0050F1B9 /* LogonParseDomainBeanToDD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogonParseDomainBeanToDD.m; sourceTree = "<group>"; };
+		75E49D28180E3C3B0050F1B9 /* LogonParseNetRespondDictionaryToDomainBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogonParseNetRespondDictionaryToDomainBean.h; sourceTree = "<group>"; };
+		75E49D29180E3C3B0050F1B9 /* LogonParseNetRespondDictionaryToDomainBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogonParseNetRespondDictionaryToDomainBean.m; sourceTree = "<group>"; };
+		75E49D2B180E3C3B0050F1B9 /* VersionDatabaseFieldsConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionDatabaseFieldsConstant.h; sourceTree = "<group>"; };
+		75E49D2C180E3C3B0050F1B9 /* VersionNetRespondBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionNetRespondBean.h; sourceTree = "<group>"; };
+		75E49D2D180E3C3B0050F1B9 /* VersionNetRespondBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionNetRespondBean.m; sourceTree = "<group>"; };
+		75E49D30180E3C3B0050F1B9 /* GlobalDataCacheForMemorySingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalDataCacheForMemorySingleton.h; sourceTree = "<group>"; };
+		75E49D31180E3C3B0050F1B9 /* GlobalDataCacheForMemorySingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalDataCacheForMemorySingleton.m; sourceTree = "<group>"; };
+		75E49D32180E3C3B0050F1B9 /* GlobalDataCacheForNeedSaveToFileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalDataCacheForNeedSaveToFileSystem.h; sourceTree = "<group>"; };
+		75E49D33180E3C3B0050F1B9 /* GlobalDataCacheForNeedSaveToFileSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalDataCacheForNeedSaveToFileSystem.m; sourceTree = "<group>"; };
+		75E49D34180E3C3B0050F1B9 /* LocalCacheDataPathConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalCacheDataPathConstant.h; sourceTree = "<group>"; };
+		75E49D35180E3C3B0050F1B9 /* LocalCacheDataPathConstant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalCacheDataPathConstant.m; sourceTree = "<group>"; };
+		75E49D36180E3C3B0050F1B9 /* MacroConstantForThisProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacroConstantForThisProject.h; sourceTree = "<group>"; };
+		75E49D37180E3C3B0050F1B9 /* UrlConstantForThisProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UrlConstantForThisProject.h; sourceTree = "<group>"; };
+		75E49D38180E3C3B0050F1B9 /* UrlConstantForThisProject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UrlConstantForThisProject.m; sourceTree = "<group>"; };
+		75E49D3A180E3C3B0050F1B9 /* MKNetworkEngineSingletonForUpAndDownLoadFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKNetworkEngineSingletonForUpAndDownLoadFile.h; sourceTree = "<group>"; };
+		75E49D3B180E3C3B0050F1B9 /* MKNetworkEngineSingletonForUpAndDownLoadFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKNetworkEngineSingletonForUpAndDownLoadFile.m; sourceTree = "<group>"; };
+		75E49D3E180E3C3B0050F1B9 /* DomainBeanNetworkEngineSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DomainBeanNetworkEngineSingleton.h; sourceTree = "<group>"; };
+		75E49D3F180E3C3B0050F1B9 /* DomainBeanNetworkEngineSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DomainBeanNetworkEngineSingleton.m; sourceTree = "<group>"; };
+		75E49D40180E3C3B0050F1B9 /* Errors_en_US.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Errors_en_US.plist; sourceTree = "<group>"; };
+		75E49D41180E3C3B0050F1B9 /* Errors_zh_CN.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Errors_zh_CN.plist; sourceTree = "<group>"; };
+		75E49D42180E3C3B0050F1B9 /* MKNetworkOperationForDomainBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKNetworkOperationForDomainBean.h; sourceTree = "<group>"; };
+		75E49D43180E3C3B0050F1B9 /* MKNetworkOperationForDomainBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKNetworkOperationForDomainBean.m; sourceTree = "<group>"; };
+		75E49D44180E3C3B0050F1B9 /* NetRequestErrorBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetRequestErrorBean.h; sourceTree = "<group>"; };
+		75E49D45180E3C3B0050F1B9 /* NetRequestErrorBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetRequestErrorBean.m; sourceTree = "<group>"; };
+		75E49D47180E3C3B0050F1B9 /* StrategyClassNameMappingBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StrategyClassNameMappingBase.h; sourceTree = "<group>"; };
+		75E49D48180E3C3B0050F1B9 /* StrategyClassNameMappingBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StrategyClassNameMappingBase.m; sourceTree = "<group>"; };
+		75E49D4A180E3C3B0050F1B9 /* DomainBeanAbstractFactoryCacheSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DomainBeanAbstractFactoryCacheSingleton.h; sourceTree = "<group>"; };
+		75E49D4B180E3C3B0050F1B9 /* DomainBeanAbstractFactoryCacheSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DomainBeanAbstractFactoryCacheSingleton.m; sourceTree = "<group>"; };
+		75E49D4C180E3C3B0050F1B9 /* DomainBeanNullValueDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DomainBeanNullValueDefine.h; sourceTree = "<group>"; };
+		75E49D4D180E3C3B0050F1B9 /* IDomainBeanAbstractFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDomainBeanAbstractFactory.h; sourceTree = "<group>"; };
+		75E49D4E180E3C3B0050F1B9 /* IParseDomainBeanToDataDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IParseDomainBeanToDataDictionary.h; sourceTree = "<group>"; };
+		75E49D4F180E3C3B0050F1B9 /* IParseNetRespondDictionaryToDomainBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IParseNetRespondDictionaryToDomainBean.h; sourceTree = "<group>"; };
+		75E49D51180E3C3B0050F1B9 /* MKNetworkEngineSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKNetworkEngineSingleton.h; sourceTree = "<group>"; };
+		75E49D52180E3C3B0050F1B9 /* MKNetworkEngineSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKNetworkEngineSingleton.m; sourceTree = "<group>"; };
+		75E49D55180E3C3B0050F1B9 /* INetEntityDataTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INetEntityDataTools.h; sourceTree = "<group>"; };
+		75E49D56180E3C3B0050F1B9 /* INetRequestEntityDataPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INetRequestEntityDataPackage.h; sourceTree = "<group>"; };
+		75E49D57180E3C3B0050F1B9 /* INetRespondDataToNSDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INetRespondDataToNSDictionary.h; sourceTree = "<group>"; };
+		75E49D58180E3C3B0050F1B9 /* INetRespondRawEntityDataUnpack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INetRespondRawEntityDataUnpack.h; sourceTree = "<group>"; };
+		75E49D59180E3C3B0050F1B9 /* IServerRespondDataTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IServerRespondDataTest.h; sourceTree = "<group>"; };
+		75E49D5A180E3C3B0050F1B9 /* NetEntityDataToolsFactoryMethodSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetEntityDataToolsFactoryMethodSingleton.h; sourceTree = "<group>"; };
+		75E49D5B180E3C3B0050F1B9 /* NetEntityDataToolsFactoryMethodSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetEntityDataToolsFactoryMethodSingleton.m; sourceTree = "<group>"; };
+		75E49D5D180E3C3B0050F1B9 /* NetRequestEntityDataPackageForDreamBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetRequestEntityDataPackageForDreamBook.h; sourceTree = "<group>"; };
+		75E49D5E180E3C3B0050F1B9 /* NetRequestEntityDataPackageForDreamBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetRequestEntityDataPackageForDreamBook.m; sourceTree = "<group>"; };
+		75E49D5F180E3C3B0050F1B9 /* NetRespondDataToNSDictionaryForDreamBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetRespondDataToNSDictionaryForDreamBook.h; sourceTree = "<group>"; };
+		75E49D60180E3C3B0050F1B9 /* NetRespondDataToNSDictionaryForDreamBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetRespondDataToNSDictionaryForDreamBook.m; sourceTree = "<group>"; };
+		75E49D61180E3C3B0050F1B9 /* NetRespondEntityDataUnpackForDreamBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetRespondEntityDataUnpackForDreamBook.h; sourceTree = "<group>"; };
+		75E49D62180E3C3B0050F1B9 /* NetRespondEntityDataUnpackForDreamBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetRespondEntityDataUnpackForDreamBook.m; sourceTree = "<group>"; };
+		75E49D63180E3C3B0050F1B9 /* ServerRespondDataTestForDreamBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerRespondDataTestForDreamBook.h; sourceTree = "<group>"; };
+		75E49D64180E3C3B0050F1B9 /* ServerRespondDataTestForDreamBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerRespondDataTestForDreamBook.m; sourceTree = "<group>"; };
+		75E49D66180E3C3B0050F1B9 /* OrderedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderedDictionary.h; sourceTree = "<group>"; };
+		75E49D67180E3C3B0050F1B9 /* OrderedDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderedDictionary.m; sourceTree = "<group>"; };
+		75E49D69180E3C3B0050F1B9 /* DeviceInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceInformation.h; sourceTree = "<group>"; };
+		75E49D6A180E3C3B0050F1B9 /* DeviceInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceInformation.m; sourceTree = "<group>"; };
+		75E49D6B180E3C3B0050F1B9 /* SimpleCookieSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleCookieSingleton.h; sourceTree = "<group>"; };
+		75E49D6C180E3C3B0050F1B9 /* SimpleCookieSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleCookieSingleton.m; sourceTree = "<group>"; };
+		75E49D6D180E3C3B0050F1B9 /* SimpleFolderTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleFolderTools.h; sourceTree = "<group>"; };
+		75E49D6E180E3C3B0050F1B9 /* SimpleFolderTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleFolderTools.m; sourceTree = "<group>"; };
+		75E49D6F180E3C3B0050F1B9 /* ToolsFunctionForThisProgect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToolsFunctionForThisProgect.h; sourceTree = "<group>"; };
+		75E49D70180E3C3B0050F1B9 /* ToolsFunctionForThisProgect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToolsFunctionForThisProgect.m; sourceTree = "<group>"; };
 		8DC2BF2DF3DA43BC929A3EBF /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -530,6 +747,7 @@
 		753BF902180E2145005DECCA /* SimpleBook */ = {
 			isa = PBXGroup;
 			children = (
+				75E49CBE180E3C3B0050F1B9 /* MyCode */,
 				75E49C9B180E39B60050F1B9 /* ThirdPartyLibraries */,
 				753BF90B180E2145005DECCA /* AppDelegate.h */,
 				753BF90C180E2145005DECCA /* AppDelegate.m */,
@@ -688,7 +906,6 @@
 			isa = PBXGroup;
 			children = (
 				75E49B5A180E30C90050F1B9 /* bj_H@2x.png */,
-				75E49B5B180E30C90050F1B9 /* d_jrsy_6@2x.png */,
 				75E49B5C180E30C90050F1B9 /* d_jrsy_6_H@2x.png */,
 				75E49B5D180E30C90050F1B9 /* d_jrsy_H@2x.png */,
 				75E49B5E180E30C90050F1B9 /* d_qysy_6@2x.png */,
@@ -874,6 +1091,380 @@
 			path = PRPDebug;
 			sourceTree = "<group>";
 		};
+		75E49CBE180E3C3B0050F1B9 /* MyCode */ = {
+			isa = PBXGroup;
+			children = (
+				75E49CBF180E3C3B0050F1B9 /* Category */,
+				75E49CD4180E3C3B0050F1B9 /* Command */,
+				75E49CE4180E3C3B0050F1B9 /* CustomView */,
+				75E49CEE180E3C3B0050F1B9 /* DomainBeanModel */,
+				75E49D2F180E3C3B0050F1B9 /* GlobalDataCache */,
+				75E49D39180E3C3B0050F1B9 /* MKNetworkEngineSingletonForUpAndDownLoadFile */,
+				75E49D3C180E3C3B0050F1B9 /* MyDomainBeanEngine */,
+				75E49D65180E3C3B0050F1B9 /* OrderedDictionary */,
+				75E49D68180E3C3B0050F1B9 /* ToolUtils */,
+			);
+			path = MyCode;
+			sourceTree = "<group>";
+		};
+		75E49CBF180E3C3B0050F1B9 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				75E49CC0180E3C3B0050F1B9 /* NSDictionary+Helper.h */,
+				75E49CC1180E3C3B0050F1B9 /* NSDictionary+Helper.m */,
+				75E49CC2180E3C3B0050F1B9 /* NSDictionary+SafeValue.h */,
+				75E49CC3180E3C3B0050F1B9 /* NSDictionary+SafeValue.m */,
+				75E49CC4180E3C3B0050F1B9 /* NSObject+DeepCopyingSupport.h */,
+				75E49CC5180E3C3B0050F1B9 /* NSObject+DeepCopyingSupport.m */,
+				75E49CC6180E3C3B0050F1B9 /* NSObject+Serialization.h */,
+				75E49CC7180E3C3B0050F1B9 /* NSObject+Serialization.m */,
+				75E49CC8180E3C3B0050F1B9 /* NSString+isEmpty.h */,
+				75E49CC9180E3C3B0050F1B9 /* NSString+isEmpty.m */,
+				75E49CCA180E3C3B0050F1B9 /* String+Helper.h */,
+				75E49CCB180E3C3B0050F1B9 /* String+Helper.m */,
+				75E49CCC180E3C3B0050F1B9 /* UIAlertView+Blocks.h */,
+				75E49CCD180E3C3B0050F1B9 /* UIAlertView+Blocks.m */,
+				75E49CCE180E3C3B0050F1B9 /* UIColor+ColorSchemes.h */,
+				75E49CCF180E3C3B0050F1B9 /* UIColor+ColorSchemes.m */,
+				75E49CD0180E3C3B0050F1B9 /* UIImage+ImageCompression.h */,
+				75E49CD1180E3C3B0050F1B9 /* UIImage+ImageCompression.m */,
+				75E49CD2180E3C3B0050F1B9 /* UIImageView+MKNetworkKitAdditions.h */,
+				75E49CD3180E3C3B0050F1B9 /* UIImageView+MKNetworkKitAdditions.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		75E49CD4180E3C3B0050F1B9 /* Command */ = {
+			isa = PBXGroup;
+			children = (
+				75E49CD5180E3C3B0050F1B9 /* Command.h */,
+				75E49CD6180E3C3B0050F1B9 /* CommandForGetImportantInfoFromServer.h */,
+				75E49CD7180E3C3B0050F1B9 /* CommandForGetImportantInfoFromServer.m */,
+				75E49CD8180E3C3B0050F1B9 /* CommandForInitApp.h */,
+				75E49CD9180E3C3B0050F1B9 /* CommandForInitApp.m */,
+				75E49CDA180E3C3B0050F1B9 /* CommandForInitMobClick.h */,
+				75E49CDB180E3C3B0050F1B9 /* CommandForInitMobClick.m */,
+				75E49CDC180E3C3B0050F1B9 /* CommandForLoadingLocalCacheData.h */,
+				75E49CDD180E3C3B0050F1B9 /* CommandForLoadingLocalCacheData.m */,
+				75E49CDE180E3C3B0050F1B9 /* CommandForNewAppVersionCheck.h */,
+				75E49CDF180E3C3B0050F1B9 /* CommandForNewAppVersionCheck.m */,
+				75E49CE0180E3C3B0050F1B9 /* CommandForPrintDeviceInfo.h */,
+				75E49CE1180E3C3B0050F1B9 /* CommandForPrintDeviceInfo.m */,
+				75E49CE2180E3C3B0050F1B9 /* CommandInvokerSingleton.h */,
+				75E49CE3180E3C3B0050F1B9 /* CommandInvokerSingleton.m */,
+			);
+			path = Command;
+			sourceTree = "<group>";
+		};
+		75E49CE4180E3C3B0050F1B9 /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				75E49CE5180E3C3B0050F1B9 /* CustomControlDelegate.h */,
+				75E49CE6180E3C3B0050F1B9 /* FastCell */,
+				75E49CE9180E3C3B0050F1B9 /* PRPNibBaseCell */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
+		75E49CE6180E3C3B0050F1B9 /* FastCell */ = {
+			isa = PBXGroup;
+			children = (
+				75E49CE7180E3C3B0050F1B9 /* FastCell.h */,
+				75E49CE8180E3C3B0050F1B9 /* FastCell.m */,
+			);
+			path = FastCell;
+			sourceTree = "<group>";
+		};
+		75E49CE9180E3C3B0050F1B9 /* PRPNibBaseCell */ = {
+			isa = PBXGroup;
+			children = (
+				75E49CEA180E3C3B0050F1B9 /* PRPNibBasedTableViewCell.h */,
+				75E49CEB180E3C3B0050F1B9 /* PRPNibBasedTableViewCell.m */,
+				75E49CEC180E3C3B0050F1B9 /* PRPSmartTableViewCell.h */,
+				75E49CED180E3C3B0050F1B9 /* PRPSmartTableViewCell.m */,
+			);
+			path = PRPNibBaseCell;
+			sourceTree = "<group>";
+		};
+		75E49CEE180E3C3B0050F1B9 /* DomainBeanModel */ = {
+			isa = PBXGroup;
+			children = (
+				75E49CEF180E3C3B0050F1B9 /* BaseModel.h */,
+				75E49CF0180E3C3B0050F1B9 /* BaseModel.m */,
+				75E49CF1180E3C3B0050F1B9 /* BookListInBookstores */,
+				75E49CFD180E3C3B0050F1B9 /* ContentDownload */,
+				75E49CFE180E3C3B0050F1B9 /* ContentList */,
+				75E49CFF180E3C3B0050F1B9 /* DomainBeanHelperClassNameMapping.h */,
+				75E49D00180E3C3B0050F1B9 /* DomainBeanHelperClassNameMapping.m */,
+				75E49D01180E3C3B0050F1B9 /* GetBookDownloadUrl */,
+				75E49D0D180E3C3B0050F1B9 /* LocalBookList */,
+				75E49D12180E3C3B0050F1B9 /* LocalBookshelfCategories */,
+				75E49D1E180E3C3B0050F1B9 /* Login */,
+				75E49D2A180E3C3B0050F1B9 /* NewVersion */,
+				75E49D2E180E3C3B0050F1B9 /* Theme */,
+			);
+			path = DomainBeanModel;
+			sourceTree = "<group>";
+		};
+		75E49CF1180E3C3B0050F1B9 /* BookListInBookstores */ = {
+			isa = PBXGroup;
+			children = (
+				75E49CF2180E3C3B0050F1B9 /* BookInfo.h */,
+				75E49CF3180E3C3B0050F1B9 /* BookInfo.m */,
+				75E49CF4180E3C3B0050F1B9 /* BookListInBookstoresDatabaseFieldsConstant.h */,
+				75E49CF5180E3C3B0050F1B9 /* BookListInBookstoresDomainBeanToolsFactory.h */,
+				75E49CF6180E3C3B0050F1B9 /* BookListInBookstoresDomainBeanToolsFactory.m */,
+				75E49CF7180E3C3B0050F1B9 /* BookListInBookstoresNetRequestBean.h */,
+				75E49CF8180E3C3B0050F1B9 /* BookListInBookstoresNetRequestBean.m */,
+				75E49CF9180E3C3B0050F1B9 /* BookListInBookstoresNetRespondBean.h */,
+				75E49CFA180E3C3B0050F1B9 /* BookListInBookstoresNetRespondBean.m */,
+				75E49CFB180E3C3B0050F1B9 /* BookListInBookstoresParseNetRespondDictionaryToDomainBean.h */,
+				75E49CFC180E3C3B0050F1B9 /* BookListInBookstoresParseNetRespondDictionaryToDomainBean.m */,
+			);
+			path = BookListInBookstores;
+			sourceTree = "<group>";
+		};
+		75E49CFD180E3C3B0050F1B9 /* ContentDownload */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ContentDownload;
+			sourceTree = "<group>";
+		};
+		75E49CFE180E3C3B0050F1B9 /* ContentList */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ContentList;
+			sourceTree = "<group>";
+		};
+		75E49D01180E3C3B0050F1B9 /* GetBookDownloadUrl */ = {
+			isa = PBXGroup;
+			children = (
+				75E49D02180E3C3B0050F1B9 /* GetBookDownloadUrlDatabaseFieldsConstant.h */,
+				75E49D03180E3C3B0050F1B9 /* GetBookDownloadUrlDomainBeanToolsFactory.h */,
+				75E49D04180E3C3B0050F1B9 /* GetBookDownloadUrlDomainBeanToolsFactory.m */,
+				75E49D05180E3C3B0050F1B9 /* GetBookDownloadUrlNetRequestBean.h */,
+				75E49D06180E3C3B0050F1B9 /* GetBookDownloadUrlNetRequestBean.m */,
+				75E49D07180E3C3B0050F1B9 /* GetBookDownloadUrlNetRespondBean.h */,
+				75E49D08180E3C3B0050F1B9 /* GetBookDownloadUrlNetRespondBean.m */,
+				75E49D09180E3C3B0050F1B9 /* GetBookDownloadUrlParseDomainBeanToDD.h */,
+				75E49D0A180E3C3B0050F1B9 /* GetBookDownloadUrlParseDomainBeanToDD.m */,
+				75E49D0B180E3C3B0050F1B9 /* GetBookDownloadUrlParseNetRespondDictionaryToDomainBean.h */,
+				75E49D0C180E3C3B0050F1B9 /* GetBookDownloadUrlParseNetRespondDictionaryToDomainBean.m */,
+			);
+			path = GetBookDownloadUrl;
+			sourceTree = "<group>";
+		};
+		75E49D0D180E3C3B0050F1B9 /* LocalBookList */ = {
+			isa = PBXGroup;
+			children = (
+				75E49D0E180E3C3B0050F1B9 /* LocalBook.h */,
+				75E49D0F180E3C3B0050F1B9 /* LocalBook.m */,
+				75E49D10180E3C3B0050F1B9 /* LocalBookList.h */,
+				75E49D11180E3C3B0050F1B9 /* LocalBookList.m */,
+			);
+			path = LocalBookList;
+			sourceTree = "<group>";
+		};
+		75E49D12180E3C3B0050F1B9 /* LocalBookshelfCategories */ = {
+			isa = PBXGroup;
+			children = (
+				75E49D13180E3C3B0050F1B9 /* LocalBookshelfCategoriesDatabaseFieldsConstant.h */,
+				75E49D14180E3C3B0050F1B9 /* LocalBookshelfCategoriesDomainBeanToolsFactory.h */,
+				75E49D15180E3C3B0050F1B9 /* LocalBookshelfCategoriesDomainBeanToolsFactory.m */,
+				75E49D16180E3C3B0050F1B9 /* LocalBookshelfCategoriesNetRequestBean.h */,
+				75E49D17180E3C3B0050F1B9 /* LocalBookshelfCategoriesNetRequestBean.m */,
+				75E49D18180E3C3B0050F1B9 /* LocalBookshelfCategoriesNetRespondBean.h */,
+				75E49D19180E3C3B0050F1B9 /* LocalBookshelfCategoriesNetRespondBean.m */,
+				75E49D1A180E3C3B0050F1B9 /* LocalBookshelfCategoriesParseNetRespondDictionaryToDomainBean.h */,
+				75E49D1B180E3C3B0050F1B9 /* LocalBookshelfCategoriesParseNetRespondDictionaryToDomainBean.m */,
+				75E49D1C180E3C3B0050F1B9 /* LocalBookshelfCategory.h */,
+				75E49D1D180E3C3B0050F1B9 /* LocalBookshelfCategory.m */,
+			);
+			path = LocalBookshelfCategories;
+			sourceTree = "<group>";
+		};
+		75E49D1E180E3C3B0050F1B9 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				75E49D1F180E3C3B0050F1B9 /* LogonDatabaseFieldsConstant.h */,
+				75E49D20180E3C3B0050F1B9 /* LogonDomainBeanToolsFactory.h */,
+				75E49D21180E3C3B0050F1B9 /* LogonDomainBeanToolsFactory.m */,
+				75E49D22180E3C3B0050F1B9 /* LogonNetRequestBean.h */,
+				75E49D23180E3C3B0050F1B9 /* LogonNetRequestBean.m */,
+				75E49D24180E3C3B0050F1B9 /* LogonNetRespondBean.h */,
+				75E49D25180E3C3B0050F1B9 /* LogonNetRespondBean.m */,
+				75E49D26180E3C3B0050F1B9 /* LogonParseDomainBeanToDD.h */,
+				75E49D27180E3C3B0050F1B9 /* LogonParseDomainBeanToDD.m */,
+				75E49D28180E3C3B0050F1B9 /* LogonParseNetRespondDictionaryToDomainBean.h */,
+				75E49D29180E3C3B0050F1B9 /* LogonParseNetRespondDictionaryToDomainBean.m */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		75E49D2A180E3C3B0050F1B9 /* NewVersion */ = {
+			isa = PBXGroup;
+			children = (
+				75E49D2B180E3C3B0050F1B9 /* VersionDatabaseFieldsConstant.h */,
+				75E49D2C180E3C3B0050F1B9 /* VersionNetRespondBean.h */,
+				75E49D2D180E3C3B0050F1B9 /* VersionNetRespondBean.m */,
+			);
+			path = NewVersion;
+			sourceTree = "<group>";
+		};
+		75E49D2E180E3C3B0050F1B9 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		75E49D2F180E3C3B0050F1B9 /* GlobalDataCache */ = {
+			isa = PBXGroup;
+			children = (
+				75E49D30180E3C3B0050F1B9 /* GlobalDataCacheForMemorySingleton.h */,
+				75E49D31180E3C3B0050F1B9 /* GlobalDataCacheForMemorySingleton.m */,
+				75E49D32180E3C3B0050F1B9 /* GlobalDataCacheForNeedSaveToFileSystem.h */,
+				75E49D33180E3C3B0050F1B9 /* GlobalDataCacheForNeedSaveToFileSystem.m */,
+				75E49D34180E3C3B0050F1B9 /* LocalCacheDataPathConstant.h */,
+				75E49D35180E3C3B0050F1B9 /* LocalCacheDataPathConstant.m */,
+				75E49D36180E3C3B0050F1B9 /* MacroConstantForThisProject.h */,
+				75E49D37180E3C3B0050F1B9 /* UrlConstantForThisProject.h */,
+				75E49D38180E3C3B0050F1B9 /* UrlConstantForThisProject.m */,
+			);
+			path = GlobalDataCache;
+			sourceTree = "<group>";
+		};
+		75E49D39180E3C3B0050F1B9 /* MKNetworkEngineSingletonForUpAndDownLoadFile */ = {
+			isa = PBXGroup;
+			children = (
+				75E49D3A180E3C3B0050F1B9 /* MKNetworkEngineSingletonForUpAndDownLoadFile.h */,
+				75E49D3B180E3C3B0050F1B9 /* MKNetworkEngineSingletonForUpAndDownLoadFile.m */,
+			);
+			path = MKNetworkEngineSingletonForUpAndDownLoadFile;
+			sourceTree = "<group>";
+		};
+		75E49D3C180E3C3B0050F1B9 /* MyDomainBeanEngine */ = {
+			isa = PBXGroup;
+			children = (
+				75E49D3D180E3C3B0050F1B9 /* DomainBeanNetworkEngineSingleton */,
+				75E49D46180E3C3B0050F1B9 /* DomainBeanStrategyMapping */,
+				75E49D49180E3C3B0050F1B9 /* DomainBeanTools */,
+				75E49D50180E3C3B0050F1B9 /* MKNetworkEngineSingleton */,
+				75E49D53180E3C3B0050F1B9 /* NetEntityDataTools */,
+			);
+			path = MyDomainBeanEngine;
+			sourceTree = "<group>";
+		};
+		75E49D3D180E3C3B0050F1B9 /* DomainBeanNetworkEngineSingleton */ = {
+			isa = PBXGroup;
+			children = (
+				75E49D3E180E3C3B0050F1B9 /* DomainBeanNetworkEngineSingleton.h */,
+				75E49D3F180E3C3B0050F1B9 /* DomainBeanNetworkEngineSingleton.m */,
+				75E49D40180E3C3B0050F1B9 /* Errors_en_US.plist */,
+				75E49D41180E3C3B0050F1B9 /* Errors_zh_CN.plist */,
+				75E49D42180E3C3B0050F1B9 /* MKNetworkOperationForDomainBean.h */,
+				75E49D43180E3C3B0050F1B9 /* MKNetworkOperationForDomainBean.m */,
+				75E49D44180E3C3B0050F1B9 /* NetRequestErrorBean.h */,
+				75E49D45180E3C3B0050F1B9 /* NetRequestErrorBean.m */,
+			);
+			path = DomainBeanNetworkEngineSingleton;
+			sourceTree = "<group>";
+		};
+		75E49D46180E3C3B0050F1B9 /* DomainBeanStrategyMapping */ = {
+			isa = PBXGroup;
+			children = (
+				75E49D47180E3C3B0050F1B9 /* StrategyClassNameMappingBase.h */,
+				75E49D48180E3C3B0050F1B9 /* StrategyClassNameMappingBase.m */,
+			);
+			path = DomainBeanStrategyMapping;
+			sourceTree = "<group>";
+		};
+		75E49D49180E3C3B0050F1B9 /* DomainBeanTools */ = {
+			isa = PBXGroup;
+			children = (
+				75E49D4A180E3C3B0050F1B9 /* DomainBeanAbstractFactoryCacheSingleton.h */,
+				75E49D4B180E3C3B0050F1B9 /* DomainBeanAbstractFactoryCacheSingleton.m */,
+				75E49D4C180E3C3B0050F1B9 /* DomainBeanNullValueDefine.h */,
+				75E49D4D180E3C3B0050F1B9 /* IDomainBeanAbstractFactory.h */,
+				75E49D4E180E3C3B0050F1B9 /* IParseDomainBeanToDataDictionary.h */,
+				75E49D4F180E3C3B0050F1B9 /* IParseNetRespondDictionaryToDomainBean.h */,
+			);
+			path = DomainBeanTools;
+			sourceTree = "<group>";
+		};
+		75E49D50180E3C3B0050F1B9 /* MKNetworkEngineSingleton */ = {
+			isa = PBXGroup;
+			children = (
+				75E49D51180E3C3B0050F1B9 /* MKNetworkEngineSingleton.h */,
+				75E49D52180E3C3B0050F1B9 /* MKNetworkEngineSingleton.m */,
+			);
+			path = MKNetworkEngineSingleton;
+			sourceTree = "<group>";
+		};
+		75E49D53180E3C3B0050F1B9 /* NetEntityDataTools */ = {
+			isa = PBXGroup;
+			children = (
+				75E49D54180E3C3B0050F1B9 /* interface */,
+				75E49D5A180E3C3B0050F1B9 /* NetEntityDataToolsFactoryMethodSingleton.h */,
+				75E49D5B180E3C3B0050F1B9 /* NetEntityDataToolsFactoryMethodSingleton.m */,
+				75E49D5C180E3C3B0050F1B9 /* SpecificProjects */,
+			);
+			path = NetEntityDataTools;
+			sourceTree = "<group>";
+		};
+		75E49D54180E3C3B0050F1B9 /* interface */ = {
+			isa = PBXGroup;
+			children = (
+				75E49D55180E3C3B0050F1B9 /* INetEntityDataTools.h */,
+				75E49D56180E3C3B0050F1B9 /* INetRequestEntityDataPackage.h */,
+				75E49D57180E3C3B0050F1B9 /* INetRespondDataToNSDictionary.h */,
+				75E49D58180E3C3B0050F1B9 /* INetRespondRawEntityDataUnpack.h */,
+				75E49D59180E3C3B0050F1B9 /* IServerRespondDataTest.h */,
+			);
+			path = interface;
+			sourceTree = "<group>";
+		};
+		75E49D5C180E3C3B0050F1B9 /* SpecificProjects */ = {
+			isa = PBXGroup;
+			children = (
+				75E49D5D180E3C3B0050F1B9 /* NetRequestEntityDataPackageForDreamBook.h */,
+				75E49D5E180E3C3B0050F1B9 /* NetRequestEntityDataPackageForDreamBook.m */,
+				75E49D5F180E3C3B0050F1B9 /* NetRespondDataToNSDictionaryForDreamBook.h */,
+				75E49D60180E3C3B0050F1B9 /* NetRespondDataToNSDictionaryForDreamBook.m */,
+				75E49D61180E3C3B0050F1B9 /* NetRespondEntityDataUnpackForDreamBook.h */,
+				75E49D62180E3C3B0050F1B9 /* NetRespondEntityDataUnpackForDreamBook.m */,
+				75E49D63180E3C3B0050F1B9 /* ServerRespondDataTestForDreamBook.h */,
+				75E49D64180E3C3B0050F1B9 /* ServerRespondDataTestForDreamBook.m */,
+			);
+			path = SpecificProjects;
+			sourceTree = "<group>";
+		};
+		75E49D65180E3C3B0050F1B9 /* OrderedDictionary */ = {
+			isa = PBXGroup;
+			children = (
+				75E49D66180E3C3B0050F1B9 /* OrderedDictionary.h */,
+				75E49D67180E3C3B0050F1B9 /* OrderedDictionary.m */,
+			);
+			path = OrderedDictionary;
+			sourceTree = "<group>";
+		};
+		75E49D68180E3C3B0050F1B9 /* ToolUtils */ = {
+			isa = PBXGroup;
+			children = (
+				75E49D69180E3C3B0050F1B9 /* DeviceInformation.h */,
+				75E49D6A180E3C3B0050F1B9 /* DeviceInformation.m */,
+				75E49D6B180E3C3B0050F1B9 /* SimpleCookieSingleton.h */,
+				75E49D6C180E3C3B0050F1B9 /* SimpleCookieSingleton.m */,
+				75E49D6D180E3C3B0050F1B9 /* SimpleFolderTools.h */,
+				75E49D6E180E3C3B0050F1B9 /* SimpleFolderTools.m */,
+				75E49D6F180E3C3B0050F1B9 /* ToolsFunctionForThisProgect.h */,
+				75E49D70180E3C3B0050F1B9 /* ToolsFunctionForThisProgect.m */,
+			);
+			path = ToolUtils;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -995,6 +1586,7 @@
 				75E49C73180E30CA0050F1B9 /* xz_touch_iphone.png in Resources */,
 				75E49C4B180E30CA0050F1B9 /* sy.png in Resources */,
 				75E49C20180E30CA0050F1B9 /* bj_H@2x.png in Resources */,
+				75E49DA4180E3C3B0050F1B9 /* Errors_en_US.plist in Resources */,
 				75E49BEA180E30CA0050F1B9 /* d_jrsy_6_H.png in Resources */,
 				75E49C66180E30CA0050F1B9 /* k_touch_iphone.png in Resources */,
 				75E49C49180E30CA0050F1B9 /* sx.png in Resources */,
@@ -1015,7 +1607,6 @@
 				75E49C68180E30CA0050F1B9 /* qyx_iphone.png in Resources */,
 				75E49C33180E30CA0050F1B9 /* d_jrsy_6.png in Resources */,
 				75E49C6D180E30CA0050F1B9 /* sx_iphone.png in Resources */,
-				75E49C21180E30CA0050F1B9 /* d_jrsy_6@2x.png in Resources */,
 				75E49BE7180E30CA0050F1B9 /* icon_80x80.png in Resources */,
 				75E49C2A180E30CA0050F1B9 /* ddh_H@2x.png in Resources */,
 				75E49C52180E30CA0050F1B9 /* yd_touch.png in Resources */,
@@ -1073,6 +1664,7 @@
 				753BF910180E2145005DECCA /* Main_iPhone.storyboard in Resources */,
 				75E49C4C180E30CA0050F1B9 /* sy_touch.png in Resources */,
 				75E49C35180E30CA0050F1B9 /* d_qysy_6.png in Resources */,
+				75E49DA5180E3C3B0050F1B9 /* Errors_zh_CN.plist in Resources */,
 				75E49C02180E30CA0050F1B9 /* fh_touch@2x.png in Resources */,
 				75E49C46180E30CA0050F1B9 /* ss.png in Resources */,
 				75E49C25180E30CA0050F1B9 /* d_qysy_6_H@2x.png in Resources */,
@@ -1201,9 +1793,75 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75E49DA3180E3C3B0050F1B9 /* DomainBeanNetworkEngineSingleton.m in Sources */,
+				75E49DAF180E3C3B0050F1B9 /* ServerRespondDataTestForDreamBook.m in Sources */,
+				75E49D96180E3C3B0050F1B9 /* LocalBookshelfCategoriesParseNetRespondDictionaryToDomainBean.m in Sources */,
+				75E49DA1180E3C3B0050F1B9 /* UrlConstantForThisProject.m in Sources */,
+				75E49DB3180E3C3B0050F1B9 /* SimpleFolderTools.m in Sources */,
 				753BF90D180E2145005DECCA /* AppDelegate.m in Sources */,
+				75E49DA6180E3C3B0050F1B9 /* MKNetworkOperationForDomainBean.m in Sources */,
+				75E49D75180E3C3B0050F1B9 /* NSString+isEmpty.m in Sources */,
+				75E49DA0180E3C3B0050F1B9 /* LocalCacheDataPathConstant.m in Sources */,
+				75E49D7D180E3C3B0050F1B9 /* CommandForInitMobClick.m in Sources */,
+				75E49DB0180E3C3B0050F1B9 /* OrderedDictionary.m in Sources */,
+				75E49D76180E3C3B0050F1B9 /* String+Helper.m in Sources */,
 				75E49CAF180E39B60050F1B9 /* GTMBase64.m in Sources */,
 				753BF909180E2145005DECCA /* main.m in Sources */,
+				75E49DB2180E3C3B0050F1B9 /* SimpleCookieSingleton.m in Sources */,
+				75E49D72180E3C3B0050F1B9 /* NSDictionary+SafeValue.m in Sources */,
+				75E49D9B180E3C3B0050F1B9 /* LogonParseDomainBeanToDD.m in Sources */,
+				75E49D9D180E3C3B0050F1B9 /* VersionNetRespondBean.m in Sources */,
+				75E49D77180E3C3B0050F1B9 /* UIAlertView+Blocks.m in Sources */,
+				75E49D9C180E3C3B0050F1B9 /* LogonParseNetRespondDictionaryToDomainBean.m in Sources */,
+				75E49D7B180E3C3B0050F1B9 /* CommandForGetImportantInfoFromServer.m in Sources */,
+				75E49D8A180E3C3B0050F1B9 /* BookListInBookstoresParseNetRespondDictionaryToDomainBean.m in Sources */,
+				75E49D80180E3C3B0050F1B9 /* CommandForPrintDeviceInfo.m in Sources */,
+				75E49DA9180E3C3B0050F1B9 /* DomainBeanAbstractFactoryCacheSingleton.m in Sources */,
+				75E49DAA180E3C3B0050F1B9 /* MKNetworkEngineSingleton.m in Sources */,
+				75E49D7E180E3C3B0050F1B9 /* CommandForLoadingLocalCacheData.m in Sources */,
+				75E49DB4180E3C3B0050F1B9 /* ToolsFunctionForThisProgect.m in Sources */,
+				75E49D9E180E3C3B0050F1B9 /* GlobalDataCacheForMemorySingleton.m in Sources */,
+				75E49D7F180E3C3B0050F1B9 /* CommandForNewAppVersionCheck.m in Sources */,
+				75E49D74180E3C3B0050F1B9 /* NSObject+Serialization.m in Sources */,
+				75E49D9A180E3C3B0050F1B9 /* LogonNetRespondBean.m in Sources */,
+				75E49D87180E3C3B0050F1B9 /* BookListInBookstoresDomainBeanToolsFactory.m in Sources */,
+				75E49DA7180E3C3B0050F1B9 /* NetRequestErrorBean.m in Sources */,
+				75E49D94180E3C3B0050F1B9 /* LocalBookshelfCategoriesNetRequestBean.m in Sources */,
+				75E49D7C180E3C3B0050F1B9 /* CommandForInitApp.m in Sources */,
+				75E49DA8180E3C3B0050F1B9 /* StrategyClassNameMappingBase.m in Sources */,
+				75E49D8D180E3C3B0050F1B9 /* GetBookDownloadUrlNetRequestBean.m in Sources */,
+				75E49D93180E3C3B0050F1B9 /* LocalBookshelfCategoriesDomainBeanToolsFactory.m in Sources */,
+				75E49D8B180E3C3B0050F1B9 /* DomainBeanHelperClassNameMapping.m in Sources */,
+				75E49D84180E3C3B0050F1B9 /* PRPSmartTableViewCell.m in Sources */,
+				75E49D8E180E3C3B0050F1B9 /* GetBookDownloadUrlNetRespondBean.m in Sources */,
+				75E49DB1180E3C3B0050F1B9 /* DeviceInformation.m in Sources */,
+				75E49D8C180E3C3B0050F1B9 /* GetBookDownloadUrlDomainBeanToolsFactory.m in Sources */,
+				75E49D9F180E3C3B0050F1B9 /* GlobalDataCacheForNeedSaveToFileSystem.m in Sources */,
+				75E49D8F180E3C3B0050F1B9 /* GetBookDownloadUrlParseDomainBeanToDD.m in Sources */,
+				75E49DA2180E3C3B0050F1B9 /* MKNetworkEngineSingletonForUpAndDownLoadFile.m in Sources */,
+				75E49DAC180E3C3B0050F1B9 /* NetRequestEntityDataPackageForDreamBook.m in Sources */,
+				75E49D91180E3C3B0050F1B9 /* LocalBook.m in Sources */,
+				75E49D79180E3C3B0050F1B9 /* UIImage+ImageCompression.m in Sources */,
+				75E49D92180E3C3B0050F1B9 /* LocalBookList.m in Sources */,
+				75E49D95180E3C3B0050F1B9 /* LocalBookshelfCategoriesNetRespondBean.m in Sources */,
+				75E49D78180E3C3B0050F1B9 /* UIColor+ColorSchemes.m in Sources */,
+				75E49D97180E3C3B0050F1B9 /* LocalBookshelfCategory.m in Sources */,
+				75E49D7A180E3C3B0050F1B9 /* UIImageView+MKNetworkKitAdditions.m in Sources */,
+				75E49D82180E3C3B0050F1B9 /* FastCell.m in Sources */,
+				75E49D89180E3C3B0050F1B9 /* BookListInBookstoresNetRespondBean.m in Sources */,
+				75E49D83180E3C3B0050F1B9 /* PRPNibBasedTableViewCell.m in Sources */,
+				75E49DAB180E3C3B0050F1B9 /* NetEntityDataToolsFactoryMethodSingleton.m in Sources */,
+				75E49DAD180E3C3B0050F1B9 /* NetRespondDataToNSDictionaryForDreamBook.m in Sources */,
+				75E49D71180E3C3B0050F1B9 /* NSDictionary+Helper.m in Sources */,
+				75E49D73180E3C3B0050F1B9 /* NSObject+DeepCopyingSupport.m in Sources */,
+				75E49D81180E3C3B0050F1B9 /* CommandInvokerSingleton.m in Sources */,
+				75E49D85180E3C3B0050F1B9 /* BaseModel.m in Sources */,
+				75E49DAE180E3C3B0050F1B9 /* NetRespondEntityDataUnpackForDreamBook.m in Sources */,
+				75E49D86180E3C3B0050F1B9 /* BookInfo.m in Sources */,
+				75E49D88180E3C3B0050F1B9 /* BookListInBookstoresNetRequestBean.m in Sources */,
+				75E49D90180E3C3B0050F1B9 /* GetBookDownloadUrlParseNetRespondDictionaryToDomainBean.m in Sources */,
+				75E49D98180E3C3B0050F1B9 /* LogonDomainBeanToolsFactory.m in Sources */,
+				75E49D99180E3C3B0050F1B9 /* LogonNetRequestBean.m in Sources */,
 				75E49CB3180E39B60050F1B9 /* PRPDebug.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1295,7 +1953,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1329,7 +1987,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1346,6 +2004,7 @@
 				GCC_PREFIX_HEADER = "SimpleBook/SimpleBook-Prefix.pch";
 				INFOPLIST_FILE = "SimpleBook/SimpleBook-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1360,6 +2019,7 @@
 				GCC_PREFIX_HEADER = "SimpleBook/SimpleBook-Prefix.pch";
 				INFOPLIST_FILE = "SimpleBook/SimpleBook-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

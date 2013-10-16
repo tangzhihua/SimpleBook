@@ -51,7 +51,8 @@
     if (![kUrlConstant_MainUrl isEqualToString:[GlobalDataCacheForMemorySingleton sharedInstance].hostName]) {
       _testServerURL = [[MKNetworkEngineSingletonForUpAndDownLoadFile sharedInstance] operationWithURLString:@"https://dreambook.retechcorp.com/dreambook/testcon.txt"];
       [_testServerURL setShouldContinueWithInvalidCertificate:YES];
-      [_testServerURL addHeader:@"User-Agent" withValue:[ToolsFunctionForThisProgect getUserAgent]];
+      [_testServerURL addHeaders:@{@"User-Agent": [ToolsFunctionForThisProgect getUserAgent]}];
+      
       NSString *filePath = [NSString stringWithFormat:@"%@/%@", [LocalCacheDataPathConstant importantDataCachePath], @"testcon.txt"];
       [_testServerURL addDownloadStream:[NSOutputStream outputStreamToFileAtPath:filePath append:NO]];
       [_testServerURL addCompletionHandler:^(MKNetworkOperation* completedRequest) {

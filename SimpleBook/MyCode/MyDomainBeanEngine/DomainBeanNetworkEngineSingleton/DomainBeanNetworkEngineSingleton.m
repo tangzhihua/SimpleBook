@@ -254,7 +254,7 @@
         // 所以这里跟服务器定好协议, 如果服务器收到了有 Paid头的请求, 就证明已经付费了, 就不需要判断 receipt(收据了)
         if (((GetBookDownloadUrlNetRequestBean *)netRequestDomainBean).receipt == nil) {
           // @"Paid" 这个头是支付所必须的.
-          [netRequestOperation addHeader:@"Paid" withValue:@"Paid"];
+          [netRequestOperation addHeaders:@{@"Paid": @"Paid"}];
         }
         //
         [netRequestOperation setCustomPostDataEncodingHandler:^NSString *(NSDictionary *postDataDict) {

@@ -76,4 +76,14 @@
     }
     return [self dictionaryWithXMLNode:tbxml.rootXMLElement];
 }
+
++ (NSDictionary*)dictionaryWithXMLString:(NSString*)string error:(NSError**)err {
+  if (string == nil) return nil;
+  
+  TBXML *tbxml = [TBXML tbxmlWithXMLString:string error:err];
+  if (tbxml == nil || !tbxml.rootXMLElement) {
+    return nil;
+  }
+  return [self dictionaryWithXMLNode:tbxml.rootXMLElement];
+}
 @end
