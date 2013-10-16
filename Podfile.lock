@@ -8,6 +8,9 @@ PODS:
   - RegexKitLite (4.0)
   - RNTimer (0.0.1)
   - SVProgressHUD (0.9)
+  - TBXML (1.5)
+  - TBXML+NSDictionary (0.0.1):
+    - TBXML (~> 1.5.0)
 
 DEPENDENCIES:
   - CocoaLumberjack (= 1.6.2)
@@ -17,6 +20,8 @@ DEPENDENCIES:
   - RegexKitLite
   - RNTimer (= 0.0.1)
   - SVProgressHUD (= 0.9)
+  - TBXML (= 1.5)
+  - TBXML+NSDictionary (= 0.0.1)
 
 SPEC CHECKSUMS:
   CocoaLumberjack: d73e1e317ced14ab930797dda6c17156ff17aaa1
@@ -27,5 +32,7 @@ SPEC CHECKSUMS:
   RegexKitLite: f7af7b4d2b675cd2ec9a4abab6aad6ae1f6499c0
   RNTimer: 4d7ca0b4de6a1a9f525ebc529dfd4e5a1952a247
   SVProgressHUD: 03d4845ec8e64591726428a08236c6a5489d45f8
+  TBXML: 0511ac325d83e59d3aefa4bc8cd6cbeff07a8d9e
+  TBXML+NSDictionary: 9bec5f9179a9f42dae1a9ba560f26c7ba732d8ac
 
 COCOAPODS: 0.24.0

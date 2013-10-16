@@ -1,4 +1,4 @@
-GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/CocoaLumberjack" "${PODS_ROOT}/Headers/EGOTableViewPullRefresh" "${PODS_ROOT}/Headers/MKNetworkKit" "${PODS_ROOT}/Headers/MKNetworkKit/Categories" "${PODS_ROOT}/Headers/MKStoreKit" "${PODS_ROOT}/Headers/RNTimer" "${PODS_ROOT}/Headers/Reachability" "${PODS_ROOT}/Headers/RegexKitLite" "${PODS_ROOT}/Headers/SVProgressHUD"
-OTHER_LDFLAGS = -ObjC -licucore -framework CFNetwork -framework Foundation -framework QuartzCore -framework Security -framework StoreKit -framework SystemConfiguration
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1 $(inherited) ARC_ENABLED
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/CocoaLumberjack" "${PODS_ROOT}/Headers/EGOTableViewPullRefresh" "${PODS_ROOT}/Headers/MKNetworkKit" "${PODS_ROOT}/Headers/MKNetworkKit/Categories" "${PODS_ROOT}/Headers/MKStoreKit" "${PODS_ROOT}/Headers/RNTimer" "${PODS_ROOT}/Headers/Reachability" "${PODS_ROOT}/Headers/RegexKitLite" "${PODS_ROOT}/Headers/SVProgressHUD" "${PODS_ROOT}/Headers/TBXML" "${PODS_ROOT}/Headers/TBXML+NSDictionary"
+OTHER_LDFLAGS = -ObjC -licucore -lz -framework CFNetwork -framework Foundation -framework QuartzCore -framework Security -framework StoreKit -framework SystemConfiguration
 PODS_ROOT = ${SRCROOT}/Pods

@@ -44,6 +44,16 @@
 			<key>orderHint</key>
 			<integer>7</integer>
 		</dict>
+		<key>Pods-TBXML+NSDictionary.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>11</integer>
+		</dict>
+		<key>Pods-TBXML.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -52,7 +62,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>12316C85AE134BA4A429AA1D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>212037E8DFCC483A9201A39A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>224C54B335DF42F9A51E82FB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -72,6 +92,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>3CCC5C52935B43AAA138C0AC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>415F2750E1DE486C856AFF44</key>
 		<dict>
 			<key>primary</key>
@@ -82,7 +107,32 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>66A94E0CD92040A8B8A9A0F5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>686A4B073FC242CDB8AE3114</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8033B84ED3F4441B95AC77AB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>82C572CBC4554E91A9AFAD8B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A79FBA304AE24D0AB1B38428</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AFD06BB02F1544108CBE4850</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -93,6 +143,21 @@
 			<true/>
 		</dict>
 		<key>ED91792BEBDA4AFF99043210</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EE8216C9A3214B298784AAAB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F63286EC2E904207A8B910CC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FC998F83A0194839B2C0E4BD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
