@@ -10,7 +10,7 @@
 
 
 // 用于外部 KVO 的, 属性名称(字符串格式).
-#define kLocalBookProperty_bookStateEnum @"bookStateEnum"
+#define kLocalBookProperty_bookStateEnum    @"bookStateEnum"
 #define kLocalBookProperty_downloadProgress @"downloadProgress"
 
 // 书籍下载解压过程中, 如果发生错误时, 通知控制层的块
@@ -40,7 +40,7 @@ typedef NS_ENUM(NSInteger, BookStateEnum) {
 };
 
 @class BookInfo;
-
+@class LogonNetRespondBean;
 @interface LocalBook : BaseModel
 
 // 书籍信息(从服务器获取的, 这个属性在初始化 LocalBook 时被赋值, 之后就是只读数据了)
@@ -58,11 +58,14 @@ typedef NS_ENUM(NSInteger, BookStateEnum) {
 // 书籍保存文件夹路径
 @property (nonatomic, readonly, copy) NSString *bookSaveDirPath;
 
-// 跟当前书籍绑定的帐号, 同一本书籍(contentID相同才是同一本书籍)可以绑定不同的账户
-// 目前要实现的一个功能是, 当A账户登录书城下载书籍时, 如果此时A账户退出了(或者被B账户替换了), 那么就要暂停正在进行下载的所有跟A账户绑定的书籍.
-// 这里考虑的一点是, 如果A/B账户切换时, 当前账户是希望独享下载网速的.
-// 但是, 对于跟 "公共账户" 绑定的书籍, 是不需要停止下载的.
-@property (nonatomic, copy) NSString *bindAccount;
+// 从书城中, 点击一本还未下载的书籍时, 这本书籍会被加入 "本地书籍列表(在 GlobalDataCacheForMemorySingleton->localBookList 中保存)"
+// 目前有两个需求:
+// 1) 当A账户登录书城下载书籍时, 如果此时A账户退出了(或者被B账户替换了), 那么就要暂停正在进行下载的所有跟A账户绑定的书籍;
+//    这里考虑的一点是, 如果A/B账户切换时, 当前账户是希望独享下载网速的.
+//    但是, 对于跟 "公共账户" 绑定的书籍, 是不需要停止下载的.
+// 2) 已经存在于 "本地书籍列表" 中的未下载完成的书籍, 再次进行断点续传时, 需要将跟这本书绑定的账号信息传递给服务器, 才能获取到最新的书籍下载地址.
+//    因为服务器为了防止盗链, 所以每次断点续传时, 都需要重新获取目标书籍的最新下载地址.
+@property (nonatomic, strong) LogonNetRespondBean *bindAccount;
 
 #pragma mark -
 #pragma mark 构造方法

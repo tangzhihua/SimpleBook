@@ -22,7 +22,7 @@
 #define kNSCodingField_downloadProgress @"downloadProgress"
 #define kNSCodingField_bookStateEnum    @"bookStateEnum"
 #define kNSCodingField_bookSaveDirPath  @"bookSaveDirPath"
-
+#define kNSCodingField_bindAccount      @"bindAccount"
 
 
 @interface LocalBook ()
@@ -81,6 +81,7 @@
   [aCoder encodeObject:_bookInfo forKey:kNSCodingField_bookInfo];
   [aCoder encodeFloat:_downloadProgress forKey:kNSCodingField_downloadProgress];
   [aCoder encodeInteger:_bookStateEnum forKey:kNSCodingField_bookStateEnum];
+  [aCoder encodeObject:_bindAccount forKey:kNSCodingField_bindAccount];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
@@ -103,6 +104,10 @@
       if (_bookStateEnum == kBookStateEnum_Downloading) {
         _bookStateEnum = kBookStateEnum_Pause;
       }
+    }
+    //
+    if ([aDecoder containsValueForKey:kNSCodingField_bindAccount]) {
+      _bindAccount = [aDecoder decodeObjectForKey:kNSCodingField_bindAccount];
     }
   }
   
@@ -307,6 +312,12 @@
 }
 
 - (void) stopDownloadBook {
+  
+  if (self.bookStateEnum != kBookStateEnum_Downloading) {
+    // 只有处于 "Downloading" 状态的书籍, 才能被暂停.
+    return;
+  }
+  
   // 更新书籍状态->Pause
   self.bookStateEnum = kBookStateEnum_Pause;
   

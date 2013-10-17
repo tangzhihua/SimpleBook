@@ -8,22 +8,10 @@
 #import "ToolsFunctionForThisProgect.h"
 
 #import "NSDictionary+SafeValue.h"
-
-
-
-
-
-
 #import "MacroConstantForThisProject.h"
-
-
 #import "SimpleCookieSingleton.h"
-
 #import "VersionNetRespondBean.h"
-
 #import "LogonNetRespondBean.h"
-
-
 
 @implementation ToolsFunctionForThisProgect
 
@@ -34,57 +22,6 @@
   
   return nil;
 }
-
-/**
- * 记录用户登录成功后的重要信息
- *
- * @param logonNetRespondBean
- * @param usernameForLastSuccessfulLogon
- * @param passwordForLastSuccessfulLogon
- */
-+(void)noteLogonSuccessfulInfoWithLogonNetRespondBean:(LogonNetRespondBean *)logonNetRespondBean
-									usernameForLastSuccessfulLogon:(NSString *)usernameForLastSuccessfulLogon
-									passwordForLastSuccessfulLogon:(NSString *)passwordForLastSuccessfulLogon {
-  
-  if (logonNetRespondBean == nil) {
-    RNAssert(NO, @"LogonNetRespondBean is null !");
-    return;
-  }
-  
-  if ([NSString isEmpty:usernameForLastSuccessfulLogon] || [NSString isEmpty:passwordForLastSuccessfulLogon]) {
-    RNAssert(NO, @"username or password is empty ! ");
-    return;
-  }
-  
-  NSLog(@"%@ LogonNetRespondBean --->", logonNetRespondBean);
-  NSLog(@"%@ username --->", usernameForLastSuccessfulLogon);
-  NSLog(@"%@ password --->", passwordForLastSuccessfulLogon);
-  
-  // 设置Cookie
-  //[[SimpleCookieSingleton sharedInstance] setObject:logonNetRespondBean.sessionid forKey:@"sessionid"];
-  
-  // 保用用户登录成功的信息
-  [GlobalDataCacheForMemorySingleton sharedInstance].logonNetRespondBean = logonNetRespondBean;
-  
-  
-	
-  // 保留用户最后一次登录成功时的 用户名
-  [GlobalDataCacheForMemorySingleton sharedInstance].usernameForLastSuccessfulLogon = usernameForLastSuccessfulLogon;
-  
-  // 保留用户最后一次登录成功时的 密码
-  [GlobalDataCacheForMemorySingleton sharedInstance].passwordForLastSuccessfulLogon = passwordForLastSuccessfulLogon;
-}
-
-/**
- * 清空登录相关信息
- */
-+(void)clearLogonInfo {
-  [[SimpleCookieSingleton sharedInstance] removeObjectForKey:@"sessionid"];
-  
-  [GlobalDataCacheForMemorySingleton sharedInstance].LogonNetRespondBean = nil;
-}
-
-
 
 // 同步网络请求App最新版本信息(一定要在子线程中调用此方法, 因为使用sendSynchronousRequest发起的网络请求), 并且返回 VersionNetRespondBean
 // 今日书院(我们的app id) : 722737021
@@ -151,57 +88,6 @@
   return appVersion;
 }
 
-// 加载内部错误时的UI(Activity之间传递的必须参数无效), 并且隐藏 bodyLayout
-+(void)loadIncomingIntentValidUIWithSuperView:(UIView *)superView andHideBodyLayout:(UIView *)bodyLayout {
-  if (![superView isKindOfClass:[UIView class]]) {
-    // 入参错误
-    return;
-  }
-  
-	/*
-	 PreloadingUIToolBar *preloadingUIToolBar = [PreloadingUIToolBar preloadingUIToolBar];
-	 [preloadingUIToolBar setHintInfo:kIncomingIntentValid];
-	 [preloadingUIToolBar showInView:superView];
-	 
-	 // 外部传入的数据非法, 就隐藏掉 bodyLayout
-	 if ([bodyLayout isKindOfClass:[UIView class]]) {
-	 bodyLayout.hidden = YES;
-	 }
-	 */
-}
-
-
-// 将 "秒" 格式化成 "天小时分钟秒", 例如 : 入参是 118269(秒), 返回 "1天8时51分9秒"
-+(NSString *)formatSecondToDayHourMinuteSecond:(NSNumber *)secondSource {
-	if (![secondSource isKindOfClass:[NSNumber class]] || [secondSource doubleValue] <= 0.0f) {
-    return @"0秒";
-  }
-  
-	double timeOfSecond = [secondSource doubleValue];
-	NSInteger day = timeOfSecond / 86400;
-	timeOfSecond -= 86400*day;
-	NSInteger hour = timeOfSecond / 3600;
-	timeOfSecond -= 3600*hour;
-	NSInteger minute = timeOfSecond / 60;
-	timeOfSecond -= 60*minute;
-	NSInteger second = timeOfSecond;
-	
-  
-	NSMutableString *dateString = [NSMutableString string];
-	if (day > 0) {
-		[dateString appendFormat:@"%d天", day];
-	}
-	if (hour > 0) {
-		[dateString appendFormat:@"%d时", hour];
-	}
-	if (minute > 0) {
-		[dateString appendFormat:@"%d分", minute];
-	}
-	[dateString appendFormat:@"%d秒", second];
-	
-	return dateString;
-}
-
 static NSString *userAgentString = nil;
 +(NSString *)getUserAgent {
   if ([NSString isEmpty:userAgentString]) {
@@ -237,6 +123,6 @@ static NSString *userAgentString = nil;
   } else {
     return [NSString stringWithFormat:@"%.2f B", (float)longLongValue];
   }
-    
+  
 }
 @end

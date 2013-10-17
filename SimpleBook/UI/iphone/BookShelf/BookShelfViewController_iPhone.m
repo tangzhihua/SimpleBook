@@ -235,7 +235,7 @@
     NSString *account = [GlobalDataCacheForMemorySingleton sharedInstance].logonNetRespondBean.username;
     LocalBookList *localBookFromBookshelf = [GlobalDataCacheForMemorySingleton sharedInstance].localBookList;
     for (LocalBook *localBook in localBookFromBookshelf.localBookList) {
-      if ([account isEqualToString:localBook.bindAccount] && localBook.bookStateEnum == kBookStateEnum_Downloading) {
+      if ([account isEqualToString:localBook.bindAccount.username] && localBook.bookStateEnum == kBookStateEnum_Downloading) {
         [localBook stopDownloadBook];
       }
     }
@@ -243,7 +243,7 @@
     // 登出当前账号.
     [GlobalDataCacheForMemorySingleton sharedInstance].logonNetRespondBean = nil;
     [GlobalDataCacheForMemorySingleton sharedInstance].usernameForLastSuccessfulLogon = nil;
-    //[GlobalDataCacheForMemorySingleton sharedInstance].passwordForLastSuccessfulLogon = nil;
+    [GlobalDataCacheForMemorySingleton sharedInstance].passwordForLastSuccessfulLogon = nil;
     
     // 隐藏 "退出登录" 按钮
     sender.hidden = YES;
@@ -375,6 +375,7 @@
       
       // 用户登录成功, 保存 用户名和密码 等信息...
       [GlobalDataCacheForMemorySingleton sharedInstance].usernameForLastSuccessfulLogon = username;
+      [GlobalDataCacheForMemorySingleton sharedInstance].passwordForLastSuccessfulLogon = password;
       if (![username isEqualToString:PUBLIC_USERNAME]) {
         // "公共图书馆 账号, 不作为已登录的凭证"
         PRPLog(@"企业账号登录成功!");

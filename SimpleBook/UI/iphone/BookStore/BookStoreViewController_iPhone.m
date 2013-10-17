@@ -23,6 +23,8 @@
 #import "BookListInBookstoresNetRequestBean.h"
 #import "BookListInBookstoresNetRespondBean.h"
 
+#import "LogonNetRespondBean.h"
+
 #import "BookStoreTableCell_iPhone.h"
 
 @interface BookStoreViewController_iPhone () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
@@ -403,10 +405,11 @@
       case kBookStateEnum_Paid:{
         if (NETWORK_REQUEST_ID_OF_IDLE == _netRequestIndexForGetBookDownloadUrl) {
           
-          // 给将要保存到本地的书籍, 绑定当前处于登录状态的账号(只有企业账号才需要绑定, 公共账号不需要).
-          if (!weakSelf.isPublicAccount) {
-            book.bindAccount = [GlobalDataCacheForMemorySingleton sharedInstance].usernameForLastSuccessfulLogon;
-          }
+          // 给将要保存到本地的书籍, 绑定当前处于登录状态的账号(企业账号/公共账号 都需要绑定).
+          LogonNetRespondBean *account = [[LogonNetRespondBean alloc] init];
+          account.username = [GlobalDataCacheForMemorySingleton sharedInstance].usernameForLastSuccessfulLogon;
+          account.password = [GlobalDataCacheForMemorySingleton sharedInstance].passwordForLastSuccessfulLogon;
+          book.bindAccount = account;
           
           // 向本地书籍列表中, 插入一本书(localBookList 中已经做了放置重复插入的处理, 外部不用担心).
           [[GlobalDataCacheForMemorySingleton sharedInstance].localBookList addBook:book];
