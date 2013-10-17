@@ -208,7 +208,7 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
   BOOL isNeedShowBeginnerGuide = [GlobalDataCacheForMemorySingleton sharedInstance].isNeedShowBeginnerGuide;
   [userDefaults setBool:isNeedShowBeginnerGuide forKey:kLocalCacheDataName_BeginnerGuide];
   
-   
+  
 }
 
 + (void)writeLocalBookshelfCategoriesToFileSystem {
@@ -307,6 +307,8 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
 #pragma mark - NSNotification 监听一些对象状态变化时, 发送的通知
 //
 + (void)registerBroadcastReceiver {
+  
+  
   // "下载完成并且安装成功一本书籍"
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(onReceiveForBroadcast:)
