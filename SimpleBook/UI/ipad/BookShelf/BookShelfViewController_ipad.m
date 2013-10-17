@@ -40,7 +40,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *logoutButton;
 @property (weak, nonatomic) IBOutlet UIButton *editButton;
 @property (weak, nonatomic) IBOutlet UIButton *doneEditButton;
-@property (weak, nonatomic) IBOutlet UIView     *headerView;
+@property (weak, nonatomic) IBOutlet UIView *headerView;
 
 
 
@@ -196,7 +196,7 @@
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration; {
-  NSLog(@"willRotateToInterfaceOrientation ifOrientation=%d", toInterfaceOrientation);
+  NSLog(@"willRotateToInterfaceOrientation ifOrientation=%ld", toInterfaceOrientation);
   
   [self.bookTableView reloadData];
   

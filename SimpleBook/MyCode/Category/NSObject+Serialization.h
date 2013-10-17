@@ -11,6 +11,9 @@
 @interface NSObject (Serialization)
 
 
--(void)serializeObjectToFileWithFileName:(NSString *)fileName directoryPath:(NSString *)directoryPath;
-+(id)deserializeObjectFromFileWithFileName:(NSString *)fileName directoryPath:(NSString *)directoryPath;
+- (void)serializeObjectToFileSystemWithFileName:(NSString *)fileName directoryPath:(NSString *)directoryPath;
++ (id)deserializeObjectFromFileSystemWithFileName:(NSString *)fileName directoryPath:(NSString *)directoryPath;
+
+- (void)serializeObjectToFileSystemWithPath:(NSString *)path;
++ (id)deserializeObjectFromFileSystemWithPath:(NSString *)path;
 @end

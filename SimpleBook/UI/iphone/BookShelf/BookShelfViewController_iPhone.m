@@ -32,18 +32,16 @@
 
 //
 @interface BookShelfViewController_iPhone () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
-{
-  CGRect footerViewOriginalFrame;
-}
+
 @property (weak, nonatomic) IBOutlet UITableView *bookTableView;
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
-@property (weak, nonatomic) IBOutlet UIView      *footerView;
-@property (weak, nonatomic) IBOutlet UIView      *headerView;
+@property (weak, nonatomic) IBOutlet UIView *footerView;
+@property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (weak, nonatomic) IBOutlet UIImageView *headerImageView;
 @property (weak, nonatomic) IBOutlet UIButton *publicLibraryButton;
 @property (weak, nonatomic) IBOutlet UIButton *privateLibraryButton;
 @property (weak, nonatomic) IBOutlet UIButton *logoutButton;
-@property (weak, nonatomic) IBOutlet UIView      *searchView;
+@property (weak, nonatomic) IBOutlet UIView *searchView;
 
 
 // 最后的搜索条件
@@ -68,6 +66,8 @@
   NSInteger _netRequestIndexForLoginPrivateLibrary;
   // 获取本地书籍分类列表 网络请求
   NSInteger _netRequestIndexForUserLocalBookshelfCategories;
+  
+  CGRect _footerViewOriginalFrame;
 }
 -(UINib *)bookListTableCellNib {
   return [BookShelfTableCell_iPhone nib];
@@ -157,10 +157,9 @@
   }
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
   // 记录footerView的原始位置，不能放在viewDidLoad中，因为需要根据设备的分辩率来进行获取
-  footerViewOriginalFrame = self.footerView.frame;
+  _footerViewOriginalFrame = self.footerView.frame;
   [super viewWillAppear:animated];
 }
 
@@ -589,22 +588,19 @@
   return 25;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   BookShelfTableCell_iPhone *cell = (BookShelfTableCell_iPhone *)[tableView cellForRowAtIndexPath:indexPath];
   [cell readButtonOnClickListener];
 }
 
 // Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
   // Return NO if you do not want the specified item to be editable.
   return YES;
 }
 
 // Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
   
   if (editingStyle == UITableViewCellEditingStyleDelete) {
     BookShelfTableCell_iPhone *cell = (BookShelfTableCell_iPhone *)[tableView cellForRowAtIndexPath:indexPath];
@@ -663,7 +659,7 @@
   [UIView setAnimationDuration:[duration doubleValue]];
   [UIView setAnimationCurve:[curve intValue]];
   
-  CGRect rect = footerViewOriginalFrame;
+  CGRect rect = _footerViewOriginalFrame;
   if([notification name] == UIKeyboardWillShowNotification)
   {
     self.footerView.frame = CGRectMake(0, rect.origin.y - keyboardBounds.size.height, rect.size.width, rect.size.height);

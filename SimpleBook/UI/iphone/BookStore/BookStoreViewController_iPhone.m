@@ -25,9 +25,8 @@
 
 #import "BookStoreTableCell_iPhone.h"
 
-@interface BookStoreViewController_iPhone () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate> {
-  CGRect footerViewOriginalFrame;
-}
+@interface BookStoreViewController_iPhone () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+
 @property (weak, nonatomic) IBOutlet UITableView *bookTableView;
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
 @property (weak, nonatomic) IBOutlet UIImageView *imgviewHeader;
@@ -55,6 +54,8 @@
   NSInteger _netRequestIndexForGetBookListInBookstores;
   // 获取要下载的书籍的URL 网络请求
   NSInteger _netRequestIndexForGetBookDownloadUrl;
+  
+  CGRect _footerViewOriginalFrame;
 }
 
 -(UINib *)bookListTableCellNib {
@@ -78,13 +79,17 @@
   self.latestSearchCriteria = @"";
 }
 
+-(void)openBookWithBookSaveDirPath:(NSString *)bookSaveDirPath {
+  
+}
+
 #pragma mark -
 #pragma mark Controller 生命周期
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
     // Custom initialization
-
+    
     //
     _netRequestIndexForGetBookListInBookstores = NETWORK_REQUEST_ID_OF_IDLE;
     _netRequestIndexForGetBookDownloadUrl = NETWORK_REQUEST_ID_OF_IDLE;
@@ -101,38 +106,38 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-    
-    // 判断当前界面是否是 "公共账号"
+  
+  // 判断当前界面是否是 "公共账号"
   self.isPublicAccount = [[GlobalDataCacheForMemorySingleton sharedInstance].usernameForLastSuccessfulLogon isEqualToString:PUBLIC_USERNAME] ;
-    // 对iOS7以下版本来标题更换图片，重新布局
-    if (!IS_IOS7) {
-        CGRect frame = self.headerView.frame;
-        frame.size.height -= 20.0f;
-        self.headerView.frame = frame;
-        
-        frame = self.bookTableView.frame;
-        frame.size.height += 20.0f;
-        frame.origin.y -= 20.0f;
-        self.bookTableView.frame = frame;
-        
-        self.imgviewHeader.image = [UIImage imageNamed:(self.isPublicAccount ? @"d_jrsy_6iphone" : @"d_qysy_6iphone.png")] ;
-    } else {
-        
-        self.imgviewHeader.image = [UIImage imageNamed:(self.isPublicAccount ? @"d_jrsy_iphone.png" : @"d_qysy_iphone.png")] ;
-    }
+  // 对iOS7以下版本来标题更换图片，重新布局
+  if (!IS_IOS7) {
+    CGRect frame = self.headerView.frame;
+    frame.size.height -= 20.0f;
+    self.headerView.frame = frame;
+    
+    frame = self.bookTableView.frame;
+    frame.size.height += 20.0f;
+    frame.origin.y -= 20.0f;
+    self.bookTableView.frame = frame;
+    
+    self.imgviewHeader.image = [UIImage imageNamed:(self.isPublicAccount ? @"d_jrsy_6iphone" : @"d_qysy_6iphone.png")] ;
+  } else {
+    
+    self.imgviewHeader.image = [UIImage imageNamed:(self.isPublicAccount ? @"d_jrsy_iphone.png" : @"d_qysy_iphone.png")] ;
+  }
   
   // 请求书城书籍列表
   [self requestBookListInBookstores];
   
   //添加键盘显示和隐藏监听
   [self addKeypadObserver];
-    
-   
+  
+  
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   // 记录footerView的原始位置，不能放在viewDidLoad中，因为需要根据设备的分辩率来进行获取
-  footerViewOriginalFrame = self.footerView.frame;
+  _footerViewOriginalFrame = self.footerView.frame;
   [super viewWillAppear:animated];
 }
 
@@ -273,7 +278,6 @@
   __weak BookStoreViewController_iPhone *weakSelf = self;
   [[DomainBeanNetworkEngineSingleton sharedInstance] requestDomainProtocolWithRequestDomainBean:netRequestBean currentNetRequestIndexToOut:&_netRequestIndexForGetBookListInBookstores successedBlock:^(id respondDomainBean) {
     
-    //weakSelf.netRequestIndexForGetBookListInBookstores = NETWORK_REQUEST_ID_OF_IDLE;
     PRPLog(@"获取 书城图书列表 成功!");
     
     // 缓存书城图书列表
@@ -299,7 +303,6 @@
     self.refurbishButton.enabled = YES;
     
   } failedBlock:^(NetRequestErrorBean *error) {
-    //weakSelf.netRequestIndexForGetBookListInBookstores = NETWORK_REQUEST_ID_OF_IDLE;
     
     UIAlertView *alertView  = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Network Error", @"Network Error")
                                                          message:error.message
@@ -334,7 +337,7 @@
     [book startDownloadBookWithURLString:logonNetRespondBean.bookDownloadUrl];
     
   } failedBlock:^(NetRequestErrorBean *error) {
-  
+    
     // コンンテンツのリスト情報に変化があったのでその旨通知する必要がある
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
                                                         message:NSLocalizedString(@"PleaseRefresh", @"PleaseRefresh")
@@ -395,20 +398,6 @@
         
       case kBookStateEnum_Unpaid:{
         
-//        if ([[StoreManager sharedInstance] canMakePayments]) {
-//          [[StoreManager sharedInstance] purchaseProductWithIdentifier:book.bookInfo.productid];
-//          // 更新状态->支付中...
-//          book.bookStateEnum = kBookStateEnum_Paiding;
-//        } else {
-//          UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
-//                                                              message:@"您的设备不支持应用内付费购买"
-//                                                             delegate:nil
-//                                                    cancelButtonTitle:@"确定"
-//                                                    otherButtonTitles:nil, nil];
-//          [alertView show];
-//          
-//        }
-        
       }break;
         
       case kBookStateEnum_Paid:{
@@ -446,7 +435,7 @@
         
       case kBookStateEnum_Installed:{
         
-        
+        [weakSelf openBookWithBookSaveDirPath:book.bookSaveDirPath];
       }break;
       case kBookStateEnum_Update:{
         
@@ -503,11 +492,10 @@
   return 25;
 }
 
- 
+
 #pragma mark - Keybord Observer
 
-- (void)addKeypadObserver
-{
+- (void)addKeypadObserver {
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(keyboardWillAnimate:)
                                                name:UIKeyboardWillShowNotification
@@ -519,8 +507,7 @@
                                              object:nil];
 }
 
-- (void)keyboardWillAnimate:(NSNotification *)notification
-{
+- (void)keyboardWillAnimate:(NSNotification *)notification {
   // 除点击搜索框
   if (![self.searchTextField isFirstResponder]) {
     return;
@@ -536,7 +523,7 @@
   [UIView setAnimationDuration:[duration doubleValue]];
   [UIView setAnimationCurve:[curve intValue]];
   
-  CGRect rect = footerViewOriginalFrame;
+  CGRect rect = _footerViewOriginalFrame;
   if([notification name] == UIKeyboardWillShowNotification)
   {
     self.footerView.frame = CGRectMake(0, rect.origin.y - keyboardBounds.size.height, rect.size.width, rect.size.height);

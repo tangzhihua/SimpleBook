@@ -290,7 +290,6 @@
 		75E49DA7180E3C3B0050F1B9 /* NetRequestErrorBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D45180E3C3B0050F1B9 /* NetRequestErrorBean.m */; };
 		75E49DA8180E3C3B0050F1B9 /* StrategyClassNameMappingBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D48180E3C3B0050F1B9 /* StrategyClassNameMappingBase.m */; };
 		75E49DA9180E3C3B0050F1B9 /* DomainBeanAbstractFactoryCacheSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D4B180E3C3B0050F1B9 /* DomainBeanAbstractFactoryCacheSingleton.m */; };
-		75E49DAA180E3C3B0050F1B9 /* MKNetworkEngineSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D52180E3C3B0050F1B9 /* MKNetworkEngineSingleton.m */; };
 		75E49DAB180E3C3B0050F1B9 /* NetEntityDataToolsFactoryMethodSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D5B180E3C3B0050F1B9 /* NetEntityDataToolsFactoryMethodSingleton.m */; };
 		75E49DAC180E3C3B0050F1B9 /* NetRequestEntityDataPackageForDreamBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D5E180E3C3B0050F1B9 /* NetRequestEntityDataPackageForDreamBook.m */; };
 		75E49DAD180E3C3B0050F1B9 /* NetRespondDataToNSDictionaryForDreamBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E49D60180E3C3B0050F1B9 /* NetRespondDataToNSDictionaryForDreamBook.m */; };
@@ -683,8 +682,6 @@
 		75E49D4D180E3C3B0050F1B9 /* IDomainBeanAbstractFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDomainBeanAbstractFactory.h; sourceTree = "<group>"; };
 		75E49D4E180E3C3B0050F1B9 /* IParseDomainBeanToDataDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IParseDomainBeanToDataDictionary.h; sourceTree = "<group>"; };
 		75E49D4F180E3C3B0050F1B9 /* IParseNetRespondDictionaryToDomainBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IParseNetRespondDictionaryToDomainBean.h; sourceTree = "<group>"; };
-		75E49D51180E3C3B0050F1B9 /* MKNetworkEngineSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKNetworkEngineSingleton.h; sourceTree = "<group>"; };
-		75E49D52180E3C3B0050F1B9 /* MKNetworkEngineSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKNetworkEngineSingleton.m; sourceTree = "<group>"; };
 		75E49D55180E3C3B0050F1B9 /* INetEntityDataTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INetEntityDataTools.h; sourceTree = "<group>"; };
 		75E49D56180E3C3B0050F1B9 /* INetRequestEntityDataPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INetRequestEntityDataPackage.h; sourceTree = "<group>"; };
 		75E49D57180E3C3B0050F1B9 /* INetRespondDataToNSDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INetRespondDataToNSDictionary.h; sourceTree = "<group>"; };
@@ -1518,7 +1515,6 @@
 				75E49D3D180E3C3B0050F1B9 /* DomainBeanNetworkEngineSingleton */,
 				75E49D46180E3C3B0050F1B9 /* DomainBeanStrategyMapping */,
 				75E49D49180E3C3B0050F1B9 /* DomainBeanTools */,
-				75E49D50180E3C3B0050F1B9 /* MKNetworkEngineSingleton */,
 				75E49D53180E3C3B0050F1B9 /* NetEntityDataTools */,
 			);
 			path = MyDomainBeanEngine;
@@ -1559,15 +1555,6 @@
 				75E49D4F180E3C3B0050F1B9 /* IParseNetRespondDictionaryToDomainBean.h */,
 			);
 			path = DomainBeanTools;
-			sourceTree = "<group>";
-		};
-		75E49D50180E3C3B0050F1B9 /* MKNetworkEngineSingleton */ = {
-			isa = PBXGroup;
-			children = (
-				75E49D51180E3C3B0050F1B9 /* MKNetworkEngineSingleton.h */,
-				75E49D52180E3C3B0050F1B9 /* MKNetworkEngineSingleton.m */,
-			);
-			path = MKNetworkEngineSingleton;
 			sourceTree = "<group>";
 		};
 		75E49D53180E3C3B0050F1B9 /* NetEntityDataTools */ = {
@@ -1994,7 +1981,6 @@
 				75E49D8A180E3C3B0050F1B9 /* BookListInBookstoresParseNetRespondDictionaryToDomainBean.m in Sources */,
 				75E49D80180E3C3B0050F1B9 /* CommandForPrintDeviceInfo.m in Sources */,
 				75E49DA9180E3C3B0050F1B9 /* DomainBeanAbstractFactoryCacheSingleton.m in Sources */,
-				75E49DAA180E3C3B0050F1B9 /* MKNetworkEngineSingleton.m in Sources */,
 				75E49D7E180E3C3B0050F1B9 /* CommandForLoadingLocalCacheData.m in Sources */,
 				75E49DB4180E3C3B0050F1B9 /* ToolsFunctionForThisProgect.m in Sources */,
 				75E49D9E180E3C3B0050F1B9 /* GlobalDataCacheForMemorySingleton.m in Sources */,

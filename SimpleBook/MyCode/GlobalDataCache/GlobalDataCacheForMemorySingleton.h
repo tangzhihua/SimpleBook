@@ -14,6 +14,7 @@
 
 // 用于外部 KVO 的, 属性名称(字符串格式).
 #define kGlobalDataCacheForMemorySingletonProperty_logonNetRespondBean @"logonNetRespondBean"
+#define kGlobalDataCacheForMemorySingletonProperty_localBookshelfCategoriesNetRespondBean @"localBookshelfCategoriesNetRespondBean"
 
 @class LogonNetRespondBean;
 @class LocalBookList;

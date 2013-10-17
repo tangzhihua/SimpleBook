@@ -95,9 +95,28 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
     
     [self unregisterLocalBookListKVO];
     [self unregisterLogonNetRespondBeanKVO];
+    [self unregisterLocalBookshelfCategoriesNetRespondBeanKVO];
   }
 }
 
+#pragma mark -
+#pragma mark 私有方法
++(void)serializeObjectToFileSystemWithObject:(id)object fileName:(NSString *)fileName directoryPath:(NSString *)directoryPath {
+  if (object == nil) {
+    // 如果入参为空, 就证明要删除本地缓存的该对象的序列化文件
+    NSString *serializeObjectPath = [NSString stringWithFormat:@"%@/%@", directoryPath, fileName];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:serializeObjectPath]) {
+      NSError *error = nil;
+      [fileManager removeItemAtPath:serializeObjectPath error:&error];
+      if (error != nil) {
+        NSLog(@"删除序列化到本地的对象文件失败! 错误描述:%@", error.localizedDescription);
+      }
+    }
+  } else {
+    [object serializeObjectToFileSystemWithFileName:fileName directoryPath:directoryPath];
+  }
+}
 
 #pragma mark -
 #pragma mark 将内存中缓存的数据保存到文件系统中
@@ -114,8 +133,8 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
   [GlobalDataCacheForMemorySingleton sharedInstance].isNeedAutologin = autoLoginMarkBOOL;
   
   // 用户最后一次成功登录时得到的响应业务Bean
-	LogonNetRespondBean *logonNetRespondBean = [LogonNetRespondBean deserializeObjectFromFileWithFileName:kLocalCacheDataName_LogonNetRespondBean
-                                                                                          directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
+	LogonNetRespondBean *logonNetRespondBean = [LogonNetRespondBean deserializeObjectFromFileSystemWithFileName:kLocalCacheDataName_LogonNetRespondBean
+                                                                                                directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
   [GlobalDataCacheForMemorySingleton sharedInstance].logonNetRespondBean = logonNetRespondBean;
   
   //
@@ -141,12 +160,12 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
   BOOL isNeedShowBeginnerGuide = [userDefaults boolForKey:kLocalCacheDataName_BeginnerGuide];
   [GlobalDataCacheForMemorySingleton sharedInstance].isNeedShowBeginnerGuide = isNeedShowBeginnerGuide;
   
-  
+
 }
 
 + (void)readLocalBookListToGlobalDataCacheForMemorySingleton {
-  LocalBookList *object = [LocalBookList deserializeObjectFromFileWithFileName:kLocalCacheDataName_LocalBookList
-                                                                 directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
+  LocalBookList *object = [LocalBookList deserializeObjectFromFileSystemWithFileName:kLocalCacheDataName_LocalBookList
+                                                                       directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
   [GlobalDataCacheForMemorySingleton sharedInstance].localBookList = object;
   
   [self registerLocalBookListKVO];
@@ -154,10 +173,12 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
 
 + (void)readLocalBookshelfCategoriesToGlobalDataCacheForMemorySingleton {
   LocalBookshelfCategoriesNetRespondBean *object
-  = [LocalBookshelfCategoriesNetRespondBean deserializeObjectFromFileWithFileName:kLocalCacheDataName_LocalBookshelfCategories
-                                                                    directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
+  = [LocalBookshelfCategoriesNetRespondBean deserializeObjectFromFileSystemWithFileName:kLocalCacheDataName_LocalBookshelfCategories
+                                                                          directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
   
   [GlobalDataCacheForMemorySingleton sharedInstance].localBookshelfCategoriesNetRespondBean = object;
+  
+  [self registerLocalBookshelfCategoriesNetRespondBeanKVO];
 }
 
 
@@ -173,21 +194,7 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
   
   // 用户最后一次成功登录时得到的响应业务Bean
   LogonNetRespondBean *logonNetRespondBean = [GlobalDataCacheForMemorySingleton sharedInstance].logonNetRespondBean;
-  if (logonNetRespondBean == nil) {
-    // 删除本地的缓存
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSError *error = nil;
-    NSString *pathOfSerializeObject = [NSString stringWithFormat:@"%@/%@", [LocalCacheDataPathConstant importantDataCachePath], kLocalCacheDataName_LogonNetRespondBean];
-    [fileManager removeItemAtPath:pathOfSerializeObject error:&error];
-    if (error != nil) {
-      NSLog(@"删除序列化到本地的对象文件失败! 错误描述:%@", error.localizedDescription);
-    }
-  } else {
-    //
-    [logonNetRespondBean serializeObjectToFileWithFileName:kLocalCacheDataName_LogonNetRespondBean
-                                             directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
-  }
-  
+  [self serializeObjectToFileSystemWithObject:logonNetRespondBean fileName:kLocalCacheDataName_LogonNetRespondBean directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
 }
 
 + (void)writeAppConfigInfoToFileSystem {
@@ -201,17 +208,17 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
   BOOL isNeedShowBeginnerGuide = [GlobalDataCacheForMemorySingleton sharedInstance].isNeedShowBeginnerGuide;
   [userDefaults setBool:isNeedShowBeginnerGuide forKey:kLocalCacheDataName_BeginnerGuide];
   
-  
+   
 }
 
 + (void)writeLocalBookshelfCategoriesToFileSystem {
   LocalBookshelfCategoriesNetRespondBean *object = [[GlobalDataCacheForMemorySingleton sharedInstance] localBookshelfCategoriesNetRespondBean];
-  [object serializeObjectToFileWithFileName:kLocalCacheDataName_LocalBookshelfCategories directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
+  [self serializeObjectToFileSystemWithObject:object fileName:kLocalCacheDataName_LocalBookshelfCategories directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
 }
 
 + (void)writeLocalBookListToFileSystem {
   LocalBookList *object = [[GlobalDataCacheForMemorySingleton sharedInstance] localBookList];
-  [object serializeObjectToFileWithFileName:kLocalCacheDataName_LocalBookList directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
+  [self serializeObjectToFileSystemWithObject:object fileName:kLocalCacheDataName_LocalBookList directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
 }
 
 #pragma mark -
@@ -234,9 +241,14 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
   
   if ((__bridge id)context == self) {// Our notification, not our superclass’s
     if ([keyPath isEqualToString:kLocalBookListProperty_localBookList]) {
+      // 保存 "本地书籍列表" 本地书籍列表包括 : 下载完/未下载完 的书籍
       [GlobalDataCacheForNeedSaveToFileSystem writeLocalBookListToFileSystem];
     } else if ([keyPath isEqualToString:kGlobalDataCacheForMemorySingletonProperty_logonNetRespondBean]) {
+      // 保存 企业用户 登录后的 网络响应业务Bean
       [GlobalDataCacheForNeedSaveToFileSystem writeUserLoginInfoToFileSystem];
+    } else if ([keyPath isEqualToString:kGlobalDataCacheForMemorySingletonProperty_localBookshelfCategoriesNetRespondBean]) {
+      // 保存 新取到的本地书籍分类网络响应业务Bean
+      [GlobalDataCacheForNeedSaveToFileSystem writeLocalBookshelfCategoriesToFileSystem];
     }
     
   } else {
@@ -275,6 +287,20 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
   
   [[GlobalDataCacheForMemorySingleton sharedInstance] removeObserver:[GlobalDataCacheForNeedSaveToFileSystem privateInstance]
                                                           forKeyPath:kGlobalDataCacheForMemorySingletonProperty_logonNetRespondBean
+                                                             context:(__bridge void *)[GlobalDataCacheForNeedSaveToFileSystem privateInstance]];
+}
+
+/// 本地书籍分类 网络响应业务Bean
++ (void)registerLocalBookshelfCategoriesNetRespondBeanKVO {
+  [[GlobalDataCacheForMemorySingleton sharedInstance] addObserver:[GlobalDataCacheForNeedSaveToFileSystem privateInstance]
+                                                       forKeyPath:kGlobalDataCacheForMemorySingletonProperty_localBookshelfCategoriesNetRespondBean
+                                                          options:NSKeyValueObservingOptionNew
+                                                          context:(__bridge void *)[GlobalDataCacheForNeedSaveToFileSystem privateInstance]];
+}
++ (void)unregisterLocalBookshelfCategoriesNetRespondBeanKVO {
+  
+  [[GlobalDataCacheForMemorySingleton sharedInstance] removeObserver:[GlobalDataCacheForNeedSaveToFileSystem privateInstance]
+                                                          forKeyPath:kGlobalDataCacheForMemorySingletonProperty_localBookshelfCategoriesNetRespondBean
                                                              context:(__bridge void *)[GlobalDataCacheForNeedSaveToFileSystem privateInstance]];
 }
 

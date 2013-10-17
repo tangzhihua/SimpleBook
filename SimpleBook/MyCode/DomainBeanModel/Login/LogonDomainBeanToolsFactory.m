@@ -16,7 +16,7 @@
 - (id) init {
 	
 	if ((self = [super init])) {
-		NSLog(@"init [0x%x]", [self hash]);
+		NSLog(@"init [0x%lx]", (unsigned long)[self hash]);
     
 	}
 	

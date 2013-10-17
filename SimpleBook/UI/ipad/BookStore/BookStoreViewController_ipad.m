@@ -32,7 +32,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imgviewHeader;
 @property (weak, nonatomic) IBOutlet UIImageView *imgviewFooter;
 @property (weak, nonatomic) IBOutlet UIButton *refurbishButton;
-@property (weak, nonatomic) IBOutlet UIView      *headerView;
+@property (weak, nonatomic) IBOutlet UIView *headerView;
 
 // 书城图书列表(完成本地图书列表和从服务器新获取的图书列表进行了数据同步)
 @property (nonatomic, strong) LocalBookList *bookList;
@@ -74,6 +74,10 @@
 -(void)clearSearchCriteria {
   self.searchTextField.text = @"";
   self.latestSearchCriteria = @"";
+}
+
+-(void)openBookWithBookSaveDirPath:(NSString *)bookSaveDirPath {
+  
 }
 
 #pragma mark -
@@ -180,7 +184,7 @@
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration; {
-  NSLog(@"willRotateToInterfaceOrientation ifOrientation=%d", toInterfaceOrientation);
+  NSLog(@"willRotateToInterfaceOrientation ifOrientation=%ld", toInterfaceOrientation);
   
   [self.bookTableView reloadData];
   
@@ -365,7 +369,6 @@
   }
   __weak BookStoreViewController_ipad *weakSelf = self;
   [[DomainBeanNetworkEngineSingleton sharedInstance] requestDomainProtocolWithRequestDomainBean:netRequestBean currentNetRequestIndexToOut:&_netRequestIndexForGetBookDownloadUrl successedBlock:^(id respondDomainBean) {
-    //weakSelf.netRequestIndexForGetBookDownloadUrl = NETWORK_REQUEST_ID_OF_IDLE;
     PRPLog(@"获取要下载的书籍URL 成功!");
     GetBookDownloadUrlNetRespondBean *logonNetRespondBean = (GetBookDownloadUrlNetRespondBean *) respondDomainBean;
     
@@ -373,7 +376,6 @@
     [book startDownloadBookWithURLString:logonNetRespondBean.bookDownloadUrl];
     
   } failedBlock:^(NetRequestErrorBean *error) {
-    //weakSelf.netRequestIndexForGetBookDownloadUrl = NETWORK_REQUEST_ID_OF_IDLE;
     
     // コンンテンツのリスト情報に変化があったのでその旨通知する必要がある
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
@@ -481,7 +483,7 @@
       }break;
         
       case kBookStateEnum_Installed:{
-        
+        [weakSelf openBookWithBookSaveDirPath:book.bookSaveDirPath];
         
       }break;
       case kBookStateEnum_Update:{
