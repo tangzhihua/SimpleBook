@@ -42,7 +42,6 @@ static const NSString *const TAG = @"<DomainBeanHelperClassNameMapping>";
     [strategyClassesNameMappingList setObject:NSStringFromClass([LogonDomainBeanToolsFactory class])
                                        forKey:NSStringFromClass([LogonNetRequestBean class])];
     
-    
     /**
 		 * 2. 本地书籍分类
 		 */

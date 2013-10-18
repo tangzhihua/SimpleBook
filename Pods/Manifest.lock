@@ -1,39 +1,24 @@
 PODS:
-  - CocoaLumberjack (1.6.2)
-  - EGOTableViewPullRefresh (0.1.0)
   - MKNetworkKit (0.87):
     - Reachability (~> 3.1.0)
   - MKStoreKit (4.99)
   - Reachability (3.1.1)
-  - RegexKitLite (4.0)
-  - RNTimer (0.0.1)
-  - SVProgressHUD (0.9)
   - TBXML (1.5)
   - TBXML+NSDictionary (0.0.1):
     - TBXML (~> 1.5.0)
   - ZipArchive (1.2.0)
 
 DEPENDENCIES:
-  - CocoaLumberjack
-  - EGOTableViewPullRefresh
   - MKNetworkKit
   - MKStoreKit
-  - RegexKitLite
-  - RNTimer
-  - SVProgressHUD
   - TBXML
   - TBXML+NSDictionary
   - ZipArchive (~> 1.2.0)
 
 SPEC CHECKSUMS:
-  CocoaLumberjack: d73e1e317ced14ab930797dda6c17156ff17aaa1
-  EGOTableViewPullRefresh: 6ba637ce6dd3186b503d2d91e6b3a08a26d650f5
   MKNetworkKit: f174100f92473012138b6b1c3040266af8d43a14
   MKStoreKit: 5dea8e2966c1218c0d0f0b5c749d2d9317141a2b
   Reachability: 2be6bc2fd2bd31d97f5db33e75e4b29c79e95883
-  RegexKitLite: f7af7b4d2b675cd2ec9a4abab6aad6ae1f6499c0
-  RNTimer: 4d7ca0b4de6a1a9f525ebc529dfd4e5a1952a247
-  SVProgressHUD: 03d4845ec8e64591726428a08236c6a5489d45f8
   TBXML: 0511ac325d83e59d3aefa4bc8cd6cbeff07a8d9e
   TBXML+NSDictionary: 9bec5f9179a9f42dae1a9ba560f26c7ba732d8ac
   ZipArchive: 93bff5d8b435767ccfac976ed08ca611d950d3d0

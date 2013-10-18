@@ -1355,11 +1355,9 @@
 			children = (
 				75E49CEF180E3C3B0050F1B9 /* BaseModel.h */,
 				75E49CF0180E3C3B0050F1B9 /* BaseModel.m */,
-				75E49CF1180E3C3B0050F1B9 /* BookListInBookstores */,
-				75E49CFD180E3C3B0050F1B9 /* ContentDownload */,
-				75E49CFE180E3C3B0050F1B9 /* ContentList */,
 				75E49CFF180E3C3B0050F1B9 /* DomainBeanHelperClassNameMapping.h */,
 				75E49D00180E3C3B0050F1B9 /* DomainBeanHelperClassNameMapping.m */,
+				75E49CF1180E3C3B0050F1B9 /* BookListInBookstores */,
 				75E49D01180E3C3B0050F1B9 /* GetBookDownloadUrl */,
 				75E49D0D180E3C3B0050F1B9 /* LocalBookList */,
 				75E49D12180E3C3B0050F1B9 /* LocalBookshelfCategories */,
@@ -1386,20 +1384,6 @@
 				75E49CFC180E3C3B0050F1B9 /* BookListInBookstoresParseNetRespondDictionaryToDomainBean.m */,
 			);
 			path = BookListInBookstores;
-			sourceTree = "<group>";
-		};
-		75E49CFD180E3C3B0050F1B9 /* ContentDownload */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ContentDownload;
-			sourceTree = "<group>";
-		};
-		75E49CFE180E3C3B0050F1B9 /* ContentList */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ContentList;
 			sourceTree = "<group>";
 		};
 		75E49D01180E3C3B0050F1B9 /* GetBookDownloadUrl */ = {
