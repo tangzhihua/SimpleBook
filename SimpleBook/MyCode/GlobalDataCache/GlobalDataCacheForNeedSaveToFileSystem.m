@@ -135,7 +135,7 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
   // 用户最后一次成功登录时得到的响应业务Bean
 	LogonNetRespondBean *logonNetRespondBean = [LogonNetRespondBean deserializeObjectFromFileSystemWithFileName:kLocalCacheDataName_LogonNetRespondBean
                                                                                                 directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
-  [GlobalDataCacheForMemorySingleton sharedInstance].logonNetRespondBean = logonNetRespondBean;
+  [GlobalDataCacheForMemorySingleton sharedInstance].privateAccountLogonNetRespondBean = logonNetRespondBean;
   
   //
   [self registerLogonNetRespondBeanKVO];
@@ -193,7 +193,7 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
   [userDefaults setBool:autoLoginMark forKey:(NSString *)kLocalCacheDataName_AutoLoginMark];
   
   // 用户最后一次成功登录时得到的响应业务Bean
-  LogonNetRespondBean *logonNetRespondBean = [GlobalDataCacheForMemorySingleton sharedInstance].logonNetRespondBean;
+  LogonNetRespondBean *logonNetRespondBean = [GlobalDataCacheForMemorySingleton sharedInstance].privateAccountLogonNetRespondBean;
   [self serializeObjectToFileSystemWithObject:logonNetRespondBean fileName:kLocalCacheDataName_LogonNetRespondBean directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
 }
 
@@ -243,7 +243,7 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
     if ([keyPath isEqualToString:kLocalBookListProperty_localBookList]) {
       // 保存 "本地书籍列表" 本地书籍列表包括 : 下载完/未下载完 的书籍
       [GlobalDataCacheForNeedSaveToFileSystem writeLocalBookListToFileSystem];
-    } else if ([keyPath isEqualToString:kGlobalDataCacheForMemorySingletonProperty_logonNetRespondBean]) {
+    } else if ([keyPath isEqualToString:kGlobalDataCacheForMemorySingletonProperty_privateAccountLogonNetRespondBean]) {
       // 保存 企业用户 登录后的 网络响应业务Bean
       [GlobalDataCacheForNeedSaveToFileSystem writeUserLoginInfoToFileSystem];
     } else if ([keyPath isEqualToString:kGlobalDataCacheForMemorySingletonProperty_localBookshelfCategoriesNetRespondBean]) {
@@ -279,14 +279,14 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
 /// 企业用户登录后的网络响应业务Bean
 + (void)registerLogonNetRespondBeanKVO {
   [[GlobalDataCacheForMemorySingleton sharedInstance] addObserver:[GlobalDataCacheForNeedSaveToFileSystem privateInstance]
-                                                       forKeyPath:kGlobalDataCacheForMemorySingletonProperty_logonNetRespondBean
+                                                       forKeyPath:kGlobalDataCacheForMemorySingletonProperty_privateAccountLogonNetRespondBean
                                                           options:NSKeyValueObservingOptionNew
                                                           context:(__bridge void *)[GlobalDataCacheForNeedSaveToFileSystem privateInstance]];
 }
 + (void)unregisterLogonNetRespondBeanKVO {
   
   [[GlobalDataCacheForMemorySingleton sharedInstance] removeObserver:[GlobalDataCacheForNeedSaveToFileSystem privateInstance]
-                                                          forKeyPath:kGlobalDataCacheForMemorySingletonProperty_logonNetRespondBean
+                                                          forKeyPath:kGlobalDataCacheForMemorySingletonProperty_privateAccountLogonNetRespondBean
                                                              context:(__bridge void *)[GlobalDataCacheForNeedSaveToFileSystem privateInstance]];
 }
 

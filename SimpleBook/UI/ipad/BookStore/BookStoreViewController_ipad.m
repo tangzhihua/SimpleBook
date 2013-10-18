@@ -186,7 +186,7 @@
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration; {
-  NSLog(@"willRotateToInterfaceOrientation ifOrientation=%ld", toInterfaceOrientation);
+  NSLog(@"willRotateToInterfaceOrientation ifOrientation=%d", toInterfaceOrientation);
   
   [self.bookTableView reloadData];
   

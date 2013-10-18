@@ -132,7 +132,7 @@
   [super viewDidLoad];
   
   // 如果上次退出app时, 用户登录了某个 "企业账户", 那么就显示 "退出登录" 按钮
-  if([GlobalDataCacheForMemorySingleton sharedInstance].logonNetRespondBean != nil){
+  if([GlobalDataCacheForMemorySingleton sharedInstance].privateAccountLogonNetRespondBean != nil){
     self.logoutButton.hidden = NO;
   } else {
     self.logoutButton.hidden = YES;
@@ -196,7 +196,7 @@
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration; {
-  NSLog(@"willRotateToInterfaceOrientation ifOrientation=%ld", toInterfaceOrientation);
+  NSLog(@"willRotateToInterfaceOrientation ifOrientation=%d", toInterfaceOrientation);
   
   [self.bookTableView reloadData];
   
@@ -274,7 +274,7 @@
     // 退出当前用户
     
     // 暂停跟当前用户绑定的所有书籍的下载进程
-    NSString *account = [GlobalDataCacheForMemorySingleton sharedInstance].logonNetRespondBean.username;
+    NSString *account = [GlobalDataCacheForMemorySingleton sharedInstance].privateAccountLogonNetRespondBean.username;
     LocalBookList *localBookFromBookshelf = [GlobalDataCacheForMemorySingleton sharedInstance].localBookList;
     for (LocalBook *localBook in localBookFromBookshelf.localBookList) {
       if ([account isEqualToString:localBook.bindAccount.username] && localBook.bookStateEnum == kBookStateEnum_Downloading) {
@@ -283,7 +283,7 @@
     }
     
     // 登出当前账号.
-    [GlobalDataCacheForMemorySingleton sharedInstance].logonNetRespondBean = nil;
+    [GlobalDataCacheForMemorySingleton sharedInstance].privateAccountLogonNetRespondBean = nil;
     [GlobalDataCacheForMemorySingleton sharedInstance].usernameForLastSuccessfulLogon = nil;
     [GlobalDataCacheForMemorySingleton sharedInstance].passwordForLastSuccessfulLogon = nil;
     
@@ -320,12 +320,12 @@
   [[DomainBeanNetworkEngineSingleton sharedInstance] cancelNetRequestByRequestIndex:_netRequestIndexForLoginPublicLibrary];
   self.publicLibraryButton.enabled = YES;
   
-  if ([GlobalDataCacheForMemorySingleton sharedInstance].logonNetRespondBean != nil
-      && ![NSString isEmpty:[GlobalDataCacheForMemorySingleton sharedInstance].logonNetRespondBean.username]
-      && ![NSString isEmpty:[GlobalDataCacheForMemorySingleton sharedInstance].logonNetRespondBean.password]) {
+  if ([GlobalDataCacheForMemorySingleton sharedInstance].privateAccountLogonNetRespondBean != nil
+      && ![NSString isEmpty:[GlobalDataCacheForMemorySingleton sharedInstance].privateAccountLogonNetRespondBean.username]
+      && ![NSString isEmpty:[GlobalDataCacheForMemorySingleton sharedInstance].privateAccountLogonNetRespondBean.password]) {
     // 直接登录 企业图书馆
-    [self requestLoginWithUsername:[GlobalDataCacheForMemorySingleton sharedInstance].logonNetRespondBean.username
-                          password:[GlobalDataCacheForMemorySingleton sharedInstance].logonNetRespondBean.password
+    [self requestLoginWithUsername:[GlobalDataCacheForMemorySingleton sharedInstance].privateAccountLogonNetRespondBean.username
+                          password:[GlobalDataCacheForMemorySingleton sharedInstance].privateAccountLogonNetRespondBean.password
        currentNetRequestIndexToOut:&_netRequestIndexForLoginPrivateLibrary];
     
     if (_netRequestIndexForLoginPrivateLibrary != NETWORK_REQUEST_ID_OF_IDLE) {
@@ -434,7 +434,7 @@
         logonNetRespondBean.password = password;
         
         // 一定要在给 logonNetRespondBean 设置 username 和 password 之后再赋值给GlobalDataCacheForMemorySingleton中, 否则触发KVO序列化对象的时机就不对了.
-        [GlobalDataCacheForMemorySingleton sharedInstance].logonNetRespondBean = logonNetRespondBean;
+        [GlobalDataCacheForMemorySingleton sharedInstance].privateAccountLogonNetRespondBean = logonNetRespondBean;
         weakSelf.logoutButton.hidden = NO;
       } else {
         PRPLog(@"公共图书馆账号登录成功!");

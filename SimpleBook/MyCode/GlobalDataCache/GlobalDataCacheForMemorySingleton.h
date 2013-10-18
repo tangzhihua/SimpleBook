@@ -13,7 +13,7 @@
 #import <Foundation/Foundation.h>
 
 // 用于外部 KVO 的, 属性名称(字符串格式).
-#define kGlobalDataCacheForMemorySingletonProperty_logonNetRespondBean @"logonNetRespondBean"
+#define kGlobalDataCacheForMemorySingletonProperty_privateAccountLogonNetRespondBean      @"privateAccountLogonNetRespondBean"
 #define kGlobalDataCacheForMemorySingletonProperty_localBookshelfCategoriesNetRespondBean @"localBookshelfCategoriesNetRespondBean"
 
 @class LogonNetRespondBean;
@@ -34,8 +34,8 @@
  
 
  
-// 用户登录成功后, 服务器返回的信息(判断有无此对象来判断当前用户是否已经登录)
-@property (nonatomic, strong) LogonNetRespondBean *logonNetRespondBean;
+// 私有用户登录成功后, 服务器返回的信息(判断此对象是否为空, 来确定当前是否有企业账户处于登录状态)
+@property (nonatomic, strong) LogonNetRespondBean *privateAccountLogonNetRespondBean;
 
  
 // 用户最后一次登录成功时的用户名/密码(企业账户/公共账户 登录成功都会保存在这里)
