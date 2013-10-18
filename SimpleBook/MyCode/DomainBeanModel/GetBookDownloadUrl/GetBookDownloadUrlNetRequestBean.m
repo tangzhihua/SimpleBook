@@ -10,13 +10,13 @@
 
 @implementation GetBookDownloadUrlNetRequestBean
 
-- (id) initWithContentId:(NSString *)contentId {
+- (id) initWithContentId:(NSString *)contentId bindAccount:(LogonNetRespondBean *)bindAccount {
   
   if ((self = [super init])) {
 		PRPLog(@"init [0x%x]", [self hash]);
     
     _contentId = [contentId copy];
-     
+    _bindAccount = bindAccount;
   }
   
   return self;

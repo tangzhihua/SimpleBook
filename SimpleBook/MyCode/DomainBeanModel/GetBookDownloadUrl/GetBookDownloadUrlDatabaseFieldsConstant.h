@@ -11,9 +11,10 @@
 /************      RequestBean       *************/
 
 // 要下载的书籍ID 必填
-#define k_GetBookDownloadUrl_RequestKey_contentId        @"contentId"
-
- 
+#define k_GetBookDownloadUrl_RequestKey_contentId       @"contentId"
+// 跟要下载的书籍绑定的账号, 这里是服务器端做的安全策略, 要检测跟目标书籍绑定的账号是否有下载权限.
+#define k_GetBookDownloadUrl_RequestKey_username        @"user_id"
+#define k_GetBookDownloadUrl_RequestKey_password        @"user_password"
 
 
 

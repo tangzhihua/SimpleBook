@@ -358,12 +358,12 @@
   }];
 }
 
--(void)requestBookDownlaodUrlWithContentID:(NSString *)contentID {
-  [self requestBookDownlaodUrlWithContentID:contentID receipt:nil];
+-(void)requestBookDownlaodUrlWithContentID:(NSString *)contentID bindAccount:(LogonNetRespondBean *)bindAccount {
+  [self requestBookDownlaodUrlWithContentID:contentID receipt:nil bindAccount:bindAccount];
 }
 
--(void)requestBookDownlaodUrlWithContentID:(NSString *)contentID receipt:(NSData *)receipt {
-  GetBookDownloadUrlNetRequestBean *netRequestBean = [[GetBookDownloadUrlNetRequestBean alloc] initWithContentId:contentID];
+-(void)requestBookDownlaodUrlWithContentID:(NSString *)contentID receipt:(NSData *)receipt bindAccount:(LogonNetRespondBean *)bindAccount {
+  GetBookDownloadUrlNetRequestBean *netRequestBean = [[GetBookDownloadUrlNetRequestBean alloc] initWithContentId:contentID  bindAccount:bindAccount];
   if (receipt != nil) {
     netRequestBean.receipt = receipt;
   } else {
@@ -463,7 +463,7 @@
           // 向本地书籍列表中, 插入一本书(localBookList 中已经做了放置重复插入的处理, 外部不用担心).
           [[GlobalDataCacheForMemorySingleton sharedInstance].localBookList addBook:book];
           
-          [weakSelf requestBookDownlaodUrlWithContentID:book.bookInfo.content_id];
+          [weakSelf requestBookDownlaodUrlWithContentID:book.bookInfo.content_id bindAccount:book.bindAccount];
         }
       }break;
         
@@ -473,7 +473,7 @@
         
       case kBookStateEnum_Pause:{
         if (NETWORK_REQUEST_ID_OF_IDLE == _netRequestIndexForGetBookDownloadUrl) {
-          [weakSelf requestBookDownlaodUrlWithContentID:book.bookInfo.content_id];
+          [weakSelf requestBookDownlaodUrlWithContentID:book.bookInfo.content_id bindAccount:book.bindAccount];
         }
       }break;
         

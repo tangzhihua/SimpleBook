@@ -9,7 +9,7 @@
 
 #import "GetBookDownloadUrlDatabaseFieldsConstant.h"
 #import "GetBookDownloadUrlNetRequestBean.h"
-
+#import "LogonNetRespondBean.h"
 
 
 
@@ -46,9 +46,16 @@
       RNAssert(NO, @"丢失关键参数 : username");
       break;
 		}
-    
 		[params setObject:value forKey:k_GetBookDownloadUrl_RequestKey_contentId];
-    //
+    
+    // 跟要下载的书籍绑定的账号, 这里是服务器端做的安全策略, 要检测跟目标书籍绑定的账号是否有下载权限.
+    LogonNetRespondBean *bindAccount = requestBean.bindAccount;
+		if (![bindAccount isKindOfClass:[LogonNetRespondBean class]]) {
+      RNAssert(NO, @"丢失关键参数 : bindAccount");
+      break;
+		}
+		[params setObject:bindAccount.username forKey:k_GetBookDownloadUrl_RequestKey_username];
+    [params setObject:bindAccount.password forKey:k_GetBookDownloadUrl_RequestKey_password];
     return params;
   } while (NO);
   
