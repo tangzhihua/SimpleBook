@@ -78,19 +78,6 @@
                                      successedBlock:(DomainNetRespondHandleInUIThreadSuccessedBlock) successedBlock
                                         failedBlock:(DomainNetRespondHandleInUIThreadFailedBlock) failedBlock {
   
-  [self requestDomainProtocolWithRequestDomainBean:netRequestDomainBean
-                       currentNetRequestIndexToOut:pCurrentNetRequestIndexToOut
-                      extraHttpRequestParameterMap:nil
-                                    successedBlock:successedBlock
-                                       failedBlock:failedBlock];
-}
-
-- (void) requestDomainProtocolWithRequestDomainBean:(in id) netRequestDomainBean
-                        currentNetRequestIndexToOut:(out NSInteger *) pCurrentNetRequestIndexToOut
-                       extraHttpRequestParameterMap:(NSDictionary *) extraHttpRequestParameterMap
-                                     successedBlock:(DomainNetRespondHandleInUIThreadSuccessedBlock) successedBlock
-                                        failedBlock:(DomainNetRespondHandleInUIThreadFailedBlock) failedBlock {
-  
 	const NSInteger netRequestIndex = ++_netRequestIndexCounter;
 	
 	NSLog(@" ");
@@ -178,12 +165,6 @@
     //
     [httpRequestParameterMap setObject:[ToolsFunctionForThisProgect getUserAgent] forKey:@"User-Agent"];
     
-    
-    // 有时候, 控制层有些特殊的要求, 所以可以通过这个extraHttpRequestParameterMap参数, 来携带一些特殊的http请求参数
-    // ???????? 这里目前的设计还没想好
-		if (extraHttpRequestParameterMap.count > 0) {
-			[httpRequestParameterMap addEntriesFromDictionary:extraHttpRequestParameterMap];
-		}
 		// //////////////////////////////////////////////////////////////////////////////
 		
 		
