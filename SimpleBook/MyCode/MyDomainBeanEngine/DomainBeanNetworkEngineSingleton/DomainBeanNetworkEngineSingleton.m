@@ -154,16 +154,15 @@
 		} while (NO);
     
     // //////////////////////////////////////////////////////////////////////////////
-		// 拼接Http请求头
-		// TODO : 这里将来要提出一个方法
-		NSMutableDictionary *httpRequestParameterMap = [NSMutableDictionary dictionary];
+		// 设置 公用的http header
+		NSMutableDictionary *httpHeaders = [NSMutableDictionary dictionary];
     //
     NSString *cookieString = [[SimpleCookieSingleton sharedInstance] cookieString];
     if (![NSString isEmpty:cookieString]) {
-      [httpRequestParameterMap setObject:cookieString forKey:@"Cookie"];
+      [httpHeaders setObject:cookieString forKey:@"Cookie"];
     }
     //
-    [httpRequestParameterMap setObject:[ToolsFunctionForThisProgect getUserAgent] forKey:@"User-Agent"];
+    [httpHeaders setObject:[ToolsFunctionForThisProgect getUserAgent] forKey:@"User-Agent"];
     
 		// //////////////////////////////////////////////////////////////////////////////
 		
@@ -175,7 +174,7 @@
       RNAssert(NO, @"必须实现 IHttpEngine 接口");
       break;
     }
-    NSOperation *netRequestOperation = [httpEngine operationWithURLString:url netRequestDomainBean:netRequestDomainBean headers:httpRequestParameterMap params:fullDataDictionary httpMethod:httpRequestMethod successedBlock:^(NSOperation *operation, NSData *responseData) {
+    NSOperation *netRequestOperation = [httpEngine operationWithURLString:url netRequestDomainBean:netRequestDomainBean headers:httpHeaders params:fullDataDictionary httpMethod:httpRequestMethod successedBlock:^(NSOperation *operation, NSData *responseData) {
       // 网络数据正常返回
       
       id netRespondDomainBean = nil;

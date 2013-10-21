@@ -64,7 +64,7 @@
                     netRequestDomainBean:(in id)netRequestDomainBean
                                  headers:(in NSDictionary *)headers
                                   params:(in NSDictionary *)body
-                              httpMethod:(in NSString*)method
+                              httpMethod:(in NSString *)method
                           successedBlock:(in IHttpEngineNetRespondHandleInUIThreadSuccessedBlock)successedBlock
                              failedBlock:(in IHttpEngineNetRespondHandleInUIThreadFailedBlock)failedBlock {
   
