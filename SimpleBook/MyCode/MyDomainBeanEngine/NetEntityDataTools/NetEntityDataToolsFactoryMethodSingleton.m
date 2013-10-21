@@ -8,17 +8,14 @@
 #import "NetEntityDataToolsFactoryMethodSingleton.h"
  
 
-// 如意彩项目
+// DreamBook项目
 #import "NetRequestEntityDataPackageForDreamBook.h"
 #import "NetRespondEntityDataUnpackForDreamBook.h"
 #import "ServerRespondDataTestForDreamBook.h"
 #import "NetRespondDataToNSDictionaryForDreamBook.h"
 
 @interface NetEntityDataToolsFactoryMethodSingleton()
-@property (nonatomic, strong) id<INetRequestEntityDataPackage> netRequestEntityDataPackageStrategyAlgorithm;
-@property (nonatomic, strong) id<INetRespondRawEntityDataUnpack> netRespondEntityDataUnpackStrategyAlgorithm;
-@property (nonatomic, strong) id<IServerRespondDataTest> serverRespondDataTestStrategyAlgorithm;
-@property (nonatomic, strong) id<INetRespondDataToNSDictionary> netRespondDataToNSDictionaryStrategyAlgorithm;
+
 @end
 
 @implementation NetEntityDataToolsFactoryMethodSingleton
@@ -41,16 +38,12 @@
   if ((self = [super init])) {
     // 初始化代码
     
-    _netRequestEntityDataPackageStrategyAlgorithm = [[NetRequestEntityDataPackageForDreamBook alloc] init];
-    _netRespondEntityDataUnpackStrategyAlgorithm = [[NetRespondEntityDataUnpackForDreamBook alloc] init];
-    _serverRespondDataTestStrategyAlgorithm = [[ServerRespondDataTestForDreamBook alloc] init];
-    _netRespondDataToNSDictionaryStrategyAlgorithm = [[NetRespondDataToNSDictionaryForDreamBook alloc] init];
   }
   
   return self;
 }
 
-+ (NetEntityDataToolsFactoryMethodSingleton *) sharedInstance {
++ (id<INetEntityDataTools>) sharedInstance {
   static NetEntityDataToolsFactoryMethodSingleton *singletonInstance = nil;
   static dispatch_once_t pred;
   dispatch_once(&pred, ^{singletonInstance = [[self alloc] initSingleton];});
@@ -60,15 +53,15 @@
 #pragma mark
 #pragma mark 实现 INetEntityDataTools 接口的方法
 - (id<INetRequestEntityDataPackage>) getNetRequestEntityDataPackageStrategyAlgorithm {
-  return self.netRequestEntityDataPackageStrategyAlgorithm;
+  return [[NetRequestEntityDataPackageForDreamBook alloc] init];
 }
 - (id<INetRespondRawEntityDataUnpack>) getNetRespondEntityDataUnpackStrategyAlgorithm {
-  return self.netRespondEntityDataUnpackStrategyAlgorithm;
+  return [[NetRespondEntityDataUnpackForDreamBook alloc] init];
 }
 - (id<IServerRespondDataTest>) getServerRespondDataTestStrategyAlgorithm {
-  return self.serverRespondDataTestStrategyAlgorithm;
+  return [[ServerRespondDataTestForDreamBook alloc] init];
 }
 - (id<INetRespondDataToNSDictionary>) getNetRespondDataToNSDictionaryStrategyAlgorithm {
-  return self.netRespondDataToNSDictionaryStrategyAlgorithm;
+  return [[NetRespondDataToNSDictionaryForDreamBook alloc] init];
 }
 @end

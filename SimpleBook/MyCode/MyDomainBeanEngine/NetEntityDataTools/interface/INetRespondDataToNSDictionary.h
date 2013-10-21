@@ -7,7 +7,11 @@
 
 #import <Foundation/Foundation.h>
 
-// 将网络响应数据转成 NSDictionary 数据
+/**
+ * 将网络响应数据转成 NSDictionary 数据
+ * @author zhihua.tang
+ *
+ */
 @protocol INetRespondDataToNSDictionary <NSObject>
 - (NSDictionary *) netRespondDataToNSDictionary:(in NSString *)serverRespondDataOfUTF8String;
 @end

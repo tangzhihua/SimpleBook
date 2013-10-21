@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		751C1A731814C4F30025E62E /* HttpEngineOfMKNetworkKitSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 751C1A721814C4F30025E62E /* HttpEngineOfMKNetworkKitSingleton.m */; };
+		751C1A771814CEB30025E62E /* HttpEngineFactoryMethodSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 751C1A761814CEB30025E62E /* HttpEngineFactoryMethodSingleton.m */; };
 		752A43A2180E60B500BAE854 /* BookShelfTableCell_ipad.m in Sources */ = {isa = PBXBuildFile; fileRef = 752A436B180E60B500BAE854 /* BookShelfTableCell_ipad.m */; };
 		752A43A3180E60B500BAE854 /* BookShelfTableCell_ipad_horizontal.xib in Resources */ = {isa = PBXBuildFile; fileRef = 752A436C180E60B500BAE854 /* BookShelfTableCell_ipad_horizontal.xib */; };
 		752A43A4180E60B500BAE854 /* BookShelfTableCell_ipad_vertical.xib in Resources */ = {isa = PBXBuildFile; fileRef = 752A436D180E60B500BAE854 /* BookShelfTableCell_ipad_vertical.xib */; };
@@ -315,6 +317,11 @@
 
 /* Begin PBXFileReference section */
 		6D1313E480E94B469D148D87 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		751C1A711814C4F30025E62E /* HttpEngineOfMKNetworkKitSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpEngineOfMKNetworkKitSingleton.h; sourceTree = "<group>"; };
+		751C1A721814C4F30025E62E /* HttpEngineOfMKNetworkKitSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpEngineOfMKNetworkKitSingleton.m; sourceTree = "<group>"; };
+		751C1A741814C6200025E62E /* IHttpEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IHttpEngine.h; sourceTree = "<group>"; };
+		751C1A751814CEB30025E62E /* HttpEngineFactoryMethodSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpEngineFactoryMethodSingleton.h; sourceTree = "<group>"; };
+		751C1A761814CEB30025E62E /* HttpEngineFactoryMethodSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpEngineFactoryMethodSingleton.m; sourceTree = "<group>"; };
 		752A436A180E60B500BAE854 /* BookShelfTableCell_ipad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookShelfTableCell_ipad.h; sourceTree = "<group>"; };
 		752A436B180E60B500BAE854 /* BookShelfTableCell_ipad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookShelfTableCell_ipad.m; sourceTree = "<group>"; };
 		752A436C180E60B500BAE854 /* BookShelfTableCell_ipad_horizontal.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookShelfTableCell_ipad_horizontal.xib; sourceTree = "<group>"; };
@@ -739,6 +746,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		751C1A701814C4F30025E62E /* HttpEngine */ = {
+			isa = PBXGroup;
+			children = (
+				751C1A741814C6200025E62E /* IHttpEngine.h */,
+				751C1A751814CEB30025E62E /* HttpEngineFactoryMethodSingleton.h */,
+				751C1A761814CEB30025E62E /* HttpEngineFactoryMethodSingleton.m */,
+				751C1AB2181501DE0025E62E /* MKNetworkKit */,
+			);
+			path = HttpEngine;
+			sourceTree = "<group>";
+		};
+		751C1AB2181501DE0025E62E /* MKNetworkKit */ = {
+			isa = PBXGroup;
+			children = (
+				751C1A711814C4F30025E62E /* HttpEngineOfMKNetworkKitSingleton.h */,
+				751C1A721814C4F30025E62E /* HttpEngineOfMKNetworkKitSingleton.m */,
+			);
+			name = MKNetworkKit;
+			sourceTree = "<group>";
+		};
 		752A4367180E60B500BAE854 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -1497,6 +1524,7 @@
 			isa = PBXGroup;
 			children = (
 				75E49D3D180E3C3B0050F1B9 /* DomainBeanNetworkEngineSingleton */,
+				751C1A701814C4F30025E62E /* HttpEngine */,
 				75E49D46180E3C3B0050F1B9 /* DomainBeanStrategyMapping */,
 				75E49D49180E3C3B0050F1B9 /* DomainBeanTools */,
 				75E49D53180E3C3B0050F1B9 /* NetEntityDataTools */,
@@ -1544,9 +1572,9 @@
 		75E49D53180E3C3B0050F1B9 /* NetEntityDataTools */ = {
 			isa = PBXGroup;
 			children = (
-				75E49D54180E3C3B0050F1B9 /* interface */,
 				75E49D5A180E3C3B0050F1B9 /* NetEntityDataToolsFactoryMethodSingleton.h */,
 				75E49D5B180E3C3B0050F1B9 /* NetEntityDataToolsFactoryMethodSingleton.m */,
+				75E49D54180E3C3B0050F1B9 /* interface */,
 				75E49D5C180E3C3B0050F1B9 /* SpecificProjects */,
 			);
 			path = NetEntityDataTools;
@@ -1943,6 +1971,7 @@
 				752A43A9180E60B500BAE854 /* BookStoreViewController_ipad.m in Sources */,
 				75E49DAF180E3C3B0050F1B9 /* ServerRespondDataTestForDreamBook.m in Sources */,
 				752A43A5180E60B500BAE854 /* BookShelfViewController_ipad.m in Sources */,
+				751C1A771814CEB30025E62E /* HttpEngineFactoryMethodSingleton.m in Sources */,
 				75E49D96180E3C3B0050F1B9 /* LocalBookshelfCategoriesParseNetRespondDictionaryToDomainBean.m in Sources */,
 				75E49DA1180E3C3B0050F1B9 /* UrlConstantForThisProject.m in Sources */,
 				75E49DB3180E3C3B0050F1B9 /* SimpleFolderTools.m in Sources */,
@@ -1959,6 +1988,7 @@
 				75E49D72180E3C3B0050F1B9 /* NSDictionary+SafeValue.m in Sources */,
 				75E49D9B180E3C3B0050F1B9 /* LogonParseDomainBeanToDD.m in Sources */,
 				75E49D9D180E3C3B0050F1B9 /* VersionNetRespondBean.m in Sources */,
+				751C1A731814C4F30025E62E /* HttpEngineOfMKNetworkKitSingleton.m in Sources */,
 				75E49D77180E3C3B0050F1B9 /* UIAlertView+Blocks.m in Sources */,
 				75E49D9C180E3C3B0050F1B9 /* LogonParseNetRespondDictionaryToDomainBean.m in Sources */,
 				75E49D7B180E3C3B0050F1B9 /* CommandForGetImportantInfoFromServer.m in Sources */,

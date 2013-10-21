@@ -21,28 +21,14 @@
 #import "INetRespondDataToNSDictionary.h"
 #import "BaseModel.h"
 
-
 #import "UrlConstantForThisProject.h"
-
-
-#import "MKNetworkKit.h"
-#import "MKNetworkOperationForDomainBean.h"
 #import "NetRequestErrorBean.h"
-
-
-/*
- 
- */
-#import "GetBookDownloadUrlNetRequestBean.h"
-
-#import "GTMBase64.h"
-
+#import "IHttpEngine.h"
+#import "HttpEngineFactoryMethodSingleton.h"
 
 
 @interface DomainBeanNetworkEngineSingleton()
 
-// 网络引擎
-@property (nonatomic, strong) MKNetworkEngine *networkEngine;
 // 当前在并发请求的 MKNetworkOperation 队列
 @property (atomic, strong) NSMutableDictionary *synchronousNetRequestBuf;
 // 网络请求索引 计数器
@@ -50,18 +36,7 @@
 @end
 
 
-
-
-
-
-
-
-
 @implementation DomainBeanNetworkEngineSingleton
-
-
-
-
 
 #pragma mark -
 #pragma mark Singleton Implementation
@@ -80,11 +55,6 @@
   self = [super init];
   if ((self = [super init])) {
     // 初始化代码
-    
-    _networkEngine = [[MKNetworkEngine alloc] initWithHostName:kUrlConstant_MainUrl apiPath:kUrlConstant_MainPtah customHeaderFields:nil];
-    [_networkEngine registerOperationSubclass:[MKNetworkOperationForDomainBean class]];
-    [_networkEngine useCache];
-    
 		_synchronousNetRequestBuf = [NSMutableDictionary dictionary];
 		_netRequestIndexCounter = 0;
   }
@@ -115,15 +85,12 @@
                                        failedBlock:failedBlock];
 }
 
-- (NSInteger) requestDomainProtocolWithRequestDomainBean:(id) netRequestDomainBean
-                             currentNetRequestIndexToOut:(out NSInteger *) pCurrentNetRequestIndexToOut
-                            extraHttpRequestParameterMap:(NSDictionary *) extraHttpRequestParameterMap
-                                          successedBlock:(DomainNetRespondHandleInUIThreadSuccessedBlock) successedBlock
-                                             failedBlock:(DomainNetRespondHandleInUIThreadFailedBlock) failedBlock {
+- (void) requestDomainProtocolWithRequestDomainBean:(in id) netRequestDomainBean
+                        currentNetRequestIndexToOut:(out NSInteger *) pCurrentNetRequestIndexToOut
+                       extraHttpRequestParameterMap:(NSDictionary *) extraHttpRequestParameterMap
+                                     successedBlock:(DomainNetRespondHandleInUIThreadSuccessedBlock) successedBlock
+                                        failedBlock:(DomainNetRespondHandleInUIThreadFailedBlock) failedBlock {
   
-  
-  
-  NSInteger returnValue = NETWORK_REQUEST_ID_OF_IDLE;
 	const NSInteger netRequestIndex = ++_netRequestIndexCounter;
 	
 	NSLog(@" ");
@@ -134,13 +101,11 @@
 	
 	do {
 		if (netRequestDomainBean == nil || pCurrentNetRequestIndexToOut == NULL || successedBlock == NULL || failedBlock == NULL) {
-			NSLog(@"requestDomainProtocolWithContext:入参中有空参数.");
+			RNAssert(NO, @"入参为空.");
 			break;
 		}
 		
-		/**
-		 * 将 "网络请求业务Bean" 的 完整class name 作为和这个业务Bean对应的"业务接口" 绑定的所有相关的处理算法的唯一识别Key
-		 */
+		// 将 "网络请求业务Bean" 的 完整class name 作为和这个业务Bean对应的"业务接口" 绑定的所有相关的处理算法的唯一识别Key
 		NSString *abstractFactoryMappingKey = NSStringFromClass([netRequestDomainBean class]);
 		NSLog(@"%@%i", @"request index--> ", netRequestIndex);
 		NSLog(@"%@%@", @"abstractFactoryMappingKey--> ", abstractFactoryMappingKey);
@@ -148,7 +113,7 @@
 		// 这里的设计使用了 "抽象工厂" 设计模式
 		id<IDomainBeanAbstractFactory> domainBeanAbstractFactoryObject = [[DomainBeanAbstractFactoryCacheSingleton sharedInstance] getDomainBeanAbstractFactoryObjectByKey:abstractFactoryMappingKey];
 		if (![domainBeanAbstractFactoryObject conformsToProtocol:@protocol(IDomainBeanAbstractFactory)]) {
-			NSLog(@"必须实现 IDomainBeanAbstractFactory 接口");
+			RNAssert(NO, @"必须实现 IDomainBeanAbstractFactory 接口");
 			break;
 		}
 		
@@ -200,40 +165,23 @@
 			// 最终确认确实需要使用POST方式发送数据
 			httpRequestMethod = @"POST";
 		} while (NO);
-		
     
-    // 为获取要下载的书籍的URL这个接口特殊做的处理, 因为这个接口的URL是直接拼接成的
-    {
-      if ([netRequestDomainBean isKindOfClass:[GetBookDownloadUrlNetRequestBean class]]) {
-        url = [NSString stringWithFormat:@"%@%@", url, ((GetBookDownloadUrlNetRequestBean *)netRequestDomainBean).contentId];
-        if (((GetBookDownloadUrlNetRequestBean *)netRequestDomainBean).receipt != nil) {
-          httpRequestMethod = @"POST";
-          fullDataDictionary = [NSMutableDictionary dictionary];
-          [fullDataDictionary setObject:((GetBookDownloadUrlNetRequestBean *)netRequestDomainBean).receipt forKey:@""];
-        } else {
-          httpRequestMethod = @"GET";
-        }
-      }
-    }
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
-    
+    // //////////////////////////////////////////////////////////////////////////////
 		// 拼接Http请求头
 		// TODO : 这里将来要提出一个方法
 		NSMutableDictionary *httpRequestParameterMap = [NSMutableDictionary dictionary];
     //
     NSString *cookieString = [[SimpleCookieSingleton sharedInstance] cookieString];
     if (![NSString isEmpty:cookieString]) {
-      [httpRequestParameterMap setObject:cookieString
-                                  forKey:@"Cookie"];
+      [httpRequestParameterMap setObject:cookieString forKey:@"Cookie"];
     }
     //
-    [httpRequestParameterMap setObject:[ToolsFunctionForThisProgect getUserAgent]
-																forKey:@"User-Agent"];
+    [httpRequestParameterMap setObject:[ToolsFunctionForThisProgect getUserAgent] forKey:@"User-Agent"];
     
     
     // 有时候, 控制层有些特殊的要求, 所以可以通过这个extraHttpRequestParameterMap参数, 来携带一些特殊的http请求参数
     // ???????? 这里目前的设计还没想好
-		if ([extraHttpRequestParameterMap count] > 0) {
+		if (extraHttpRequestParameterMap.count > 0) {
 			[httpRequestParameterMap addEntriesFromDictionary:extraHttpRequestParameterMap];
 		}
 		// //////////////////////////////////////////////////////////////////////////////
@@ -241,32 +189,13 @@
 		
 		// 创建一个 Http Operation
     __weak DomainBeanNetworkEngineSingleton *weakSelf = self;
-		MKNetworkOperationForDomainBean *netRequestOperation = (MKNetworkOperationForDomainBean *)[self.networkEngine operationWithURLString:url params:fullDataDictionary httpMethod:httpRequestMethod];
-    // 设置 "当证书无效时, 也要继续网络访问" 标志位
-    // TODO : 目前服务器就是这样配置的, 否则会发生 401错误, SSL -1202
-    [netRequestOperation setShouldContinueWithInvalidCertificate:YES];
-		[netRequestOperation addHeaders:httpRequestParameterMap];
-    
-    {
-      // 为获取要下载的书籍的URL这个接口特殊做的处理, 因为这个接口的URL是直接拼接成的
-      if ([netRequestDomainBean isKindOfClass:[GetBookDownloadUrlNetRequestBean class]]) {
-        // 这是对, 需要付费下载的书籍的处理, 这样的书籍在付费过后, 当进行了暂停操作时, 回复下载时, 就不要再走付费检测流程了.
-        // 所以这里跟服务器定好协议, 如果服务器收到了有 Paid头的请求, 就证明已经付费了, 就不需要判断 receipt(收据了)
-        if (((GetBookDownloadUrlNetRequestBean *)netRequestDomainBean).receipt == nil) {
-          // @"Paid" 这个头是支付所必须的.
-          [netRequestOperation addHeaders:@{@"Paid": @"Paid"}];
-        }
-        //
-        [netRequestOperation setCustomPostDataEncodingHandler:^NSString *(NSDictionary *postDataDict) {
-          return [GTMBase64 stringByEncodingData:((GetBookDownloadUrlNetRequestBean *)netRequestDomainBean).receipt];
-        } forType:nil];
-      }
+    id<IHttpEngine> httpEngine = [[HttpEngineFactoryMethodSingleton sharedInstance] httpEngine];
+    if (![httpEngine conformsToProtocol:@protocol(IHttpEngine)]) {
+      RNAssert(NO, @"必须实现 IHttpEngine 接口");
+      break;
     }
-    /**********************************************************************************/
-    [netRequestOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
-      
+    NSOperation *netRequestOperation = [httpEngine operationWithURLString:url netRequestDomainBean:netRequestDomainBean headers:httpRequestParameterMap params:fullDataDictionary httpMethod:httpRequestMethod successedBlock:^(NSOperation *operation, NSData *responseData) {
       // 网络数据正常返回
-      //completedOperation.
       
       id netRespondDomainBean = nil;
       NetRequestErrorBean *serverRespondDataError = [[NetRequestErrorBean alloc] init];
@@ -276,13 +205,13 @@
 			do {
 				
         // ------------------------------------- >>>
-        if ([completedOperation isCancelled]) {
+        if ([operation isCancelled]) {
           // 本次网络请求被取消了
           break;
         }
         // ------------------------------------- >>>
         
-				NSData *netRawEntityData = [completedOperation responseData];
+				NSData *netRawEntityData = responseData;
 			  if (![netRawEntityData isKindOfClass:[NSData class]] || netRawEntityData.length <= 0) {
 					NSLog(@"-->从服务器端获得的实体数据为空(EntityData), 这种情况有可能是正常的, 比如 退出登录 接口, 服务器就只是通知客户端访问成功, 而不发送任何实体数据. 也可能是网络超时.");
           serverRespondDataError.errorCode = -1;
@@ -307,7 +236,7 @@
         
         
 				// ------------------------------------- >>>
-        if ([completedOperation isCancelled]) {
+        if ([operation isCancelled]) {
           // 本次网络请求被取消了
           break;
         }
@@ -321,7 +250,8 @@
         = [[DomainBeanAbstractFactoryCacheSingleton sharedInstance] getDomainBeanAbstractFactoryObjectByKey:abstractFactoryMappingKey];
 				if ([domainBeanAbstractFactoryObject conformsToProtocol:@protocol(IDomainBeanAbstractFactory)]) {
           
-          id netRespondDataToNSDictionaryStrategyAlgorithm = [[NetEntityDataToolsFactoryMethodSingleton sharedInstance] getNetRespondDataToNSDictionaryStrategyAlgorithm];
+          id<INetRespondDataToNSDictionary> netRespondDataToNSDictionaryStrategyAlgorithm
+          = [[NetEntityDataToolsFactoryMethodSingleton sharedInstance] getNetRespondDataToNSDictionaryStrategyAlgorithm];
 					if ([netRespondDataToNSDictionaryStrategyAlgorithm conformsToProtocol:@protocol(INetRespondDataToNSDictionary)]) {
             NSDictionary *netRespondDictionary = [netRespondDataToNSDictionaryStrategyAlgorithm netRespondDataToNSDictionary:netUnpackedDataOfUTF8String];
             
@@ -364,7 +294,7 @@
       // 本次网络请求结束, 设置NetRequestIndex为IDLE状态.
       *pCurrentNetRequestIndexToOut = NETWORK_REQUEST_ID_OF_IDLE;
       
-      if (![completedOperation isCancelled]) {
+      if (![operation isCancelled]) {
         
         if (serverRespondDataError.errorCode != 200) {
           failedBlock(serverRespondDataError);
@@ -379,15 +309,18 @@
       // 删除本地缓存的 MKNetworkOperation
       [weakSelf.synchronousNetRequestBuf removeObjectForKey:[NSNumber numberWithInteger:netRequestIndex]];
       NSLog(@"当前网络接口请求队列长度=%i", weakSelf.synchronousNetRequestBuf.count);
-    } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
-      
-      
+    } failedBlock:^(NSOperation *operation, NSError *error) {
       // 发生网络请求错误
+      
+      // 本次网络请求结束, 设置NetRequestIndex为IDLE状态.
+      *pCurrentNetRequestIndexToOut = NETWORK_REQUEST_ID_OF_IDLE;
+      
       // ------------------------------------- >>>
-      if (![completedOperation isCancelled]) {
+      if (![operation isCancelled]) {
         NetRequestErrorBean *serverRespondDataError = [[NetRequestErrorBean alloc] init];
         serverRespondDataError.errorCode = error.code;
         serverRespondDataError.message = [error localizedDescription];
+        
         failedBlock(serverRespondDataError);
       }
       // ------------------------------------- >>>
@@ -397,18 +330,10 @@
       [weakSelf.synchronousNetRequestBuf removeObjectForKey:[NSNumber numberWithInteger:netRequestIndex]];
       NSLog(@"当前网络接口请求队列长度=%i", weakSelf.synchronousNetRequestBuf.count);
     }];
-    
-    
-		
-		
-		/**
+    /**
 		 * 将这个 "内部网络请求事件" 缓存到集合synchronousNetRequestEventBuf中
 		 */
-		[self.synchronousNetRequestBuf setObject:netRequestOperation
-																			forKey:[NSNumber numberWithInteger:netRequestIndex]];
-		
-		[self.networkEngine enqueueOperation:netRequestOperation];
-		
+		[self.synchronousNetRequestBuf setObject:netRequestOperation forKey:[NSNumber numberWithInteger:netRequestIndex]];
 		
 		NSLog(@"当前网络接口请求队列长度=%i", self.synchronousNetRequestBuf.count);
 		
@@ -421,13 +346,14 @@
 		NSLog(@" ");
 		
 		
-		
-		returnValue = netRequestIndex;
+    // 发起网络请求成功
+		*pCurrentNetRequestIndexToOut = netRequestIndex;
+    return;
 	} while (NO);
 	
-  *pCurrentNetRequestIndexToOut = returnValue;
-  
-  return returnValue;
+  // 发起网络请求失败
+  *pCurrentNetRequestIndexToOut = NETWORK_REQUEST_ID_OF_IDLE;
+  return;
 }
 
 /**
@@ -442,7 +368,7 @@
     }
     
     NSNumber *indexOfNSNumber = [NSNumber numberWithInteger:netRequestIndex];
-    MKNetworkOperation *netRequestOperation = [self.synchronousNetRequestBuf objectForKey:indexOfNSNumber];
+    NSOperation *netRequestOperation = [self.synchronousNetRequestBuf objectForKey:indexOfNSNumber];
     if (nil == netRequestOperation) {
       break;
     }

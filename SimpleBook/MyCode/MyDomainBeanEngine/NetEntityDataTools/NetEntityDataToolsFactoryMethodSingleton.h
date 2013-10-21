@@ -12,6 +12,6 @@
   
 }
 
-+ (NetEntityDataToolsFactoryMethodSingleton *) sharedInstance;
++ (id<INetEntityDataTools>) sharedInstance;
 
 @end
