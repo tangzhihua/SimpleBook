@@ -67,6 +67,9 @@ typedef NS_ENUM(NSInteger, BookStateEnum) {
 //    因为服务器为了防止盗链, 所以每次断点续传时, 都需要重新获取目标书籍的最新下载地址.
 @property (nonatomic, strong) LogonNetRespondBean *bindAccount;
 
+// 当前书籍所归属的本地文件夹
+@property (nonatomic, copy) NSString *folder;
+
 #pragma mark -
 #pragma mark 构造方法
 - (id) initWithBookInfo:(BookInfo *)bookInfo;

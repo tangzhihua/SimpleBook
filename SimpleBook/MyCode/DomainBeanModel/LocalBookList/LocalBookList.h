@@ -28,7 +28,7 @@
 - (NSUInteger)indexOfBookByContentID:(NSString *)contentIDString;
 
 #pragma mark -
-#pragma mark 对外的接口方法 (用户控制层构建 TableView)
+#pragma mark 对外的接口方法 (根据书籍所属 "分类" 进行格式化)
 
 // 根据 "图书名称" 进行筛选后, 符合条件的书籍的分类总数
 // 注意 : 如果传入 nil(或者 ""), 就认为要查询全部书籍的分类总数
@@ -38,6 +38,18 @@
 // 字典结构是 key=categoryid , value=NSArray(属于该分类的BookInfo列表)
 // 注意 : 如果传入 nil(或者 ""), 就认为要查询全部书籍的分类
 -(NSDictionary *)bookCategoryDictionaryByBookNameSearch:(NSString *)bookName;
+
+#pragma mark -
+#pragma mark 对外的接口方法 (根据书籍所属 "本地文件夹" 进行格式化)
+
+// 根据 "图书名称" 进行筛选后, 符合条件的书籍的文件夹总数
+// 注意 : 如果传入 nil(或者 ""), 就认为要查询全部书籍的文件夹总数
+-(NSUInteger)bookFolderTotalByBookNameSearch:(NSString *)bookName;
+
+// 根据 "图书名称" 进行筛选后, 符合条件的书籍的文件夹字典
+// 字典结构是 key=folder , value=NSArray(属于该文件夹的BookInfo列表)
+// 注意 : 如果传入 nil(或者 ""), 就认为要查询全部书籍的文件夹
+-(NSDictionary *)bookFolderDictionaryByBookNameSearch:(NSString *)bookName;
 
 #pragma mark -
 #pragma mark 对外的接口方法 (下面两个方法是临时存在的, 将来在书架要显示未下载完的书籍, 1期只是临时处理)

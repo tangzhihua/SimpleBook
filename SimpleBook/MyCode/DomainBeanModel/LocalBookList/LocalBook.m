@@ -13,8 +13,11 @@
 #import "MKNetworkEngineSingletonForUpAndDownLoadFile.h"
 #import "LocalCacheDataPathConstant.h"
 #import "MacroConstantForThisProject.h"
+#import "LogonNetRespondBean.h"
+
 //
 #import "ZipArchive.h"
+
 
 #define kTmpDownloadBookFileName @"tmp.zip"
 
@@ -23,7 +26,7 @@
 #define kNSCodingField_bookStateEnum    @"bookStateEnum"
 #define kNSCodingField_bookSaveDirPath  @"bookSaveDirPath"
 #define kNSCodingField_bindAccount      @"bindAccount"
-
+#define kNSCodingField_folder           @"folder"
 
 @interface LocalBook ()
 //
@@ -82,6 +85,7 @@
   [aCoder encodeFloat:_downloadProgress forKey:kNSCodingField_downloadProgress];
   [aCoder encodeInteger:_bookStateEnum forKey:kNSCodingField_bookStateEnum];
   [aCoder encodeObject:_bindAccount forKey:kNSCodingField_bindAccount];
+  [aCoder encodeObject:_folder forKey:kNSCodingField_folder];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
@@ -108,6 +112,10 @@
     //
     if ([aDecoder containsValueForKey:kNSCodingField_bindAccount]) {
       _bindAccount = [aDecoder decodeObjectForKey:kNSCodingField_bindAccount];
+    }
+    //
+    if ([aDecoder containsValueForKey:kNSCodingField_folder]) {
+      _folder = [aDecoder decodeObjectForKey:kNSCodingField_folder];
     }
   }
   
@@ -148,13 +156,13 @@
     isZipSucceed = YES;
   } while (NO);
   [zipArchive UnzipCloseFile];
-
+  
   return isZipSucceed;
 }
 
 // 解压书籍的函数, 运行在后台线程
 -(void)unzipBookZipResSelectorInBackground {
-
+  
   if ([self unzipBookZipRes]) {
     NSLog(@"解压成功");
     // 解压成功
@@ -302,7 +310,7 @@
     
     // 更新书籍状态->Downloading
     self.bookStateEnum = kBookStateEnum_Downloading;
-
+    
     ///
     return YES;
   } while (NO);
@@ -312,7 +320,6 @@
 }
 
 - (void) stopDownloadBook {
-  
   if (self.bookStateEnum != kBookStateEnum_Downloading) {
     // 只有处于 "Downloading" 状态的书籍, 才能被暂停.
     return;

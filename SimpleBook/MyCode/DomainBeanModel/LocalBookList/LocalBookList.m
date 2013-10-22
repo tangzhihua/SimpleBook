@@ -207,7 +207,7 @@
 }
 
 #pragma mark -
-#pragma mark 对外的接口方法 (用户控制层构建 TableView)
+#pragma mark 对外的接口方法 (根据书籍所属 "分类" 进行格式化)
 
 -(NSUInteger)bookCategoryTotalByBookNameSearch:(NSString *)bookName {
   NSDictionary *bookCategoryDictionaryByBookNameSearch = [self bookCategoryDictionaryByBookNameSearch:bookName];
@@ -271,6 +271,51 @@
 }
 
 #pragma mark -
+#pragma mark 对外的接口方法 (根据书籍所属 "本地文件夹" 进行格式化)
+
+// 根据 "图书名称" 进行筛选后, 符合条件的书籍的分类总数
+// 注意 : 如果传入 nil(或者 ""), 就认为要查询全部书籍的分类总数
+-(NSUInteger)bookFolderTotalByBookNameSearch:(NSString *)bookName {
+  NSDictionary *bookFolderDictionaryByBookNameSearch = [self bookFolderDictionaryByBookNameSearch:bookName];
+  return bookFolderDictionaryByBookNameSearch.count;
+}
+
+// 根据 "图书名称" 进行筛选后, 符合条件的书籍的分类字典
+// 字典结构是 key=categoryid , value=NSArray(属于该分类的BookInfo列表)
+// 注意 : 如果传入 nil(或者 ""), 就认为要查询全部书籍的分类
+-(NSDictionary *)bookFolderDictionaryByBookNameSearch:(NSString *)bookName {
+  NSMutableDictionary *bookFolderDictionary = [NSMutableDictionary dictionary];
+  for (LocalBook *book in self.localBookList) {
+  
+    if ([NSString isEmpty:bookName]) {
+      
+      if ([bookFolderDictionary.allKeys containsObject:book.folder]) {
+        NSMutableArray *bookList = [bookFolderDictionary objectForKey:book.folder];
+        [bookList addObject:book];
+      } else {
+        [bookFolderDictionary setObject:[NSMutableArray arrayWithObject:book] forKey:book.folder];
+      }
+      
+    } else {
+      
+      NSRange range = [book.bookInfo.name rangeOfString:bookName options:NSCaseInsensitiveSearch];
+      
+      if(range.location != NSNotFound){
+        if ([bookFolderDictionary.allKeys containsObject:book.folder]) {
+          NSMutableArray *bookList = [bookFolderDictionary objectForKey:book.folder];
+          [bookList addObject:book];
+        } else {
+          [bookFolderDictionary setObject:[NSMutableArray arrayWithObject:book] forKey:book.folder];
+        }
+      }
+    }
+    
+  }
+  
+  return bookFolderDictionary;
+}
+
+#pragma mark -
 #pragma mark 对外的接口方法 (下面两个方法是临时存在的, 将来在书架要显示未下载完的书籍, 1期只是临时处理)
 // 下面两个获取的是 下载/安装 完成的书籍, 用于 书架界面
 -(NSUInteger)bookCategoryTotalOfInstalledByBookNameSearch:(NSString *)bookName {
@@ -280,31 +325,32 @@
 -(NSDictionary *)bookCategoryDictionaryOfInstalledByBookNameSearch:(NSString *)bookName {
   NSMutableDictionary *bookCategoryDictionary = [NSMutableDictionary dictionary];
   for (LocalBook *book in self.localBookList) {
-    
-    BookInfo *bookInfo = book.bookInfo;
-    if ([NSString isEmpty:bookName]) {
-      if (kBookStateEnum_Installed == book.bookStateEnum) {
+    if (kBookStateEnum_Installed == book.bookStateEnum) {
+      BookInfo *bookInfo = book.bookInfo;
+      
+      if ([NSString isEmpty:bookName]) {
+        
         if ([bookCategoryDictionary.allKeys containsObject:bookInfo.categoryid]) {
           NSMutableArray *bookList = [bookCategoryDictionary objectForKey:bookInfo.categoryid];
           [bookList addObject:book];
         } else {
           [bookCategoryDictionary setObject:[NSMutableArray arrayWithObject:book] forKey:bookInfo.categoryid];
         }
-      }
-    } else {
-      
-      NSRange range = [bookInfo.name rangeOfString:bookName options:NSCaseInsensitiveSearch];
-      
-      if(range.location != NSNotFound){
-        if ([bookCategoryDictionary.allKeys containsObject:bookInfo.categoryid]) {
-          NSMutableArray *bookList = [bookCategoryDictionary objectForKey:bookInfo.categoryid];
-          [bookList addObject:book];
-        } else {
-          [bookCategoryDictionary setObject:[NSMutableArray arrayWithObject:book] forKey:bookInfo.categoryid];
+        
+      } else {
+        
+        NSRange range = [bookInfo.name rangeOfString:bookName options:NSCaseInsensitiveSearch];
+        
+        if(range.location != NSNotFound){
+          if ([bookCategoryDictionary.allKeys containsObject:bookInfo.categoryid]) {
+            NSMutableArray *bookList = [bookCategoryDictionary objectForKey:bookInfo.categoryid];
+            [bookList addObject:book];
+          } else {
+            [bookCategoryDictionary setObject:[NSMutableArray arrayWithObject:book] forKey:bookInfo.categoryid];
+          }
         }
       }
     }
-    
   }
   
   return bookCategoryDictionary;
