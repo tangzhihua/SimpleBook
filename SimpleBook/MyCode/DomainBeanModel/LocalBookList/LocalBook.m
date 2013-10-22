@@ -274,7 +274,7 @@
     [self.bookDownloadOperation addDownloadStream:[NSOutputStream outputStreamToFileAtPath:self.bookTmpZipResFilePath append:YES]];
     //
     [self.bookDownloadOperation onDownloadProgressChanged:^(double progress) {
-      long long expectedContentLength = weakSelf.bookDownloadOperation.readonlyResponse.expectedContentLength;
+      //long long expectedContentLength = weakSelf.bookDownloadOperation.readonlyResponse.expectedContentLength;
       weakSelf.downloadProgress = progress;
       //NSLog(@"下载进度更新 %lld %f", expectedContentLength, progress * 100);
     }];
