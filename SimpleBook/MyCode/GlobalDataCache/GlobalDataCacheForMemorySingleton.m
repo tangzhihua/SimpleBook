@@ -113,18 +113,19 @@
  - (void) initialize {
  
  }
+ 
  + (GlobalDataCacheForMemorySingleton *) sharedInstance {
- @synchronized(self) {
- if (singletonInstance == nil) {
- singletonInstance = [[super allocWithZone:NULL] init];
+   @synchronized(self) {
+     if (singletonInstance == nil) {
+       singletonInstance = [[super allocWithZone:NULL] init];
  
- // initialize the first view controller
- // and keep it with the singleton
- [singletonInstance initialize];
- }
+       // initialize the first view controller
+       // and keep it with the singleton
+       [singletonInstance initialize];
+     }
  
- return singletonInstance;
- }
+     return singletonInstance;
+   }
  }
  */
 
@@ -141,27 +142,27 @@
  
  
  + (id) allocWithZone:(NSZone *)zone {
- return [[self sharedInstance] retain];
+   return [[self sharedInstance] retain];
  }
  
  - (id) copyWithZone:(NSZone*)zone {
- return self;
+   return self;
  }
  
  - (id) retain {
- return self;
+   return self;
  }
  
  - (NSUInteger) retainCount {
- return NSUIntegerMax;
+   return NSUIntegerMax;
  }
  
  - (oneway void) release {
- // do nothing
+   // do nothing
  }
  
  - (id) autorelease {
- return self;
+   return self;
  }
  
  */
@@ -201,5 +202,5 @@
   }
 }
 
- 
+
 @end
