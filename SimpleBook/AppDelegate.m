@@ -66,7 +66,7 @@
 	// 启动 "新版本信息检测" 子线程
   command = [CommandForNewAppVersionCheck commandForNewAppVersionCheck];
   [[CommandInvokerSingleton sharedInstance] runCommandWithCommandObject:command];
-
+  
   
   // 判断当前设备 iPhone or iPad 之后加载相对应的nib文件
   UIViewController *rootViewController = nil;
@@ -80,7 +80,7 @@
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
-
+  
   return YES;
 }
 
@@ -109,6 +109,10 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
   // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+  
+  // Make sure we save the model when the application is quitting
+  CoreData *sharedModel = [CoreData sharedModel:nil];
+  [sharedModel saveContext];
 }
 
 @end

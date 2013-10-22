@@ -13,7 +13,7 @@
 
 @interface LocalBookshelfCategory()
 // 分类ID
-@property (nonatomic, readwrite, assign) NSInteger ID;
+@property (nonatomic, readwrite, assign) NSInteger identifier;
 // 分类名称
 @property (nonatomic, readwrite, strong) NSString *name;
 @end
@@ -21,14 +21,14 @@
 @implementation LocalBookshelfCategory
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
   if ([key isEqualToString:kNSCodingField_id]) {
-    _ID = [value integerValue];
+    _identifier = [value integerValue];
   }
 }
 
 #pragma mark -
 #pragma mark 实现 NSCoding 接口
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-  [aCoder encodeInteger:_ID forKey:kNSCodingField_id];
+  [aCoder encodeInteger:_identifier forKey:kNSCodingField_id];
   [aCoder encodeObject:_name forKey:kNSCodingField_name];
 }
 
@@ -39,7 +39,7 @@
     
     //
     if ([aDecoder containsValueForKey:kNSCodingField_id]) {
-      _ID = [aDecoder decodeIntegerForKey:kNSCodingField_id];
+      _identifier = [aDecoder decodeIntegerForKey:kNSCodingField_id];
     }
     //
     if ([aDecoder containsValueForKey:kNSCodingField_name]) {

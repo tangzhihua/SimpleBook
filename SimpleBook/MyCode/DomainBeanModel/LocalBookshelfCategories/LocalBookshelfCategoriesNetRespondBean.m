@@ -60,7 +60,7 @@
 
 -(NSString *)categoryNameByCategoryID:(const NSInteger)categoryID {
   for (LocalBookshelfCategory *category in self.categories) {
-    if (categoryID == category.ID) {
+    if (categoryID == category.identifier) {
       return category.name;
     }
   }

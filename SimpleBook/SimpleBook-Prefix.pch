@@ -13,8 +13,11 @@
 #ifdef __OBJC__
   #import <UIKit/UIKit.h>
   #import <Foundation/Foundation.h>
+  #import <CoreData/CoreData.h>
 
 // 这里是本项目中最常用的头文件, 放到这里, 就不需要单独引用了
+
+#import "CoreData.h"
 
 // 智能 debug 输出
 #import "PRPDebug.h"

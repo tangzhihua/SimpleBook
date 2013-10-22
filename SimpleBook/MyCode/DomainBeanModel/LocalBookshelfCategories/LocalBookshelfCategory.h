@@ -10,7 +10,7 @@
 
 @interface LocalBookshelfCategory : BaseModel
 // 分类ID
-@property (nonatomic, readonly, assign) NSInteger ID;
+@property (nonatomic, readonly, assign) NSInteger identifier;
 // 分类名称
 @property (nonatomic, readonly, strong) NSString *name;
 @end

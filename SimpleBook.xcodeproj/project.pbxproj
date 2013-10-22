@@ -41,6 +41,9 @@
 		753BF929180E2145005DECCA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 753BF927180E2145005DECCA /* InfoPlist.strings */; };
 		753BF92B180E2145005DECCA /* SimpleBookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 753BF92A180E2145005DECCA /* SimpleBookTests.m */; };
 		7586E433180E9D5C007E6BAA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7586E432180E9D5C007E6BAA /* Localizable.strings */; };
+		759AB36818166006008D602D /* CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 759AB36718166006008D602D /* CoreData.m */; };
+		75D45D9318161C49005819A2 /* DreamBook.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 75D45D9118161C49005819A2 /* DreamBook.xcdatamodeld */; };
+		75D45D9518161D09005819A2 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75D45D9418161D09005819A2 /* CoreData.framework */; };
 		75E49BD9180E30CA0050F1B9 /* icon_100x100.png in Resources */ = {isa = PBXBuildFile; fileRef = 75E49B0E180E30C90050F1B9 /* icon_100x100.png */; };
 		75E49BDA180E30CA0050F1B9 /* icon_1024x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 75E49B0F180E30C90050F1B9 /* icon_1024x1024.png */; };
 		75E49BDB180E30CA0050F1B9 /* icon_114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = 75E49B10180E30C90050F1B9 /* icon_114x114.png */; };
@@ -366,6 +369,10 @@
 		753BF928180E2145005DECCA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		753BF92A180E2145005DECCA /* SimpleBookTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimpleBookTests.m; sourceTree = "<group>"; };
 		7586E432180E9D5C007E6BAA /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		759AB36618166006008D602D /* CoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreData.h; sourceTree = "<group>"; };
+		759AB36718166006008D602D /* CoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreData.m; sourceTree = "<group>"; };
+		75D45D9218161C49005819A2 /* DreamBook.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DreamBook.xcdatamodel; sourceTree = "<group>"; };
+		75D45D9418161D09005819A2 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		75E49B0E180E30C90050F1B9 /* icon_100x100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_100x100.png; sourceTree = "<group>"; };
 		75E49B0F180E30C90050F1B9 /* icon_1024x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_1024x1024.png; sourceTree = "<group>"; };
 		75E49B10180E30C90050F1B9 /* icon_114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_114x114.png; sourceTree = "<group>"; };
@@ -722,6 +729,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75D45D9518161D09005819A2 /* CoreData.framework in Frameworks */,
 				75E49CBD180E3B020050F1B9 /* ImageIO.framework in Frameworks */,
 				75E49CBB180E3AF90050F1B9 /* Security.framework in Frameworks */,
 				75E49CB9180E3AF10050F1B9 /* SystemConfiguration.framework in Frameworks */,
@@ -936,6 +944,7 @@
 		753BF8FB180E2145005DECCA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				75D45D9418161D09005819A2 /* CoreData.framework */,
 				75E49CBC180E3B020050F1B9 /* ImageIO.framework */,
 				75E49CBA180E3AF90050F1B9 /* Security.framework */,
 				75E49CB8180E3AF10050F1B9 /* SystemConfiguration.framework */,
@@ -952,6 +961,7 @@
 		753BF902180E2145005DECCA /* SimpleBook */ = {
 			isa = PBXGroup;
 			children = (
+				75D45D9018161C0F005819A2 /* CoreData */,
 				752A4367180E60B500BAE854 /* UI */,
 				75E49CBE180E3C3B0050F1B9 /* MyCode */,
 				75E49C9B180E39B60050F1B9 /* ThirdPartyLibraries */,
@@ -995,6 +1005,16 @@
 				753BF927180E2145005DECCA /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		75D45D9018161C0F005819A2 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				759AB36618166006008D602D /* CoreData.h */,
+				759AB36718166006008D602D /* CoreData.m */,
+				75D45D9118161C49005819A2 /* DreamBook.xcdatamodeld */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		75E49B0D180E30C90050F1B9 /* icon */ = {
@@ -1969,6 +1989,7 @@
 			files = (
 				75E49DA3180E3C3B0050F1B9 /* DomainBeanNetworkEngineSingleton.m in Sources */,
 				752A43A9180E60B500BAE854 /* BookStoreViewController_ipad.m in Sources */,
+				75D45D9318161C49005819A2 /* DreamBook.xcdatamodeld in Sources */,
 				75E49DAF180E3C3B0050F1B9 /* ServerRespondDataTestForDreamBook.m in Sources */,
 				752A43A5180E60B500BAE854 /* BookShelfViewController_ipad.m in Sources */,
 				751C1A771814CEB30025E62E /* HttpEngineFactoryMethodSingleton.m in Sources */,
@@ -2001,6 +2022,7 @@
 				75E49D7F180E3C3B0050F1B9 /* CommandForNewAppVersionCheck.m in Sources */,
 				75E49D74180E3C3B0050F1B9 /* NSObject+Serialization.m in Sources */,
 				752A43B6180E60B500BAE854 /* BookShelfViewController_iPhone.m in Sources */,
+				759AB36818166006008D602D /* CoreData.m in Sources */,
 				75E49D9A180E3C3B0050F1B9 /* LogonNetRespondBean.m in Sources */,
 				75E49D87180E3C3B0050F1B9 /* BookListInBookstoresDomainBeanToolsFactory.m in Sources */,
 				75E49DA7180E3C3B0050F1B9 /* NetRequestErrorBean.m in Sources */,
@@ -2282,6 +2304,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		75D45D9118161C49005819A2 /* DreamBook.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				75D45D9218161C49005819A2 /* DreamBook.xcdatamodel */,
+			);
+			currentVersion = 75D45D9218161C49005819A2 /* DreamBook.xcdatamodel */;
+			path = DreamBook.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 753BF8F1180E2145005DECCA /* Project object */;
 }
