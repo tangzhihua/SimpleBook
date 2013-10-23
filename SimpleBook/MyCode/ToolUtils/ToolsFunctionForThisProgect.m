@@ -84,8 +84,15 @@
 // 使用 Info.plist 中的 "Bundle version" 来保存本地App Version
 +(NSString *)localAppVersion {
   NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
-  NSString *appVersion = [infoDic objectForKey:@"CFBundleVersion"];
-  return appVersion;
+  NSString *version = [infoDic objectForKey:@"CFBundleVersion"];
+  return version;
+}
+
+// 本地 "图书引擎版本号"
++(NSString *)localBookEngineVersion {
+  NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
+  NSString *version = [infoDic objectForKey:@"CFBundleShortVersionString"];
+  return version;
 }
 
 static NSString *userAgentString = nil;

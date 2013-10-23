@@ -6,32 +6,21 @@
 //
 
 #import "GlobalDataCacheForNeedSaveToFileSystem.h"
+
 #import "GlobalDataCacheForMemorySingleton.h"
-
-
-
-
 #import "NSObject+Serialization.h"
-
 #import "LocalCacheDataPathConstant.h"
-
+#import "BookInfo.h"
+#import "LocalBook.h"
+#import "BookListInBookstoresDatabaseFieldsConstant.h"
+#import "LogonDatabaseFieldsConstant.h"
 #import "LocalBookList.h"
-
 #import "LocalBookshelfCategoriesNetRespondBean.h"
-
 #import "LogonNetRespondBean.h"
+#import "NSMutableDictionary+SafeSetObject.h"
+#import "ToolsFunctionForThisProgect.h"
 
 static NSString *const TAG = @"<GlobalDataCacheForNeedSaveToFileSystem>";
-
-
-
-
-
-
-
-
-
-
 
 // 自动登录的标志
 static NSString *const kLocalCacheDataName_AutoLoginMark                  = @"AutoLoginMark";
@@ -160,13 +149,18 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
   BOOL isNeedShowBeginnerGuide = [userDefaults boolForKey:kLocalCacheDataName_BeginnerGuide];
   [GlobalDataCacheForMemorySingleton sharedInstance].isNeedShowBeginnerGuide = isNeedShowBeginnerGuide;
   
-
+  // 服务器主机名
+  //NSString *hostName = [userDefaults stringForKey:kLocalCacheDataName_HostName];
+  //[GlobalDataCacheForMemorySingleton sharedInstance].hostName = hostName;
 }
 
 + (void)readLocalBookListToGlobalDataCacheForMemorySingleton {
   LocalBookList *object = [LocalBookList deserializeObjectFromFileSystemWithFileName:kLocalCacheDataName_LocalBookList
                                                                        directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
   [GlobalDataCacheForMemorySingleton sharedInstance].localBookList = object;
+  
+  // 从文件系统中, 读取已经安装好的书籍信息, 这是为了防止 "序列化" 出现问题.
+  [self readInstallSucceedBookInfoFromFileSystem];
   
   [self registerLocalBookListKVO];
 }
@@ -208,7 +202,11 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
   BOOL isNeedShowBeginnerGuide = [GlobalDataCacheForMemorySingleton sharedInstance].isNeedShowBeginnerGuide;
   [userDefaults setBool:isNeedShowBeginnerGuide forKey:kLocalCacheDataName_BeginnerGuide];
   
-  
+  // 服务器主机名
+//  NSString *hostName = [GlobalDataCacheForMemorySingleton sharedInstance].hostName;
+//  if ([hostName isEqualToString:kUrlConstant_MainUrl]) {
+//    [userDefaults setObject:hostName forKey:kLocalCacheDataName_HostName];
+//  }
 }
 
 + (void)writeLocalBookshelfCategoriesToFileSystem {
@@ -307,8 +305,6 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
 #pragma mark - NSNotification 监听一些对象状态变化时, 发送的通知
 //
 + (void)registerBroadcastReceiver {
-  
-  
   // "下载完成并且安装成功一本书籍"
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(onReceiveForBroadcast:)
@@ -336,7 +332,98 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
   
   // "下载完成并且安装成功一本书籍"
   if ([notification.name isEqualToString:[NSNumber numberWithInteger:kUserNotificationEnum_DownloadAndInstallSucceed].stringValue]) {
+    LocalBook *book = (LocalBook *)notification.object;
+    [self saveBookInfoToPListWithInstallSucceedBook:book];
+    
     [GlobalDataCacheForNeedSaveToFileSystem writeLocalBookListToFileSystem];
   }
+}
+
+#pragma mark -
+#pragma mark 保存已经解压成功的书籍
+
+// 图书引擎版本号
+#define BOOK_ENGINE_VERSION       @"book_engine_version"
+#define BOOK_INFO_PLIST_FILE_NAME @"bookinfo.plist"
+
++ (void) saveBookInfoToPListWithInstallSucceedBook:(LocalBook *)book {
+  NSString *filePath = [NSString stringWithFormat:@"%@/%@", book.bookSaveDirPath, BOOK_INFO_PLIST_FILE_NAME];
+  NSMutableDictionary *dicData = [NSMutableDictionary dictionary];
+  // BookInfo
+  if (book.bookInfo != nil) {
+    
+    [dicData safeSetObject:book.bookInfo.content_id      forKey:k_BookListInBookstores_RespondKey_content_id];
+    [dicData safeSetObject:book.bookInfo.name            forKey:k_BookListInBookstores_RespondKey_name];
+    [dicData safeSetObject:book.bookInfo.published       forKey:k_BookListInBookstores_RespondKey_published];
+    [dicData safeSetObject:book.bookInfo.expired         forKey:k_BookListInBookstores_RespondKey_expired];
+    [dicData safeSetObject:book.bookInfo.author          forKey:k_BookListInBookstores_RespondKey_author];
+    [dicData safeSetObject:book.bookInfo.price           forKey:k_BookListInBookstores_RespondKey_price];
+    [dicData safeSetObject:book.bookInfo.productid       forKey:k_BookListInBookstores_RespondKey_productid];
+    [dicData safeSetObject:book.bookInfo.categoryid      forKey:k_BookListInBookstores_RespondKey_categoryid];
+    [dicData safeSetObject:book.bookInfo.publisher       forKey:k_BookListInBookstores_RespondKey_publisher];
+    [dicData safeSetObject:book.bookInfo.thumbnail       forKey:k_BookListInBookstores_RespondKey_thumbnail];
+    [dicData safeSetObject:book.bookInfo.bookDescription forKey:k_BookListInBookstores_RespondKey_description];
+    [dicData safeSetObject:book.bookInfo.size            forKey:k_BookListInBookstores_RespondKey_size];
+  }
+  
+  // bindAccount
+  if (book.bindAccount != nil) {
+    [dicData safeSetObject:book.bindAccount.username     forKey:kLogonNetRespondBeanProperty_username];
+    [dicData safeSetObject:book.bindAccount.password     forKey:kLogonNetRespondBeanProperty_password];
+  }
+  
+  // folder
+  [dicData safeSetObject:book.folder                     forKey:kLocalBookProperty_folder];
+  
+  // 本地App中的 "图书引擎版本号"
+  NSString *localBookEngineVersion = [ToolsFunctionForThisProgect localBookEngineVersion];
+  [dicData safeSetObject:localBookEngineVersion          forKey:BOOK_ENGINE_VERSION];
+  
+  // save file
+  [dicData writeToFile:filePath atomically:YES];
+}
+
++ (void) readInstallSucceedBookInfoFromFileSystem {
+  
+  LocalBookList *localBookList = [GlobalDataCacheForMemorySingleton sharedInstance].localBookList;
+  
+  do {
+    NSString *localBookCachePath = [LocalCacheDataPathConstant localBookCachePath];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:localBookCachePath]) {
+      break;
+    }
+    
+    NSArray *folders = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:localBookCachePath error:nil];
+    if (folders.count <= 0) {
+      break;
+    }
+    
+    for (NSString *folder in folders) {
+      NSString *bookInfoPath = [NSString stringWithFormat:@"%@/%@/%@", localBookCachePath, folder, BOOK_INFO_PLIST_FILE_NAME];
+      if (![[NSFileManager defaultManager] fileExistsAtPath:bookInfoPath]) {
+        // 如果 "书籍文件夹" 中没有 bookinfo.plist 证明书籍没有解压成功, 也就是垃圾文件夹, 可以删除了.
+        [[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithFormat:@"%@/%@", localBookCachePath, folder] error:NULL];
+        continue;
+      }
+      
+      NSMutableDictionary *bookInfoDictionary = [NSMutableDictionary dictionaryWithContentsOfFile:bookInfoPath];
+      if (bookInfoDictionary.count <= 0) {
+        // 书籍信息字典, 如果为空, 也是不正常的.
+        continue;
+      }
+      BookInfo *bookInfo = [[BookInfo alloc] initWithDictionary:bookInfoDictionary];
+      LocalBook *localBook = [[LocalBook alloc] initWithBookInfo:bookInfo];
+      localBook.bookStateEnum = kBookStateEnum_Installed;
+      LogonNetRespondBean *bindAccount = [[LogonNetRespondBean alloc] initWithDictionary:bookInfoDictionary];
+      localBook.bindAccount = bindAccount;
+      localBook.folder = [bookInfoDictionary objectForKey:kLocalBookProperty_folder];
+      
+      NSString *localBookEngineVersion = [ToolsFunctionForThisProgect localBookEngineVersion];
+      NSString *bookEngineVersionOfCurrentlyBook = [bookInfoDictionary objectForKey:kLocalBookProperty_folder];
+      // TODO : 这里的处理还没有想好, 一种最简单的解决方案是, 如果发现本地的保存的书籍的 书籍引擎和当前app的书籍引擎版本号是不兼容的, 就直接删除本地已经下载的这本书
+      [localBookList addBook:localBook];
+      
+    }
+  } while (NO);
 }
 @end

@@ -172,7 +172,7 @@
     // 发送 "下载完成并且安装成功一本书籍" 的通知.
     NSNotification *userBroadcast
     = [NSNotification notificationWithName:[NSNumber numberWithInteger:kUserNotificationEnum_DownloadAndInstallSucceed].stringValue
-                                    object:nil
+                                    object:self
                                   userInfo:nil];
     [[NSNotificationCenter defaultCenter] postNotification:userBroadcast];
   } else {
@@ -202,10 +202,9 @@
   
 }
 
-
 - (BOOL) startDownloadBookWithURLString:(NSString *)urlString {
   do {
-    //urlString = @"http://dl_dir.qq.com/qqfile/qq/QQforMac/QQ_V1.4.1.dmg";
+    
     if ([NSString isEmpty:urlString]) {
       // 参数非法
       RNAssert(NO, @"入参urlString为空!");
@@ -275,8 +274,6 @@
         }
       }
     }
-    
-    
     
     //
     [self.bookDownloadOperation addDownloadStream:[NSOutputStream outputStreamToFileAtPath:self.bookTmpZipResFilePath append:YES]];

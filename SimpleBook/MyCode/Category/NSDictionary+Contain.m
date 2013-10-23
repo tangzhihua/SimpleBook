@@ -5,9 +5,9 @@
 //
 //
 
-#import "NSDictionary+Helper.h"
+#import "NSDictionary+Contain.h"
 
-@implementation NSDictionary (Helper)
+@implementation NSDictionary (Contain)
 
 -(BOOL)containsKey:(id)key {
   if (key == nil || [key isKindOfClass:[NSNull class]]) {

@@ -17,6 +17,9 @@
 // 使用 Info.plist 中的 "Bundle version" 来保存本地App Version
 +(NSString *)localAppVersion;
 
+// 本地 "图书引擎版本号"
++(NSString *)localBookEngineVersion;
+
 // 获取当前设备的UA信息
 +(NSString *)getUserAgent;
 

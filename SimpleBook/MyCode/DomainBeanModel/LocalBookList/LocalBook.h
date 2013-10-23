@@ -12,6 +12,7 @@
 // 用于外部 KVO 的, 属性名称(字符串格式).
 #define kLocalBookProperty_bookStateEnum    @"bookStateEnum"
 #define kLocalBookProperty_downloadProgress @"downloadProgress"
+#define kLocalBookProperty_folder           @"folder"
 
 // 书籍下载解压过程中, 如果发生错误时, 通知控制层的块
 typedef void (^BookDownloadErrorBlock)(NSError* error);

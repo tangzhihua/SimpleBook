@@ -8,6 +8,9 @@
 #import <Foundation/Foundation.h>
 #import "BaseModel.h"
 
+#define kLogonNetRespondBeanProperty_username @"username"
+#define kLogonNetRespondBeanProperty_password @"password"
+
 // 只针对 企业用户, 公共账户 不会需要创建当前模型
 @interface LogonNetRespondBean : BaseModel
  

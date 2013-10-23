@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSDictionary (Helper)
+@interface NSDictionary (Contain)
 
 -(BOOL)containsKey:(id)key;
 -(BOOL)containsValue:(id)value;
