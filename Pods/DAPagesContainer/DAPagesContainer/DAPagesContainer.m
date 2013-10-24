@@ -131,7 +131,12 @@
      {
        [previosSelectdItem setTitleColor:[UIColor colorWithWhite:0.6 alpha:1.] forState:UIControlStateNormal];
        [nextSelectdItem setTitleColor:[UIColor colorWithWhite:1. alpha:1.] forState:UIControlStateNormal];
-     } completion:nil];
+     } completion:^(BOOL finished) {
+       //
+       if (self.tabPageChangeHandleBlock != NULL) {
+         self.tabPageChangeHandleBlock(self.selectedIndex);
+       }
+     }];
   } else {
     // This means we should "jump" over at least one view controller
     self.shouldObserveContentOffset = NO;
@@ -286,7 +291,10 @@
 
 - (void)itemAtIndex:(NSUInteger)index didSelectInPagesContainerTopBar:(DAPagesContainerTopBar *)bar
 {
-  [self setSelectedIndex:index animated:YES];
+  // 防止重复的向控制层发送 tab change event
+  if (self.selectedIndex != index) {
+    [self setSelectedIndex:index animated:YES];
+  }
 }
 
 #pragma mark - UIScrollView delegate
@@ -296,13 +304,13 @@
 }
 // 2、将要开始拖拽，手指已经放在view上并准备拖动的那一刻
 // called on start of dragging (may require some time and or distance to move)
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-  
-}
+//- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+//
+//}
 // 3、将要结束拖拽，手指已拖动过view并准备离开手指的那一刻，注意：当属性pagingEnabled为YES时，此函数不被调用
--(void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-  
-}
+//-(void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+//
+//}
 // 4、已经结束拖拽，手指刚离开view的那一刻
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
   if (!decelerate) {
@@ -310,23 +318,24 @@
   }
 }
 // 5、view将要开始减速，view滑动之后有惯性
--(void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
-  
-}
+//-(void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+//
+//}
 // 6、view已经停止滚动
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-  self.selectedIndex = scrollView.contentOffset.x / CGRectGetWidth(self.scrollView.frame);
-  self.scrollView.userInteractionEnabled = YES;
   
-  //
-  if (self.tabPageChangeHandleBlock != NULL) {
-    self.tabPageChangeHandleBlock(self.selectedIndex);
+  // 防止重复的向控制层发送 tab change event
+  NSUInteger newSelectedIndex = scrollView.contentOffset.x / CGRectGetWidth(self.scrollView.frame);
+  if (newSelectedIndex != self.selectedIndex) {
+    self.selectedIndex = newSelectedIndex;
   }
+  
+  self.scrollView.userInteractionEnabled = YES;
 }
 // 7、view的缩放
--(void)scrollViewDidZoom:(UIScrollView *)scrollView {
-  
-}
+//-(void)scrollViewDidZoom:(UIScrollView *)scrollView {
+//
+//}
 // 8、有动画时调用
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
   self.scrollView.userInteractionEnabled = YES;

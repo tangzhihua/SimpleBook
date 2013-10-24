@@ -28,7 +28,7 @@
 
 #import "BookStoreTableCell_ipad.h"
 
-@interface BookCategoryViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface BookCategoryViewController () 
 @property (weak, nonatomic) IBOutlet UITableView *bookTableView;
 
 // 书城图书列表(完成本地图书列表和从服务器新获取的图书列表进行了数据同步)
@@ -279,126 +279,6 @@
     [alertView show];
   }];
   
-}
-
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  return self.bookList != nil ? [self.bookList bookCategoryTotalByBookNameSearch:@""] : 0;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  
-  NSDictionary *bookCategoryDictionaryByBookNameSearch = [self.bookList bookCategoryDictionaryByBookNameSearch:@""];
-  NSArray *bookCategoryIDListOfSorted = [bookCategoryDictionaryByBookNameSearch.allKeys sortedArrayUsingSelector:@selector(compare:)];
-  NSString *categoryIDOfSection = bookCategoryIDListOfSorted[section];
-  NSArray *bookInfoListOfSection = bookCategoryDictionaryByBookNameSearch[categoryIDOfSection];
-  return bookInfoListOfSection.count;
-}
-
-// テーブルビューにセルを追加する
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  BookStoreTableCell_ipad *cell = [BookStoreTableCell_ipad cellForTableView:tableView fromNib:self.bookListTableCellNib];
-  if (![NSString isEmpty:cell.contentID]) {
-    // 注销监听下载KVO
-    LocalBook *book = [self.bookList objectByContentID:cell.contentID];
-    [book removeObserver:cell forKeyPath:kLocalBookProperty_bookStateEnum context:(__bridge void *)cell];
-    [book removeObserver:cell forKeyPath:kLocalBookProperty_downloadProgress context:(__bridge void *)cell];
-  }
-  
-  NSDictionary *bookCategoryDictionaryByBookNameSearch = [self.bookList bookCategoryDictionaryByBookNameSearch:@""];
-  NSArray *bookCategoryIDListOfSorted = [bookCategoryDictionaryByBookNameSearch.allKeys sortedArrayUsingSelector:@selector(compare:)];
-  NSString *categoryIDOfSection = bookCategoryIDListOfSorted[indexPath.section];
-  NSArray *bookInfoListOfSection = bookCategoryDictionaryByBookNameSearch[categoryIDOfSection];
-  
-  LocalBook *book = bookInfoListOfSection[indexPath.row];
-  // 注册KVO
-  [book addObserver:cell
-         forKeyPath:kLocalBookProperty_bookStateEnum
-            options:NSKeyValueObservingOptionNew
-            context:(__bridge void *)cell];
-  [book addObserver:cell
-         forKeyPath:kLocalBookProperty_downloadProgress
-            options:NSKeyValueObservingOptionNew
-            context:(__bridge void *)cell];
-  
-  __weak BookCategoryViewController *weakSelf = self;
-  cell.bookStoreTableCellFunctionButtonClickHandleBlock
-  = ^(BookStoreTableCell_ipad* tableCell, NSString *contentIDString) {
-    LocalBook *book = [weakSelf.bookList objectByContentID:contentIDString];
-    switch (book.bookStateEnum) {
-        
-      case kBookStateEnum_Unpaid:{
-        
-        [[MKStoreManager sharedManager] buyFeature:kFeatureAId
-                                        onComplete:^(NSString* purchasedFeature,
-                                                     NSData* purchasedReceipt,
-                                                     NSArray* availableDownloads) {
-                                          NSLog(@"Purchased: %@", purchasedFeature);
-                                        } onCancelled:^ {
-                                          NSLog(@"User Cancelled Transaction");
-                                        }];
-        
-        
-      }break;
-        
-      case kBookStateEnum_Paid:{
-        if (NETWORK_REQUEST_ID_OF_IDLE == _netRequestIndexForGetBookDownloadUrl) {
-          
-          // 给将要保存到本地的书籍, 绑定当前处于登录状态的账号(企业账号/公共账号 都需要绑定).
-          LogonNetRespondBean *account = [[LogonNetRespondBean alloc] init];
-          account.username = [GlobalDataCacheForMemorySingleton sharedInstance].usernameForLastSuccessfulLogon;
-          account.password = [GlobalDataCacheForMemorySingleton sharedInstance].passwordForLastSuccessfulLogon;
-          book.bindAccount = account;
-          
-          // 向本地书籍列表中, 插入一本书(localBookList 中已经做了放置重复插入的处理, 外部不用担心).
-          [[GlobalDataCacheForMemorySingleton sharedInstance].localBookList addBook:book];
-          
-          [weakSelf requestBookDownlaodUrlWithContentID:book.bookInfo.content_id bindAccount:book.bindAccount];
-        }
-      }break;
-        
-      case kBookStateEnum_Downloading:{
-        [book stopDownloadBook];
-      }break;
-        
-      case kBookStateEnum_Pause:{
-        if (NETWORK_REQUEST_ID_OF_IDLE == _netRequestIndexForGetBookDownloadUrl) {
-          [weakSelf requestBookDownlaodUrlWithContentID:book.bookInfo.content_id bindAccount:book.bindAccount];
-        }
-      }break;
-        
-      case kBookStateEnum_NotInstalled:{
-        
-      }break;
-        
-      case kBookStateEnum_Unziping:{
-        
-      }break;
-        
-      case kBookStateEnum_Installed:{
-        [weakSelf openBookWithBookSaveDirPath:book.bookSaveDirPath];
-        
-      }break;
-      case kBookStateEnum_Update:{
-        
-      }break;
-      default:
-        break;
-    }
-  };
-  
-  [cell bind:book];
-  return cell;
-}
-
-// cellの高さ
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-  return 244;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-  return 31;
 }
 
 

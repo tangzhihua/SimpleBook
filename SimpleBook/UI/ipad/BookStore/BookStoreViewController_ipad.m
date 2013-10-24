@@ -27,6 +27,10 @@
 
 #import "BookStoreTableCell_ipad.h"
 
+#import "DAPagesContainer.h"
+#import "BookCategoryViewController.h"
+#import "BookCategory.h"
+
 @interface BookStoreViewController_ipad () <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
@@ -40,7 +44,7 @@
 @property (weak, nonatomic) IBOutlet UIView *thirdLayerView;
 
 
-
+@property (strong, nonatomic) DAPagesContainer *pagesContainer;
 
 // 最后的搜索条件
 @property (nonatomic, copy) NSString *latestSearchCriteria;
@@ -86,6 +90,25 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  self.pagesContainer = [[DAPagesContainer alloc] init];
+  [self.pagesContainer willMoveToParentViewController:self];
+  self.pagesContainer.view.frame = self.view.bounds;
+  self.pagesContainer.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  [self.firstLayerView addSubview:self.pagesContainer.view];
+  [self.pagesContainer didMoveToParentViewController:self];
+  
+  NSMutableArray *bookCategoryViewControllerArray = [NSMutableArray array];
+  for (BookCategory *bookCategory in [GlobalDataCacheForMemorySingleton sharedInstance].bookCategoriesNetRespondBean.categories) {
+    BookCategoryViewController *bookCategoryViewController = [[BookCategoryViewController alloc]initWithNibName:@"BookCategoryViewController" bundle:nil];
+    bookCategoryViewController.title = bookCategory.name;
+    [bookCategoryViewControllerArray addObject:bookCategoryViewController];
+  }
+  
+  self.pagesContainer.viewControllers = bookCategoryViewControllerArray;
+  
+  self.pagesContainer.tabPageChangeHandleBlock = ^(NSUInteger selectedIndex) {
+    NSLog(@"------ %d", selectedIndex);
+  };
 }
 
 
