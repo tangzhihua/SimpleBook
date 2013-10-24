@@ -9,7 +9,7 @@
 #import "BaseModel.h"
 
 
-@interface LocalBookshelfCategoriesNetRespondBean : BaseModel
+@interface BookCategoriesNetRespondBean : BaseModel
  
 @property (nonatomic, readonly, strong) NSArray *categories;
 

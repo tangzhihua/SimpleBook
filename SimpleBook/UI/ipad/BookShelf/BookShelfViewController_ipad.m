@@ -16,9 +16,9 @@
 #import "LogonNetRequestBean.h"
 #import "LogonNetRespondBean.h"
 // 获取本地书籍分类列表
-#import "LocalBookshelfCategoriesNetRequestBean.h"
-#import "LocalBookshelfCategoriesNetRespondBean.h"
-#import "LocalBookshelfCategory.h"
+#import "BookCategoriesNetRequestBean.h"
+#import "BookCategoriesNetRespondBean.h"
+#import "BookCategory.h"
 
 #import "BookInfo.h"
 #import "LocalBook.h"
@@ -54,7 +54,7 @@
 // 这里具体原因我还未知....
 @property (nonatomic, assign) BOOL editMode;
 
-@property (nonatomic, strong) LocalBookshelfCategoriesNetRespondBean *localBookshelfCategoriesNetRespondBean;
+@property (nonatomic, strong) BookCategoriesNetRespondBean *bookCategoriesNetRespondBean;
 @end
 
 
@@ -137,22 +137,22 @@
   } else {
     self.logoutButton.hidden = YES;
   }
+  
+  // 对iOS7以下版本来标题更换图片，重新布局
+  if (!IS_IOS7) {
+    CGRect frame = self.headerView.frame;
+    frame.size.height -= 20.0f;
+    self.headerView.frame = frame;
     
-    // 对iOS7以下版本来标题更换图片，重新布局
-    if (!IS_IOS7) {
-        CGRect frame = self.headerView.frame;
-        frame.size.height -= 20.0f;
-        self.headerView.frame = frame;
-        
-        frame = self.imgviewHeader.frame;
-        frame.size.height -= 20.0f;
-        self.imgviewHeader.frame = frame;
-        
-        frame = self.bookTableView.frame;
-        frame.size.height += 20.0f;
-        frame.origin.y -= 20.0f;
-        self.bookTableView.frame = frame;
-    }
+    frame = self.imgviewHeader.frame;
+    frame.size.height -= 20.0f;
+    self.imgviewHeader.frame = frame;
+    
+    frame = self.bookTableView.frame;
+    frame.size.height += 20.0f;
+    frame.origin.y -= 20.0f;
+    self.bookTableView.frame = frame;
+  }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -163,18 +163,18 @@
     // 竖屏
     [self.imgviewHeader setImage:[UIImage imageNamed:@"d_wdsj.png"]];
     [self.imgviewFooter setImage:[UIImage imageNamed:@"ddh.png"]];
-      // 对iOS7以下版本来标题更换图片
-      if (!IS_IOS7) {
-          self.imgviewHeader.image = [UIImage imageNamed:@"d_wdsj_6"];
-      }
+    // 对iOS7以下版本来标题更换图片
+    if (!IS_IOS7) {
+      self.imgviewHeader.image = [UIImage imageNamed:@"d_wdsj_6"];
+    }
   } else {
     // 横屏
     [self.imgviewHeader setImage:[UIImage imageNamed:@"d_wdsj_H.png"]];
     [self.imgviewFooter setImage:[UIImage imageNamed:@"ddh_H.png"]];
-      // 对iOS7以下版本来标题更换图片
-      if (!IS_IOS7) {
-          self.imgviewHeader.image = [UIImage imageNamed:@"d_wdsj_6_H"];
-      }
+    // 对iOS7以下版本来标题更换图片
+    if (!IS_IOS7) {
+      self.imgviewHeader.image = [UIImage imageNamed:@"d_wdsj_6_H"];
+    }
   }
   
   // superクラスの呼び出し前にreloadDataやっておくと２回呼ばれないですむ
@@ -201,21 +201,21 @@
   [self.bookTableView reloadData];
   
   if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
-      // 竖屏
-      [self.imgviewHeader setImage:[UIImage imageNamed:@"d_wdsj.png"]];
-      [self.imgviewFooter setImage:[UIImage imageNamed:@"ddh.png"]];
-      // 对iOS7以下版本来标题更换图片
-      if (!IS_IOS7) {
-          self.imgviewHeader.image = [UIImage imageNamed:@"d_wdsj_6"];
-      }
+    // 竖屏
+    [self.imgviewHeader setImage:[UIImage imageNamed:@"d_wdsj.png"]];
+    [self.imgviewFooter setImage:[UIImage imageNamed:@"ddh.png"]];
+    // 对iOS7以下版本来标题更换图片
+    if (!IS_IOS7) {
+      self.imgviewHeader.image = [UIImage imageNamed:@"d_wdsj_6"];
+    }
   } else {
-      // 横屏
-      [self.imgviewHeader setImage:[UIImage imageNamed:@"d_wdsj_H.png"]];
-      [self.imgviewFooter setImage:[UIImage imageNamed:@"ddh_H.png"]];
-      // 对iOS7以下版本来标题更换图片
-      if (!IS_IOS7) {
-          self.imgviewHeader.image = [UIImage imageNamed:@"d_wdsj_6_H"];
-      }
+    // 横屏
+    [self.imgviewHeader setImage:[UIImage imageNamed:@"d_wdsj_H.png"]];
+    [self.imgviewFooter setImage:[UIImage imageNamed:@"ddh_H.png"]];
+    // 对iOS7以下版本来标题更换图片
+    if (!IS_IOS7) {
+      self.imgviewHeader.image = [UIImage imageNamed:@"d_wdsj_6_H"];
+    }
   }
   
 }
@@ -312,10 +312,10 @@
 
 // 私有图书馆(企业) 按钮
 - (IBAction)privateLibraryButtonOnClickListener:(UIButton *)sender {
-    // 如果在编辑状态时，点击了登陆按钮，取消编辑状态
-    [self closeEditButton];
+  // 如果在编辑状态时，点击了登陆按钮，取消编辑状态
+  [self closeEditButton];
   // 如果在搜索状态，点了登陆按钮时，取消搜索6
-    [self.searchTextField resignFirstResponder];
+  [self.searchTextField resignFirstResponder];
   // 私有图书馆(企业) 按钮, 就中断对公有图书馆的请求.
   [[DomainBeanNetworkEngineSingleton sharedInstance] cancelNetRequestByRequestIndex:_netRequestIndexForLoginPublicLibrary];
   self.publicLibraryButton.enabled = YES;
@@ -441,7 +441,7 @@
       }
       
       // 请求本地书籍分类
-      if (weakSelf.localBookshelfCategoriesNetRespondBean == nil && _netRequestIndexForUserLocalBookshelfCategories == NETWORK_REQUEST_ID_OF_IDLE) {
+      if (weakSelf.bookCategoriesNetRespondBean == nil && _netRequestIndexForUserLocalBookshelfCategories == NETWORK_REQUEST_ID_OF_IDLE) {
         // 本地书籍分类列表, 只需要在登录成功之后请求一次即可.
         // 当本地书籍分类类表获取成功后, 会自动跳转到书城界面
         [weakSelf requestLocalBookshelfCategories];
@@ -487,18 +487,18 @@
     }
     
     // 获取书的分类
-    LocalBookshelfCategoriesNetRequestBean *netRequestBean = [[LocalBookshelfCategoriesNetRequestBean alloc] init];
+    BookCategoriesNetRequestBean *netRequestBean = [[BookCategoriesNetRequestBean alloc] init];
     __weak BookShelfViewController_ipad *weakSelf = self;
     [[DomainBeanNetworkEngineSingleton sharedInstance] requestDomainProtocolWithRequestDomainBean:netRequestBean currentNetRequestIndexToOut:&_netRequestIndexForUserLocalBookshelfCategories successedBlock:^(id respondDomainBean) {
       
       PRPLog(@"获取书的分类 成功!");
-      LocalBookshelfCategoriesNetRespondBean *netRespondBean = (LocalBookshelfCategoriesNetRespondBean *) respondDomainBean;
+      BookCategoriesNetRespondBean *netRespondBean = (BookCategoriesNetRespondBean *) respondDomainBean;
       PRPLog(@"%@", netRespondBean);
       
       // 局部缓存 "本地书籍分类"
-      weakSelf.localBookshelfCategoriesNetRespondBean = netRespondBean;
+      weakSelf.bookCategoriesNetRespondBean = netRespondBean;
       // 全局缓存 "本地书籍分类"
-      [GlobalDataCacheForMemorySingleton sharedInstance].localBookshelfCategoriesNetRespondBean = netRespondBean;
+      [GlobalDataCacheForMemorySingleton sharedInstance].bookCategoriesNetRespondBean = netRespondBean;
       
       // 跳转到 "书城界面"
       [weakSelf gotoBookStoreViewController];
@@ -633,7 +633,7 @@
   NSString *categoryIDOfSection = bookCategoryIDListOfSorted[section];
   
   // 通过 "分类ID" 获取 "分类Name"
-  NSString *categoryNameString = [[GlobalDataCacheForMemorySingleton sharedInstance].localBookshelfCategoriesNetRespondBean categoryNameByCategoryID:[categoryIDOfSection integerValue]];
+  NSString *categoryNameString = [[GlobalDataCacheForMemorySingleton sharedInstance].bookCategoriesNetRespondBean categoryNameByCategoryID:[categoryIDOfSection integerValue]];
   
   UIImage *headerViewBackgroundImage = nil;
   UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];

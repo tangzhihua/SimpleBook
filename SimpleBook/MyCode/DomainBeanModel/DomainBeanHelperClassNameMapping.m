@@ -14,8 +14,8 @@
 #import "LogonDomainBeanToolsFactory.h"
 
 // 2. 本地书籍分类
-#import "LocalBookshelfCategoriesNetRequestBean.h"
-#import "LocalBookshelfCategoriesDomainBeanToolsFactory.h"
+#import "BookCategoriesNetRequestBean.h"
+#import "BookCategoriesDomainBeanToolsFactory.h"
 
 // 3. 获取要下载的书籍URL
 #import "GetBookDownloadUrlNetRequestBean.h"
@@ -45,8 +45,8 @@ static const NSString *const TAG = @"<DomainBeanHelperClassNameMapping>";
     /**
 		 * 2. 本地书籍分类
 		 */
-    [strategyClassesNameMappingList setObject:NSStringFromClass([LocalBookshelfCategoriesDomainBeanToolsFactory class])
-                                       forKey:NSStringFromClass([LocalBookshelfCategoriesNetRequestBean class])];
+    [strategyClassesNameMappingList setObject:NSStringFromClass([BookCategoriesDomainBeanToolsFactory class])
+                                       forKey:NSStringFromClass([BookCategoriesNetRequestBean class])];
     
     /**
 		 * 3. 获取要下载的书籍URL

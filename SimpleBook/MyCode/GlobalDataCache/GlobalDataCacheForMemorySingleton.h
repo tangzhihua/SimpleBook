@@ -13,12 +13,12 @@
 #import <Foundation/Foundation.h>
 
 // 用于外部 KVO 的, 属性名称(字符串格式).
-#define kGlobalDataCacheForMemorySingletonProperty_privateAccountLogonNetRespondBean      @"privateAccountLogonNetRespondBean"
-#define kGlobalDataCacheForMemorySingletonProperty_localBookshelfCategoriesNetRespondBean @"localBookshelfCategoriesNetRespondBean"
+#define kGlobalDataCacheForMemorySingletonProperty_privateAccountLogonNetRespondBean @"privateAccountLogonNetRespondBean"
+#define kGlobalDataCacheForMemorySingletonProperty_bookCategoriesNetRespondBean      @"bookCategoriesNetRespondBean"
 
 @class LogonNetRespondBean;
 @class LocalBookList;
-@class LocalBookshelfCategoriesNetRespondBean;
+@class BookCategoriesNetRespondBean;
 
 @interface GlobalDataCacheForMemorySingleton : NSObject {
   
@@ -49,7 +49,7 @@
 // 本地书籍列表
 @property (nonatomic, strong) LocalBookList *localBookList;
 // 本地书籍分类
-@property (nonatomic, strong) LocalBookshelfCategoriesNetRespondBean *localBookshelfCategoriesNetRespondBean;
+@property (nonatomic, strong) BookCategoriesNetRespondBean *bookCategoriesNetRespondBean;
 
 #pragma mark -
 #pragma mark 单例

@@ -6,6 +6,12 @@
 // project.
 
 
+// DAPagesContainer
+#define COCOAPODS_POD_AVAILABLE_DAPagesContainer
+#define COCOAPODS_VERSION_MAJOR_DAPagesContainer 1
+#define COCOAPODS_VERSION_MINOR_DAPagesContainer 0
+#define COCOAPODS_VERSION_PATCH_DAPagesContainer 1
+
 // MKNetworkKit
 #define COCOAPODS_POD_AVAILABLE_MKNetworkKit
 #define COCOAPODS_VERSION_MAJOR_MKNetworkKit 0

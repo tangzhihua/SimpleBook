@@ -12,7 +12,7 @@
 #import "MKNetworkKit.h"
 
 #import "GlobalDataCacheForMemorySingleton.h"
-#import "LocalBookshelfCategoriesNetRespondBean.h"
+#import "BookCategoriesNetRespondBean.h"
 #import "GetBookDownloadUrlNetRequestBean.h"
 #import "GetBookDownloadUrlNetRespondBean.h"
 
@@ -463,7 +463,7 @@
   NSString *categoryIDOfSection = bookCategoryIDListOfSorted[section];
   
   // 通过 "分类ID" 获取 "分类Name"
-  NSString *categoryNameString = [[GlobalDataCacheForMemorySingleton sharedInstance].localBookshelfCategoriesNetRespondBean categoryNameByCategoryID:[categoryIDOfSection integerValue]];
+  NSString *categoryNameString = [[GlobalDataCacheForMemorySingleton sharedInstance].bookCategoriesNetRespondBean categoryNameByCategoryID:[categoryIDOfSection integerValue]];
   
   UIImage *headerViewBackgroundImage = nil;
   // 竖屏

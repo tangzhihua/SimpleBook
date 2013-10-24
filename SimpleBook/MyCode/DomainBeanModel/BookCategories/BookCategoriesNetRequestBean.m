@@ -5,10 +5,10 @@
 //
 //
 
-#import "LocalBookshelfCategoriesNetRequestBean.h"
+#import "BookCategoriesNetRequestBean.h"
  
 
-@implementation LocalBookshelfCategoriesNetRequestBean
+@implementation BookCategoriesNetRequestBean
 
  
 - (NSString *)description {

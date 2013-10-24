@@ -15,7 +15,7 @@
 #import "BookListInBookstoresDatabaseFieldsConstant.h"
 #import "LogonDatabaseFieldsConstant.h"
 #import "LocalBookList.h"
-#import "LocalBookshelfCategoriesNetRespondBean.h"
+#import "BookCategoriesNetRespondBean.h"
 #import "LogonNetRespondBean.h"
 #import "NSMutableDictionary+SafeSetObject.h"
 #import "ToolsFunctionForThisProgect.h"
@@ -84,7 +84,7 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
     
     [self unregisterLocalBookListKVO];
     [self unregisterLogonNetRespondBeanKVO];
-    [self unregisterLocalBookshelfCategoriesNetRespondBeanKVO];
+    [self unregisterBookCategoriesNetRespondBeanKVO];
   }
 }
 
@@ -166,13 +166,13 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
 }
 
 + (void)readLocalBookshelfCategoriesToGlobalDataCacheForMemorySingleton {
-  LocalBookshelfCategoriesNetRespondBean *object
-  = [LocalBookshelfCategoriesNetRespondBean deserializeObjectFromFileSystemWithFileName:kLocalCacheDataName_LocalBookshelfCategories
-                                                                          directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
+  BookCategoriesNetRespondBean *object
+  = [BookCategoriesNetRespondBean deserializeObjectFromFileSystemWithFileName:kLocalCacheDataName_LocalBookshelfCategories
+                                                                directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
   
-  [GlobalDataCacheForMemorySingleton sharedInstance].localBookshelfCategoriesNetRespondBean = object;
+  [GlobalDataCacheForMemorySingleton sharedInstance].bookCategoriesNetRespondBean = object;
   
-  [self registerLocalBookshelfCategoriesNetRespondBeanKVO];
+  [self registerBookCategoriesNetRespondBeanKVO];
 }
 
 
@@ -203,14 +203,14 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
   [userDefaults setBool:isNeedShowBeginnerGuide forKey:kLocalCacheDataName_BeginnerGuide];
   
   // 服务器主机名
-//  NSString *hostName = [GlobalDataCacheForMemorySingleton sharedInstance].hostName;
-//  if ([hostName isEqualToString:kUrlConstant_MainUrl]) {
-//    [userDefaults setObject:hostName forKey:kLocalCacheDataName_HostName];
-//  }
+  //  NSString *hostName = [GlobalDataCacheForMemorySingleton sharedInstance].hostName;
+  //  if ([hostName isEqualToString:kUrlConstant_MainUrl]) {
+  //    [userDefaults setObject:hostName forKey:kLocalCacheDataName_HostName];
+  //  }
 }
 
 + (void)writeLocalBookshelfCategoriesToFileSystem {
-  LocalBookshelfCategoriesNetRespondBean *object = [[GlobalDataCacheForMemorySingleton sharedInstance] localBookshelfCategoriesNetRespondBean];
+  BookCategoriesNetRespondBean *object = [[GlobalDataCacheForMemorySingleton sharedInstance] bookCategoriesNetRespondBean];
   [self serializeObjectToFileSystemWithObject:object fileName:kLocalCacheDataName_LocalBookshelfCategories directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
 }
 
@@ -244,7 +244,7 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
     } else if ([keyPath isEqualToString:kGlobalDataCacheForMemorySingletonProperty_privateAccountLogonNetRespondBean]) {
       // 保存 企业用户 登录后的 网络响应业务Bean
       [GlobalDataCacheForNeedSaveToFileSystem writeUserLoginInfoToFileSystem];
-    } else if ([keyPath isEqualToString:kGlobalDataCacheForMemorySingletonProperty_localBookshelfCategoriesNetRespondBean]) {
+    } else if ([keyPath isEqualToString:kGlobalDataCacheForMemorySingletonProperty_bookCategoriesNetRespondBean]) {
       // 保存 新取到的本地书籍分类网络响应业务Bean
       [GlobalDataCacheForNeedSaveToFileSystem writeLocalBookshelfCategoriesToFileSystem];
     }
@@ -289,16 +289,16 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
 }
 
 /// 本地书籍分类 网络响应业务Bean
-+ (void)registerLocalBookshelfCategoriesNetRespondBeanKVO {
++ (void)registerBookCategoriesNetRespondBeanKVO {
   [[GlobalDataCacheForMemorySingleton sharedInstance] addObserver:[GlobalDataCacheForNeedSaveToFileSystem privateInstance]
-                                                       forKeyPath:kGlobalDataCacheForMemorySingletonProperty_localBookshelfCategoriesNetRespondBean
+                                                       forKeyPath:kGlobalDataCacheForMemorySingletonProperty_bookCategoriesNetRespondBean
                                                           options:NSKeyValueObservingOptionNew
                                                           context:(__bridge void *)[GlobalDataCacheForNeedSaveToFileSystem privateInstance]];
 }
-+ (void)unregisterLocalBookshelfCategoriesNetRespondBeanKVO {
++ (void)unregisterBookCategoriesNetRespondBeanKVO {
   
   [[GlobalDataCacheForMemorySingleton sharedInstance] removeObserver:[GlobalDataCacheForNeedSaveToFileSystem privateInstance]
-                                                          forKeyPath:kGlobalDataCacheForMemorySingletonProperty_localBookshelfCategoriesNetRespondBean
+                                                          forKeyPath:kGlobalDataCacheForMemorySingletonProperty_bookCategoriesNetRespondBean
                                                              context:(__bridge void *)[GlobalDataCacheForNeedSaveToFileSystem privateInstance]];
 }
 

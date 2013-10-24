@@ -1,5 +1,5 @@
 //
-//  LocalBookshelfCategory.h
+//  BookCategory.h
 //  MBEnterprise
 //
 //  Created by 唐志华 on 13-9-22.
@@ -8,7 +8,7 @@
 
 #import "BaseModel.h"
 
-@interface LocalBookshelfCategory : BaseModel
+@interface BookCategory : BaseModel
 // 分类ID
 @property (nonatomic, readonly, assign) NSInteger identifier;
 // 分类名称

@@ -18,9 +18,9 @@
 #import "LogonNetRequestBean.h"
 #import "LogonNetRespondBean.h"
 // 获取本地书籍分类列表
-#import "LocalBookshelfCategoriesNetRequestBean.h"
-#import "LocalBookshelfCategoriesNetRespondBean.h"
-#import "LocalBookshelfCategory.h"
+#import "BookCategoriesNetRequestBean.h"
+#import "BookCategoriesNetRespondBean.h"
+#import "BookCategory.h"
 
 #import "BookInfo.h"
 #import "LocalBook.h"
@@ -54,7 +54,7 @@
 // 这里具体原因我还未知....
 @property (nonatomic, assign) BOOL editMode;
 
-@property (nonatomic, strong) LocalBookshelfCategoriesNetRespondBean *localBookshelfCategoriesNetRespondBean;
+@property (nonatomic, strong) BookCategoriesNetRespondBean *bookCategoriesNetRespondBean;
 @end
 
 
@@ -399,7 +399,7 @@
       }
       
       // 请求本地书籍分类
-      if (weakSelf.localBookshelfCategoriesNetRespondBean == nil && _netRequestIndexForUserLocalBookshelfCategories == NETWORK_REQUEST_ID_OF_IDLE) {
+      if (weakSelf.bookCategoriesNetRespondBean == nil && _netRequestIndexForUserLocalBookshelfCategories == NETWORK_REQUEST_ID_OF_IDLE) {
         // 本地书籍分类列表, 只需要在登录成功之后请求一次即可.
         // 当本地书籍分类类表获取成功后, 会自动跳转到书城界面
         [weakSelf requestLocalBookshelfCategories];
@@ -445,18 +445,18 @@
     }
     
     // 获取书的分类
-    LocalBookshelfCategoriesNetRequestBean *netRequestBean = [[LocalBookshelfCategoriesNetRequestBean alloc] init];
+    BookCategoriesNetRequestBean *netRequestBean = [[BookCategoriesNetRequestBean alloc] init];
     __weak BookShelfViewController_iPhone *weakSelf = self;
     [[DomainBeanNetworkEngineSingleton sharedInstance] requestDomainProtocolWithRequestDomainBean:netRequestBean currentNetRequestIndexToOut:&_netRequestIndexForUserLocalBookshelfCategories successedBlock:^(id respondDomainBean) {
       
       PRPLog(@"获取书的分类 成功!");
-      LocalBookshelfCategoriesNetRespondBean *netRespondBean = (LocalBookshelfCategoriesNetRespondBean *) respondDomainBean;
+      BookCategoriesNetRespondBean *netRespondBean = (BookCategoriesNetRespondBean *) respondDomainBean;
       PRPLog(@"%@", netRespondBean);
       
       // 局部缓存 "本地书籍分类"
-      weakSelf.localBookshelfCategoriesNetRespondBean = netRespondBean;
+      weakSelf.bookCategoriesNetRespondBean = netRespondBean;
       // 全局缓存 "本地书籍分类"
-      [GlobalDataCacheForMemorySingleton sharedInstance].localBookshelfCategoriesNetRespondBean = netRespondBean;
+      [GlobalDataCacheForMemorySingleton sharedInstance].bookCategoriesNetRespondBean = netRespondBean;
       
       // 跳转到 "书城界面"
       [weakSelf gotoBookStoreViewController];
@@ -557,7 +557,7 @@
   NSString *categoryIDOfSection = bookCategoryIDListOfSorted[section];
   
   // 通过 "分类ID" 获取 "分类Name"
-  NSString *categoryNameString = [[GlobalDataCacheForMemorySingleton sharedInstance].localBookshelfCategoriesNetRespondBean categoryNameByCategoryID:[categoryIDOfSection integerValue]];
+  NSString *categoryNameString = [[GlobalDataCacheForMemorySingleton sharedInstance].bookCategoriesNetRespondBean categoryNameByCategoryID:[categoryIDOfSection integerValue]];
   
   UIImage *headerViewBackgroundImage = nil;
   // 竖屏

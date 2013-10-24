@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 #import "IDomainBeanAbstractFactory.h"
 
-@interface LocalBookshelfCategoriesDomainBeanToolsFactory : NSObject <IDomainBeanAbstractFactory>
+@interface BookCategoriesDomainBeanToolsFactory : NSObject <IDomainBeanAbstractFactory>
 @end

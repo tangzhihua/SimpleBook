@@ -5,19 +5,19 @@
 //
 //
 
-#import "LocalBookshelfCategoriesParseNetRespondDictionaryToDomainBean.h"
+#import "BookCategoriesParseNetRespondDictionaryToDomainBean.h"
 
-#import "LocalBookshelfCategoriesDatabaseFieldsConstant.h"
-#import "LocalBookshelfCategoriesNetRespondBean.h"
+#import "BookCategoriesDatabaseFieldsConstant.h"
+#import "BookCategoriesNetRespondBean.h"
 
 #import "NSString+isEmpty.h"
 
 #import "TBXML.h"
 #import "TBXML+NSDictionary.h"
 
-static const NSString *const TAG = @"<LocalBookshelfCategoriesParseNetRespondStringToDomainBean>";
+static const NSString *const TAG = @"<BookCategoriesParseNetRespondDictionaryToDomainBean>";
 
-@implementation LocalBookshelfCategoriesParseNetRespondDictionaryToDomainBean
+@implementation BookCategoriesParseNetRespondDictionaryToDomainBean
 - (id) init {
 	
 	if ((self = [super init])) {
@@ -36,7 +36,7 @@ static const NSString *const TAG = @"<LocalBookshelfCategoriesParseNetRespondStr
       break;
     }
    	
-    return [[LocalBookshelfCategoriesNetRespondBean alloc] initWithDictionary:netRespondDictionary];
+    return [[BookCategoriesNetRespondBean alloc] initWithDictionary:netRespondDictionary];
   } while (NO);
   
   return nil;

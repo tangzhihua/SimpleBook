@@ -1,24 +1,24 @@
 //
-//  LocalBookshelfCategory.m
+//  BookCategory.m
 //  MBEnterprise
 //
 //  Created by 唐志华 on 13-9-22.
 //
 //
 
-#import "LocalBookshelfCategory.h"
+#import "BookCategory.h"
 
 #define kNSCodingField_id   @"id"
 #define kNSCodingField_name @"name"
 
-@interface LocalBookshelfCategory()
+@interface BookCategory()
 // 分类ID
 @property (nonatomic, readwrite, assign) NSInteger identifier;
 // 分类名称
 @property (nonatomic, readwrite, strong) NSString *name;
 @end
 
-@implementation LocalBookshelfCategory
+@implementation BookCategory
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
   if ([key isEqualToString:kNSCodingField_id]) {
     _identifier = [value integerValue];

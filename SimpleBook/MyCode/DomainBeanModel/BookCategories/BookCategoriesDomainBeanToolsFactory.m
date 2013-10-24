@@ -5,12 +5,14 @@
 //
 //
 
-#import "LocalBookshelfCategoriesDomainBeanToolsFactory.h"
-#import "LocalBookshelfCategoriesParseNetRespondDictionaryToDomainBean.h"
+#import "BookCategoriesDomainBeanToolsFactory.h"
 
-#import "LocalBookshelfCategoriesNetRespondBean.h"
+#import "BookCategoriesParseNetRespondDictionaryToDomainBean.h"
+
+#import "BookCategoriesNetRespondBean.h"
 #import "UrlConstantForThisProject.h"
-@implementation LocalBookshelfCategoriesDomainBeanToolsFactory
+
+@implementation BookCategoriesDomainBeanToolsFactory
 - (id) init {
 	
 	if ((self = [super init])) {
@@ -34,7 +36,7 @@
  * @return
  */
 - (id<IParseNetRespondDictionaryToDomainBean>) getParseNetRespondDictionaryToDomainBeanStrategy {
-  return [[LocalBookshelfCategoriesParseNetRespondDictionaryToDomainBean alloc] init];
+  return [[BookCategoriesParseNetRespondDictionaryToDomainBean alloc] init];
 }
 
 /**
@@ -50,6 +52,6 @@
  * @return
  */
 - (Class) getClassOfNetRespondBean {
-  return [LocalBookshelfCategoriesNetRespondBean class];
+  return [BookCategoriesNetRespondBean class];
 }
 @end

@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface LocalBookshelfCategoriesNetRequestBean : NSObject {
+@interface BookCategoriesNetRequestBean : NSObject {
   
 }
 

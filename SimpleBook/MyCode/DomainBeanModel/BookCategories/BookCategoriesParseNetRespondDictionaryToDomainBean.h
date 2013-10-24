@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "IParseNetRespondDictionaryToDomainBean.h"
 
-@interface LocalBookshelfCategoriesParseNetRespondDictionaryToDomainBean : NSObject <IParseNetRespondDictionaryToDomainBean> {
+@interface BookCategoriesParseNetRespondDictionaryToDomainBean : NSObject <IParseNetRespondDictionaryToDomainBean> {
   
 }
 
