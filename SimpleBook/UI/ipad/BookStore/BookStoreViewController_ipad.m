@@ -101,7 +101,14 @@
   for (BookCategory *bookCategory in [GlobalDataCacheForMemorySingleton sharedInstance].bookCategoriesNetRespondBean.categories) {
     BookCategoryViewController *bookCategoryViewController = [[BookCategoryViewController alloc]initWithNibName:@"BookCategoryViewController" bundle:nil];
     bookCategoryViewController.title = bookCategory.name;
-    [bookCategoryViewControllerArray addObject:bookCategoryViewController];
+    //[bookCategoryViewControllerArray addObject:bookCategoryViewController];
+    
+    UIViewController *beaverViewController = [[UIViewController alloc] init];
+    UIImageView *beaverImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"beaver.jpg"]];
+    beaverImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+    [beaverViewController.view addSubview:beaverImageView];
+    beaverViewController.title = @"BEAVER";
+    [bookCategoryViewControllerArray addObject:beaverViewController];
   }
   
   self.pagesContainer.viewControllers = bookCategoryViewControllerArray;
@@ -148,6 +155,11 @@
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration; {
   NSLog(@"willRotateToInterfaceOrientation ifOrientation=%d", toInterfaceOrientation);
   
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+  [self.pagesContainer updateLayoutForNewOrientation:toInterfaceOrientation];
 }
 
 - (void)didReceiveMemoryWarning {
