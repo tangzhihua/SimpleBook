@@ -69,17 +69,37 @@
   
   
   // 判断当前设备 iPhone or iPad 之后加载相对应的nib文件
-  UIViewController *rootViewController = nil;
+  __weak AppDelegate *weakSelf = self;
+  UIViewController *firstViewController = nil;
+  
   if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-    rootViewController = (UIViewController *)[[BookShelfViewController_iPhone alloc] initWithNibName:@"BookShelfViewController_iPhone" bundle:nil];
+    
+    /// iphone
+    self.navigation = [[UINavigationController alloc] initWithRootViewController:(UIViewController *)[[BookShelfViewController_ipad alloc] initWithNibName:@"BookShelfViewController_iPhone" bundle:nil]];
+    firstViewController = self.navigation;
+    
   } else {
-    rootViewController = (UIViewController *)[[BookShelfViewController_ipad alloc] initWithNibName:@"BookShelfViewController_ipad" bundle:nil];
+    /// ipad
+    self.navigation = [[UINavigationController alloc] initWithRootViewController:(UIViewController *)[[BookShelfViewController_ipad alloc] initWithNibName:@"BookShelfViewController_ipad" bundle:nil]];
+    
+    if ([GlobalDataCacheForMemorySingleton sharedInstance].isFirstStartApp) {
+     
+      
+      firstViewController = self.navigation;
+    } else {
+      
+      //
+      firstViewController = self.navigation;
+    }
   }
+  
+  [self.navigation.navigationBar setHidden:YES];
   
   // window
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-  self.window.rootViewController = rootViewController;
+  self.window.rootViewController = firstViewController;
   [self.window makeKeyAndVisible];
+  
   
   return YES;
 }

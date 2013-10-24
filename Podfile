@@ -1,8 +1,8 @@
 platform :ios, '5.0'
 
-pod 'MKStoreKit'
-pod 'MKNetworkKit'
-pod 'TBXML'
-pod 'TBXML+NSDictionary'
+pod 'MKStoreKit', '~> 4.99'
+pod 'MKNetworkKit', '~> 0.87'
+pod 'TBXML', '~> 1.5'
+pod 'TBXML+NSDictionary', '~> 0.0.1'
 pod 'ZipArchive', '~> 1.2.0'
 pod 'DAPagesContainer', '~> 1.0.1'

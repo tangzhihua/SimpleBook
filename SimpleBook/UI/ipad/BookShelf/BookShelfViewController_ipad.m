@@ -89,8 +89,8 @@
   [self closeEditButton];
   
   BookStoreViewController_ipad *bookStoreView = [[BookStoreViewController_ipad alloc]initWithNibName:@"BookStoreViewController_ipad" bundle:nil];
-  [bookStoreView setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-  [self presentViewController:bookStoreView animated:YES completion:NULL];
+  
+  [self.navigationController pushViewController:bookStoreView animated:YES];
 }
 
 -(void)openBookWithBookSaveDirPath:(NSString *)bookSaveDirPath {
@@ -157,6 +157,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+  
+  self.navigationController.navigationBar.hidden = YES;
+  
   // 设置Header/Footer图片
   UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
   if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {

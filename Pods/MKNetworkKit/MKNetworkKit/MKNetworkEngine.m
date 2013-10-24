@@ -585,7 +585,7 @@ static NSOperationQueue *_sharedNetworkQueue;
 -(void) saveCacheData:(NSData*) data forKey:(NSString*) cacheDataKey
 {
   if (data == nil) {
-    // 入参错误, 这里要容错
+    // 20131016 唐志华 add : 入参错误, 这里要容错, 否则 (self.memoryCache)[cacheDataKey] = data; 会崩溃
     return;
   }
   dispatch_async(self.backgroundCacheQueue, ^{

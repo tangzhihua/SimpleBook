@@ -52,8 +52,12 @@
 -(NSDictionary *)bookFolderDictionaryByBookNameSearch:(NSString *)bookName;
 
 #pragma mark -
-#pragma mark 对外的接口方法 (下面两个方法是临时存在的, 将来在书架要显示未下载完的书籍, 1期只是临时处理)
+#pragma mark 对外的接口方法 (下面两个方法是临时存在的, 将来在书架要显示未下载完的书籍, 1.0版本 中临时处理)
 // 下面两个获取的是 下载/安装 完成的书籍, 用于 书架界面
 -(NSUInteger)bookCategoryTotalOfInstalledByBookNameSearch:(NSString *)bookName;
 -(NSDictionary *)bookCategoryDictionaryOfInstalledByBookNameSearch:(NSString *)bookName;
+
+#pragma mark -
+#pragma mark 对外的接口方法 (下面两个方法是临时存在的, 因为目前没有后台人员, 所以不能提供根据书籍分类获取书籍列表的接口, 还是一次性取回全部书籍, 1.1版本 中临时处理)
+-(NSArray *)bookListByCategoryID:(NSString *)categoryID;
 @end

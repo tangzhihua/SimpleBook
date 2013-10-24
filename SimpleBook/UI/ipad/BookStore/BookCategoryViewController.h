@@ -11,5 +11,9 @@
 @class BookCategory;
 @interface BookCategoryViewController : UIViewController
 
+// 书籍分类
 @property (nonatomic, strong) BookCategory *bookCategory;
+
+//
+@property (nonatomic, strong) NSArray *bookListes;
 @end

@@ -11,10 +11,10 @@ PODS:
 
 DEPENDENCIES:
   - DAPagesContainer (~> 1.0.1)
-  - MKNetworkKit
-  - MKStoreKit
-  - TBXML
-  - TBXML+NSDictionary
+  - MKNetworkKit (~> 0.87)
+  - MKStoreKit (~> 4.99)
+  - TBXML (~> 1.5)
+  - TBXML+NSDictionary (~> 0.0.1)
   - ZipArchive (~> 1.2.0)
 
 SPEC CHECKSUMS:
