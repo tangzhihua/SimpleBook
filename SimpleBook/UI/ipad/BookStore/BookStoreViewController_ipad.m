@@ -90,32 +90,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  self.pagesContainer = [[DAPagesContainer alloc] init];
-  [self.pagesContainer willMoveToParentViewController:self];
-  self.pagesContainer.view.frame = self.view.bounds;
-  self.pagesContainer.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  [self.firstLayerView addSubview:self.pagesContainer.view];
-  [self.pagesContainer didMoveToParentViewController:self];
-  
-  NSMutableArray *bookCategoryViewControllerArray = [NSMutableArray array];
-  for (BookCategory *bookCategory in [GlobalDataCacheForMemorySingleton sharedInstance].bookCategoriesNetRespondBean.categories) {
-    BookCategoryViewController *bookCategoryViewController = [[BookCategoryViewController alloc]initWithNibName:@"BookCategoryViewController" bundle:nil];
-    bookCategoryViewController.title = bookCategory.name;
-    //[bookCategoryViewControllerArray addObject:bookCategoryViewController];
-    
-    UIViewController *beaverViewController = [[UIViewController alloc] init];
-    UIImageView *beaverImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"beaver.jpg"]];
-    beaverImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
-    [beaverViewController.view addSubview:beaverImageView];
-    beaverViewController.title = @"BEAVER";
-    [bookCategoryViewControllerArray addObject:beaverViewController];
-  }
-  
-  self.pagesContainer.viewControllers = bookCategoryViewControllerArray;
-  
-  self.pagesContainer.tabPageChangeHandleBlock = ^(NSUInteger selectedIndex) {
-    NSLog(@"------ %d", selectedIndex);
-  };
+  [self initPagesContainer];
 }
 
 
@@ -129,6 +104,11 @@
   self.navigationController.navigationBar.hidden = NO;
   
   
+}
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  
+  [self.pagesContainer updateLayoutWithBounds:self.view.bounds];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -171,6 +151,31 @@
   if([self isViewLoaded] && self.view.window == nil) {
     self.view = nil;
   }
+}
+
+#pragma mark -
+#pragma mark 初始化UI控件
+-(void)initPagesContainer {
+  self.pagesContainer = [[DAPagesContainer alloc] init];
+  [self.pagesContainer willMoveToParentViewController:self];
+  self.pagesContainer.view.frame = self.view.bounds;
+  self.pagesContainer.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  [self.firstLayerView addSubview:self.pagesContainer.view];
+  [self.pagesContainer didMoveToParentViewController:self];
+  
+  NSMutableArray *bookCategoryViewControllerArray = [NSMutableArray array];
+  for (BookCategory *bookCategory in [GlobalDataCacheForMemorySingleton sharedInstance].bookCategoriesNetRespondBean.categories) {
+    BookCategoryViewController *bookCategoryViewController = [[BookCategoryViewController alloc] initWithNibName:@"BookCategoryViewController" bundle:nil];
+    bookCategoryViewController.title = bookCategory.name;
+    [bookCategoryViewControllerArray addObject:bookCategoryViewController];
+  }
+  
+  self.pagesContainer.viewControllers = bookCategoryViewControllerArray;
+  
+  self.pagesContainer.tabPageChangeHandleBlock = ^(NSUInteger selectedIndex) {
+    NSLog(@"------ %d", selectedIndex);
+  };
+  
 }
 
 #pragma mark -

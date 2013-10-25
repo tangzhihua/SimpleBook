@@ -88,4 +88,6 @@ typedef void (^TabPageChangeHandleBlock)(NSUInteger selectedIndex);
  */
 - (void)updateLayoutForNewOrientation:(UIInterfaceOrientation)orientation;
 
+// 根据 bounds 来更新控件布局, 发现在 viewDidLoad 和 viewWillAppear 中得到的 self.view.bounds 都是不准确的, 因为横屏时, 也会得到竖屏的尺寸 需要在 viewDidAppear 中获取准确的bounds
+- (void)updateLayoutWithBounds:(CGRect)bounds;
 @end

@@ -24,8 +24,8 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </imageView>
                 <view contentMode="scaleToFill" id="xPg-Oh-Ufl" userLabel="outlet-> View 第一层视图">
-                    <rect key="frame" x="0.0" y="65" width="768" height="960"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </view>
                 <view hidden="YES" contentMode="scaleToFill" id="L5f-Af-wQ4" userLabel="outlet-> View 第二层视图">
                     <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
@@ -33,12 +33,11 @@
                 </view>
                 <view hidden="YES" contentMode="scaleToFill" id="r99-kR-4F5" userLabel="outlet-> View 第三层视图">
                     <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
         </view>
         <searchDisplayController id="gEL-sy-ioS">
             <connections>

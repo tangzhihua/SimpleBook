@@ -188,6 +188,10 @@
   [self layoutSubviews];
 }
 
+- (void)updateLayoutWithBounds:(CGRect)bounds {
+  self.view.frame = bounds;
+  [self layoutSubviews];
+}
 #pragma mark * Overwritten setters
 
 - (void)setPageIndicatorViewSize:(CGSize)size
@@ -234,7 +238,7 @@
       [self.scrollView addSubview:viewController.view];
       [viewController didMoveToParentViewController:self];
     }
-    [self layoutSubviews];
+    //[self layoutSubviews];
     self.selectedIndex = 0;
     self.pageIndicatorView.center = CGPointMake([self.topBar centerForSelectedItemAtIndex:self.selectedIndex].x,
                                                 self.pageIndicatorView.center.y);
