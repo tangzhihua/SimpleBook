@@ -341,13 +341,18 @@
  *
  * @param netRequestIndex : 网络请求命令对应的索引
  */
-- (void) cancelNetRequestByRequestIndex:(NSInteger) netRequestIndex {
+- (void) cancelNetRequestByRequestIndex:(out NSInteger *) pNetRequestIndex {
   do {
-    if (netRequestIndex == NETWORK_REQUEST_ID_OF_IDLE) {
+    if (pNetRequestIndex == NULL) {
+      RNAssert(NO, @"入参为空.");
       break;
     }
     
-    NSNumber *indexOfNSNumber = [NSNumber numberWithInteger:netRequestIndex];
+    if (*pNetRequestIndex == NETWORK_REQUEST_ID_OF_IDLE) {
+      break;
+    }
+    
+    NSNumber *indexOfNSNumber = [NSNumber numberWithInteger:*pNetRequestIndex];
     NSOperation *netRequestOperation = [self.synchronousNetRequestBuf objectForKey:indexOfNSNumber];
     if (nil == netRequestOperation) {
       break;
@@ -356,9 +361,11 @@
     // 调用 cancel 不会在触发 addCompletionHandler 和 errorHandler, 所以这里直接从请求队列中删除缓存对象.
     [netRequestOperation cancel];
     [self.synchronousNetRequestBuf removeObjectForKey:indexOfNSNumber];
+    
+    // 复位标签索引
+    *pNetRequestIndex = NETWORK_REQUEST_ID_OF_IDLE;
     NSLog(@"当前网络接口请求队列长度=%i", self.synchronousNetRequestBuf.count);
   } while (NO);
-  
 }
 
 @end

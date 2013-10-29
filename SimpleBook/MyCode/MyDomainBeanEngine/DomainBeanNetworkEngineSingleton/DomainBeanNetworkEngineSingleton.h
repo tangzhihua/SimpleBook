@@ -57,7 +57,7 @@ typedef void (^DomainNetRespondHandleInUIThreadFailedBlock)(NetRequestErrorBean 
  *
  * @param netRequestIndex : 网络请求命令对应的索引
  */
-- (void) cancelNetRequestByRequestIndex:(NSInteger) netRequestIndex;
+- (void) cancelNetRequestByRequestIndex:(out NSInteger *) pNetRequestIndex;
 
 
 

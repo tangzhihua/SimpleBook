@@ -263,7 +263,7 @@
 - (IBAction)publicLibraryButtonOnClickListener:(UIButton *)sender {
   
   // 如果点击了公共图书馆, 就中断对私有图书馆的请求.
-  [[DomainBeanNetworkEngineSingleton sharedInstance] cancelNetRequestByRequestIndex:_netRequestIndexForLoginPrivateLibrary];
+  [[DomainBeanNetworkEngineSingleton sharedInstance] cancelNetRequestByRequestIndex:&_netRequestIndexForLoginPrivateLibrary];
   self.privateLibraryButton.enabled = YES;
   
   // 开始登录 公共图书馆
@@ -281,7 +281,7 @@
   [self.searchTextField resignFirstResponder];
   
   // 私有图书馆(企业) 按钮, 就中断对公有图书馆的请求.
-  [[DomainBeanNetworkEngineSingleton sharedInstance] cancelNetRequestByRequestIndex:_netRequestIndexForLoginPublicLibrary];
+  [[DomainBeanNetworkEngineSingleton sharedInstance] cancelNetRequestByRequestIndex:&_netRequestIndexForLoginPublicLibrary];
   self.publicLibraryButton.enabled = YES;
   
   if ([GlobalDataCacheForMemorySingleton sharedInstance].privateAccountLogonNetRespondBean != nil
@@ -498,9 +498,9 @@
       case kBookShelfTableCellActionEnum_Read:{
         //
         // 如果要打开一本书, 就要先中断全部的网络请求操作.
-        [[DomainBeanNetworkEngineSingleton sharedInstance] cancelNetRequestByRequestIndex:_netRequestIndexForLoginPrivateLibrary];
-        [[DomainBeanNetworkEngineSingleton sharedInstance] cancelNetRequestByRequestIndex:_netRequestIndexForLoginPublicLibrary];
-        [[DomainBeanNetworkEngineSingleton sharedInstance] cancelNetRequestByRequestIndex:_netRequestIndexForUserLocalBookshelfCategories];
+        [[DomainBeanNetworkEngineSingleton sharedInstance] cancelNetRequestByRequestIndex:&_netRequestIndexForLoginPrivateLibrary];
+        [[DomainBeanNetworkEngineSingleton sharedInstance] cancelNetRequestByRequestIndex:&_netRequestIndexForLoginPublicLibrary];
+        [[DomainBeanNetworkEngineSingleton sharedInstance] cancelNetRequestByRequestIndex:&_netRequestIndexForUserLocalBookshelfCategories];
         // 恢复按钮可用性
         weakSelf.publicLibraryButton.enabled = YES;
         weakSelf.privateLibraryButton.enabled = YES;

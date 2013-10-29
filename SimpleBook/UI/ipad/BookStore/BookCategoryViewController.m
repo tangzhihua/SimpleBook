@@ -110,8 +110,8 @@
   // 注销 消息监听
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   
-  [[DomainBeanNetworkEngineSingleton sharedInstance] cancelNetRequestByRequestIndex:_netRequestIndexForGetBookDownloadUrl];
-  [[DomainBeanNetworkEngineSingleton sharedInstance] cancelNetRequestByRequestIndex:_netRequestIndexForGetBookListInBookstores];
+  [[DomainBeanNetworkEngineSingleton sharedInstance] cancelNetRequestByRequestIndex:&_netRequestIndexForGetBookDownloadUrl];
+  [[DomainBeanNetworkEngineSingleton sharedInstance] cancelNetRequestByRequestIndex:&_netRequestIndexForGetBookListInBookstores];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
