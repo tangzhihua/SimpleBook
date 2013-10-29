@@ -163,7 +163,6 @@
     }
     //
     [httpHeaders setObject:[ToolsFunctionForThisProgect getUserAgent] forKey:@"User-Agent"];
-    
 		// //////////////////////////////////////////////////////////////////////////////
 		
 		
@@ -271,10 +270,9 @@
 			} while (NO);
 			
       // ------------------------------------- >>>
-      // 本次网络请求结束, 设置NetRequestIndex为IDLE状态.
-      *pCurrentNetRequestIndexToOut = NETWORK_REQUEST_ID_OF_IDLE;
-      
       if (![operation isCancelled]) {
+        // 本次网络请求结束, 设置NetRequestIndex为IDLE状态.
+        *pCurrentNetRequestIndexToOut = NETWORK_REQUEST_ID_OF_IDLE;
         
         if (serverRespondDataError.errorCode != 200) {
           failedBlock(serverRespondDataError);
@@ -292,11 +290,11 @@
     } failedBlock:^(NSOperation *operation, NSError *error) {
       // 发生网络请求错误
       
-      // 本次网络请求结束, 设置NetRequestIndex为IDLE状态.
-      *pCurrentNetRequestIndexToOut = NETWORK_REQUEST_ID_OF_IDLE;
-      
       // ------------------------------------- >>>
       if (![operation isCancelled]) {
+        // 本次网络请求结束, 设置NetRequestIndex为IDLE状态.
+        *pCurrentNetRequestIndexToOut = NETWORK_REQUEST_ID_OF_IDLE;
+        
         NetRequestErrorBean *serverRespondDataError = [[NetRequestErrorBean alloc] init];
         serverRespondDataError.errorCode = error.code;
         serverRespondDataError.message = [error localizedDescription];
@@ -360,12 +358,12 @@
     
     // 调用 cancel 不会在触发 addCompletionHandler 和 errorHandler, 所以这里直接从请求队列中删除缓存对象.
     [netRequestOperation cancel];
-    [self.synchronousNetRequestBuf removeObjectForKey:indexOfNSNumber];
     
     // 复位标签索引
     *pNetRequestIndex = NETWORK_REQUEST_ID_OF_IDLE;
     NSLog(@"当前网络接口请求队列长度=%i", self.synchronousNetRequestBuf.count);
   } while (NO);
+  
 }
 
 @end
