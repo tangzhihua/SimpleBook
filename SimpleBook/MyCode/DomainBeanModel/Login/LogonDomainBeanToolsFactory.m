@@ -44,7 +44,7 @@
  * @return
  */
 - (NSString *) getSpecialPath {
-  return kUrlConstant_SpecialPath_account_login;
+  return kUrlConstant_SpecialPath_login;
 }
 
 /**

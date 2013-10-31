@@ -25,13 +25,13 @@ NSString *const kUrlConstant_MainPtah = @"dreambook";
 
 
 // 1	获取本地书架书籍分类
-NSString *const kUrlConstant_SpecialPath_local_bookshelf_categories = @"categories";
+NSString *const kUrlConstant_SpecialPath_book_categories = @"categories";
 // 2	用户登录
-NSString *const kUrlConstant_SpecialPath_account_login = @"account/login";
+NSString *const kUrlConstant_SpecialPath_login = @"account/login";
 // 3	获取要下载的书籍的URL
-NSString *const kUrlConstant_SpecialPath_content_download = @"content/download/";
+NSString *const kUrlConstant_SpecialPath_book_downlaod_url = @"content/download/";
 // 4	企业书库的书籍列表
-NSString *const kUrlConstant_SpecialPath_content_list = @"content/list";
+NSString *const kUrlConstant_SpecialPath_book_list_in_bookstores = @"content/list";
 // 5	主题
 NSString *const kUrlConstant_SpecialPath_theme = @"theme";
 

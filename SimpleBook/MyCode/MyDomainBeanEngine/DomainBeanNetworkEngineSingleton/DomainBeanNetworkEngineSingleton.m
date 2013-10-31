@@ -24,7 +24,7 @@
 #import "UrlConstantForThisProject.h"
 #import "NetRequestErrorBean.h"
 #import "IHttpEngine.h"
-#import "HttpEngineFactoryMethodSingleton.h"
+#import "HttpEngineFactory.h"
 
 
 @interface DomainBeanNetworkEngineSingleton()
@@ -168,7 +168,7 @@
 		
 		// 创建一个 Http Operation
     __weak DomainBeanNetworkEngineSingleton *weakSelf = self;
-    id<IHttpEngine> httpEngine = [[HttpEngineFactoryMethodSingleton sharedInstance] httpEngine];
+    id<IHttpEngine> httpEngine = [HttpEngineFactory getHttpEngine];
     if (![httpEngine conformsToProtocol:@protocol(IHttpEngine)]) {
       RNAssert(NO, @"必须实现 IHttpEngine 接口");
       break;

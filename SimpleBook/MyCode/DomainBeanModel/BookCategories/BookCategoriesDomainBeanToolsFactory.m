@@ -44,7 +44,7 @@
  * @return
  */
 - (NSString *) getSpecialPath {
-  return kUrlConstant_SpecialPath_local_bookshelf_categories;
+  return kUrlConstant_SpecialPath_book_categories;
 }
 
 /**

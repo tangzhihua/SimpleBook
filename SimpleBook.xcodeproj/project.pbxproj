@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		751C1A731814C4F30025E62E /* HttpEngineOfMKNetworkKitSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 751C1A721814C4F30025E62E /* HttpEngineOfMKNetworkKitSingleton.m */; };
-		751C1A771814CEB30025E62E /* HttpEngineFactoryMethodSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 751C1A761814CEB30025E62E /* HttpEngineFactoryMethodSingleton.m */; };
+		751C1A771814CEB30025E62E /* HttpEngineFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 751C1A761814CEB30025E62E /* HttpEngineFactory.m */; };
 		75226D491818AD9400601CDF /* BookCategoriesDomainBeanToolsFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 75226D401818AD9400601CDF /* BookCategoriesDomainBeanToolsFactory.m */; };
 		75226D4A1818AD9400601CDF /* BookCategoriesNetRequestBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 75226D421818AD9400601CDF /* BookCategoriesNetRequestBean.m */; };
 		75226D4B1818AD9400601CDF /* BookCategoriesNetRespondBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 75226D441818AD9400601CDF /* BookCategoriesNetRespondBean.m */; };
@@ -326,8 +326,8 @@
 		751C1A711814C4F30025E62E /* HttpEngineOfMKNetworkKitSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpEngineOfMKNetworkKitSingleton.h; sourceTree = "<group>"; };
 		751C1A721814C4F30025E62E /* HttpEngineOfMKNetworkKitSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpEngineOfMKNetworkKitSingleton.m; sourceTree = "<group>"; };
 		751C1A741814C6200025E62E /* IHttpEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IHttpEngine.h; sourceTree = "<group>"; };
-		751C1A751814CEB30025E62E /* HttpEngineFactoryMethodSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpEngineFactoryMethodSingleton.h; sourceTree = "<group>"; };
-		751C1A761814CEB30025E62E /* HttpEngineFactoryMethodSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpEngineFactoryMethodSingleton.m; sourceTree = "<group>"; };
+		751C1A751814CEB30025E62E /* HttpEngineFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpEngineFactory.h; sourceTree = "<group>"; };
+		751C1A761814CEB30025E62E /* HttpEngineFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpEngineFactory.m; sourceTree = "<group>"; };
 		75226D3E1818AD9400601CDF /* BookCategoriesDatabaseFieldsConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookCategoriesDatabaseFieldsConstant.h; sourceTree = "<group>"; };
 		75226D3F1818AD9400601CDF /* BookCategoriesDomainBeanToolsFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookCategoriesDomainBeanToolsFactory.h; sourceTree = "<group>"; };
 		75226D401818AD9400601CDF /* BookCategoriesDomainBeanToolsFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookCategoriesDomainBeanToolsFactory.m; sourceTree = "<group>"; };
@@ -700,7 +700,6 @@
 		75E49D48180E3C3B0050F1B9 /* StrategyClassNameMappingBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StrategyClassNameMappingBase.m; sourceTree = "<group>"; };
 		75E49D4A180E3C3B0050F1B9 /* DomainBeanAbstractFactoryCacheSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DomainBeanAbstractFactoryCacheSingleton.h; sourceTree = "<group>"; };
 		75E49D4B180E3C3B0050F1B9 /* DomainBeanAbstractFactoryCacheSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DomainBeanAbstractFactoryCacheSingleton.m; sourceTree = "<group>"; };
-		75E49D4C180E3C3B0050F1B9 /* DomainBeanNullValueDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DomainBeanNullValueDefine.h; sourceTree = "<group>"; };
 		75E49D4D180E3C3B0050F1B9 /* IDomainBeanAbstractFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDomainBeanAbstractFactory.h; sourceTree = "<group>"; };
 		75E49D4E180E3C3B0050F1B9 /* IParseDomainBeanToDataDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IParseDomainBeanToDataDictionary.h; sourceTree = "<group>"; };
 		75E49D4F180E3C3B0050F1B9 /* IParseNetRespondDictionaryToDomainBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IParseNetRespondDictionaryToDomainBean.h; sourceTree = "<group>"; };
@@ -766,8 +765,8 @@
 			isa = PBXGroup;
 			children = (
 				751C1A741814C6200025E62E /* IHttpEngine.h */,
-				751C1A751814CEB30025E62E /* HttpEngineFactoryMethodSingleton.h */,
-				751C1A761814CEB30025E62E /* HttpEngineFactoryMethodSingleton.m */,
+				751C1A751814CEB30025E62E /* HttpEngineFactory.h */,
+				751C1A761814CEB30025E62E /* HttpEngineFactory.m */,
 				751C1AB2181501DE0025E62E /* MKNetworkKit */,
 			);
 			path = HttpEngine;
@@ -1594,10 +1593,7 @@
 			children = (
 				75E49D4A180E3C3B0050F1B9 /* DomainBeanAbstractFactoryCacheSingleton.h */,
 				75E49D4B180E3C3B0050F1B9 /* DomainBeanAbstractFactoryCacheSingleton.m */,
-				75E49D4C180E3C3B0050F1B9 /* DomainBeanNullValueDefine.h */,
-				75E49D4D180E3C3B0050F1B9 /* IDomainBeanAbstractFactory.h */,
-				75E49D4E180E3C3B0050F1B9 /* IParseDomainBeanToDataDictionary.h */,
-				75E49D4F180E3C3B0050F1B9 /* IParseNetRespondDictionaryToDomainBean.h */,
+				75F8EA061821F9690018A688 /* DomainBeanAbstractFactory */,
 			);
 			path = DomainBeanTools;
 			sourceTree = "<group>";
@@ -1662,6 +1658,16 @@
 				75E49D70180E3C3B0050F1B9 /* ToolsFunctionForThisProgect.m */,
 			);
 			path = ToolUtils;
+			sourceTree = "<group>";
+		};
+		75F8EA061821F9690018A688 /* DomainBeanAbstractFactory */ = {
+			isa = PBXGroup;
+			children = (
+				75E49D4D180E3C3B0050F1B9 /* IDomainBeanAbstractFactory.h */,
+				75E49D4E180E3C3B0050F1B9 /* IParseDomainBeanToDataDictionary.h */,
+				75E49D4F180E3C3B0050F1B9 /* IParseNetRespondDictionaryToDomainBean.h */,
+			);
+			name = DomainBeanAbstractFactory;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2007,7 +2013,7 @@
 				752A466218179DD00096925B /* NSString+isEmpty.m in Sources */,
 				75E49DAF180E3C3B0050F1B9 /* ServerRespondDataTestForDreamBook.m in Sources */,
 				752A43A5180E60B500BAE854 /* BookShelfViewController_ipad.m in Sources */,
-				751C1A771814CEB30025E62E /* HttpEngineFactoryMethodSingleton.m in Sources */,
+				751C1A771814CEB30025E62E /* HttpEngineFactory.m in Sources */,
 				75E49DA1180E3C3B0050F1B9 /* UrlConstantForThisProject.m in Sources */,
 				75E49DB3180E3C3B0050F1B9 /* SimpleFolderTools.m in Sources */,
 				75ACA7751817E18900C48CD3 /* BookCategoryViewController.m in Sources */,

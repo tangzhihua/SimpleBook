@@ -45,7 +45,7 @@
  * @return
  */
 - (NSString *) getSpecialPath {
-  return kUrlConstant_SpecialPath_content_download;
+  return kUrlConstant_SpecialPath_book_downlaod_url;
 }
 
 /**
