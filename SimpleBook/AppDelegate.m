@@ -101,6 +101,11 @@
   [self.window makeKeyAndVisible];
   
   
+  {
+    //
+    NSString *test = [ToolsFunctionForThisProgect getUserAgent];
+    NSLog(@"%@", test);
+  }
   return YES;
 }
 
