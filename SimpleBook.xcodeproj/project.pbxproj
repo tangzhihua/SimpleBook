@@ -13,6 +13,12 @@
 		75155707182CCCBB009B8CB5 /* icon_del_h.png in Resources */ = {isa = PBXBuildFile; fileRef = 75155701182CCCBB009B8CB5 /* icon_del_h.png */; };
 		75155708182CCCBB009B8CB5 /* SkyduckGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75155703182CCCBB009B8CB5 /* SkyduckGridView.m */; };
 		75155709182CCCBB009B8CB5 /* SkyduckGridViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75155705182CCCBB009B8CB5 /* SkyduckGridViewCell.m */; };
+		7515570C182CCDF3009B8CB5 /* FolderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7515570B182CCDF3009B8CB5 /* FolderCell.m */; };
+		7515570F182CCE16009B8CB5 /* FileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7515570E182CCE16009B8CB5 /* FileCell.m */; };
+		75155713182CD402009B8CB5 /* FileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75155712182CD402009B8CB5 /* FileCell.xib */; };
+		75155715182CD4A3009B8CB5 /* FolderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75155714182CD4A3009B8CB5 /* FolderCell.xib */; };
+		75155717182CDE90009B8CB5 /* bookshelf_group_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 75155716182CDE90009B8CB5 /* bookshelf_group_black.png */; };
+		75155719182CE54D009B8CB5 /* folder.png in Resources */ = {isa = PBXBuildFile; fileRef = 75155718182CE54D009B8CB5 /* folder.png */; };
 		751C1A731814C4F30025E62E /* HttpEngineOfMKNetworkKitSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 751C1A721814C4F30025E62E /* HttpEngineOfMKNetworkKitSingleton.m */; };
 		751C1A771814CEB30025E62E /* HttpEngineFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 751C1A761814CEB30025E62E /* HttpEngineFactory.m */; };
 		75226D491818AD9400601CDF /* BookCategoriesDomainBeanToolsFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 75226D401818AD9400601CDF /* BookCategoriesDomainBeanToolsFactory.m */; };
@@ -338,6 +344,14 @@
 		75155703182CCCBB009B8CB5 /* SkyduckGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkyduckGridView.m; sourceTree = "<group>"; };
 		75155704182CCCBB009B8CB5 /* SkyduckGridViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkyduckGridViewCell.h; sourceTree = "<group>"; };
 		75155705182CCCBB009B8CB5 /* SkyduckGridViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkyduckGridViewCell.m; sourceTree = "<group>"; };
+		7515570A182CCDF3009B8CB5 /* FolderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderCell.h; sourceTree = "<group>"; };
+		7515570B182CCDF3009B8CB5 /* FolderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderCell.m; sourceTree = "<group>"; };
+		7515570D182CCE16009B8CB5 /* FileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileCell.h; sourceTree = "<group>"; };
+		7515570E182CCE16009B8CB5 /* FileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileCell.m; sourceTree = "<group>"; };
+		75155712182CD402009B8CB5 /* FileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FileCell.xib; sourceTree = "<group>"; };
+		75155714182CD4A3009B8CB5 /* FolderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FolderCell.xib; sourceTree = "<group>"; };
+		75155716182CDE90009B8CB5 /* bookshelf_group_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bookshelf_group_black.png; sourceTree = "<group>"; };
+		75155718182CE54D009B8CB5 /* folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = folder.png; sourceTree = "<group>"; };
 		751C1A711814C4F30025E62E /* HttpEngineOfMKNetworkKitSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpEngineOfMKNetworkKitSingleton.h; sourceTree = "<group>"; };
 		751C1A721814C4F30025E62E /* HttpEngineOfMKNetworkKitSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpEngineOfMKNetworkKitSingleton.m; sourceTree = "<group>"; };
 		751C1A741814C6200025E62E /* IHttpEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IHttpEngine.h; sourceTree = "<group>"; };
@@ -779,12 +793,20 @@
 		751556FF182CCCBB009B8CB5 /* SkyduckFolder */ = {
 			isa = PBXGroup;
 			children = (
+				75155718182CE54D009B8CB5 /* folder.png */,
+				75155716182CDE90009B8CB5 /* bookshelf_group_black.png */,
 				75155700182CCCBB009B8CB5 /* icon_del.png */,
 				75155701182CCCBB009B8CB5 /* icon_del_h.png */,
 				75155702182CCCBB009B8CB5 /* SkyduckGridView.h */,
 				75155703182CCCBB009B8CB5 /* SkyduckGridView.m */,
 				75155704182CCCBB009B8CB5 /* SkyduckGridViewCell.h */,
 				75155705182CCCBB009B8CB5 /* SkyduckGridViewCell.m */,
+				7515570A182CCDF3009B8CB5 /* FolderCell.h */,
+				7515570B182CCDF3009B8CB5 /* FolderCell.m */,
+				75155714182CD4A3009B8CB5 /* FolderCell.xib */,
+				7515570D182CCE16009B8CB5 /* FileCell.h */,
+				7515570E182CCE16009B8CB5 /* FileCell.m */,
+				75155712182CD402009B8CB5 /* FileCell.xib */,
 			);
 			path = SkyduckFolder;
 			sourceTree = "<group>";
@@ -1808,6 +1830,7 @@
 				75E49BFC180E30CA0050F1B9 /* d_qysy@2x.png in Resources */,
 				75E49C95180E30CA0050F1B9 /* xz_iphone@2x.png in Resources */,
 				75E49C51180E30CA0050F1B9 /* yd.png in Resources */,
+				75155715182CD4A3009B8CB5 /* FolderCell.xib in Resources */,
 				75E49C70180E30CA0050F1B9 /* sy_touch_iphone.png in Resources */,
 				75E49C7C180E30CA0050F1B9 /* d_qysy_iphone@2x.png in Resources */,
 				75E49C5A180E30CA0050F1B9 /* d_wdsj_6iphone.png in Resources */,
@@ -1833,6 +1856,7 @@
 				75E49DA4180E3C3B0050F1B9 /* Errors_en_US.plist in Resources */,
 				75E49BEA180E30CA0050F1B9 /* d_jrsy_6_H.png in Resources */,
 				75E49C66180E30CA0050F1B9 /* k_touch_iphone.png in Resources */,
+				75155717182CDE90009B8CB5 /* bookshelf_group_black.png in Resources */,
 				75E49C49180E30CA0050F1B9 /* sx.png in Resources */,
 				75E49C77180E30CA0050F1B9 /* zt_touch_iphone.png in Resources */,
 				75E49C45180E30CA0050F1B9 /* sk.png in Resources */,
@@ -1894,6 +1918,7 @@
 				75E49C7B180E30CA0050F1B9 /* d_qysy_6iphone@2x.png in Resources */,
 				75E49BFF180E30CA0050F1B9 /* d_wdsj_6@2x.png in Resources */,
 				75E49C06180E30CA0050F1B9 /* fl_xc_hb@2x.png in Resources */,
+				75155713182CD402009B8CB5 /* FileCell.xib in Resources */,
 				75E49BF2180E30CA0050F1B9 /* ddh_H.png in Resources */,
 				75E49BF7180E30CA0050F1B9 /* bianji@2x.png in Resources */,
 				75E49BEB180E30CA0050F1B9 /* d_jrsy_H.png in Resources */,
@@ -1977,6 +2002,7 @@
 				75E49C3A180E30CA0050F1B9 /* fh_touch.png in Resources */,
 				75E49C22180E30CA0050F1B9 /* d_jrsy_6_H@2x.png in Resources */,
 				75E49C17180E30CA0050F1B9 /* tcdl@2x.png in Resources */,
+				75155719182CE54D009B8CB5 /* folder.png in Resources */,
 				752A43B9180E60B500BAE854 /* BookStoreTableCell_iPhone.xib in Resources */,
 				75E49C32180E30CA0050F1B9 /* d_jrsy.png in Resources */,
 				75E49C42180E30CA0050F1B9 /* qy.png in Resources */,
@@ -2077,6 +2103,7 @@
 				75E49DA9180E3C3B0050F1B9 /* DomainBeanAbstractFactoryCacheSingleton.m in Sources */,
 				75E49D7E180E3C3B0050F1B9 /* CommandForLoadingLocalCacheData.m in Sources */,
 				75E49DB4180E3C3B0050F1B9 /* ToolsFunctionForThisProgect.m in Sources */,
+				7515570C182CCDF3009B8CB5 /* FolderCell.m in Sources */,
 				75E49D9E180E3C3B0050F1B9 /* GlobalDataCacheForMemorySingleton.m in Sources */,
 				75E49D7F180E3C3B0050F1B9 /* CommandForNewAppVersionCheck.m in Sources */,
 				752A466518179DD00096925B /* UIColor+ColorSchemes.m in Sources */,
@@ -2126,6 +2153,7 @@
 				75E49D88180E3C3B0050F1B9 /* BookListInBookstoresNetRequestBean.m in Sources */,
 				75E49D90180E3C3B0050F1B9 /* GetBookDownloadUrlParseNetRespondDictionaryToDomainBean.m in Sources */,
 				75E49D98180E3C3B0050F1B9 /* LogonDomainBeanToolsFactory.m in Sources */,
+				7515570F182CCE16009B8CB5 /* FileCell.m in Sources */,
 				75E49D99180E3C3B0050F1B9 /* LogonNetRequestBean.m in Sources */,
 				75E49CB3180E39B60050F1B9 /* PRPDebug.m in Sources */,
 			);

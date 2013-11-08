@@ -132,5 +132,43 @@
   [self.deleteButton setHidden:!editable];
 }
 
+#pragma mark -
+#pragma mark Cell generation
 
++ (NSString *)cellIdentifier {
+  return NSStringFromClass([self class]);
+}
+
++ (id)cellFromNib:(UINib *)nib {
+	RNAssert([nib isKindOfClass:[UINib class]], @"入参 nib 类型不为 UINib");
+	
+	NSArray *nibObjects = [nib instantiateWithOwner:nil options:nil];
+	
+	NSAssert2(([nibObjects count] > 0) &&
+						[[nibObjects objectAtIndex:0] isKindOfClass:[self class]],
+						@"Nib '%@' does not appear to contain a valid %@",
+						[self nibName], NSStringFromClass([self class]));
+	
+	return [nibObjects objectAtIndex:0];
+}
+
+#pragma mark -
+#pragma mark Nib support
+
++ (UINib *)nib {
+  NSBundle *classBundle = [NSBundle bundleForClass:[self class]];
+  UINib *nibObject =  [UINib nibWithNibName:[self nibName] bundle:classBundle];
+  RNAssert(nibObject != nil, @"创建 nibObject 失败! 错误的nibName=%@", [self nibName]);
+  return nibObject;
+}
+
++ (NSString *)nibName {
+  return [self cellIdentifier];
+}
+
++(CGRect)viewFrameRectFromNib {
+  NSArray *nibObjects = [[self nib] instantiateWithOwner:nil options:nil];
+  UIView *view = [nibObjects objectAtIndex:0];
+  return [view frame];
+}
 @end
