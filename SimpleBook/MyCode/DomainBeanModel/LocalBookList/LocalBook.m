@@ -329,6 +329,10 @@
   [self cancelDownloadBookNetOperation];
 }
 
-
+#pragma mark -
+#pragma mark - 对于 LocalBook 来说, 判断两个 LocalBook 是否相等的条件就是 content_id
+- (BOOL)isEqual:(id)object{
+  return [_bookInfo.content_id isEqualToString:((LocalBook *)object).bookInfo.content_id];
+}
 
 @end

@@ -601,12 +601,12 @@
   NSArray *bookInfoListOfSection = bookCategoryDictionaryByBookNameSearch[categoryIDOfSection];
   
   // 因为目前设计成 一排显示两本书籍, 所以这里要进行一下计算.
-  // indexOfOneRowContainsTwoBook 是数组索引, 所以从 0 开始
+  // indexOfOneRowContainsTwoBook 是数组索引, 所以从 0 开始, 是LocalBookList数据源中的索引
   NSInteger indexOfOneRowContainsTwoBook = indexPath.row * 2;
-  LocalBook *firstBookDataBean = bookInfoListOfSection[indexOfOneRowContainsTwoBook];
+  LocalBook *firstBookDataBean = bookInfoListOfSection[indexOfOneRowContainsTwoBook++];
   LocalBook *secondBookDataBean = nil;
-  if (bookInfoListOfSection.count >= (indexOfOneRowContainsTwoBook + 1) * 2) {
-    secondBookDataBean = bookInfoListOfSection[indexOfOneRowContainsTwoBook + 1];
+  if (indexOfOneRowContainsTwoBook < bookInfoListOfSection.count) {
+    secondBookDataBean = bookInfoListOfSection[indexOfOneRowContainsTwoBook];
   }
   
   // 给cell进行数据绑定

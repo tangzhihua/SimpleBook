@@ -11,6 +11,8 @@
 #import "BookShelfViewController_ipad.h"
 #import "BookShelfViewController_iPhone.h"
 
+#import "TestBookShelfController_ipad.h"
+
 #import "MKStoreManager.h"
 //
 #import "GlobalDataCacheForNeedSaveToFileSystem.h"
@@ -69,7 +71,7 @@
   
   
   // 判断当前设备 iPhone or iPad 之后加载相对应的nib文件
-  __weak AppDelegate *weakSelf = self;
+  
   UIViewController *firstViewController = nil;
   
   if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -80,7 +82,7 @@
     
   } else {
     /// ipad
-    self.navigation = [[UINavigationController alloc] initWithRootViewController:(UIViewController *)[[BookShelfViewController_ipad alloc] initWithNibName:@"BookShelfViewController_ipad" bundle:nil]];
+    self.navigation = [[UINavigationController alloc] initWithRootViewController:(UIViewController *)[[BookShelfViewController_ipad alloc] initWithNibName:@"TestBookShelfController_ipad" bundle:nil]];
     
     if ([GlobalDataCacheForMemorySingleton sharedInstance].isFirstStartApp) {
      
@@ -100,11 +102,16 @@
   self.window.rootViewController = firstViewController;
   [self.window makeKeyAndVisible];
   
-  
   {
-    //
-    NSString *test = [ToolsFunctionForThisProgect getUserAgent];
-    NSLog(@"%@", test);
+    
+    NSMutableArray *test = [NSMutableArray array];
+    [test addObject:@"a"];
+    [test addObject:@"b"];
+    [test addObject:@"a"];
+    [test addObject:@"b"];
+    
+    [test removeObject:@"a"];
+    [test description];
   }
   return YES;
 }
