@@ -68,6 +68,8 @@
 		753BF921180E2145005DECCA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 753BF900180E2145005DECCA /* UIKit.framework */; };
 		753BF929180E2145005DECCA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 753BF927180E2145005DECCA /* InfoPlist.strings */; };
 		753BF92B180E2145005DECCA /* SimpleBookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 753BF92A180E2145005DECCA /* SimpleBookTests.m */; };
+		7561915D18306BB000F754E9 /* SkyduckFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 7561915C18306BB000F754E9 /* SkyduckFile.m */; };
+		756191651830A69300F754E9 /* BookShelfDataSourceSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 756191641830A69300F754E9 /* BookShelfDataSourceSingleton.m */; };
 		7586E433180E9D5C007E6BAA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7586E432180E9D5C007E6BAA /* Localizable.strings */; };
 		759AB36818166006008D602D /* CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 759AB36718166006008D602D /* CoreData.m */; };
 		75ACA7751817E18900C48CD3 /* BookCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75ACA7731817E18900C48CD3 /* BookCategoryViewController.m */; };
@@ -433,6 +435,10 @@
 		753BF926180E2145005DECCA /* SimpleBookTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SimpleBookTests-Info.plist"; sourceTree = "<group>"; };
 		753BF928180E2145005DECCA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		753BF92A180E2145005DECCA /* SimpleBookTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimpleBookTests.m; sourceTree = "<group>"; };
+		7561915B18306BB000F754E9 /* SkyduckFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkyduckFile.h; sourceTree = "<group>"; };
+		7561915C18306BB000F754E9 /* SkyduckFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkyduckFile.m; sourceTree = "<group>"; };
+		756191631830A69300F754E9 /* BookShelfDataSourceSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookShelfDataSourceSingleton.h; sourceTree = "<group>"; };
+		756191641830A69300F754E9 /* BookShelfDataSourceSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookShelfDataSourceSingleton.m; sourceTree = "<group>"; };
 		7586E432180E9D5C007E6BAA /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		759AB36618166006008D602D /* CoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreData.h; sourceTree = "<group>"; };
 		759AB36718166006008D602D /* CoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreData.m; sourceTree = "<group>"; };
@@ -793,20 +799,8 @@
 		751556FF182CCCBB009B8CB5 /* SkyduckFolder */ = {
 			isa = PBXGroup;
 			children = (
-				75155718182CE54D009B8CB5 /* folder.png */,
-				75155716182CDE90009B8CB5 /* bookshelf_group_black.png */,
-				75155700182CCCBB009B8CB5 /* icon_del.png */,
-				75155701182CCCBB009B8CB5 /* icon_del_h.png */,
-				75155702182CCCBB009B8CB5 /* SkyduckGridView.h */,
-				75155703182CCCBB009B8CB5 /* SkyduckGridView.m */,
-				75155704182CCCBB009B8CB5 /* SkyduckGridViewCell.h */,
-				75155705182CCCBB009B8CB5 /* SkyduckGridViewCell.m */,
-				7515570A182CCDF3009B8CB5 /* FolderCell.h */,
-				7515570B182CCDF3009B8CB5 /* FolderCell.m */,
-				75155714182CD4A3009B8CB5 /* FolderCell.xib */,
-				7515570D182CCE16009B8CB5 /* FileCell.h */,
-				7515570E182CCE16009B8CB5 /* FileCell.m */,
-				75155712182CD402009B8CB5 /* FileCell.xib */,
+				756191621830721400F754E9 /* Data */,
+				756191611830720A00F754E9 /* View */,
 			);
 			path = SkyduckFolder;
 			sourceTree = "<group>";
@@ -1087,6 +1081,38 @@
 				753BF927180E2145005DECCA /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		756191611830720A00F754E9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				75155718182CE54D009B8CB5 /* folder.png */,
+				75155716182CDE90009B8CB5 /* bookshelf_group_black.png */,
+				75155700182CCCBB009B8CB5 /* icon_del.png */,
+				75155701182CCCBB009B8CB5 /* icon_del_h.png */,
+				75155702182CCCBB009B8CB5 /* SkyduckGridView.h */,
+				75155703182CCCBB009B8CB5 /* SkyduckGridView.m */,
+				75155704182CCCBB009B8CB5 /* SkyduckGridViewCell.h */,
+				75155705182CCCBB009B8CB5 /* SkyduckGridViewCell.m */,
+				7515570A182CCDF3009B8CB5 /* FolderCell.h */,
+				7515570B182CCDF3009B8CB5 /* FolderCell.m */,
+				75155714182CD4A3009B8CB5 /* FolderCell.xib */,
+				7515570D182CCE16009B8CB5 /* FileCell.h */,
+				7515570E182CCE16009B8CB5 /* FileCell.m */,
+				75155712182CD402009B8CB5 /* FileCell.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		756191621830721400F754E9 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				7561915B18306BB000F754E9 /* SkyduckFile.h */,
+				7561915C18306BB000F754E9 /* SkyduckFile.m */,
+				756191631830A69300F754E9 /* BookShelfDataSourceSingleton.h */,
+				756191641830A69300F754E9 /* BookShelfDataSourceSingleton.m */,
+			);
+			name = Data;
 			sourceTree = "<group>";
 		};
 		75D45D9018161C0F005819A2 /* CoreData */ = {
@@ -2099,6 +2125,7 @@
 				75E49D8A180E3C3B0050F1B9 /* BookListInBookstoresParseNetRespondDictionaryToDomainBean.m in Sources */,
 				75226D4C1818AD9400601CDF /* BookCategoriesParseNetRespondDictionaryToDomainBean.m in Sources */,
 				752A466118179DD00096925B /* NSObject+Serialization.m in Sources */,
+				7561915D18306BB000F754E9 /* SkyduckFile.m in Sources */,
 				75E49D80180E3C3B0050F1B9 /* CommandForPrintDeviceInfo.m in Sources */,
 				75E49DA9180E3C3B0050F1B9 /* DomainBeanAbstractFactoryCacheSingleton.m in Sources */,
 				75E49D7E180E3C3B0050F1B9 /* CommandForLoadingLocalCacheData.m in Sources */,
@@ -2113,6 +2140,7 @@
 				75E49D87180E3C3B0050F1B9 /* BookListInBookstoresDomainBeanToolsFactory.m in Sources */,
 				75226D491818AD9400601CDF /* BookCategoriesDomainBeanToolsFactory.m in Sources */,
 				75E49DA7180E3C3B0050F1B9 /* NetRequestErrorBean.m in Sources */,
+				756191651830A69300F754E9 /* BookShelfDataSourceSingleton.m in Sources */,
 				75E49D7C180E3C3B0050F1B9 /* CommandForInitApp.m in Sources */,
 				75E49DA8180E3C3B0050F1B9 /* StrategyClassNameMappingBase.m in Sources */,
 				752A466918179EA00096925B /* UIImageView+MKNetworkKitAdditions.m in Sources */,

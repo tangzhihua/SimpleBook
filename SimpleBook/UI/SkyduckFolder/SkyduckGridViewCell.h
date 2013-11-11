@@ -24,11 +24,11 @@
 @end
 
 // 单元格类型
-typedef NS_ENUM(NSUInteger, UzysFolderCellTypeEnum) {
+typedef NS_ENUM(NSUInteger, SkyduckFolderCellTypeEnum) {
   // 文件
-  kUzysFolderCellTypeEnum_File = 0,
+  kSkyduckFolderCellTypeEnum_File = 0,
   // 文件夹
-  UzysFolderCellTypeEnum_Folder
+  kSkyduckFolderCellTypeEnum_Folder
 };
 
 @interface SkyduckGridViewCell : UIView
@@ -43,7 +43,7 @@ typedef NS_ENUM(NSUInteger, UzysFolderCellTypeEnum) {
 @property (nonatomic, assign) CGRect cellInitFrame;
 
 // 单元格类型(分为 文件夹/文件 两种)
-@property (nonatomic, assign) UzysFolderCellTypeEnum type;
+@property (nonatomic, assign) SkyduckFolderCellTypeEnum type;
 
 // 将单元格移动到新的位置
 - (void)moveByOffset:(CGPoint)offset;

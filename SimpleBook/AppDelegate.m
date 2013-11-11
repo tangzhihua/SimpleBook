@@ -85,7 +85,7 @@
     self.navigation = [[UINavigationController alloc] initWithRootViewController:(UIViewController *)[[BookShelfViewController_ipad alloc] initWithNibName:@"TestBookShelfController_ipad" bundle:nil]];
     
     if ([GlobalDataCacheForMemorySingleton sharedInstance].isFirstStartApp) {
-     
+      
       
       firstViewController = self.navigation;
     } else {
@@ -102,17 +102,6 @@
   self.window.rootViewController = firstViewController;
   [self.window makeKeyAndVisible];
   
-  {
-    
-    NSMutableArray *test = [NSMutableArray array];
-    [test addObject:@"a"];
-    [test addObject:@"b"];
-    [test addObject:@"a"];
-    [test addObject:@"b"];
-    
-    [test removeObject:@"a"];
-    [test description];
-  }
   return YES;
 }
 

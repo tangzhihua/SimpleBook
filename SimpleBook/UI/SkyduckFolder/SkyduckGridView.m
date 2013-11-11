@@ -271,7 +271,16 @@
       if(distance < kCellCollisionMoveMinDistance) {
         // 发生了碰撞
         
-        [self targetIndexForMoveFromPointAtIndex:sourceCell.index toProposedIndex:tempCell.index];
+        // TODO : 这里要根据 sourceCell 和 tempCell 的 type 来决定是移动还是合并
+        if (sourceCell.type == kSkyduckFolderCellTypeEnum_Folder) {
+          // 要进行移动
+          [self targetIndexForMoveFromPointAtIndex:sourceCell.index toProposedIndex:tempCell.index];
+        } else if (sourceCell.type == kSkyduckFolderCellTypeEnum_File) {
+          // 要进行合并
+          
+          
+        }
+        
         
         break;
       }
