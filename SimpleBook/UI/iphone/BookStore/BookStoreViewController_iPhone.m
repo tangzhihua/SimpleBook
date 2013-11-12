@@ -287,7 +287,7 @@
     LocalBookList *localBookFromBookshelf = [GlobalDataCacheForMemorySingleton sharedInstance].localBookList;
     
     for (BookInfo *bookInfo in bookListInBookstoresNetRespondBean.bookInfoList) {
-      LocalBook *newBook = [localBookFromBookshelf objectByContentID:bookInfo.content_id];
+      LocalBook *newBook = [localBookFromBookshelf bookByContentID:bookInfo.content_id];
       if (newBook == nil) {
         newBook = [[LocalBook alloc] initWithBookInfo:bookInfo];
       } else {
@@ -335,7 +335,7 @@
     PRPLog(@"获取要下载的书籍URL 成功!");
     GetBookDownloadUrlNetRespondBean *logonNetRespondBean = (GetBookDownloadUrlNetRespondBean *) respondDomainBean;
     
-    LocalBook *book = [weakSelf.bookList objectByContentID:contentID];
+    LocalBook *book = [weakSelf.bookList bookByContentID:contentID];
     [book startDownloadBookWithURLString:logonNetRespondBean.bookDownloadUrl];
     
   } failedBlock:^(NetRequestErrorBean *error) {
@@ -371,7 +371,7 @@
   BookStoreTableCell_iPhone *cell = [BookStoreTableCell_iPhone cellForTableView:tableView fromNib:self.bookListTableCellNib];
   if (![NSString isEmpty:cell.contentID]) {
     // 注销监听下载KVO
-    LocalBook *book = [self.bookList objectByContentID:cell.contentID];
+    LocalBook *book = [self.bookList bookByContentID:cell.contentID];
     [book removeObserver:cell forKeyPath:kLocalBookProperty_bookStateEnum context:(__bridge void *)cell];
     [book removeObserver:cell forKeyPath:kLocalBookProperty_downloadProgress context:(__bridge void *)cell];
   }
@@ -395,7 +395,7 @@
   __weak BookStoreViewController_iPhone *weakSelf = self;
   cell.bookStoreTableCellFunctionButtonClickHandleBlock
   = ^(BookStoreTableCell_iPhone* tableCell, NSString *contentIDString) {
-    LocalBook *book = [weakSelf.bookList objectByContentID:contentIDString];
+    LocalBook *book = [weakSelf.bookList bookByContentID:contentIDString];
     switch (book.bookStateEnum) {
         
       case kBookStateEnum_Unpaid:{

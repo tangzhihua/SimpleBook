@@ -20,7 +20,7 @@
 
 #pragma mark -
 #pragma mark 对外的接口方法 (操作列表)
-- (LocalBook *)objectByContentID:(NSString *)contentIDString;
+- (LocalBook *)bookByContentID:(NSString *)contentIDString;
 - (BOOL)addBook:(LocalBook *const)newBook;
 - (void)removeBook:(LocalBook *const)book;
 - (BOOL)removeBookAtIndex:(const NSUInteger)index;

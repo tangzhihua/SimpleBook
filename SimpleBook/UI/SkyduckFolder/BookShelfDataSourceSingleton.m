@@ -7,7 +7,11 @@
 //
 
 #import "BookShelfDataSourceSingleton.h"
+#import "SkyduckFile.h"
 
+@interface BookShelfDataSourceSingleton ()
+
+@end
 @implementation BookShelfDataSourceSingleton
 #pragma mark -
 #pragma mark Singleton Implementation
@@ -26,7 +30,7 @@
   self = [super init];
   if ((self = [super init])) {
     // 初始化代码
-		 
+		_rootDirectory = [SkyduckFile createDirectory];
   }
   
   return self;

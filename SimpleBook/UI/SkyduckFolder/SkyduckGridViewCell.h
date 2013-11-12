@@ -9,6 +9,7 @@
 
 @class SkyduckGridView;
 @class SkyduckGridViewCell;
+@class SkyduckFile;
 
 #pragma mark -
 #pragma mark - SkyduckGridViewCellDelegate
@@ -23,14 +24,6 @@
 - (void)gridViewCell:(SkyduckGridViewCell *)cell handleLongPress:(NSUInteger)index;
 @end
 
-// 单元格类型
-typedef NS_ENUM(NSUInteger, SkyduckFolderCellTypeEnum) {
-  // 文件
-  kSkyduckFolderCellTypeEnum_File = 0,
-  // 文件夹
-  kSkyduckFolderCellTypeEnum_Folder
-};
-
 @interface SkyduckGridViewCell : UIView
 
 //
@@ -42,10 +35,17 @@ typedef NS_ENUM(NSUInteger, SkyduckFolderCellTypeEnum) {
 @property (nonatomic, strong) UIButton *deleteButton;
 @property (nonatomic, assign) CGRect cellInitFrame;
 
-// 单元格类型(分为 文件夹/文件 两种)
-@property (nonatomic, assign) SkyduckFolderCellTypeEnum type;
 
 // 将单元格移动到新的位置
 - (void)moveByOffset:(CGPoint)offset;
 
+@property (nonatomic, strong, readonly) SkyduckFile *file;
+// "数据绑定 (data binding)"
+// 数据绑定最好的办法是将你的数据模型对象传递到自定义的表视图单元并让其绑定数据.
+- (void)bind:(SkyduckFile *)file;
+
+#pragma mark -
+#pragma mark - 通过 xib 创建 cell view
++ (UINib *)nib;
++ (id)cellFromNib:(UINib *)nib;
 @end

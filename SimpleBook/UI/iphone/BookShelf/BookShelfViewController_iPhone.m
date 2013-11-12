@@ -492,7 +492,7 @@
   cell.bookShelfTableCellFunctionButtonClickHandleBlock
   = ^(BookShelfTableCell_iPhone* tableCell, BookShelfTableCellActionEnum actionEnum, NSString *contentIDString) {
     LocalBookList *localBookList = [GlobalDataCacheForMemorySingleton sharedInstance].localBookList;
-    LocalBook *book = [localBookList objectByContentID:contentIDString];
+    LocalBook *book = [localBookList bookByContentID:contentIDString];
     
     switch (actionEnum) {
       case kBookShelfTableCellActionEnum_Read:{

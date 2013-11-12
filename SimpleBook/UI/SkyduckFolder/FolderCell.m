@@ -7,25 +7,30 @@
 //
 
 #import "FolderCell.h"
+#import "SkyduckFile.h"
+
+@interface FolderCell ()
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *fileNumberLabel;
+
+@end
 
 @implementation FolderCell
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
+  self = [super initWithFrame:frame];
+  if (self) {
+    // Initialization code
+  }
+  return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
+- (void)bind:(SkyduckFile *)file {
+  [super bind:file];
+  
+  self.nameLabel.text = file.value;
+  self.fileNumberLabel.text = [NSString stringWithFormat:@"共有 %d 本书", file.listFiles.count];
 }
-*/
 
 @end

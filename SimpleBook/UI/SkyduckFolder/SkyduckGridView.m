@@ -6,6 +6,7 @@
 //
 
 #import "SkyduckGridView.h"
+#import "SkyduckFile.h"
 
 // 两个单元格碰撞时, 发生 Move 效果时的最小触发间距
 #define kCellCollisionMoveMinDistance (80)
@@ -272,10 +273,10 @@
         // 发生了碰撞
         
         // TODO : 这里要根据 sourceCell 和 tempCell 的 type 来决定是移动还是合并
-        if (sourceCell.type == kSkyduckFolderCellTypeEnum_Folder) {
+        if (sourceCell.file.isDirectory) {
           // 要进行移动
           [self targetIndexForMoveFromPointAtIndex:sourceCell.index toProposedIndex:tempCell.index];
-        } else if (sourceCell.type == kSkyduckFolderCellTypeEnum_File) {
+        } else if (sourceCell.file.isFile) {
           // 要进行合并
           
           

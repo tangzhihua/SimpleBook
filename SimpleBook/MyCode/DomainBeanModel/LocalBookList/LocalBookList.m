@@ -80,7 +80,7 @@
 
 #pragma mark -
 #pragma mark 对外的接口方法 (操作列表)
-- (LocalBook *)objectByContentID:(NSString *)contentIDString {
+- (LocalBook *)bookByContentID:(NSString *)contentIDString {
   if ([NSString isEmpty:contentIDString]) {
     RNAssert(NO, @"入参错误 contentIDString !");
     return nil;

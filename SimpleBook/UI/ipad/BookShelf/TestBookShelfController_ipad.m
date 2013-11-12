@@ -7,32 +7,149 @@
 //
 
 #import "TestBookShelfController_ipad.h"
+#import "SkyduckFile.h"
+#import "BookShelfDataSourceSingleton.h"
+#import "BookInfo.h"
+#import "LocalBook.h"
+#import "LocalBookList.h"
+#import "SkyduckGridView.h"
+#import "SkyduckGridViewCell.h"
+#import "FolderCell.h"
+#import "FileCell.h"
+#import "SkyduckGridViewCell.h"
 
-@interface TestBookShelfController_ipad ()
-
+@interface TestBookShelfController_ipad () <SkyduckGridViewDelegate, SkyduckGridViewDataSource>
+@property (nonatomic, strong) SkyduckGridView *gridView;
+//
+@property (nonatomic, retain) UINib *fileCellUINib;
+@property (nonatomic, retain) UINib *folderCellUINib;
 @end
 
 @implementation TestBookShelfController_ipad
+- (UINib *)fileCellUINib {
+  if (_fileCellUINib == nil) {
+    self.fileCellUINib = [FileCell nib];
+  }
+  return _fileCellUINib;
+}
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+- (UINib *)folderCellUINib {
+  if (_folderCellUINib == nil) {
+    self.folderCellUINib = [FolderCell nib];
+  }
+  return _folderCellUINib;
+}
+
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    // Custom initialization
+    
+    SkyduckFile *rootDirectory = [BookShelfDataSourceSingleton sharedInstance].rootDirectory;
+    SkyduckFile *file = nil;
+    
+    LocalBookList *localBookFromBookshelf = [GlobalDataCacheForMemorySingleton sharedInstance].localBookList;
+    BookInfo *bookInfo = nil;
+    LocalBook *localBook = nil;
+    
+    for (int i=0; i<20; i++) {
+      //
+      bookInfo = [[BookInfo alloc] init];
+      bookInfo.content_id = [[NSNumber numberWithInt:i] stringValue];
+      bookInfo.name = @"初中叽叽报告";
+      bookInfo.thumbnail = @"http://img0.bdstatic.com/img/image/853267f9e2f07082838b83f9903ba99a9014c08f1f3.jpg";
+      localBook = [[LocalBook alloc] initWithBookInfo:bookInfo];
+      [localBookFromBookshelf addBook:localBook];
+      
+      file = [SkyduckFile createFileWithValue:bookInfo.content_id];
+      [rootDirectory addFile:file];
     }
-    return self;
+    
+    
+    
+    
+    //
+    NSMutableArray *files = [NSMutableArray array];
+    bookInfo = [[BookInfo alloc] init];
+    bookInfo.content_id = @"3";
+    bookInfo.name = @"岸本齐史";
+    bookInfo.thumbnail = @"https://dreambook.retechcorp.com/dreambook/thumbnail/show/4";
+    localBook = [[LocalBook alloc] initWithBookInfo:bookInfo];
+    [localBookFromBookshelf addBook:localBook];
+    file = [SkyduckFile createFileWithValue:bookInfo.content_id];
+    [files addObject:file];
+    //
+    bookInfo = [[BookInfo alloc] init];
+    bookInfo.content_id = @"4";
+    bookInfo.name = @"火影忍者";
+    bookInfo.thumbnail = @"https://dreambook.retechcorp.com/dreambook/thumbnail/show/4";
+    localBook = [[LocalBook alloc] initWithBookInfo:bookInfo];
+    [localBookFromBookshelf addBook:localBook];
+    file = [SkyduckFile createFileWithValue:bookInfo.content_id];
+    [files addObject:file];
+    
+    SkyduckFile *directory = [SkyduckFile createDirectoryWithValue:@"文件夹" files:files];
+    [rootDirectory addFile:directory];
+    
+  }
+  return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  // Do any additional setup after loading the view from its nib.
+  
+  self.gridView = [[SkyduckGridView alloc] initWithFrame:self.view.frame numOfRow:4 numOfColumns:4 cellMargin:2];
+  _gridView.delegate = self;
+  _gridView.dataSource = self;
+  [self.view addSubview:_gridView];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)didReceiveMemoryWarning {
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
+}
+
+#pragma mark- UzysGridViewDataSource
+
+- (NSInteger)numberOfCellsInGridView:(SkyduckGridView *)gridview {
+  return [BookShelfDataSourceSingleton sharedInstance].rootDirectory.listFiles.count;
+}
+
+- (SkyduckGridViewCell *)gridView:(SkyduckGridView *)gridview cellAtIndex:(NSUInteger)index {
+  SkyduckFile *file = [BookShelfDataSourceSingleton sharedInstance].rootDirectory.listFiles[index];
+  if (file.isFile) {
+    FileCell *cell = [FileCell cellFromNib:self.fileCellUINib];
+    [cell bind:file];
+    return cell;
+  } else {
+    FolderCell *cell = [FolderCell cellFromNib:self.folderCellUINib];
+    [cell bind:file];
+    return cell;
+  }
+}
+
+- (void)gridView:(SkyduckGridView *)gridview moveAtIndex:(NSUInteger)fromindex toIndex:(NSUInteger)toIndex {
+  SkyduckFile *rootDirectory = [BookShelfDataSourceSingleton sharedInstance].rootDirectory;
+  SkyduckFile *Temp = [rootDirectory.listFiles objectAtIndex:fromindex];
+  [rootDirectory.listFiles removeObjectAtIndex:fromindex];
+  [rootDirectory.listFiles insertObject:Temp atIndex:toIndex];
+}
+
+-(void) gridView:(SkyduckGridView *)gridview deleteAtIndex:(NSUInteger)index {
+  SkyduckFile *rootDirectory = [BookShelfDataSourceSingleton sharedInstance].rootDirectory;
+  [rootDirectory.listFiles removeObjectAtIndex:index];
+}
+
+#pragma mark- UzysGridViewDelegate
+-(void) gridView:(SkyduckGridView *)gridView changedPageIndex:(NSUInteger)index
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  NSLog(@"Page : %d",index);
+}
+-(void) gridView:(SkyduckGridView *)gridView didSelectCell:(SkyduckGridViewCell *)cell atIndex:(NSUInteger)index
+{
+  NSLog(@"Cell index %d",index);
 }
 
 @end

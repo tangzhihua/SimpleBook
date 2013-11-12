@@ -29,6 +29,8 @@
 #import "CommandForNewAppVersionCheck.h"
 #import "CommandForLoadingLocalCacheData.h"
 
+
+#import "TestBookShelfController_ipad.h"
 @implementation AppDelegate
 
 + (AppDelegate *) sharedAppDelegate {
@@ -82,7 +84,7 @@
     
   } else {
     /// ipad
-    self.navigation = [[UINavigationController alloc] initWithRootViewController:(UIViewController *)[[BookShelfViewController_ipad alloc] initWithNibName:@"TestBookShelfController_ipad" bundle:nil]];
+    self.navigation = [[UINavigationController alloc] initWithRootViewController:(UIViewController *)[[TestBookShelfController_ipad alloc] initWithNibName:@"TestBookShelfController_ipad" bundle:nil]];
     
     if ([GlobalDataCacheForMemorySingleton sharedInstance].isFirstStartApp) {
       
