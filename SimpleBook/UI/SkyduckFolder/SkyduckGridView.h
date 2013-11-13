@@ -15,8 +15,11 @@
 -(NSInteger) numberOfCellsInGridView:(SkyduckGridView *)gridview;
 -(SkyduckGridViewCell *)gridView:(SkyduckGridView *)gridview cellAtIndex:(NSUInteger)index;
 
-@optional                                                                                                   // edit mode
--(void) gridView:(SkyduckGridView *)gridview moveAtIndex:(NSUInteger)fromindex toIndex:(NSUInteger)toIndex;    // Cell Position Reorder
+@optional
+// 合并两个cell
+-(void) gridView:(SkyduckGridView *)gridview mergeAtIndex:(NSUInteger)fromindex toIndex:(NSUInteger)toIndex;
+// 移动两个cell
+-(void) gridView:(SkyduckGridView *)gridview moveAtIndex:(NSUInteger)fromindex toIndex:(NSUInteger)toIndex;
 -(void) gridView:(SkyduckGridView *)gridview deleteAtIndex:(NSUInteger)index;
 -(void) gridView:(SkyduckGridView *)gridview InsertAtIndex:(NSUInteger)index;
 @end

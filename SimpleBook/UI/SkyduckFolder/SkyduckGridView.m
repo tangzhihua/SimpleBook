@@ -10,6 +10,8 @@
 
 // 两个单元格碰撞时, 发生 Move 效果时的最小触发间距
 #define kCellCollisionMoveMinDistance (80)
+// 两个单元格碰撞时, 发生 Merge 效果时的最小触发间距
+#define kCellCollisionMergeMinDistance (10)
 //
 #define kPageMoveMargin 70
 
@@ -22,8 +24,8 @@
 // Last location
 @property (nonatomic, assign) CGPoint touchLocation;
 // GridView Page move Timer
-@property (nonatomic, strong) NSTimer *movePagesTimer;
-@property (nonatomic, strong) SkyduckGridViewCell *curcell;
+@property (nonatomic, strong) NSTimer *timerOfMovePage;
+@property (nonatomic, strong) SkyduckGridViewCell *cellOfMoving;
 
 // 行
 @property (nonatomic, assign) NSUInteger numberOfRows;
@@ -205,6 +207,37 @@
   }
 }
 
+// 合并两个cell
+- (void)targetIndexForMergeFromPointAtIndex:(NSInteger)sourceIndex toProposedIndex:(NSInteger)proposedDestinationIndex {
+  if(sourceIndex == proposedDestinationIndex || proposedDestinationIndex == -1) {
+    return;
+  }
+  
+  SkyduckGridViewCell *sourceCell = _cellList[sourceIndex];
+  [UIView animateWithDuration:0.1
+                        delay:0
+                      options:UIViewAnimationOptionCurveEaseIn
+                   animations:^{
+                     
+                     sourceCell.transform = CGAffineTransformMakeScale(1, 1);
+                     sourceCell.alpha = 0.8;
+                     
+                   }
+                   completion:nil];
+  
+  SkyduckGridViewCell *proposedDestinationCell = _cellList[proposedDestinationIndex];
+  [UIView animateWithDuration:0.1
+                        delay:0
+                      options:UIViewAnimationOptionCurveEaseIn
+                   animations:^{
+                     
+                     proposedDestinationCell.transform = CGAffineTransformMakeScale(1.1, 1.1);
+                     proposedDestinationCell.alpha = 0.8;
+                     
+                   }
+                   completion:nil];
+  
+}
 
 -(void)cellSetPosition:(SkyduckGridViewCell *) cell
 {
@@ -269,21 +302,37 @@
       CGFloat yDist = (tempCell.center.y - sourceCell.center.y);
       CGFloat distance = sqrt((xDist * xDist) + (yDist * yDist));
       
-      if(distance < kCellCollisionMoveMinDistance) {
-        // 发生了碰撞
+      if (sourceCell.file.isDirectory) {
         
-        // TODO : 这里要根据 sourceCell 和 tempCell 的 type 来决定是移动还是合并
-        if (sourceCell.file.isDirectory) {
+        
+        if(distance < kCellCollisionMoveMinDistance) {
           // 要进行移动
           [self targetIndexForMoveFromPointAtIndex:sourceCell.index toProposedIndex:tempCell.index];
-        } else if (sourceCell.file.isFile) {
-          // 要进行合并
-          
-          
+          break;
         }
-        
-        
-        break;
+      } else if (sourceCell.file.isFile) {
+        if(distance < kCellCollisionMergeMinDistance) {
+          // 要进行合并
+          [self targetIndexForMergeFromPointAtIndex:sourceCell.index toProposedIndex:tempCell.index];
+          break;
+        } else {
+          
+          if (i == 0) {
+            if((distance < kCellCollisionMoveMinDistance && xDist > 0)) {
+              // 要进行移动
+              [self targetIndexForMoveFromPointAtIndex:sourceCell.index toProposedIndex:tempCell.index];
+              break;
+            }
+          } else if (i == _cellList.count - 1) {
+            if((distance < kCellCollisionMoveMinDistance && xDist < 0)) {
+              // 要进行移动
+              [self targetIndexForMoveFromPointAtIndex:sourceCell.index toProposedIndex:tempCell.index];
+              break;
+            }
+          } else {
+            
+          }
+        }
       }
     }
   }
@@ -596,40 +645,40 @@
   
 	if([timer.userInfo isEqualToString:@"right"]) {
     
-    if(maxScrollwidth - _curcell.center.x < kPageMoveMargin) {// 向右移动
+    if(maxScrollwidth - _cellOfMoving.center.x < kPageMoveMargin) {// 向右移动
       
       if(self.numberOfPages - 1 > _currentPageIndex) {
         //
         [self movePage:_currentPageIndex + 1 animated:YES];
         //
-        [_curcell moveByOffset:CGPointMake(_scrollView.frame.size.width, 0)];
+        [_cellOfMoving moveByOffset:CGPointMake(_scrollView.frame.size.width, 0)];
         //
         _touchLocation = CGPointMake(_touchLocation.x + _scrollView.frame.size.width, _touchLocation.y);
         
         if(self.numberOfPages - 1 == _currentPageIndex) {
           // 已经滑到了最后一页
           SkyduckGridViewCell *targetCell = [_cellList lastObject];
-          [self targetIndexForMoveFromPointAtIndex:_curcell.index toProposedIndex:targetCell.index];
+          [self targetIndexForMoveFromPointAtIndex:_cellOfMoving.index toProposedIndex:targetCell.index];
         }
       }
     }
     
   } else if([timer.userInfo isEqualToString:@"left"]) {// 向左移动
     
-    if(_curcell.center.x - minScrollwidth < kPageMoveMargin) {
+    if(_cellOfMoving.center.x - minScrollwidth < kPageMoveMargin) {
       if(_currentPageIndex > 0) {
         //
         [self movePage:_currentPageIndex - 1 animated:YES];
         //
-        [_curcell moveByOffset:CGPointMake(_scrollView.frame.size.width * -1, 0)];
+        [_cellOfMoving moveByOffset:CGPointMake(_scrollView.frame.size.width * -1, 0)];
         //
         _touchLocation = CGPointMake(_touchLocation.x - _scrollView.frame.size.width, _touchLocation.y);
       }
     }
   }
   
-  _movePagesTimer = nil;
-  _curcell = nil;
+  _timerOfMovePage = nil;
+  _cellOfMoving = nil;
 }
 
 - (void)gridViewCell:(SkyduckGridViewCell *)cell touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -682,37 +731,37 @@
     NSInteger minScrollwidth = _scrollView.contentOffset.x;
     
     if (maxScrollwidth - cell.center.x < kPageMoveMargin) {
-      if(_movePagesTimer == nil) {
-        _curcell = cell;
-        _movePagesTimer = [NSTimer scheduledTimerWithTimeInterval:0.7
-                                                           target:self
-                                                         selector:@selector(timerFireMethodForMovePages:)
-                                                         userInfo:@"right"
-                                                          repeats:NO];
+      if(_timerOfMovePage == nil) {
+        _cellOfMoving = cell;
+        _timerOfMovePage = [NSTimer scheduledTimerWithTimeInterval:0.7
+                                                            target:self
+                                                          selector:@selector(timerFireMethodForMovePages:)
+                                                          userInfo:@"right"
+                                                           repeats:NO];
         
         NSLog(@"movePageTmr right");
       }
       
     } else if (cell.center.x - minScrollwidth < kPageMoveMargin) {
       
-      if(_movePagesTimer == nil) {
-        _curcell = cell;
-        _movePagesTimer = [NSTimer scheduledTimerWithTimeInterval:0.7
-                                                           target:self
-                                                         selector:@selector(timerFireMethodForMovePages:)
-                                                         userInfo:@"left"
-                                                          repeats:NO];
+      if(_timerOfMovePage == nil) {
+        _cellOfMoving = cell;
+        _timerOfMovePage = [NSTimer scheduledTimerWithTimeInterval:0.7
+                                                            target:self
+                                                          selector:@selector(timerFireMethodForMovePages:)
+                                                          userInfo:@"left"
+                                                           repeats:NO];
         NSLog(@"movePageTmr left");
       }
       
     } else {
       
       NSLog(@"MovPageTimver invalidate");
-      [_movePagesTimer invalidate];
+      [_timerOfMovePage invalidate];
       NSLog(@"MovPageTimver nil");
-      _movePagesTimer = nil;
+      _timerOfMovePage = nil;
       
-      _curcell = nil;
+      _cellOfMoving = nil;
     }
     
     _touchLocation = newTouchLocation;
@@ -723,10 +772,9 @@
 {
   self.scrollView.scrollEnabled = YES;
   
-  if(self.editable)
-  {
-    [_movePagesTimer invalidate];
-    _movePagesTimer = nil;
+  if(self.editable) {
+    [_timerOfMovePage invalidate], _timerOfMovePage = nil;
+    
     [UIView animateWithDuration:0.1
                           delay:0
                         options:UIViewAnimationOptionCurveEaseIn
@@ -741,9 +789,7 @@
     
     
     [self cellSetPosition:cell];
-  }
-  else
-  {
+  } else {
     [UIView animateWithDuration:0.1
                           delay:0
                         options:UIViewAnimationOptionCurveEaseIn
@@ -803,8 +849,8 @@
 }
 
 -(void) gridViewCell:(SkyduckGridViewCell *)cell touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-  [_movePagesTimer invalidate];
-  _movePagesTimer = nil;
+  [_timerOfMovePage invalidate], _timerOfMovePage = nil;
+  
   if(self.editable)
   {
     NSLog(@"add to GridView");

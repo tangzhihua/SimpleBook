@@ -62,8 +62,8 @@
   [super layoutSubviews];
   
   CGSize imgsize = [UIImage imageNamed:@"icon_del.png"].size;
-  CGRect CellBound = self.bounds;
-  [_deleteButton setFrame:CGRectMake(CellBound.size.width - imgsize.width , 0, imgsize.width, imgsize.height)];
+  CGRect cellBound = self.bounds;
+  [_deleteButton setFrame:CGRectMake(cellBound.size.width - imgsize.width * 2, 20, imgsize.width, imgsize.height)];
 }
 
 
