@@ -1,5 +1,5 @@
 #include "Pods-TBXML+NSDictionary.xcconfig"
 GCC_PREPROCESSOR_DEFINITIONS = COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/TBXML+NSDictionary" "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/DAPagesContainer" "${PODS_ROOT}/Headers/MKNetworkKit" "${PODS_ROOT}/Headers/MKNetworkKit/Categories" "${PODS_ROOT}/Headers/MKStoreKit" "${PODS_ROOT}/Headers/Reachability" "${PODS_ROOT}/Headers/TBXML" "${PODS_ROOT}/Headers/TBXML+NSDictionary" "${PODS_ROOT}/Headers/ZipArchive"
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/TBXML+NSDictionary" "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/DAPagesContainer" "${PODS_ROOT}/Headers/MKNetworkKit" "${PODS_ROOT}/Headers/MKNetworkKit/Categories" "${PODS_ROOT}/Headers/MKStoreKit" "${PODS_ROOT}/Headers/RNTimer" "${PODS_ROOT}/Headers/Reachability" "${PODS_ROOT}/Headers/TBXML" "${PODS_ROOT}/Headers/TBXML+NSDictionary" "${PODS_ROOT}/Headers/ZipArchive"
 OTHER_LDFLAGS = -ObjC
 PODS_ROOT = ${SRCROOT}

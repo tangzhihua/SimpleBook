@@ -50,17 +50,10 @@
   return self;
 }
 
-// 长按事件处理方法
-- (void)handleLongPress:(UILongPressGestureRecognizer *)recognizer  {
-  
-  if(self.delegate != nil && [self.delegate respondsToSelector:@selector(gridViewCell:handleLongPress:)]) {
-    [self.delegate gridViewCell:self handleLongPress:self.index];
-  }
-}
-
 - (void)layoutSubviews {
   [super layoutSubviews];
   
+  //
   CGSize imgsize = [UIImage imageNamed:@"icon_del.png"].size;
   CGRect cellBound = self.bounds;
   [_deleteButton setFrame:CGRectMake(cellBound.size.width - imgsize.width * 2, 20, imgsize.width, imgsize.height)];
@@ -70,7 +63,16 @@
 
 #pragma mark -
 #pragma mark - Touch Event Handling
-
+/*
+ // Generally, all responders which do custom touch handling should override all four of these methods.
+ // 通常情况, 所有的 响应者 应该覆写这里全部的4个方法.
+ // Your responder will receive either touchesEnded:withEvent: or touchesCancelled:withEvent: for each touch it is handling (those touches it received in touchesBegan:withEvent:).
+ // 你的 响应者 会接收到在touchesBegan:withEvent:中 接收到事件的 touchesEnded:withEvent: 或者 touchesCancelled:withEvent:
+ //
+ // *** You must handle cancelled touches to ensure correct behavior in your application.  Failure to do so is very likely to lead to incorrect behavior or crashes.
+ // 你必须在你的app中处理已经取消的 触摸事件, 好确保正确的行为. 如果不这么做的话, 和可能导致不正确的行为或崩溃.
+ //
+ */
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
   
   if(self.delegate != nil && [self.delegate respondsToSelector:@selector(gridViewCell:touchesMoved:withEvent:)]) {
@@ -106,6 +108,7 @@
   }
 }
 
+//
 - (IBAction)deleteButtonOnClickListener:(UIButton *)sender {
   NSLog(@"Delete Button %d",self.index);
   
@@ -114,14 +117,13 @@
   }
 }
 
-/*
- // Only override drawRect: if you perform custom drawing.
- // An empty implementation adversely affects performance during animation.
- - (void)drawRect:(CGRect)rect
- {
- // Drawing code
- }
- */
+// 长按事件处理方法
+- (void)handleLongPress:(UILongPressGestureRecognizer *)recognizer  {
+  
+  if(self.delegate != nil && [self.delegate respondsToSelector:@selector(gridViewCell:handleLongPress:)]) {
+    [self.delegate gridViewCell:self handleLongPress:self.index];
+  }
+}
 
 // 将单元格移动到新的位置
 - (void)moveByOffset:(CGPoint)offset {

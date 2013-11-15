@@ -8,12 +8,6 @@
 #import "SkyduckGridView.h"
 #import "SkyduckFile.h"
 
-// 两个单元格碰撞时, 发生 Move 效果时的最小触发间距
-#define kCellCollisionMoveMinDistance (80)
-// 两个单元格碰撞时, 发生 Merge 效果时的最小触发间距
-#define kCellCollisionMergeMinDistance (10)
-//
-#define kPageMoveMargin 70
 
 
 @interface SkyduckGridView () <UIScrollViewDelegate, SkyduckGridViewCellDelegate>
@@ -21,7 +15,8 @@
 
 // 单元格列表
 @property (nonatomic, strong) NSMutableArray *cellList;
-// Last location
+// 触点坐标
+@property (nonatomic, assign) CGPoint beginTouchLocation;
 @property (nonatomic, assign) CGPoint touchLocation;
 // GridView Page move Timer
 @property (nonatomic, strong) NSTimer *timerOfMovePage;
@@ -40,6 +35,26 @@
 @end
 
 @implementation SkyduckGridView
+
+// 两个单元格碰撞时, 发生 Move 效果时的最小触发间距
+#define kCellCollisionMoveMinDistance (80)
+// 两个单元格碰撞时, 发生 Merge 效果时的最小触发间距
+#define kCellCollisionMergeMinDistance (10)
+// 拖动一个cell时, 当触碰到屏幕边缘时, 发生页面移动效果时的最小触发间距.
+#define kPageMoveMargin (70)
+
+// 移动方向
+typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
+  // 上移
+  kMoveDirectionEnum_Up = 0,
+  // 下移
+  kMoveDirectionEnum_Down,
+  // 左移
+  kMoveDirectionEnum_Left,
+  // 右移
+  kMoveDirectionEnum_Right
+};
+
 
 // ----------------------------------------------------------------------------------
 #pragma mark -
@@ -113,7 +128,7 @@
                                delay:0.0
                              options:(UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionCurveLinear | UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat)
                           animations:^(void){
-                            NSLog(@"editAniworking");
+                            //NSLog(@"editAniworking");
                             
                             for (SkyduckGridViewCell *cell in _cellList) {
                               cell.deleteButton.transform = CGAffineTransformMakeScale(1.1, 1.1);
@@ -124,7 +139,7 @@
                           }];
     }
   } else {
-    NSLog(@"editAniworking clear");
+    //NSLog(@"editAniworking clear");
     
     for (SkyduckGridViewCell *cell in _cellList) {
       cell.deleteButton.transform = CGAffineTransformIdentity;
@@ -205,6 +220,10 @@
       }
     }
   }
+  
+  SkyduckGridViewCell *cellOfproposedDestinationIndex =  _cellList[proposedDestinationIndex];
+  _beginTouchLocation =  cellOfproposedDestinationIndex.center;
+  
 }
 
 // 合并两个cell
@@ -289,8 +308,8 @@
   }
 }
 
-// 单元格碰撞检测
-- (void)cellCollisionDetectionWithSourceCell:(SkyduckGridViewCell *)sourceCell {
+// 源cell 和 所有其他的cell之间的碰撞检测处理
+- (void)cellsCollisionDetectionHandleWithSourceCell:(SkyduckGridViewCell *)sourceCell moveDirection:(const MoveDirectionEnum)moveDirectionEnum {
   
   for(int i=0; i<_cellList.count; i++) {
     SkyduckGridViewCell *tempCell = _cellList[i];
@@ -303,34 +322,33 @@
       CGFloat distance = sqrt((xDist * xDist) + (yDist * yDist));
       
       if (sourceCell.file.isDirectory) {
-        
-        
+      
         if(distance < kCellCollisionMoveMinDistance) {
           // 要进行移动
           [self targetIndexForMoveFromPointAtIndex:sourceCell.index toProposedIndex:tempCell.index];
           break;
         }
+        
       } else if (sourceCell.file.isFile) {
+        
         if(distance < kCellCollisionMergeMinDistance) {
           // 要进行合并
-          [self targetIndexForMergeFromPointAtIndex:sourceCell.index toProposedIndex:tempCell.index];
+          //[self targetIndexForMergeFromPointAtIndex:sourceCell.index toProposedIndex:tempCell.index];
           break;
-        } else {
+        } else if (distance < kCellCollisionMoveMinDistance) {
           
-          if (i == 0) {
-            if((distance < kCellCollisionMoveMinDistance && xDist > 0)) {
+          if (kMoveDirectionEnum_Left == moveDirectionEnum) {
+            // 向左移动
+            if (sourceCell.center.x < tempCell.center.x) {
               // 要进行移动
               [self targetIndexForMoveFromPointAtIndex:sourceCell.index toProposedIndex:tempCell.index];
-              break;
             }
-          } else if (i == _cellList.count - 1) {
-            if((distance < kCellCollisionMoveMinDistance && xDist < 0)) {
+          } else if (kMoveDirectionEnum_Right == moveDirectionEnum) {
+            // 向右移动
+            if (sourceCell.center.x > tempCell.center.x) {
               // 要进行移动
               [self targetIndexForMoveFromPointAtIndex:sourceCell.index toProposedIndex:tempCell.index];
-              break;
             }
-          } else {
-            
           }
         }
       }
@@ -634,6 +652,17 @@
 
 #pragma mark -
 #pragma mark - SkyduckGridViewCell Delegate
+- (MoveDirectionEnum)moveDirectionFrom:(CGPoint)fromPoint to:(CGPoint)toPoint {
+  if (fromPoint.x > toPoint.x) {
+    return kMoveDirectionEnum_Left;
+  } else if (fromPoint.x < toPoint.x) {
+    return kMoveDirectionEnum_Right;
+  } else if (fromPoint.y > toPoint.y) {
+    return kMoveDirectionEnum_Up;
+  } else {
+    return kMoveDirectionEnum_Down;
+  }
+}
 
 // 这是指 移动一个 cell 移动到页面边缘时, 整个页面要发生切换移动.
 - (void)timerFireMethodForMovePages:(NSTimer *)timer {
@@ -682,11 +711,15 @@
 }
 
 - (void)gridViewCell:(SkyduckGridViewCell *)cell touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+  
+  // 记录第一个 "触点"
+  _beginTouchLocation = cell.center;
   _touchLocation = [[touches anyObject] locationInView:_scrollView];
   
   if(self.editable) {
+    // 如果在 "编辑状态" 中, 点中一个 cell 时, 目的可能是移动这个cell, 那么必须先禁用 UIScrollView, 否则在拖动一个cell时, 后面的 UIScrollView也会一起运动.
     _scrollView.scrollEnabled = NO;
-    // Bring Subview to Front
+    // Bring Subview to Front (作用不明了??????)
     [_scrollView bringSubviewToFront:cell];
     
     [UIView animateWithDuration:0.1
@@ -694,6 +727,7 @@
                         options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
                        
+                       // 设置缩放，及改变a、d的值
                        cell.transform = CGAffineTransformMakeScale(1.1, 1.1);
                        cell.alpha = 0.8;
                        
@@ -703,7 +737,8 @@
     
   } else {
     
-    if([[touches anyObject] tapCount] == 1) {
+    // 处于 "非编辑状态" 时, 点击事件的监听.
+    if ([[touches anyObject] tapCount] == 1) {
       if (_delegate != nil && [_delegate respondsToSelector:@selector(gridView:touchUpInside:)]) {
         [_delegate gridView:self touchUpInside:cell];
       }
@@ -714,17 +749,19 @@
 
 - (void)gridViewCell:(SkyduckGridViewCell *)cell touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
   
+  // 发生了 touch move 事件, 获取一个最新的坐标点
   CGPoint newTouchLocation = [[touches anyObject] locationInView:_scrollView];
   
   if(self.editable) {
     
-    // 选择 & 移动 (Picking & Move)
+    // 选择 并且 移动 (Picking & Move) 一个 cell
     const float deltaX = newTouchLocation.x - _touchLocation.x;
     const float deltaY = newTouchLocation.y - _touchLocation.y;
     [cell moveByOffset:CGPointMake(deltaX, deltaY)];
     
-    // 单元格碰撞检测
-    [self cellCollisionDetectionWithSourceCell:cell];
+    // 源cell 和 所有其他的cell之间的碰撞检测处理
+    // cell 发生碰撞时, 会引起后续的处理逻辑, 如果源cell是 file类型, 就会和发生碰撞的cell发生cell合并事件, 如果是 folder 类型的, 就会发生cell移动事件.
+    [self cellsCollisionDetectionHandleWithSourceCell:cell moveDirection:[self moveDirectionFrom:_beginTouchLocation to:newTouchLocation]];
     
     // 页面移动(PageMove)
     NSInteger maxScrollwidth = _scrollView.contentOffset.x + _scrollView.bounds.size.width;
@@ -756,10 +793,9 @@
       
     } else {
       
-      NSLog(@"MovPageTimver invalidate");
-      [_timerOfMovePage invalidate];
-      NSLog(@"MovPageTimver nil");
-      _timerOfMovePage = nil;
+      //NSLog(@"MovPageTimver invalidate");
+      [_timerOfMovePage invalidate], _timerOfMovePage = nil;
+      //NSLog(@"MovPageTimver nil");
       
       _cellOfMoving = nil;
     }
@@ -848,7 +884,7 @@
   NSLog(@"TE");
 }
 
--(void) gridViewCell:(SkyduckGridViewCell *)cell touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)gridViewCell:(SkyduckGridViewCell *)cell touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
   [_timerOfMovePage invalidate], _timerOfMovePage = nil;
   
   if(self.editable)
@@ -878,6 +914,7 @@
   
 }
 
+//
 - (void)gridViewCell:(SkyduckGridViewCell *)cell didDelete:(NSUInteger)index {
   [UIView animateWithDuration:0.1
                         delay:0
@@ -892,7 +929,9 @@
   [self cellWasDelete:cell];
 }
 
+// cell 长按事件监听
 - (void)gridViewCell:(SkyduckGridViewCell *)cell handleLongPress:(NSUInteger)index {
   self.editable = YES;
 }
+
 @end

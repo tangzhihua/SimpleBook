@@ -52,6 +52,11 @@ MKStoreKit uses MIT Licensing And so all of my source code can
                            remove the copyright notice from the source code if you make your
                            app open source and in the about page.
 
+## RNTimer
+
+Copyright (C) Rob Napier. All Right Reserved.
+
+
 ## Reachability
 
 Copyright (c) 2011, Tony Million.

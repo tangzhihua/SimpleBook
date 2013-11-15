@@ -4,6 +4,7 @@ PODS:
     - Reachability (~> 3.1.0)
   - MKStoreKit (4.99)
   - Reachability (3.1.1)
+  - RNTimer (0.0.1)
   - TBXML (1.5)
   - TBXML+NSDictionary (0.0.1):
     - TBXML (~> 1.5.0)
@@ -13,6 +14,7 @@ DEPENDENCIES:
   - DAPagesContainer (~> 1.0.1)
   - MKNetworkKit (~> 0.87)
   - MKStoreKit (~> 4.99)
+  - RNTimer (~> 0.0.1)
   - TBXML (~> 1.5)
   - TBXML+NSDictionary (~> 0.0.1)
   - ZipArchive (~> 1.2.0)
@@ -21,9 +23,10 @@ SPEC CHECKSUMS:
   DAPagesContainer: c2fc85a244ef7024cf89385709af7951963451dd
   MKNetworkKit: f174100f92473012138b6b1c3040266af8d43a14
   MKStoreKit: 5dea8e2966c1218c0d0f0b5c749d2d9317141a2b
-  Reachability: 2be6bc2fd2bd31d97f5db33e75e4b29c79e95883
+  Reachability: be4883bb93f31e38266ae3365e5600a317aae735
+  RNTimer: 4d7ca0b4de6a1a9f525ebc529dfd4e5a1952a247
   TBXML: 0511ac325d83e59d3aefa4bc8cd6cbeff07a8d9e
   TBXML+NSDictionary: 9bec5f9179a9f42dae1a9ba560f26c7ba732d8ac
   ZipArchive: 93bff5d8b435767ccfac976ed08ca611d950d3d0
 
-COCOAPODS: 0.24.0
+COCOAPODS: 0.27.1

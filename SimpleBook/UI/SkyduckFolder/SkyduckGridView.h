@@ -21,7 +21,7 @@
 // 移动两个cell
 -(void) gridView:(SkyduckGridView *)gridview moveAtIndex:(NSUInteger)fromindex toIndex:(NSUInteger)toIndex;
 -(void) gridView:(SkyduckGridView *)gridview deleteAtIndex:(NSUInteger)index;
--(void) gridView:(SkyduckGridView *)gridview InsertAtIndex:(NSUInteger)index;
+-(void) gridView:(SkyduckGridView *)gridview insertAtIndex:(NSUInteger)index;
 @end
 
 #pragma mark - SkyduckGridViewDelegate
@@ -51,7 +51,7 @@
 #pragma mark - SkyduckGridView
 @interface SkyduckGridView : UIView 
 
-
+//
 @property (nonatomic, weak) IBOutlet id<SkyduckGridViewDataSource> dataSource;
 @property (nonatomic, weak) IBOutlet id<SkyduckGridViewDelegate> delegate;
 @property (nonatomic, weak) IBOutlet id<SkyduckGridViewScrollViewDelegate> delegateScrollView;
