@@ -7,8 +7,8 @@
 
 #import "BookInfo.h"
 #import "BookListInBookstoresDatabaseFieldsConstant.h"
-//
-//@interface BookInfo ()
+
+@interface BookInfo ()
 ////
 //@property (nonatomic, readwrite, copy) NSString *content_id;
 ////
@@ -33,8 +33,8 @@
 //@property (nonatomic, readwrite, copy) NSString *bookDescription;
 //// 书籍zip资源包大小, 以byte为单位.
 //@property (nonatomic, readwrite, copy) NSString *size;
-//
-//@end
+
+@end
 
 @implementation BookInfo
 

@@ -9,6 +9,7 @@
 #import "INetRespondRawEntityDataUnpack.h"
 #import "NetEntityDataToolsFactoryMethodSingleton.h"
 #import "IServerRespondDataTest.h"
+#import "NetRequestErrorBean.h"
 
 @implementation MKNetworkOperationForDomainBean
 /*!

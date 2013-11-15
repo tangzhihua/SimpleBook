@@ -10,7 +10,7 @@
 
 #import "GlobalDataCacheForMemorySingleton.h"
 #import "GlobalDataCacheForNeedSaveToFileSystem.h"
- 
+
 #import "LocalCacheDataPathConstant.h"
 
 
@@ -66,7 +66,7 @@
   if ((self = [super init])) {
     // 初始化代码
     _isExecuted = NO;
-		 
+    
   }
   
   return self;

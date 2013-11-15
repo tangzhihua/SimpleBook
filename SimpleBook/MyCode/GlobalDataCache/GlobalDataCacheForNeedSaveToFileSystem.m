@@ -34,10 +34,10 @@ static NSString *const kLocalCacheDataName_BeginnerGuide                  = @"Be
 // 本地书籍列表
 static NSString *const kLocalCacheDataName_LocalBookList                  = @"LocalBookList";
 // 本地书籍分类列表
-static NSString *const kLocalCacheDataName_LocalBookshelfCategories       = @"LocalBookshelfCategories";
+static NSString *const kLocalCacheDataName_BookCategoriesNetRespondBean   = @"BookCategoriesNetRespondBean";
 
-// 服务器主机名
-static NSString *const kLocalCacheDataName_HostName                       = @"HostName";
+// 当前app版本号, 用了防止升级app时, 本地缓存的序列化数据恢复出错.
+static NSString *const kLocalCacheDataName_LocalAppVersion                = @"LocalAppVersion";
 
 @implementation GlobalDataCacheForNeedSaveToFileSystem
 
@@ -73,7 +73,11 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
 +(void) initialize {
   // 这是为了子类化当前类后, 父类的initialize方法会被调用2次
   if (self == [GlobalDataCacheForNeedSaveToFileSystem class]) {
+    // 注册 "广播消息"
     [self registerBroadcastReceiver];
+    
+    // 新版本升级处理
+    [self newVersionUpgradeHandle];
   }
 }
 
@@ -90,6 +94,25 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
 
 #pragma mark -
 #pragma mark 私有方法
+
+// 新版本升级处理
++(void)newVersionUpgradeHandle {
+  // 检查app版本是否发生了变化, 如果发生了变化, 可能是发生了 "软件升级"
+  NSString *filePath = [NSString stringWithFormat:@"%@/%@", [LocalCacheDataPathConstant importantDataCachePath], [ToolsFunctionForThisProgect localAppVersion]];
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  if (![fileManager fileExistsAtPath:filePath]) {
+    //
+    [fileManager removeItemAtPath:[LocalCacheDataPathConstant importantDataCachePath] error:nil];
+    
+    [fileManager createDirectoryAtPath:[LocalCacheDataPathConstant importantDataCachePath]
+           withIntermediateDirectories:YES
+                            attributes:nil
+                                 error:nil];
+    
+    [fileManager createFileAtPath:filePath contents:nil attributes:nil];
+  }
+}
+
 +(void)serializeObjectToFileSystemWithObject:(id)object fileName:(NSString *)fileName directoryPath:(NSString *)directoryPath {
   if (object == nil) {
     // 如果入参为空, 就证明要删除本地缓存的该对象的序列化文件
@@ -148,10 +171,6 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
   }
   BOOL isNeedShowBeginnerGuide = [userDefaults boolForKey:kLocalCacheDataName_BeginnerGuide];
   [GlobalDataCacheForMemorySingleton sharedInstance].isNeedShowBeginnerGuide = isNeedShowBeginnerGuide;
-  
-  // 服务器主机名
-  //NSString *hostName = [userDefaults stringForKey:kLocalCacheDataName_HostName];
-  //[GlobalDataCacheForMemorySingleton sharedInstance].hostName = hostName;
 }
 
 + (void)readLocalBookListToGlobalDataCacheForMemorySingleton {
@@ -165,9 +184,9 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
   [self registerLocalBookListKVO];
 }
 
-+ (void)readLocalBookshelfCategoriesToGlobalDataCacheForMemorySingleton {
++ (void)readBookCategoriesNetRespondBeanToGlobalDataCacheForMemorySingleton {
   BookCategoriesNetRespondBean *object
-  = [BookCategoriesNetRespondBean deserializeObjectFromFileSystemWithFileName:kLocalCacheDataName_LocalBookshelfCategories
+  = [BookCategoriesNetRespondBean deserializeObjectFromFileSystemWithFileName:kLocalCacheDataName_BookCategoriesNetRespondBean
                                                                 directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
   
   [GlobalDataCacheForMemorySingleton sharedInstance].bookCategoriesNetRespondBean = object;
@@ -201,17 +220,11 @@ static NSString *const kLocalCacheDataName_HostName                       = @"Ho
   // 是否需要显示用户第一次登录时的帮助界面的标志
   BOOL isNeedShowBeginnerGuide = [GlobalDataCacheForMemorySingleton sharedInstance].isNeedShowBeginnerGuide;
   [userDefaults setBool:isNeedShowBeginnerGuide forKey:kLocalCacheDataName_BeginnerGuide];
-  
-  // 服务器主机名
-  //  NSString *hostName = [GlobalDataCacheForMemorySingleton sharedInstance].hostName;
-  //  if ([hostName isEqualToString:kUrlConstant_MainUrl]) {
-  //    [userDefaults setObject:hostName forKey:kLocalCacheDataName_HostName];
-  //  }
 }
 
 + (void)writeLocalBookshelfCategoriesToFileSystem {
   BookCategoriesNetRespondBean *object = [[GlobalDataCacheForMemorySingleton sharedInstance] bookCategoriesNetRespondBean];
-  [self serializeObjectToFileSystemWithObject:object fileName:kLocalCacheDataName_LocalBookshelfCategories directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
+  [self serializeObjectToFileSystemWithObject:object fileName:kLocalCacheDataName_BookCategoriesNetRespondBean directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
 }
 
 + (void)writeLocalBookListToFileSystem {

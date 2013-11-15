@@ -96,6 +96,7 @@
   
   return result;
 }
+
 - (BOOL)addBook:(LocalBook *const)newBook {
   do {
     if (![newBook isKindOfClass:[LocalBook class]]) {
@@ -103,11 +104,9 @@
       break;
     }
     
-    for (LocalBook *localBook in self.localBookList) {
-      if ([localBook.bookInfo.content_id isEqualToString:newBook.bookInfo.content_id]) {
-        PRPLog(@"当前书籍已经存在本地了, bookname=%@", newBook.bookInfo.name);
-        return NO;
-      }
+    if ([self.localBookList containsObject:newBook]) {
+      PRPLog(@"当前书籍已经存在本地了, bookname=%@", newBook.bookInfo.name);
+      return NO;
     }
     
     [self insertObject:newBook inLocalBookListAtIndex:self.localBookList.count];

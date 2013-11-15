@@ -29,8 +29,8 @@
 
 // 读取本地书籍列表
 + (void)readLocalBookListToGlobalDataCacheForMemorySingleton;
-// 读取本地书籍分类列表
-+ (void)readLocalBookshelfCategoriesToGlobalDataCacheForMemorySingleton;
+// 读取书籍分类列表
++ (void)readBookCategoriesNetRespondBeanToGlobalDataCacheForMemorySingleton;
  
  
 @end

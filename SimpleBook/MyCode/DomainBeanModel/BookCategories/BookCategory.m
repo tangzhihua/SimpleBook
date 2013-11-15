@@ -1,5 +1,5 @@
 //
-//  BookCategory.m
+//  LocalBookshelfCategory.m
 //  MBEnterprise
 //
 //  Created by 唐志华 on 13-9-22.

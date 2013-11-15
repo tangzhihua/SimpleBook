@@ -7,9 +7,10 @@
 
 #import "ServerRespondDataTestForDreamBook.h"
 #import "NetRequestErrorBean.h"
-#import "NSDictionary+SafeValue.h"
+
 #import "TBXML.h"
 #import "TBXML+NSDictionary.h"
+ 
 
 @implementation ServerRespondDataTestForDreamBook
 #pragma mark 实现 IServerRespondDataTest 接口

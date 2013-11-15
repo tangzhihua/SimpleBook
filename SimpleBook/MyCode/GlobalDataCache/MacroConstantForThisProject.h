@@ -49,11 +49,61 @@ typedef NS_ENUM(NSInteger, NewVersionDetectStateEnum) {
   kNewVersionDetectStateEnum_LocalAppIsTheLatest
 };
 
+#define IS_IOS7             ([[UIDevice currentDevice].systemVersion floatValue] >= 7.0)
+#define CURRENT_IOS_VERSION [[UIDevice currentDevice].systemVersion floatValue]
+
+// message title
+//#define MSG_I_DEF              @"情報"
+//#define MSG_W_DEF              @"警告"
+//#define MSG_E_DEF              @"エラー"
+//#define MSG_Q_DEF              @"確認"
+
+// message title
+//#define MSG_E_TITLE_LOGIN      @"認証エラー"
+//#define MSG_E_LOGIN            @"ログインに失敗しました。IDとパスワードをご確認ください。"
+
+
+//#define MSG_Q_LOGOUT           @"ログアウトしますよろしいですか？"
+//#define MSG_E_NETWORK_OFFLINE  @"ネットワークの接続を確認してください。"
+//#define MSG_E_AUTH             @"ログインに失敗しました。再度認証を行ってください。"
+//#define MSG_E_AUTHFAILE        @"認証情報が無効です。再度認証を行ってください。"
+
+
+//#define MSG_E_TITLE_NETWORK    @"ネットワーク無効"
+//#define MSG_E_NETWORK          @"Wi-Fiネットワークかモバイルデータ通信を利用する必要があります。"
+
+//#define MSG_I_DOWNLOADED       @"ダウンロード中..." // @"Please wait...\n\n\n"
+//#define MSG_I_UNZIP            @"解凍中ですお待ちください。" // @"Please wait...\n\n\n"
+//#define MSG_E_UNZIP            @"解凍に失敗しましたコンテンツの管理者に問い合わせてください。"
+
+//#define MSG_I_OVER_EXPIRED     @"有効期限を過ぎているため、\n閲覧できません。"
+
+// login view
+//#define DEF_DESC_DIALOG_AUTH   @"アカウント認証"
+//#define DEF_DESC_SWITCH_IDSAVE @"認証情報の保存"
+//#define DEF_DESC_ID            @"ID"
+//#define DEF_DESC_PASSWORD      @"PASSWORD"
+
+
+// 7777 search
+// 8888 ID
+// 9999 PASSWORD
+
+#define DEF_HTTP_POST           @"POST"
+#define DEF_HTTP_GET            @"GET"
+#define DEF_HTTP_USERAGENT      @"User-Agent"
+#define DEF_HTTP_USERID         @"user_id="
+#define DEF_HTTP_USERPASSWORD   @"&user_password="
+#define DEF_HTTP_USERAGENT_FMT  @"%@_%@_%@%@_iOS%d.%d" // MbEnterprise_1.0_[Hardware]_[OS version] >> Ikemen_1.0_iPhone Simulator5.0_iOS5.0
+
+
+// userdefault
+//#define DEF_UD_ISSAVECOOKIE     @"SaveAccount"
+//#define DEF_UD_USERID           @"UserID"   // _kawa 20120615  logout message + user_id
+#define UD_USERNAME             @"username"
+#define UD_USERPASSWORD         @"userpassword"
 // public account
 #define PUBLIC_USERNAME         @"public"
 #define PUBLIC_PASSWORD         @"pwpublic"
-
-#define IS_IOS7             ([[UIDevice currentDevice].systemVersion floatValue] >= 7.0)
-#define CURRENT_IOS_VERSION [[UIDevice currentDevice].systemVersion floatValue]
 
 #endif

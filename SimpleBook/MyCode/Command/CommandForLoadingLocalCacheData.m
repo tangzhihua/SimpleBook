@@ -65,11 +65,14 @@
     
     /********            这里加载最重要的信息, 不加载完, 是不能进入App的.           ************/
 		
-		// 读取App配置文件
+		// 读取App配置
     [GlobalDataCacheForNeedSaveToFileSystem readAppConfigInfoToGlobalDataCacheForMemorySingleton];
+    // 读取用户登录相关信息(自动登录标志位/用户最后一次成功登录时得到的响应业务Bean)
     [GlobalDataCacheForNeedSaveToFileSystem readUserLoginInfoToGlobalDataCacheForMemorySingleton];
+    // 读取本地保存的书籍列表(被保存在本地的书籍列表中包含两种书籍:1.已经下载安装完成的 2.未下载完成的
     [GlobalDataCacheForNeedSaveToFileSystem readLocalBookListToGlobalDataCacheForMemorySingleton];
-    [GlobalDataCacheForNeedSaveToFileSystem readLocalBookshelfCategoriesToGlobalDataCacheForMemorySingleton];
+    // 读取书籍分类网络响应业务Bean
+    [GlobalDataCacheForNeedSaveToFileSystem readBookCategoriesNetRespondBeanToGlobalDataCacheForMemorySingleton];
 		 
   }
   

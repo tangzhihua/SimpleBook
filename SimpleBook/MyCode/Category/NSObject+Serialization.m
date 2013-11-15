@@ -33,8 +33,13 @@
         }
       }
       
-      BOOL isSaveSuccessful = [NSKeyedArchiver archiveRootObject:self toFile:path];
-      NSLog(@"序列化保存对象 %@ 结果 = %@", path, [[NSNumber numberWithBool:isSaveSuccessful] description]);
+      @try {
+        [NSKeyedArchiver archiveRootObject:self toFile:path];
+      }
+      @catch (NSException *exception) {
+        
+      }
+      
     } while (NO);
     
   }
@@ -65,7 +70,12 @@
       return nil;
     }
     
-    return [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    @try {
+      return [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    }
+    @catch (NSException *exception) {
+      return nil;
+    }
   }
 }
 

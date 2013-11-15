@@ -204,7 +204,7 @@
 
 - (BOOL) startDownloadBookWithURLString:(NSString *)urlString {
   do {
-    
+
     if ([NSString isEmpty:urlString]) {
       // 参数非法
       RNAssert(NO, @"入参urlString为空!");
