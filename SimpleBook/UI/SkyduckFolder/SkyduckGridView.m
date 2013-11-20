@@ -101,7 +101,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
     
     // 长按手势
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
-    longPress.minimumPressDuration = 1.0;
+    longPress.minimumPressDuration = 0.5;
     longPress.delegate = self;
     [self addGestureRecognizer:longPress];
   }
@@ -613,7 +613,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   _touchLocation = [touch locationInView:_scrollView];
   
   // 改变被点中的 cell 的UI效果, 好体现被点中的效果
-  cell.alpha = 0.5;
+  cell.alpha = 0.8;
   // 记录第一个 "触点" 点中的 cell 对象
   _cellOfMoving = cell;
 }
@@ -667,7 +667,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
                           options:UIViewAnimationOptionCurveEaseIn
                        animations:^{
                          _cellOfMoving.transform = CGAffineTransformMakeScale(1.1, 1.1);
-                         _cellOfMoving.alpha = 0.8;
+                         //_cellOfMoving.alpha = 1.0;
                        }
                        completion:nil];
     }break;
@@ -794,7 +794,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
                      
                      // 设置缩放，及改变a、d的值
                      cell.transform = CGAffineTransformMakeScale(1.1, 1.1);
-                     cell.alpha = 0.8;
+                     //cell.alpha = 0.8;
                      
                    }
                    completion:nil];
