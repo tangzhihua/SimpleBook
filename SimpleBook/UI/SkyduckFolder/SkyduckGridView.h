@@ -12,40 +12,41 @@
 
 #pragma mark - SkyduckGridViewDataSource
 @protocol SkyduckGridViewDataSource <NSObject>
--(NSInteger) numberOfCellsInGridView:(SkyduckGridView *)gridview;
--(SkyduckGridViewCell *)gridView:(SkyduckGridView *)gridview cellAtIndex:(NSUInteger)index;
+@required
+- (NSInteger)numberOfCellsInGridView:(SkyduckGridView *)gridview;
+- (SkyduckGridViewCell *)gridView:(SkyduckGridView *)gridview cellAtIndex:(NSUInteger)index;
 
 @optional
 // 合并两个cell
--(void) gridView:(SkyduckGridView *)gridview mergeAtIndex:(NSUInteger)fromindex toIndex:(NSUInteger)toIndex;
+- (void)gridView:(SkyduckGridView *)gridview mergeAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex;
 // 移动两个cell
--(void) gridView:(SkyduckGridView *)gridview moveAtIndex:(NSUInteger)fromindex toIndex:(NSUInteger)toIndex;
--(void) gridView:(SkyduckGridView *)gridview deleteAtIndex:(NSUInteger)index;
--(void) gridView:(SkyduckGridView *)gridview insertAtIndex:(NSUInteger)index;
+- (void)gridView:(SkyduckGridView *)gridview moveAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex;
+- (void)gridView:(SkyduckGridView *)gridview deleteAtIndex:(NSUInteger)index;
+- (void)gridView:(SkyduckGridView *)gridview insertAtIndex:(NSUInteger)index;
 @end
 
 #pragma mark - SkyduckGridViewDelegate
 @protocol SkyduckGridViewDelegate <NSObject>
 @optional
--(void) gridView:(SkyduckGridView *)gridView didSelectCell:(SkyduckGridViewCell *)cell atIndex:(NSUInteger)index;
+- (void)gridView:(SkyduckGridView *)gridView didSelectCell:(SkyduckGridViewCell *)cell atIndex:(NSUInteger)index;
 //-(void) gridView:(SkyduckGridView *)gridView didDeselectCell:(SkyduckGridViewCell *)cell atIndex:(NSUInteger)index;
 //-(void) gridView:(SkyduckGridView *)gridView didEndEditingCell:(SkyduckGridViewCell *)cell atIndex:(NSUInteger)index;
--(void) gridView:(SkyduckGridView *)gridView changedPageIndex:(NSUInteger)index;
--(void) gridView:(SkyduckGridView *)gridView endMovePage:(NSUInteger)index;
+- (void)gridView:(SkyduckGridView *)gridView changedPageIndex:(NSUInteger)index;
+- (void)gridView:(SkyduckGridView *)gridView endMovePage:(NSUInteger)index;
 
--(void) gridView:(SkyduckGridView *)gridView touchUpInside:(SkyduckGridViewCell *)cell;
--(void) gridView:(SkyduckGridView *)gridView touchUpOoutside:(SkyduckGridViewCell *)cell;
--(void) gridView:(SkyduckGridView *)gridView touchCanceled:(SkyduckGridViewCell *)cell;
+//- (void)gridView:(SkyduckGridView *)gridView touchUpInside:(SkyduckGridViewCell *)cell;
+//- (void)gridView:(SkyduckGridView *)gridView touchUpOoutside:(SkyduckGridViewCell *)cell;
+//- (void)gridView:(SkyduckGridView *)gridView touchCanceled:(SkyduckGridViewCell *)cell;
 @end
 
 #pragma mark - SkyduckGridViewScrollViewDelegate
-@protocol SkyduckGridViewScrollViewDelegate<NSObject>
+@protocol SkyduckGridViewScrollViewDelegate <NSObject>
 @optional
--(void) gridView:(SkyduckGridView *)gridView scrollViewDidEndDecelerating:(UIScrollView *)scrollView;
--(void) gridView:(SkyduckGridView *)gridView scrollViewWillBeginDragging:(UIScrollView *)scrollView;
--(void) gridView:(SkyduckGridView *)gridView scrollViewWillBeginDecelerating:(UIScrollView *)scrollView;
--(void) gridView:(SkyduckGridView *)gridView scrollViewDidScroll:(UIScrollView *)scrollView;
--(void) gridView:(SkyduckGridView *)gridView scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView;
+- (void)gridView:(SkyduckGridView *)gridView scrollViewDidEndDecelerating:(UIScrollView *)scrollView;
+- (void)gridView:(SkyduckGridView *)gridView scrollViewWillBeginDragging:(UIScrollView *)scrollView;
+- (void)gridView:(SkyduckGridView *)gridView scrollViewWillBeginDecelerating:(UIScrollView *)scrollView;
+- (void)gridView:(SkyduckGridView *)gridView scrollViewDidScroll:(UIScrollView *)scrollView;
+- (void)gridView:(SkyduckGridView *)gridView scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView;
 @end
 
 #pragma mark - SkyduckGridView
@@ -58,8 +59,8 @@
 
 // 总页数
 @property (nonatomic, readonly) NSUInteger numberOfPages;
-@property (nonatomic, assign) BOOL editable;
 
-- (void) reloadData;
-- (id) initWithFrame:(CGRect)frame numOfRow:(NSUInteger)rows numOfColumns:(NSUInteger)columns cellMargin:(NSUInteger)cellMargins;
+
+- (void)reloadData;
+- (id)initWithFrame:(CGRect)frame numOfRow:(NSUInteger)rows numOfColumns:(NSUInteger)columns cellMargin:(NSUInteger)cellMargins;
 @end

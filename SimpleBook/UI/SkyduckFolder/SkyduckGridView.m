@@ -8,9 +8,9 @@
 #import "SkyduckGridView.h"
 #import "SkyduckFile.h"
 
+#import "RNTimer.h"
 
-
-@interface SkyduckGridView () <UIScrollViewDelegate, SkyduckGridViewCellDelegate>
+@interface SkyduckGridView () <UIScrollViewDelegate, SkyduckGridViewCellDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic, strong) UIScrollView *scrollView;
 
 // 单元格列表
@@ -19,7 +19,7 @@
 @property (nonatomic, assign) CGPoint beginTouchLocation;
 @property (nonatomic, assign) CGPoint touchLocation;
 // GridView Page move Timer
-@property (nonatomic, strong) NSTimer *timerOfMovePage;
+@property (nonatomic, strong) RNTimer *timerOfMovePage;
 @property (nonatomic, strong) SkyduckGridViewCell *cellOfMoving;
 
 // 行
@@ -32,6 +32,8 @@
 @property (nonatomic, strong) NSArray *rowPosY;
 // 当前页索引(从 0 开始)
 @property (nonatomic, assign) NSUInteger currentPageIndex;
+// 长按 cell 会进入 编辑状态
+@property (nonatomic, assign) BOOL editable;
 @end
 
 @implementation SkyduckGridView
@@ -59,18 +61,6 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
 // ----------------------------------------------------------------------------------
 #pragma mark -
 #pragma - Property Override
-
-- (void)setEditable:(BOOL)value {
-  _editable = value;
-  for(UIView *v in self.scrollView.subviews) {
-    if([v isKindOfClass:[SkyduckGridViewCell class]]) {
-      SkyduckGridViewCell *cell = (SkyduckGridViewCell *)v;
-      cell.editable = _editable;
-    }
-  }
-  
-  [self editableAnimation];
-}
 
 - (void)setCurrentPageIndex:(NSUInteger)currentPageIndex {
   if(currentPageIndex < self.numberOfPages) {
@@ -100,12 +90,20 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   self = [super initWithFrame:frame];
   if (self) {
     // Initialization code
+    _editable = NO;
+    
     _numberOfRows = rows;
     _numberOfColumns = columns;
     _cellMargin = cellMargins;
     
     [self createLayout];
     [self initVariable];
+    
+    // 长按手势
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
+    longPress.minimumPressDuration = 1.0;
+    longPress.delegate = self;
+    [self addGestureRecognizer:longPress];
   }
   return self;
 }
@@ -117,34 +115,6 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
 
 - (void)initVariable {
   _cellList = [[NSMutableArray alloc] init];
-}
-
-// 处于编辑状态时, 显示的动画
-- (void)editableAnimation {
-  
-  if(self.editable) {
-    if(_cellList.count > 0) {
-      [UIControl animateWithDuration:0.6
-                               delay:0.0
-                             options:(UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionCurveLinear | UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat)
-                          animations:^(void){
-                            //NSLog(@"editAniworking");
-                            
-                            for (SkyduckGridViewCell *cell in _cellList) {
-                              cell.deleteButton.transform = CGAffineTransformMakeScale(1.1, 1.1);
-                            }
-                            
-                          } completion:^(BOOL finished){
-                            
-                          }];
-    }
-  } else {
-    //NSLog(@"editAniworking clear");
-    
-    for (SkyduckGridViewCell *cell in _cellList) {
-      cell.deleteButton.transform = CGAffineTransformIdentity;
-    }
-  }
 }
 
 // 将一个单元格移动到另一个单元格的位置(会重新排列网格)
@@ -258,47 +228,37 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   
 }
 
--(void)cellSetPosition:(SkyduckGridViewCell *) cell
-{
+- (void)cellSetPosition:(SkyduckGridViewCell *)cell {
   NSUInteger numCols = _numberOfColumns;
   NSUInteger numRows = _numberOfRows;
   NSUInteger cellsPerPage = numCols * numRows;
   
-  BOOL isLandscape = UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]);
-  if(isLandscape)
-  {
+  if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
     numCols = _numberOfRows;
     numRows = _numberOfColumns;
-    
   }
   
-  CGRect gridBounds = self.scrollView.bounds;
+  CGRect gridBounds = _scrollView.bounds;
   CGRect cellBounds = CGRectMake(0, 0, gridBounds.size.width / (float) numCols, gridBounds.size.height / (float) numRows);
-  
   
   NSUInteger setIndex = cell.index;
   NSUInteger page = (NSUInteger)((float)(setIndex)/ cellsPerPage);
   NSUInteger row = (NSUInteger)((float)(setIndex)/numCols) - (page * numRows);
   
-  CGPoint origin;
-  CGRect contractFrame;
-  if([_colPosX count] == numCols && [_rowPosY count] == numRows)
-  {
+  CGPoint origin = {0};
+  CGRect contractFrame = {0};
+  if([_colPosX count] == numCols && [_rowPosY count] == numRows) {
     NSNumber *rowPos = [_rowPosY objectAtIndex:row];
     NSNumber *col= [_colPosX objectAtIndex:(setIndex % numCols)];
-    origin = CGPointMake((page * gridBounds.size.width) + ( [col intValue]),
-                         [rowPos intValue]);
+    origin = CGPointMake((page * gridBounds.size.width) + ( [col intValue]), [rowPos intValue]);
     contractFrame = CGRectMake((NSUInteger)origin.x, (NSUInteger)origin.y, (NSUInteger)cell.cellInitFrame.size.width, (NSUInteger)cell.cellInitFrame.size.height);
     [UIView beginAnimations:@"Move" context:nil];
     [UIView setAnimationDuration:0.2];
     [UIView setAnimationCurve: UIViewAnimationCurveEaseInOut];
     cell.frame = contractFrame;
     [UIView commitAnimations];
-  }
-  else
-  {
-    origin = CGPointMake((page * gridBounds.size.width) + (((setIndex) % numCols) * cellBounds.size.width),
-                         (row * cellBounds.size.height));
+  } else {
+    origin = CGPointMake((page * gridBounds.size.width) + (((setIndex) % numCols) * cellBounds.size.width), (row * cellBounds.size.height));
     contractFrame = CGRectMake((NSUInteger)origin.x, (NSUInteger)origin.y, (NSUInteger)cellBounds.size.width, (NSUInteger)cellBounds.size.height);
     [UIView beginAnimations:@"Move" context:nil];
     [UIView setAnimationDuration:0.2];
@@ -322,7 +282,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
       CGFloat distance = sqrt((xDist * xDist) + (yDist * yDist));
       
       if (sourceCell.file.isDirectory) {
-      
+        
         if(distance < kCellCollisionMoveMinDistance) {
           // 要进行移动
           [self targetIndexForMoveFromPointAtIndex:sourceCell.index toProposedIndex:tempCell.index];
@@ -333,7 +293,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
         
         if(distance < kCellCollisionMergeMinDistance) {
           // 要进行合并
-          //[self targetIndexForMergeFromPointAtIndex:sourceCell.index toProposedIndex:tempCell.index];
+          [self targetIndexForMergeFromPointAtIndex:sourceCell.index toProposedIndex:tempCell.index];
           break;
         } else if (distance < kCellCollisionMoveMinDistance) {
           
@@ -393,7 +353,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
 - (void)drawRect:(CGRect)rect {
   // Drawing code
   [self loadTotalView];
-  [self editableAnimation];
+  
 }
 
 - (void)reloadData {
@@ -458,8 +418,6 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
         cell.frame = CGRectInset(contractFrame, _cellMargin, _cellMargin);
       }
       
-      cell.editable = _editable;
-      
       [self.scrollView addSubview:cell];
       
       [_cellList addObject:cell];
@@ -477,7 +435,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
 
 - (void)deleteCell:(NSInteger)index {
   
-  [[_cellList objectAtIndex:index] removeFromSuperview];
+  [_cellList[index] removeFromSuperview];
   [_cellList removeObjectAtIndex:index];
   
   NSUInteger numCols = _numberOfColumns;
@@ -530,29 +488,19 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
 }
 
 
-- (void)updateCurrentPageIndex
-{
-  //    CGFloat pageWidth = _scrollView.frame.size.width;
-  //    NSUInteger cpi = floor((_scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
-  //    _currentPageIndex = cpi;
-  //
-  //    if (delegate && [delegate respondsToSelector:@selector(gridView:changedPageToIndex:)]) {
-  //        [self.delegate gridView:self changedPageIndex:_currentPageIndex];
-  //    }
+- (void)updateCurrentPageIndex {
   NSUInteger curPage = round(self.scrollView.contentOffset.x / self.scrollView.frame.size.width);
-  static NSUInteger prevPage =0;
-  // NSLog(@"CurPage %d",curPage);
-  if(curPage != prevPage)
-  {
-    _currentPageIndex =curPage;
-    if (_delegate && [_delegate respondsToSelector:@selector(gridView:changedPageIndex:)]) {
+  static NSUInteger prevPage = 0;
+  
+  if(curPage != prevPage) {
+    _currentPageIndex = curPage;
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(gridView:changedPageIndex:)]) {
       
-      [self.delegate gridView:self changedPageIndex:curPage];
+      [_delegate gridView:self changedPageIndex:curPage];
     }
   }
   
   prevPage = curPage;
-  
 }
 
 - (void)movePage:(NSInteger)newPageIndex animated:(BOOL)animate {
@@ -587,13 +535,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
 
 // ----------------------------------------------------------------------------------
 #pragma - SkyduckGridView callback
-- (void)cellWasSelected:(SkyduckGridViewCell *)cell
-{
-  NSLog(@"Cellwasselected");
-  if (_delegate != nil && [_delegate respondsToSelector:@selector(gridView:didSelectCell:atIndex:)]) {
-    [_delegate gridView:self didSelectCell:cell atIndex:cell.index];
-  }
-}
+
 
 - (void)cellWasDelete:(SkyduckGridViewCell *)cell {
   if (_dataSource != nil && [_dataSource respondsToSelector:@selector(gridView:deleteAtIndex:)]) {
@@ -604,48 +546,48 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
     [self deleteCell:cell.index];
   }
 }
-// ----------------------------------------------------------------------------------
+
 #pragma mark -
 #pragma mark - UIScrollViewDelegate
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
   [self updateCurrentPageIndex];
   
-  if(_delegateScrollView && [_delegateScrollView respondsToSelector:@selector(gridView:scrollViewDidEndDecelerating:)])
-    [self.delegateScrollView gridView:self scrollViewDidEndDecelerating:scrollView];
+  if(_delegateScrollView != nil && [_delegateScrollView respondsToSelector:@selector(gridView:scrollViewDidEndDecelerating:)]) {
+    [_delegateScrollView gridView:self scrollViewDidEndDecelerating:scrollView];
+  }
 }
 
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
-{
-  if(_delegateScrollView && [_delegateScrollView respondsToSelector:@selector(gridView:scrollViewDidEndScrollingAnimation:)])
-    [self.delegateScrollView gridView:self scrollViewDidEndScrollingAnimation:scrollView];
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+  if(_delegateScrollView != nil && [_delegateScrollView respondsToSelector:@selector(gridView:scrollViewDidEndScrollingAnimation:)]) {
+    [_delegateScrollView gridView:self scrollViewDidEndScrollingAnimation:scrollView];
+  }
   
   [self updateCurrentPageIndex];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   [self updateCurrentPageIndex];
-  if(_delegateScrollView && [_delegateScrollView respondsToSelector:@selector(gridView:scrollViewDidScroll:)])
-    [self.delegateScrollView gridView:self scrollViewDidScroll:scrollView];
   
-  
-  // NSLog(@"offset :%@",NSStringFromCGPoint(scrollView.contentOffset));
-  
+  if(_delegateScrollView != nil && [_delegateScrollView respondsToSelector:@selector(gridView:scrollViewDidScroll:)]) {
+    [_delegateScrollView gridView:self scrollViewDidScroll:scrollView];
+  }
 }
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
   [self updateCurrentPageIndex];
-  if(_delegateScrollView && [_delegateScrollView respondsToSelector:@selector(gridView:scrollViewWillBeginDragging:)])
-    [self.delegateScrollView gridView:self scrollViewWillBeginDragging:scrollView];
+  
+  if(_delegateScrollView != nil && [_delegateScrollView respondsToSelector:@selector(gridView:scrollViewWillBeginDragging:)]) {
+    [_delegateScrollView gridView:self scrollViewWillBeginDragging:scrollView];
+  }
 }
-- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
-{
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
   [self updateCurrentPageIndex];
-  if(_delegateScrollView && [_delegateScrollView respondsToSelector:@selector(gridView:scrollViewWillBeginDecelerating:)])
-    [self.delegateScrollView gridView:self scrollViewWillBeginDecelerating:scrollView];
+  
+  if(_delegateScrollView != nil && [_delegateScrollView respondsToSelector:@selector(gridView:scrollViewWillBeginDecelerating:)]) {
+    [_delegateScrollView gridView:self scrollViewWillBeginDecelerating:scrollView];
+  }
 }
 
 
@@ -664,274 +606,199 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   }
 }
 
-// 这是指 移动一个 cell 移动到页面边缘时, 整个页面要发生切换移动.
-- (void)timerFireMethodForMovePages:(NSTimer *)timer {
+- (void)gridViewCell:(SkyduckGridViewCell *)cell touchesBegan:(UITouch *)touch {
   
-  NSLog(@"movePageTimer in");
+  // 记录第一个 "触点" 点中的 cell 的中心点
+  _beginTouchLocation = cell.center;
+  _touchLocation = [touch locationInView:_scrollView];
   
-  NSInteger maxScrollwidth = _scrollView.contentOffset.x + _scrollView.bounds.size.width;
-  NSInteger minScrollwidth = _scrollView.contentOffset.x;
-  
-	if([timer.userInfo isEqualToString:@"right"]) {
-    
-    if(maxScrollwidth - _cellOfMoving.center.x < kPageMoveMargin) {// 向右移动
-      
-      if(self.numberOfPages - 1 > _currentPageIndex) {
-        //
-        [self movePage:_currentPageIndex + 1 animated:YES];
-        //
-        [_cellOfMoving moveByOffset:CGPointMake(_scrollView.frame.size.width, 0)];
-        //
-        _touchLocation = CGPointMake(_touchLocation.x + _scrollView.frame.size.width, _touchLocation.y);
-        
-        if(self.numberOfPages - 1 == _currentPageIndex) {
-          // 已经滑到了最后一页
-          SkyduckGridViewCell *targetCell = [_cellList lastObject];
-          [self targetIndexForMoveFromPointAtIndex:_cellOfMoving.index toProposedIndex:targetCell.index];
-        }
-      }
-    }
-    
-  } else if([timer.userInfo isEqualToString:@"left"]) {// 向左移动
-    
-    if(_cellOfMoving.center.x - minScrollwidth < kPageMoveMargin) {
-      if(_currentPageIndex > 0) {
-        //
-        [self movePage:_currentPageIndex - 1 animated:YES];
-        //
-        [_cellOfMoving moveByOffset:CGPointMake(_scrollView.frame.size.width * -1, 0)];
-        //
-        _touchLocation = CGPointMake(_touchLocation.x - _scrollView.frame.size.width, _touchLocation.y);
-      }
-    }
-  }
-  
-  _timerOfMovePage = nil;
+  // 改变被点中的 cell 的UI效果, 好体现被点中的效果
+  cell.alpha = 0.5;
+  // 记录第一个 "触点" 点中的 cell 对象
+  _cellOfMoving = cell;
+}
+
+- (void)gridViewCell:(SkyduckGridViewCell *)cell touchesMoved:(UITouch *)touch {
+  // 一旦发生移动时, 就取消了点中cell时的效果
+  cell.alpha = 1.0;
   _cellOfMoving = nil;
 }
 
-- (void)gridViewCell:(SkyduckGridViewCell *)cell touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)gridViewCell:(SkyduckGridViewCell *)cell touchesEnded:(UITouch *)touch {
   
-  // 记录第一个 "触点"
-  _beginTouchLocation = cell.center;
-  _touchLocation = [[touches anyObject] locationInView:_scrollView];
   
-  if(self.editable) {
-    // 如果在 "编辑状态" 中, 点中一个 cell 时, 目的可能是移动这个cell, 那么必须先禁用 UIScrollView, 否则在拖动一个cell时, 后面的 UIScrollView也会一起运动.
-    _scrollView.scrollEnabled = NO;
-    // Bring Subview to Front (作用不明了??????)
-    [_scrollView bringSubviewToFront:cell];
-    
-    [UIView animateWithDuration:0.1
-                          delay:0
-                        options:UIViewAnimationOptionCurveEaseIn
-                     animations:^{
-                       
-                       // 设置缩放，及改变a、d的值
-                       cell.transform = CGAffineTransformMakeScale(1.1, 1.1);
-                       cell.alpha = 0.8;
-                       
-                     }
-                     completion:nil];
-    
-    
-  } else {
-    
-    // 处于 "非编辑状态" 时, 点击事件的监听.
-    if ([[touches anyObject] tapCount] == 1) {
-      if (_delegate != nil && [_delegate respondsToSelector:@selector(gridView:touchUpInside:)]) {
-        [_delegate gridView:self touchUpInside:cell];
-      }
-    }
-    
+}
+
+- (void)gridViewCell:(SkyduckGridViewCell *)cell touchesCancelled:(UITouch *)touch {
+  if (!_editable) {
+    cell.alpha = 1.0;
   }
 }
 
-- (void)gridViewCell:(SkyduckGridViewCell *)cell touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-  
-  // 发生了 touch move 事件, 获取一个最新的坐标点
-  CGPoint newTouchLocation = [[touches anyObject] locationInView:_scrollView];
-  
-  if(self.editable) {
-    
-    // 选择 并且 移动 (Picking & Move) 一个 cell
-    const float deltaX = newTouchLocation.x - _touchLocation.x;
-    const float deltaY = newTouchLocation.y - _touchLocation.y;
-    [cell moveByOffset:CGPointMake(deltaX, deltaY)];
-    
-    // 源cell 和 所有其他的cell之间的碰撞检测处理
-    // cell 发生碰撞时, 会引起后续的处理逻辑, 如果源cell是 file类型, 就会和发生碰撞的cell发生cell合并事件, 如果是 folder 类型的, 就会发生cell移动事件.
-    [self cellsCollisionDetectionHandleWithSourceCell:cell moveDirection:[self moveDirectionFrom:_beginTouchLocation to:newTouchLocation]];
-    
-    // 页面移动(PageMove)
-    NSInteger maxScrollwidth = _scrollView.contentOffset.x + _scrollView.bounds.size.width;
-    NSInteger minScrollwidth = _scrollView.contentOffset.x;
-    
-    if (maxScrollwidth - cell.center.x < kPageMoveMargin) {
-      if(_timerOfMovePage == nil) {
-        _cellOfMoving = cell;
-        _timerOfMovePage = [NSTimer scheduledTimerWithTimeInterval:0.7
-                                                            target:self
-                                                          selector:@selector(timerFireMethodForMovePages:)
-                                                          userInfo:@"right"
-                                                           repeats:NO];
-        
-        NSLog(@"movePageTmr right");
-      }
-      
-    } else if (cell.center.x - minScrollwidth < kPageMoveMargin) {
-      
-      if(_timerOfMovePage == nil) {
-        _cellOfMoving = cell;
-        _timerOfMovePage = [NSTimer scheduledTimerWithTimeInterval:0.7
-                                                            target:self
-                                                          selector:@selector(timerFireMethodForMovePages:)
-                                                          userInfo:@"left"
-                                                           repeats:NO];
-        NSLog(@"movePageTmr left");
-      }
-      
-    } else {
-      
-      //NSLog(@"MovPageTimver invalidate");
-      [_timerOfMovePage invalidate], _timerOfMovePage = nil;
-      //NSLog(@"MovPageTimver nil");
-      
-      _cellOfMoving = nil;
-    }
-    
-    _touchLocation = newTouchLocation;
+// cell 单击事件监听
+- (void)gridViewCell:(SkyduckGridViewCell *)cell handleSingleTap:(NSUInteger)index {
+  if (_delegate != nil && [_delegate respondsToSelector:@selector(gridView:didSelectCell:atIndex:)]) {
+    [_delegate gridView:self didSelectCell:cell atIndex:index];
   }
 }
 
--(void) gridViewCell:(SkyduckGridViewCell *)cell touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-  self.scrollView.scrollEnabled = YES;
+// called when a gesture recognizer attempts to transition out of UIGestureRecognizerStatePossible.
+// returning NO causes it to transition to UIGestureRecognizerStateFailed
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+  // 长按手势 代理 (如果没有点中一个有效的 cell 时, 是不需要检测 长按手势的)
+  return _cellOfMoving != nil;
+}
+
+// 长按
+- (void)handleLongPress:(UILongPressGestureRecognizer *)recognizer {
   
-  if(self.editable) {
-    [_timerOfMovePage invalidate], _timerOfMovePage = nil;
-    
-    [UIView animateWithDuration:0.1
-                          delay:0
-                        options:UIViewAnimationOptionCurveEaseIn
-                     animations:^{
-                       
-                       cell.transform = CGAffineTransformIdentity;
-                       cell.alpha = 1;
-                       
-                       
-                     }
-                     completion:nil];
-    
-    
-    [self cellSetPosition:cell];
-  } else {
-    [UIView animateWithDuration:0.1
-                          delay:0
-                        options:UIViewAnimationOptionCurveEaseIn
-                     animations:^{
-                       
-                       cell.transform = CGAffineTransformIdentity;
-                       cell.alpha = 1;
-                       
-                       
-                     }
-                     completion:nil];
-    
-    //SEL singleTapSelector = @selector(cellWasSelected:);
-    //    SEL doubleTapSelector = @selector(cellWasDoubleTapped:);
-    
-    if (self) {
-      UITouch *touch = [touches anyObject];
+  NSLog(@"handleLongPress");
+  
+  switch (recognizer.state) {
+    case UIGestureRecognizerStateBegan:{// 手势开始
+      _editable = YES;
       
-      switch ([touch tapCount])
-      {
-        case 0: //오랫동안 길게 누른경우
-        {
-          CGPoint curPos = [touch locationInView:self];
-          NSLog(@"CELL Frame:%@",NSStringFromCGRect(cell.frame));
-          if(CGRectContainsPoint(cell.frame, curPos))
-          {
-            //select
-            if (_delegate && [_delegate respondsToSelector:@selector(gridView:touchUpOoutside:)]) {
-              [_delegate gridView:self touchUpOoutside:cell];
+      _scrollView.scrollEnabled = NO;
+      //Bring Subview to Front
+      [_scrollView bringSubviewToFront:_cellOfMoving];
+      
+      [UIView animateWithDuration:0.1
+                            delay:0
+                          options:UIViewAnimationOptionCurveEaseIn
+                       animations:^{
+                         _cellOfMoving.transform = CGAffineTransformMakeScale(1.1, 1.1);
+                         _cellOfMoving.alpha = 0.8;
+                       }
+                       completion:nil];
+    }break;
+      
+    case UIGestureRecognizerStateChanged:{// 手势变化
+      // 发生了 touch move 事件, 获取一个最新的坐标点
+      CGPoint newTouchLocation = [recognizer locationInView:_scrollView];
+      
+      // 选择 并且 移动 (Picking & Move) 一个 cell
+      const float deltaX = newTouchLocation.x - _touchLocation.x;
+      const float deltaY = newTouchLocation.y - _touchLocation.y;
+      [_cellOfMoving moveByOffset:CGPointMake(deltaX, deltaY)];
+      
+      // 源cell 和 所有其他的cell之间的碰撞检测处理
+      // cell 发生碰撞时, 会引起后续的处理逻辑, 如果源cell是 file类型, 就会和发生碰撞的cell发生cell合并事件, 如果是 folder 类型的, 就会发生cell移动事件.
+      [self cellsCollisionDetectionHandleWithSourceCell:_cellOfMoving moveDirection:[self moveDirectionFrom:_beginTouchLocation to:newTouchLocation]];
+      
+      // 页面移动(PageMove)
+      NSInteger maxScrollwidth = _scrollView.contentOffset.x + _scrollView.bounds.size.width;
+      NSInteger minScrollwidth = _scrollView.contentOffset.x;
+      
+      if (maxScrollwidth - _cellOfMoving.center.x < kPageMoveMargin) {
+        // 向右滑动
+        if(_timerOfMovePage == nil) {
+          _timerOfMovePage = [RNTimer repeatingTimerWithTimeInterval:0.7 block:^{
+            NSInteger maxScrollwidth = _scrollView.contentOffset.x + _scrollView.bounds.size.width;
+            
+            if(maxScrollwidth - _cellOfMoving.center.x < kPageMoveMargin) {
+              
+              if(self.numberOfPages - 1 > _currentPageIndex) {
+                //
+                [self movePage:_currentPageIndex + 1 animated:YES];
+                //
+                [_cellOfMoving moveByOffset:CGPointMake(_scrollView.frame.size.width, 0)];
+                //
+                _touchLocation = CGPointMake(_touchLocation.x + _scrollView.frame.size.width, _touchLocation.y);
+                
+                if(self.numberOfPages - 1 == _currentPageIndex) {
+                  // 已经滑到了最后一页
+                  SkyduckGridViewCell *targetCell = [_cellList lastObject];
+                  [self targetIndexForMoveFromPointAtIndex:_cellOfMoving.index toProposedIndex:targetCell.index];
+                }
+              }
             }
             
-            [self performSelector:@selector(cellWasSelected:) withObject:cell];
-          }
-          else
-          {
-            if (_delegate && [_delegate respondsToSelector:@selector(gridView:touchCanceled:)]) {
-              [_delegate gridView:self touchCanceled:cell];
-            }
-          }
-          
+            _timerOfMovePage = nil;
+          }];
         }
-          break;
-        case 1:
-          if (_delegate && [_delegate respondsToSelector:@selector(gridView:touchUpOoutside:)]) {
-            [_delegate gridView:self touchUpOoutside:cell];
-          }
-          [self performSelector:@selector(cellWasSelected:) withObject:cell];
-          break;
-        default:
-          break;
+        
+      } else if (_cellOfMoving.center.x - minScrollwidth < kPageMoveMargin) {
+        // 向左滑动
+        if(_timerOfMovePage == nil) {
+          
+          _timerOfMovePage = [RNTimer repeatingTimerWithTimeInterval:0.7 block:^{
+            NSInteger minScrollwidth = _scrollView.contentOffset.x;
+            if(_cellOfMoving.center.x - minScrollwidth < kPageMoveMargin) {
+              if(_currentPageIndex > 0) {
+                //
+                [self movePage:_currentPageIndex - 1 animated:YES];
+                //
+                [_cellOfMoving moveByOffset:CGPointMake(_scrollView.frame.size.width * -1, 0)];
+                //
+                _touchLocation = CGPointMake(_touchLocation.x - _scrollView.frame.size.width, _touchLocation.y);
+              }
+            }
+            
+            _timerOfMovePage = nil;
+          }];
+        }
+        
+      } else {
+        [_timerOfMovePage invalidate], _timerOfMovePage = nil;
       }
-    }
-    
+      
+      // 更新
+      _touchLocation = newTouchLocation;
+    }break;
+      
+    case UIGestureRecognizerStateFailed:
+      // do nothing
+      break;
+    case UIGestureRecognizerStatePossible:
+      break;
+    case UIGestureRecognizerStateCancelled:
+      
+    case UIGestureRecognizerStateEnded:{// 手势结束
+      _editable = NO;
+      
+      _scrollView.scrollEnabled = YES;
+      
+      _cellOfMoving.alpha = 1.0;
+      [_timerOfMovePage invalidate], _timerOfMovePage = nil;
+      
+      [UIView animateWithDuration:0.1
+                            delay:0
+                          options:UIViewAnimationOptionCurveEaseIn
+                       animations:^{
+                         _cellOfMoving.transform = CGAffineTransformIdentity;
+                         _cellOfMoving.alpha = 1.0;
+                       }
+                       completion:nil];
+      
+      // 将移动的cell 复位
+      [self cellSetPosition:_cellOfMoving];
+    }break;
+      
+    default:
+      break;
   }
   
-  NSLog(@"TE");
-}
-
-- (void)gridViewCell:(SkyduckGridViewCell *)cell touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-  [_timerOfMovePage invalidate], _timerOfMovePage = nil;
-  
-  if(self.editable)
-  {
-    NSLog(@"add to GridView");
-    _scrollView.scrollEnabled = YES;
-    [UIView animateWithDuration:0.1
-                          delay:0
-                        options:UIViewAnimationOptionCurveEaseIn
-                     animations:^{
-                       
-                       cell.transform = CGAffineTransformIdentity;
-                       cell.alpha = 1;
-                       
-                       
-                     }
-                     completion:nil];
-    [self cellSetPosition:cell];
-  }
-  else
-  {
-    if (_delegate && [_delegate respondsToSelector:@selector(gridView:touchCanceled:)]) {
-      [_delegate gridView:self touchCanceled:cell];
-    }
-    
-  }
-  
-}
-
-//
-- (void)gridViewCell:(SkyduckGridViewCell *)cell didDelete:(NSUInteger)index {
-  [UIView animateWithDuration:0.1
-                        delay:0
-                      options:UIViewAnimationOptionCurveEaseIn
-                   animations:^{
-                     cell.alpha = 0;
-                     cell.transform = CGAffineTransformMakeScale(0.00001, 0.00001);
-                   }
-                   completion:nil];
-  
-  // 删除当前 cell
-  [self cellWasDelete:cell];
 }
 
 // cell 长按事件监听
 - (void)gridViewCell:(SkyduckGridViewCell *)cell handleLongPress:(NSUInteger)index {
-  self.editable = YES;
+  // 如果在 "编辑状态" 中, 点中一个 cell 时, 目的可能是移动这个cell, 那么必须先禁用 UIScrollView, 否则在拖动一个cell时, 后面的 UIScrollView也会一起运动.
+  _scrollView.scrollEnabled = NO;
+  // Bring Subview to Front
+  [_scrollView bringSubviewToFront:cell];
+  
+  [UIView animateWithDuration:0.1
+                        delay:0
+                      options:UIViewAnimationOptionCurveEaseIn
+                   animations:^{
+                     
+                     // 设置缩放，及改变a、d的值
+                     cell.transform = CGAffineTransformMakeScale(1.1, 1.1);
+                     cell.alpha = 0.8;
+                     
+                   }
+                   completion:nil];
+  
 }
 
 @end

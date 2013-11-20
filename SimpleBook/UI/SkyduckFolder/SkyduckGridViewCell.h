@@ -15,15 +15,18 @@
 #pragma mark - SkyduckGridViewCellDelegate
 @protocol SkyduckGridViewCellDelegate <NSObject>
 //
-- (void)gridViewCell:(SkyduckGridViewCell *)cell touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
-- (void)gridViewCell:(SkyduckGridViewCell *)cell touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
-- (void)gridViewCell:(SkyduckGridViewCell *)cell touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
-- (void)gridViewCell:(SkyduckGridViewCell *)cell touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
-//
-- (void)gridViewCell:(SkyduckGridViewCell *)cell didDelete:(NSUInteger)index;
-- (void)gridViewCell:(SkyduckGridViewCell *)cell handleLongPress:(NSUInteger)index;
+- (void)gridViewCell:(SkyduckGridViewCell *)cell touchesBegan:(UITouch *)touch;
+- (void)gridViewCell:(SkyduckGridViewCell *)cell touchesMoved:(UITouch *)touch;
+- (void)gridViewCell:(SkyduckGridViewCell *)cell touchesEnded:(UITouch *)touch;
+- (void)gridViewCell:(SkyduckGridViewCell *)cell touchesCancelled:(UITouch *)touch;
+// 单击
+- (void)gridViewCell:(SkyduckGridViewCell *)cell handleSingleTap:(NSUInteger)index;
+
 @end
 
+
+#pragma mark -
+#pragma mark - SkyduckGridViewCell
 @interface SkyduckGridViewCell : UIView
 
 //
@@ -31,14 +34,13 @@
 
 //
 @property (nonatomic, assign) NSInteger index;
-@property (nonatomic, assign) BOOL editable;
-@property (nonatomic, strong) UIButton *deleteButton;
 @property (nonatomic, assign) CGRect cellInitFrame;
 
 
 // 将单元格移动到新的位置
 - (void)moveByOffset:(CGPoint)offset;
 
+// 只能使用 bind方法 更换 file 属性.
 @property (nonatomic, strong, readonly) SkyduckFile *file;
 // "数据绑定 (data binding)"
 // 数据绑定最好的办法是将你的数据模型对象传递到自定义的表视图单元并让其绑定数据.

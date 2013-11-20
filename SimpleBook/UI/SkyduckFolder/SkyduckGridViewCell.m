@@ -15,12 +15,6 @@
 @implementation SkyduckGridViewCell
 
 - (void)initCell {
-  _deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-  [_deleteButton addTarget:self action:@selector(deleteButtonOnClickListener:) forControlEvents:UIControlEventTouchUpInside];
-  [_deleteButton setImage:[UIImage imageNamed:@"icon_del.png"] forState:UIControlStateNormal];
-  [_deleteButton setImage:[UIImage imageNamed:@"icon_del_h.png"] forState:UIControlStateHighlighted];
-  [_deleteButton setHidden:YES];
-  [self addSubview:_deleteButton];
   
   /* ------------>   UIView 的exclusiveTouch属性
    exclusiveTouch的意思是UIView会独占整个Touch事件，
@@ -32,11 +26,10 @@
    否则当同时点击多个子视图，那么会触发每个子视图的事件。当然 还有我们常说的模态对话框。*/
   self.exclusiveTouch = YES;
   
-  // 长按事件
-  UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
-  longPressGestureRecognizer.minimumPressDuration = 1.0;
-  [self addGestureRecognizer:longPressGestureRecognizer];
-  
+  // 单击手势
+  UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap)];
+  singleTap.numberOfTapsRequired = 1;
+  [self addGestureRecognizer:singleTap];
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -52,11 +45,6 @@
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  
-  //
-  CGSize imgsize = [UIImage imageNamed:@"icon_del.png"].size;
-  CGRect cellBound = self.bounds;
-  [_deleteButton setFrame:CGRectMake(cellBound.size.width - imgsize.width * 2, 20, imgsize.width, imgsize.height)];
 }
 
 
@@ -74,68 +62,46 @@
  //
  */
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-  
-  if(self.delegate != nil && [self.delegate respondsToSelector:@selector(gridViewCell:touchesMoved:withEvent:)]) {
-    [self.delegate gridViewCell:self touchesBegan:touches withEvent:event];
+  NSLog(@"touchesBegan");
+  if(self.delegate != nil && [self.delegate respondsToSelector:@selector(gridViewCell:touchesMoved:)]) {
+    [self.delegate gridViewCell:self touchesBegan:[touches anyObject]];
   }
-  
-	[super touchesBegan:touches withEvent:event];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-  
-  if(self.delegate != nil && [self.delegate respondsToSelector:@selector(gridViewCell:touchesMoved:withEvent:)]) {
-    [self.delegate gridViewCell:self touchesMoved:touches withEvent:event];
+  NSLog(@"touchesMoved");
+  if(self.delegate != nil && [self.delegate respondsToSelector:@selector(gridViewCell:touchesMoved:)]) {
+    [self.delegate gridViewCell:self touchesMoved:[touches anyObject]];
   }
-  
-  [super touchesMoved:touches withEvent:event];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-  
-  if(self.delegate != nil && [self.delegate respondsToSelector:@selector(gridViewCell:touchesEnded:withEvent:)]) {
-    [self.delegate gridViewCell:self touchesEnded:touches withEvent:event];
-  }
-  
-  [super touchesEnded:touches withEvent:event];
-}
-
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-  [super touchesCancelled:touches withEvent:event];
-  
-  if(self.delegate != nil && [self.delegate respondsToSelector:@selector(gridViewCell:touchesCancelled:withEvent:)]) {
-    [self.delegate gridViewCell:self touchesCancelled:touches withEvent:event];
+  NSLog(@"touchesEnded");
+  if(self.delegate != nil && [self.delegate respondsToSelector:@selector(gridViewCell:touchesEnded:)]) {
+    [self.delegate gridViewCell:self touchesEnded:[touches anyObject]];
   }
 }
 
-//
-- (IBAction)deleteButtonOnClickListener:(UIButton *)sender {
-  NSLog(@"Delete Button %d",self.index);
-  
-  if(self.delegate != nil && [self.delegate respondsToSelector:@selector(gridViewCell:didDelete:)]) {
-    [self.delegate gridViewCell:self didDelete:self.index];
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event{
+  NSLog(@"touchesCancelled");
+  if(self.delegate != nil && [self.delegate respondsToSelector:@selector(gridViewCell:touchesCancelled:)]) {
+    [self.delegate gridViewCell:self touchesCancelled:[touches anyObject]];
   }
 }
 
-// 长按事件处理方法
-- (void)handleLongPress:(UILongPressGestureRecognizer *)recognizer  {
-  
-  if(self.delegate != nil && [self.delegate respondsToSelector:@selector(gridViewCell:handleLongPress:)]) {
-    [self.delegate gridViewCell:self handleLongPress:self.index];
+// 单击
+- (void)handleSingleTap {
+  NSLog(@"handleSingleTap");
+  if(self.delegate != nil && [self.delegate respondsToSelector:@selector(gridViewCell:handleSingleTap:)]) {
+    [self.delegate gridViewCell:self handleSingleTap:self.index];
   }
 }
-
 // 将单元格移动到新的位置
 - (void)moveByOffset:(CGPoint)offset {
 	CGRect frame = [self frame];
 	frame.origin.x += offset.x;
 	frame.origin.y += offset.y;
 	[self setFrame:frame];
-}
-
-- (void)setEditable:(BOOL)editable {
-  _editable = editable;
-  [self.deleteButton setHidden:!editable];
 }
 
 - (void)bind:(SkyduckFile *)file {
@@ -178,7 +144,7 @@
   return [self cellIdentifier];
 }
 
-+(CGRect)viewFrameRectFromNib {
++ (CGRect)viewFrameRectFromNib {
   NSArray *nibObjects = [[self nib] instantiateWithOwner:nil options:nil];
   UIView *view = [nibObjects objectAtIndex:0];
   return [view frame];

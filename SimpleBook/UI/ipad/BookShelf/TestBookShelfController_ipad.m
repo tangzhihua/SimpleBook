@@ -58,7 +58,7 @@
       bookInfo = [[BookInfo alloc] init];
       bookInfo.content_id = [[NSNumber numberWithInt:i] stringValue];
       bookInfo.name = @"初中叽叽报告";
-      bookInfo.thumbnail = @"https://dreambook.retechcorp.com/dreambook/thumbnail/show/4";
+      bookInfo.thumbnail = @"http://img.baidu.com/img/image/sy.jpg";
       localBook = [[LocalBook alloc] initWithBookInfo:bookInfo];
       [localBookFromBookshelf addBook:localBook];
       
@@ -111,7 +111,8 @@
   // Dispose of any resources that can be recreated.
 }
 
-#pragma mark- UzysGridViewDataSource
+#pragma mark - 
+#pragma mark - SkyduckGridViewDataSource
 
 - (NSInteger)numberOfCellsInGridView:(SkyduckGridView *)gridview {
   return [BookShelfDataSourceSingleton sharedInstance].rootDirectory.listFiles.count;
@@ -130,26 +131,24 @@
   }
 }
 
-- (void)gridView:(SkyduckGridView *)gridview moveAtIndex:(NSUInteger)fromindex toIndex:(NSUInteger)toIndex {
+- (void)gridView:(SkyduckGridView *)gridview moveAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex {
   SkyduckFile *rootDirectory = [BookShelfDataSourceSingleton sharedInstance].rootDirectory;
-  SkyduckFile *Temp = [rootDirectory.listFiles objectAtIndex:fromindex];
-  [rootDirectory.listFiles removeObjectAtIndex:fromindex];
-  [rootDirectory.listFiles insertObject:Temp atIndex:toIndex];
+  SkyduckFile *temp = [rootDirectory.listFiles objectAtIndex:fromIndex];
+  [rootDirectory.listFiles removeObjectAtIndex:fromIndex];
+  [rootDirectory.listFiles insertObject:temp atIndex:toIndex];
 }
 
--(void) gridView:(SkyduckGridView *)gridview deleteAtIndex:(NSUInteger)index {
+- (void)gridView:(SkyduckGridView *)gridview deleteAtIndex:(NSUInteger)index {
   SkyduckFile *rootDirectory = [BookShelfDataSourceSingleton sharedInstance].rootDirectory;
   [rootDirectory.listFiles removeObjectAtIndex:index];
 }
 
-#pragma mark- UzysGridViewDelegate
--(void) gridView:(SkyduckGridView *)gridView changedPageIndex:(NSUInteger)index
-{
-  NSLog(@"Page : %d",index);
+#pragma mark- SkyduckGridViewDelegate
+- (void)gridView:(SkyduckGridView *)gridView changedPageIndex:(NSUInteger)index {
+  NSLog(@"翻页 : %d",index);
 }
--(void) gridView:(SkyduckGridView *)gridView didSelectCell:(SkyduckGridViewCell *)cell atIndex:(NSUInteger)index
-{
-  NSLog(@"Cell index %d",index);
+- (void)gridView:(SkyduckGridView *)gridView didSelectCell:(SkyduckGridViewCell *)cell atIndex:(NSUInteger)index {
+  NSLog(@"点中的 Cell 索引 : %d",index);
 }
 
 @end
