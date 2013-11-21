@@ -58,7 +58,7 @@
       bookInfo = [[BookInfo alloc] init];
       bookInfo.content_id = [[NSNumber numberWithInt:i] stringValue];
       bookInfo.name = @"初中叽叽报告";
-      bookInfo.thumbnail = @"http://img.baidu.com/img/image/sy.jpg";
+      //bookInfo.thumbnail = @"http://img.baidu.com/img/image/sy.jpg";
       localBook = [[LocalBook alloc] initWithBookInfo:bookInfo];
       [localBookFromBookshelf addBook:localBook];
       

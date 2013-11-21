@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="140" height="237"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="bookshelf_group_black.png" id="JP1-qR-eG5" userLabel="outlet->Image View - 书籍封面图片">
+                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="bookcover_default.png" id="JP1-qR-eG5" userLabel="outlet->Image View - 书籍封面图片">
                     <rect key="frame" x="0.0" y="0.0" width="140" height="188"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </imageView>
@@ -31,6 +31,6 @@
         </view>
     </objects>
     <resources>
-        <image name="bookshelf_group_black.png" width="140" height="188"/>
+        <image name="bookcover_default.png" width="120" height="160"/>
     </resources>
 </document>

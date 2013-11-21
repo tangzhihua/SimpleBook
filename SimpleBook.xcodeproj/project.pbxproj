@@ -85,6 +85,7 @@
 		754082F8183D99DD00A9A009 /* folder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 754082E5183D99DD00A9A009 /* folder@2x.png */; };
 		754082F9183D99DD00A9A009 /* folder@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 754082E6183D99DD00A9A009 /* folder@2x~iphone.png */; };
 		754082FA183D99DD00A9A009 /* folder~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 754082E7183D99DD00A9A009 /* folder~iphone.png */; };
+		754082FC183D9CB100A9A009 /* bookcover_default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 754082FB183D9CB100A9A009 /* bookcover_default@2x.png */; };
 		7586E433180E9D5C007E6BAA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7586E432180E9D5C007E6BAA /* Localizable.strings */; };
 		759AB36818166006008D602D /* CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 759AB36718166006008D602D /* CoreData.m */; };
 		75ACA7751817E18900C48CD3 /* BookCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75ACA7731817E18900C48CD3 /* BookCategoryViewController.m */; };
@@ -469,6 +470,7 @@
 		754082E5183D99DD00A9A009 /* folder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "folder@2x.png"; sourceTree = "<group>"; };
 		754082E6183D99DD00A9A009 /* folder@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "folder@2x~iphone.png"; sourceTree = "<group>"; };
 		754082E7183D99DD00A9A009 /* folder~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "folder~iphone.png"; sourceTree = "<group>"; };
+		754082FB183D9CB100A9A009 /* bookcover_default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bookcover_default@2x.png"; sourceTree = "<group>"; };
 		7586E432180E9D5C007E6BAA /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		759AB36618166006008D602D /* CoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreData.h; sourceTree = "<group>"; };
 		759AB36718166006008D602D /* CoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreData.m; sourceTree = "<group>"; };
@@ -1117,6 +1119,7 @@
 		754082A8183D96A900A9A009 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				754082FB183D9CB100A9A009 /* bookcover_default@2x.png */,
 				754082D5183D99DD00A9A009 /* alert_icon_delete.png */,
 				754082D6183D99DD00A9A009 /* alert_icon_delete@2x.png */,
 				754082D7183D99DD00A9A009 /* bookcover_default.png */,
@@ -2071,6 +2074,7 @@
 				75E49C6E180E30CA0050F1B9 /* sx_touch_iphone.png in Resources */,
 				75E49C4E180E30CA0050F1B9 /* x.png in Resources */,
 				75E49BED180E30CA0050F1B9 /* d_qysy_6_H.png in Resources */,
+				754082FC183D9CB100A9A009 /* bookcover_default@2x.png in Resources */,
 				75E49BF3180E30CA0050F1B9 /* fl_ty_hb_H.png in Resources */,
 				754082F2183D99DD00A9A009 /* button_trashbox@2x.png in Resources */,
 				75E49C62180E30CA0050F1B9 /* ht_iphone.png in Resources */,
