@@ -100,10 +100,12 @@
   [super viewDidLoad];
   // Do any additional setup after loading the view from its nib.
   
-  self.gridView = [[SkyduckGridView alloc] initWithFrame:self.view.frame numOfRow:4 numOfColumns:4 cellMargin:2];
+  _gridView = [[SkyduckGridView alloc] initWithFrame:self.view.frame];
   _gridView.delegate = self;
   _gridView.dataSource = self;
   [self.view addSubview:_gridView];
+  
+  [_gridView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -113,11 +115,11 @@
 
 #pragma mark - 
 #pragma mark - SkyduckGridViewDataSource
-
-- (NSInteger)numberOfCellsInGridView:(SkyduckGridView *)gridview {
+// 在网格控件中cell总数量
+- (NSUInteger)numberOfCellsInGridView:(SkyduckGridView *)gridview {
   return [BookShelfDataSourceSingleton sharedInstance].rootDirectory.listFiles.count;
 }
-
+//
 - (SkyduckGridViewCell *)gridView:(SkyduckGridView *)gridview cellAtIndex:(NSUInteger)index {
   SkyduckFile *file = [BookShelfDataSourceSingleton sharedInstance].rootDirectory.listFiles[index];
   if (file.isFile) {
@@ -130,25 +132,49 @@
     return cell;
   }
 }
-
-- (void)gridView:(SkyduckGridView *)gridview moveAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex {
-  SkyduckFile *rootDirectory = [BookShelfDataSourceSingleton sharedInstance].rootDirectory;
-  SkyduckFile *temp = [rootDirectory.listFiles objectAtIndex:fromIndex];
-  [rootDirectory.listFiles removeObjectAtIndex:fromIndex];
-  [rootDirectory.listFiles insertObject:temp atIndex:toIndex];
+// 一行显示最多多少个cell
+- (NSUInteger)numberOfCellsInRowOfGridView:(SkyduckGridView *)gridview {
+  if (UIInterfaceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
+    // 竖屏
+    return 4;
+  } else {
+    // 横屏
+    return 5;
+  }
 }
-
-- (void)gridView:(SkyduckGridView *)gridview deleteAtIndex:(NSUInteger)index {
-  SkyduckFile *rootDirectory = [BookShelfDataSourceSingleton sharedInstance].rootDirectory;
-  [rootDirectory.listFiles removeObjectAtIndex:index];
+// cell size
+- (CGSize)sizeOfCellInGridView:(SkyduckGridView *)gridview {
+  return CGSizeMake(170, 237);
+}
+// cell 之间上下空白处高度
+- (CGFloat)marginOfVerticalCellInGridView:(SkyduckGridView *)gridview {
+  return 20.0;
 }
 
 #pragma mark- SkyduckGridViewDelegate
-- (void)gridView:(SkyduckGridView *)gridView changedPageIndex:(NSUInteger)index {
-  NSLog(@"翻页 : %d",index);
+// 单击一个cell
+- (void)gridView:(SkyduckGridView *)gridView didSelectCellAtIndex:(NSUInteger)index {
+  NSLog(@"点击了一个cell : %d", index);
 }
-- (void)gridView:(SkyduckGridView *)gridView didSelectCell:(SkyduckGridViewCell *)cell atIndex:(NSUInteger)index {
-  NSLog(@"点中的 Cell 索引 : %d",index);
+// 合并两个cell
+- (void)gridView:(SkyduckGridView *)gridview targetIndexForMergeFromCellAtIndex:(NSUInteger)sourceIndex toProposedIndex:(NSUInteger)proposedDestinationIndex {
+  NSLog(@"合并两个cell : sourceIndex=%d, proposedDestinationIndex=%d", sourceIndex, proposedDestinationIndex);
+}
+// 移动两个cell
+- (void)gridView:(SkyduckGridView *)gridview targetIndexForMoveFromCellAtIndex:(NSUInteger)sourceIndex toProposedIndex:(NSUInteger)proposedDestinationIndex {
+  NSLog(@"移动两个cell :  sourceIndex=%d, proposedDestinationIndex=%d", sourceIndex, proposedDestinationIndex);
+  
+  SkyduckFile *rootDirectory = [BookShelfDataSourceSingleton sharedInstance].rootDirectory;
+  SkyduckFile *temp = [rootDirectory.listFiles objectAtIndex:sourceIndex];
+  [rootDirectory.listFiles removeObjectAtIndex:sourceIndex];
+  [rootDirectory.listFiles insertObject:temp atIndex:proposedDestinationIndex];
+}
+// 删除一个cell
+- (void)gridView:(SkyduckGridView *)gridview deleteCellAtIndex:(NSUInteger)index {
+  NSLog(@"删除一个cell : %d", index);
+  
+  SkyduckFile *rootDirectory = [BookShelfDataSourceSingleton sharedInstance].rootDirectory;
+  [rootDirectory.listFiles removeObjectAtIndex:index];
 }
 
 @end

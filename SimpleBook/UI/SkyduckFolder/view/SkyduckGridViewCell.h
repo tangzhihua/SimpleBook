@@ -50,4 +50,5 @@
 #pragma mark - 通过 xib 创建 cell view
 + (UINib *)nib;
 + (id)cellFromNib:(UINib *)nib;
++ (CGRect)viewFrameRectFromNib;
 @end

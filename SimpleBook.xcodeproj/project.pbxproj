@@ -1119,10 +1119,10 @@
 		754082A8183D96A900A9A009 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				754082D7183D99DD00A9A009 /* bookcover_default.png */,
 				754082FB183D9CB100A9A009 /* bookcover_default@2x.png */,
 				754082D5183D99DD00A9A009 /* alert_icon_delete.png */,
 				754082D6183D99DD00A9A009 /* alert_icon_delete@2x.png */,
-				754082D7183D99DD00A9A009 /* bookcover_default.png */,
 				754082D8183D99DD00A9A009 /* bookshelf_group_black.png */,
 				754082D9183D99DD00A9A009 /* bookshelf_group_black~iphone.png */,
 				754082DA183D99DD00A9A009 /* button_trashbox_active.png */,

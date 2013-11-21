@@ -15,7 +15,8 @@
 @implementation SkyduckGridViewCell
 
 - (void)initCell {
-  
+  CGRect frame = self.frame;
+  //self.backgroundColor = [UIColor orangeColor];
   /* ------------>   UIView 的exclusiveTouch属性
    exclusiveTouch的意思是UIView会独占整个Touch事件，
    具体的来说，就是当设置了exclusiveTouch的 UIView是事件的第一响应者，
@@ -43,9 +44,9 @@
   return self;
 }
 
-- (void)layoutSubviews {
-  [super layoutSubviews];
-}
+//- (void)layoutSubviews {
+//  [super layoutSubviews];
+//}
 
 
 
