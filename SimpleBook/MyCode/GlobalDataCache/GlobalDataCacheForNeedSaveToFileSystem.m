@@ -415,7 +415,8 @@ static NSString *const kLocalCacheDataName_LocalAppVersion                = @"Lo
       NSString *bookInfoPath = [NSString stringWithFormat:@"%@/%@/%@", localBookCachePath, folder, BOOK_INFO_PLIST_FILE_NAME];
       if (![[NSFileManager defaultManager] fileExistsAtPath:bookInfoPath]) {
         // 如果 "书籍文件夹" 中没有 bookinfo.plist 证明书籍没有解压成功, 也就是垃圾文件夹, 可以删除了.
-        [[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithFormat:@"%@/%@", localBookCachePath, folder] error:NULL];
+        // 20131119 : 这里有个问题需要考虑, 就是正常未下载完的书籍, 是不会生成 BOOK_INFO_PLIST_FILE_NAME 文件的, 所以不能单纯判断没有 BOOK_INFO_PLIST_FILE_NAME 文件就认为是垃圾文件.
+        //[[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithFormat:@"%@/%@", localBookCachePath, folder] error:NULL];
         continue;
       }
       

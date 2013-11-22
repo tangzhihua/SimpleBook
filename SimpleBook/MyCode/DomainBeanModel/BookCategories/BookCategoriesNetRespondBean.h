@@ -14,5 +14,5 @@
 @property (nonatomic, readonly, strong) NSArray *categories;
 
 // 根据 "分类ID" 获取该分类对应的 "分类name"
--(NSString *)categoryNameByCategoryID:(const NSInteger)categoryID;
+-(NSString *)categoryNameByCategoryID:(NSString *)categoryID;
 @end

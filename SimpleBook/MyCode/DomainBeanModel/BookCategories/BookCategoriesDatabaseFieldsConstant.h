@@ -24,6 +24,7 @@
 #define k_BookCategories_RespondKey_id                @"id"
 //
 #define k_BookCategories_RespondKey_name              @"name"
-
+//
+#define k_BookCategories_RespondKey_bookcount         @"bookcount"
 
 #endif

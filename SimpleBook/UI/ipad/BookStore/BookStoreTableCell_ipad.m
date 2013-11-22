@@ -82,6 +82,10 @@ static UIImage *kButtonHighlightedBGImageOfInstalled = nil;
 }
  */
 
+- (void)dealloc {
+  
+}
+
 - (IBAction)functionButtonOnClickListener:(UIButton *)sender {
   
   if (self.bookStoreTableCellFunctionButtonClickHandleBlock != NULL) {
@@ -173,6 +177,10 @@ static UIImage *kButtonHighlightedBGImageOfInstalled = nil;
       NSString *downloadProgress = [NSString stringWithFormat:@"%.2f %%", book.downloadProgress * 100.0];
       [self.functionButton setTitle:downloadProgress forState:UIControlStateNormal];
       [self.functionButton setTitle:downloadProgress forState:UIControlStateHighlighted];
+    } else if ([keyPath isEqualToString:kIsContrllerDealloc]) {
+      // 外部控制器, 已经被释放了, 在这里释放cell占用的资源
+      [self.bookCoverImageOperation cancel];
+      self.bookCoverImageOperation = nil;
     }
   } else {
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];

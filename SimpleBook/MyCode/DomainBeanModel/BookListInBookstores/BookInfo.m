@@ -9,30 +9,7 @@
 #import "BookListInBookstoresDatabaseFieldsConstant.h"
 
 @interface BookInfo ()
-////
-//@property (nonatomic, readwrite, copy) NSString *content_id;
-////
-//@property (nonatomic, readwrite, copy) NSString *name;
-////
-//@property (nonatomic, readwrite, copy) NSString *published;
-////
-//@property (nonatomic, readwrite, copy) NSString *expired;
-////
-//@property (nonatomic, readwrite, copy) NSString *author;
-////
-//@property (nonatomic, readwrite, copy) NSString *price;
-////
-//@property (nonatomic, readwrite, copy) NSString *productid;
-////
-//@property (nonatomic, readwrite, copy) NSString *categoryid;
-////
-//@property (nonatomic, readwrite, copy) NSString *publisher;
-////
-//@property (nonatomic, readwrite, copy) NSString *thumbnail;
-////
-//@property (nonatomic, readwrite, copy) NSString *bookDescription;
-//// 书籍zip资源包大小, 以byte为单位.
-//@property (nonatomic, readwrite, copy) NSString *size;
+ 
 
 @end
 
@@ -40,11 +17,7 @@
 
 #pragma mark
 #pragma mark 不能使用默认的init方法初始化对象, 而必须使用当前类特定的 "初始化方法" 初始化所有参数
-//- (id) init {
-//  RNAssert(NO, @"Can not use the default init method!");
-//  
-//  return nil;
-//}
+ 
 
 - (NSString *)description {
 	return descriptionForDebug(self);

@@ -43,7 +43,7 @@
 		//
 		value = requestBean.contentId;
 		if ([NSString isEmpty:value]) {
-      RNAssert(NO, @"丢失关键参数 : username");
+      RNAssert(NO, @"丢失关键参数 : contentId");
       break;
 		}
 		[params setObject:value forKey:k_GetBookDownloadUrl_RequestKey_contentId];

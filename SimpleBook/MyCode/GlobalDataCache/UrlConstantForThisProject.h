@@ -27,5 +27,6 @@ UIKIT_EXTERN NSString *const kUrlConstant_SpecialPath_book_downlaod_url;
 UIKIT_EXTERN NSString *const kUrlConstant_SpecialPath_book_list_in_bookstores;
 // 5	主题
 UIKIT_EXTERN NSString *const kUrlConstant_SpecialPath_theme;
-
+// 6	书籍搜索(联网)
+UIKIT_EXTERN NSString *const kUrlConstant_SpecialPath_book_query;
  

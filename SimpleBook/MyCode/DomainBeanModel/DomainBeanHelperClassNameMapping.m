@@ -25,6 +25,10 @@
 #import "BookListInBookstoresNetRequestBean.h"
 #import "BookListInBookstoresDomainBeanToolsFactory.h"
 
+// 5. 搜索书籍
+#import "BookSearchNetRequestBean.h"
+#import "BookSearchDomainBeanToolsFactory.h"
+
 static const NSString *const TAG = @"<DomainBeanHelperClassNameMapping>";
 
 @implementation DomainBeanHelperClassNameMapping
@@ -60,6 +64,12 @@ static const NSString *const TAG = @"<DomainBeanHelperClassNameMapping>";
 		 */
     [strategyClassesNameMappingList setObject:NSStringFromClass([BookListInBookstoresDomainBeanToolsFactory class])
                                        forKey:NSStringFromClass([BookListInBookstoresNetRequestBean class])];
+    
+    /**
+		 * 5. 搜索图书
+		 */
+    [strategyClassesNameMappingList setObject:NSStringFromClass([BookSearchDomainBeanToolsFactory class])
+                                       forKey:NSStringFromClass([BookSearchNetRequestBean class])];
 	}
   
   

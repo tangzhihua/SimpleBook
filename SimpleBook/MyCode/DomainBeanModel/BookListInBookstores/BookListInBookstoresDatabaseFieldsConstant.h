@@ -9,7 +9,7 @@
 #define DreamBook_BookListInBookstoresDatabaseFieldsConstant_h
 
 /************      RequestBean       *************/
-
+#define k_BookListInBookstores_RequestKey_category_id    @"category_id"
  
  
 

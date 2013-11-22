@@ -36,7 +36,13 @@ static const NSString *const TAG = @"<BookListInBookstoresParseNetRespondStringT
       break;
     }
    	
-    return [[BookListInBookstoresNetRespondBean alloc] initWithDictionary:netRespondDictionary];
+    BookListInBookstoresNetRespondBean *netRespondBean = [[BookListInBookstoresNetRespondBean alloc] initWithDictionary:netRespondDictionary];
+    if (netRespondBean.bookInfoList.count <= 0) {
+      PRPLog(@"服务器没有返回任何有效的书籍.");
+      break;
+    }
+    
+    return netRespondBean;
   } while (NO);
   
   return nil;

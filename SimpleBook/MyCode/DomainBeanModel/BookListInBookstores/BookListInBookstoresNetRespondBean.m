@@ -49,6 +49,9 @@
       // 只有1个数据
       BookInfo *bookInfo = [[BookInfo alloc] initWithDictionary:books];
       [(NSMutableArray *)self.bookInfoList addObject:bookInfo];
+    } else if ([books isEqualToString:@"nil"]) {
+      // 没有有效数据
+      PRPLog(@"服务器没有返回任何有效的书籍.");
     } else {
       RNAssert(NO, @"服务器修改了数据格式!");
     }

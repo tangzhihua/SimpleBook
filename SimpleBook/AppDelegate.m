@@ -8,8 +8,7 @@
 
 #import "AppDelegate.h"
 
-#import "BookShelfViewController_ipad.h"
-#import "BookShelfViewController_iPhone.h"
+ 
 
 #import "TestBookShelfController_ipad.h"
 
@@ -79,7 +78,7 @@
   if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
     
     /// iphone
-    self.navigation = [[UINavigationController alloc] initWithRootViewController:(UIViewController *)[[BookShelfViewController_iPhone alloc] initWithNibName:@"BookShelfViewController_iPhone" bundle:nil]];
+//    self.navigation = [[UINavigationController alloc] initWithRootViewController:(UIViewController *)[[BookShelfViewController_iPhone alloc] initWithNibName:@"BookShelfViewController_iPhone" bundle:nil]];
     firstViewController = self.navigation;
     
   } else {

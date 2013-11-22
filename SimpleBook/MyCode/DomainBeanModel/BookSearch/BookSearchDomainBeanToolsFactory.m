@@ -5,15 +5,14 @@
 //
 //
 
-#import "BookListInBookstoresDomainBeanToolsFactory.h"
+#import "BookSearchDomainBeanToolsFactory.h"
 
-#import "BookListInBookstoresParseNetRespondDictionaryToDomainBean.h"
-#import "BookListInBookstoresParseDomainBeanToDD.h"
-
-#import "BookListInBookstoresNetRespondBean.h"
 #import "UrlConstantForThisProject.h"
+#import "BookListInBookstoresParseNetRespondDictionaryToDomainBean.h"
+#import "BookSearchParseDomainBeanToDD.h"
+#import "BookListInBookstoresNetRespondBean.h"
 
-@implementation BookListInBookstoresDomainBeanToolsFactory
+@implementation BookSearchDomainBeanToolsFactory
 - (id) init {
 	
 	if ((self = [super init])) {
@@ -29,7 +28,7 @@
  * @return
  */
 - (id<IParseDomainBeanToDataDictionary>) getParseDomainBeanToDDStrategy {
-  return [[BookListInBookstoresParseDomainBeanToDD alloc] init];
+  return [[BookSearchParseDomainBeanToDD alloc] init];
 }
 
 /**
@@ -45,7 +44,7 @@
  * @return
  */
 - (NSString *) getSpecialPath {
-  return kUrlConstant_SpecialPath_book_list_in_bookstores;
+  return kUrlConstant_SpecialPath_book_query;
 }
 
 /**

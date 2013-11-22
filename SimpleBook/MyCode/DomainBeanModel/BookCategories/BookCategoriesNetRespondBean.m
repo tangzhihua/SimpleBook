@@ -59,9 +59,9 @@
 	}
 }
 
--(NSString *)categoryNameByCategoryID:(const NSInteger)categoryID {
+-(NSString *)categoryNameByCategoryID:(NSString *)categoryID {
   for (BookCategory *category in self.categories) {
-    if (categoryID == category.identifier) {
+    if ([category.identifier isEqualToString:categoryID]) {
       return category.name;
     }
   }
