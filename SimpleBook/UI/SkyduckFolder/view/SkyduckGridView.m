@@ -21,6 +21,8 @@
 // GridView Page move Timer
 @property (nonatomic, strong) RNTimer *timerOfMovePage;
 @property (nonatomic, strong) SkyduckGridViewCell *cellOfMoving;
+@property (nonatomic, strong) SkyduckGridViewCell *cellOfMerging;
+
 
 // 长按 cell 会进入 编辑状态(处于编辑状态时, 可以吸附移动cell)
 @property (nonatomic, assign) BOOL editable;
@@ -31,9 +33,9 @@
 // 两个单元格碰撞时, 发生 Move 效果时的最小触发间距
 #define kCellCollisionMoveMinDistance (80)
 // 两个单元格碰撞时, 发生 Merge 效果时的最小触发间距
-#define kCellCollisionMergeMinDistance (10)
+#define kCellCollisionMergeMinDistance (30)
 // 拖动一个cell时, 当触碰到屏幕边缘时, 发生页面移动效果时的最小触发间距.
-#define kPageMoveMargin (70)
+#define kPageMoveMargin (100)
 
 // 移动方向
 typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
@@ -82,11 +84,13 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
 
 // 将一个单元格移动到另一个单元格的位置(会重新排列网格)
 // 将 sourceIndex 对应的单元格 移动到 proposedDestinationIndex 对应的位置, proposedDestinationIndex 之前的所有单元格 都向前推进, 填补 sourceIndex 空出的位置.
-- (void)targetIndexForMoveFromPointAtIndex:(NSInteger)sourceIndex toProposedIndex:(NSInteger)proposedDestinationIndex {
+- (BOOL)targetIndexForMoveFromPointAtIndex:(NSInteger)sourceIndex toProposedIndex:(NSInteger)proposedDestinationIndex {
   
   if(sourceIndex == proposedDestinationIndex || proposedDestinationIndex == -1) {
-    return;
+    return NO;
   }
+  
+  NSLog(@"移动两个cell :  sourceIndex=%d, proposedDestinationIndex=%d", sourceIndex, proposedDestinationIndex);
   
   // 数据源索引重新排列(Data Position Rearrange)
   SkyduckGridViewCell *sourceCell = _cellList[sourceIndex];
@@ -97,11 +101,11 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   [_delegate gridView:self targetIndexForMoveFromCellAtIndex:sourceIndex toProposedIndex:proposedDestinationIndex];
   
   // cell 总数
-  const NSUInteger numberOfCells = [_dataSource numberOfCellsInGridView:self];
+  const NSInteger numberOfCells = [_dataSource numberOfCellsInGridView:self];
   // 一行显示的cell的最大数量
-  const NSUInteger numberOfCellsInRow = [_dataSource numberOfCellsInRowOfGridView:self];
+  const NSInteger numberOfCellsInRow = [_dataSource numberOfCellsInRowOfGridView:self];
   // 总行数
-  const NSUInteger numberOfRows = ceilf((float)numberOfCells / (float)numberOfCellsInRow);// ceilf 向上取整
+  const NSInteger numberOfRows = ceilf((float)numberOfCells / (float)numberOfCellsInRow);// ceilf 向上取整
   // cell size
   const CGSize sizeOfCell = [_dataSource sizeOfCellInGridView:self];
   // cell 垂直方向的空白间距
@@ -113,7 +117,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   
   // 单元格重新排列(Cell Rearrange)
   // 定位所有的cell
-  for(NSUInteger i=0; i<_cellList.count; i++) {
+  for(NSInteger i=0; i<_cellList.count; i++) {
     
     SkyduckGridViewCell *cell = _cellList[i];
     //
@@ -125,92 +129,105 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
     }
     // 定位 cell
     const CGPoint origin = CGPointMake(((i % numberOfCellsInRow) * cellBounds.size.width), (i / numberOfCellsInRow * cellBounds.size.height));
-    CGPoint center = CGPointMake((NSUInteger)(origin.x + cellBounds.size.width / 2), (NSUInteger)(origin.y + cellBounds.size.height/2));
+    CGPoint center = CGPointMake((NSInteger)(origin.x + cellBounds.size.width / 2), (NSInteger)(origin.y + cellBounds.size.height/2));
     
+    [UIView animateWithDuration:0.5 animations:^{
+      cell.frame = CGRectMake((NSInteger)(center.x - cell.frame.size.width/2), (NSInteger)(center.y - cell.frame.size.height/2), (NSInteger)cell.frame.size.width, (NSInteger)cell.frame.size.height);
+    }];
     
-    [UIView beginAnimations:@"Move" context:nil];
-    [UIView setAnimationDuration:0.5];
-    [UIView setAnimationCurve: UIViewAnimationCurveEaseInOut];
-    cell.frame = CGRectMake((NSUInteger)(center.x - cell.frame.size.width/2), (NSUInteger)(center.y - cell.frame.size.height/2), (NSUInteger)cell.frame.size.width, (NSUInteger)cell.frame.size.height);
-    [UIView commitAnimations];
   }
- 
+  
   
   SkyduckGridViewCell *cellOfproposedDestinationIndex =  _cellList[proposedDestinationIndex];
   _beginTouchLocation = cellOfproposedDestinationIndex.center;
   
+  
+  //
+  [UIView animateWithDuration:0.1 animations:^{
+    _cellOfMoving.transform = CGAffineTransformMakeScale(1.2, 1.2);
+    _cellOfMoving.alpha = 0.8;
+  }];
+  
+  //
+  [UIView animateWithDuration:0.1 animations:^{
+    _cellOfMerging.transform = CGAffineTransformIdentity;
+    _cellOfMerging.alpha = 1.0;
+    _cellOfMerging = nil;
+  }];
+  
+  return YES;
 }
 
 // 合并两个cell
-- (void)targetIndexForMergeFromPointAtIndex:(NSInteger)sourceIndex toProposedIndex:(NSInteger)proposedDestinationIndex {
+- (BOOL)targetIndexForMergeFromPointAtIndex:(NSInteger)sourceIndex toProposedIndex:(NSInteger)proposedDestinationIndex {
   if(sourceIndex == proposedDestinationIndex || proposedDestinationIndex == -1) {
-    return;
+    return NO;
   }
   
+  
   SkyduckGridViewCell *sourceCell = _cellList[sourceIndex];
-  [UIView animateWithDuration:0.1
-                        delay:0
-                      options:UIViewAnimationOptionCurveEaseIn
-                   animations:^{
-                     
-                     sourceCell.transform = CGAffineTransformMakeScale(1, 1);
-                     sourceCell.alpha = 0.8;
-                     
-                   }
-                   completion:nil];
-  
   SkyduckGridViewCell *proposedDestinationCell = _cellList[proposedDestinationIndex];
-  [UIView animateWithDuration:0.1
-                        delay:0
-                      options:UIViewAnimationOptionCurveEaseIn
-                   animations:^{
-                     
-                     proposedDestinationCell.transform = CGAffineTransformMakeScale(1.1, 1.1);
-                     proposedDestinationCell.alpha = 0.8;
-                     
-                   }
-                   completion:nil];
+  if (_cellOfMerging == proposedDestinationCell) {
+    return NO;
+  }
+  NSLog(@"合并两个cell :  sourceIndex=%d, proposedDestinationIndex=%d", sourceIndex, proposedDestinationIndex);
   
+  _cellOfMerging.transform = CGAffineTransformIdentity;
+  _cellOfMerging.alpha = 1.0;
+  _cellOfMerging = proposedDestinationCell;
+  //
+  [UIView animateWithDuration:0.1 animations:^{
+    sourceCell.transform = CGAffineTransformMakeScale(1.0, 1.0);
+    sourceCell.alpha = 0.8;
+  }];
+  
+  //
+  [UIView animateWithDuration:0.1 animations:^{
+    proposedDestinationCell.transform = CGAffineTransformMakeScale(1.2, 1.2);
+    proposedDestinationCell.alpha = 0.8;
+  }];
+  
+  return YES;
 }
 
-- (void)cellSetPosition:(SkyduckGridViewCell *)cell {
-//  NSUInteger numCols = _numberOfColumns;
-//  NSUInteger numRows = _numberOfRows;
-//  NSUInteger cellsPerPage = numCols * numRows;
-//  
-//  if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
-//    numCols = _numberOfRows;
-//    numRows = _numberOfColumns;
-//  }
-//  
-//  CGRect gridBounds = _scrollView.bounds;
-//  CGRect cellBounds = CGRectMake(0, 0, gridBounds.size.width / (float) numCols, gridBounds.size.height / (float) numRows);
-//  
-//  NSUInteger setIndex = cell.index;
-//  NSUInteger page = (NSUInteger)((float)(setIndex)/ cellsPerPage);
-//  NSUInteger row = (NSUInteger)((float)(setIndex)/numCols) - (page * numRows);
-//  
-//  CGPoint origin = {0};
-//  CGRect contractFrame = {0};
-//  if([_colPosX count] == numCols && [_rowPosY count] == numRows) {
-//    NSNumber *rowPos = [_rowPosY objectAtIndex:row];
-//    NSNumber *col= [_colPosX objectAtIndex:(setIndex % numCols)];
-//    origin = CGPointMake((page * gridBounds.size.width) + ( [col intValue]), [rowPos intValue]);
-//    contractFrame = CGRectMake((NSUInteger)origin.x, (NSUInteger)origin.y, (NSUInteger)cell.cellInitFrame.size.width, (NSUInteger)cell.cellInitFrame.size.height);
-//    [UIView beginAnimations:@"Move" context:nil];
-//    [UIView setAnimationDuration:0.2];
-//    [UIView setAnimationCurve: UIViewAnimationCurveEaseInOut];
-//    cell.frame = contractFrame;
-//    [UIView commitAnimations];
-//  } else {
-//    origin = CGPointMake((page * gridBounds.size.width) + (((setIndex) % numCols) * cellBounds.size.width), (row * cellBounds.size.height));
-//    contractFrame = CGRectMake((NSUInteger)origin.x, (NSUInteger)origin.y, (NSUInteger)cellBounds.size.width, (NSUInteger)cellBounds.size.height);
-//    [UIView beginAnimations:@"Move" context:nil];
-//    [UIView setAnimationDuration:0.2];
-//    [UIView setAnimationCurve: UIViewAnimationCurveEaseInOut];
-//    cell.frame = CGRectInset(contractFrame, _cellMargin, _cellMargin);
-//    [UIView commitAnimations];
-//  }
+- (void)resetMovingCellPosition {
+  // cell 总数
+  const NSInteger numberOfCells = [_dataSource numberOfCellsInGridView:self];
+  // 一行显示的cell的最大数量
+  const NSInteger numberOfCellsInRow = [_dataSource numberOfCellsInRowOfGridView:self];
+  // 总行数
+  const NSInteger numberOfRows = ceilf((float)numberOfCells / (float)numberOfCellsInRow);// ceilf 向上取整
+  // cell size
+  const CGSize sizeOfCell = [_dataSource sizeOfCellInGridView:self];
+  // cell 垂直方向的空白间距
+  const CGFloat marginOfVerticalCell = [_dataSource marginOfVerticalCellInGridView:self];
+  // 网格控件边界
+  const CGRect gridBounds = _scrollView.bounds;
+  // 单元格边界(这不是cell的真实边界, 而是用于计算每个cell 坐标)
+  const CGRect cellBounds = CGRectMake(0, 0, gridBounds.size.width / (CGFloat) numberOfCellsInRow, sizeOfCell.height + marginOfVerticalCell);
+  
+  // 定位 cell
+  const CGPoint origin = CGPointMake(((_cellOfMoving.index % numberOfCellsInRow) * cellBounds.size.width), (_cellOfMoving.index / numberOfCellsInRow * cellBounds.size.height));
+  CGPoint center = CGPointMake((NSInteger)(origin.x + cellBounds.size.width / 2), (NSInteger)(origin.y + cellBounds.size.height/2));
+  
+  [UIView animateWithDuration:0.1
+                   animations:^{
+                     
+                     _cellOfMoving.frame = CGRectMake((NSInteger)(center.x - _cellOfMoving.frame.size.width/2), (NSInteger)(center.y - _cellOfMoving.frame.size.height/2), (NSInteger)_cellOfMoving.frame.size.width, (NSInteger)_cellOfMoving.frame.size.height);
+                     
+                     //
+                     _cellOfMoving.transform = CGAffineTransformIdentity;
+                     _cellOfMoving.alpha = 1.0;
+                     _cellOfMoving = nil;
+                     
+                     //
+                     _cellOfMerging.transform = CGAffineTransformIdentity;
+                     _cellOfMerging.alpha = 1.0;
+                     _cellOfMerging = nil;
+                   } completion:^(BOOL finished) {
+                     
+                   }];
+  
 }
 
 // 源cell 和 所有其他的cell之间的碰撞检测处理
@@ -230,29 +247,55 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
         
         if(distance < kCellCollisionMoveMinDistance) {
           // 要进行移动
-          [self targetIndexForMoveFromPointAtIndex:sourceCell.index toProposedIndex:tempCell.index];
-          break;
+          if ([self targetIndexForMoveFromPointAtIndex:sourceCell.index toProposedIndex:tempCell.index]) {
+            break;
+          }
         }
         
       } else if (sourceCell.file.isFile) {
         
-        if(distance < kCellCollisionMergeMinDistance) {
+        if(distance < kCellCollisionMergeMinDistance) {// 进入了可以合并的范围
           // 要进行合并
-          [self targetIndexForMergeFromPointAtIndex:sourceCell.index toProposedIndex:tempCell.index];
-          break;
-        } else if (distance < kCellCollisionMoveMinDistance) {
+          if ([self targetIndexForMergeFromPointAtIndex:sourceCell.index toProposedIndex:tempCell.index]) {
+            break;
+          }
+          
+        } else if (distance < kCellCollisionMoveMinDistance && distance > kCellCollisionMergeMinDistance + 10) {// 进入了可以移动的范围
           
           if (kMoveDirectionEnum_Left == moveDirectionEnum) {
             // 向左移动
             if (sourceCell.center.x < tempCell.center.x) {
               // 要进行移动
-              [self targetIndexForMoveFromPointAtIndex:sourceCell.index toProposedIndex:tempCell.index];
+              if ([self targetIndexForMoveFromPointAtIndex:sourceCell.index toProposedIndex:tempCell.index]) {
+                break;
+              }
             }
           } else if (kMoveDirectionEnum_Right == moveDirectionEnum) {
             // 向右移动
             if (sourceCell.center.x > tempCell.center.x) {
               // 要进行移动
-              [self targetIndexForMoveFromPointAtIndex:sourceCell.index toProposedIndex:tempCell.index];
+              if ([self targetIndexForMoveFromPointAtIndex:sourceCell.index toProposedIndex:tempCell.index]) {
+                break;
+              }
+            }
+          }
+        } else {// 此时都是可以取消, 合并状态的范围
+          if (_cellOfMerging != nil) {
+            if (distance > kCellCollisionMergeMinDistance && distance < kCellCollisionMoveMinDistance) {
+              //
+              [UIView animateWithDuration:0.1 animations:^{
+                _cellOfMoving.transform = CGAffineTransformMakeScale(1.2, 1.2);
+                _cellOfMoving.alpha = 0.8;
+              }];
+              
+              //
+              [UIView animateWithDuration:0.1 animations:^{
+                _cellOfMerging.transform = CGAffineTransformIdentity;
+                _cellOfMerging.alpha = 1.0;
+                _cellOfMerging = nil;
+              }];
+              
+              break;
             }
           }
         }
@@ -315,6 +358,12 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
 // 加载全部的 cell
 - (void)reloadAllCells {
   
+  // 复位所有的状态变量
+  _cellOfMoving = nil;
+  _cellOfMerging = nil;
+  _editable = NO;
+  [_timerOfMovePage invalidate], _timerOfMovePage = nil;
+  
   // 清理掉全部 cell view
   [_cellList removeAllObjects];
   // 清理掉 UIScrollView 中包含的 cell view
@@ -323,11 +372,11 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   }
   
   // cell 总数
-  const NSUInteger numberOfCells = [_dataSource numberOfCellsInGridView:self];
+  const NSInteger numberOfCells = [_dataSource numberOfCellsInGridView:self];
   // 一行显示的cell的最大数量
-  const NSUInteger numberOfCellsInRow = [_dataSource numberOfCellsInRowOfGridView:self];
+  const NSInteger numberOfCellsInRow = [_dataSource numberOfCellsInRowOfGridView:self];
   // 总行数
-  const NSUInteger numberOfRows = ceilf((float)numberOfCells / (float)numberOfCellsInRow);// ceilf 向上取整
+  const NSInteger numberOfRows = ceilf((float)numberOfCells / (float)numberOfCellsInRow);// ceilf 向上取整
   // cell size
   const CGSize sizeOfCell = [_dataSource sizeOfCellInGridView:self];
   // cell 垂直方向的空白间距
@@ -342,7 +391,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   [_scrollView setContentSize:contentSizeOfScrollView];
   
   // 定位所有的cell
-  for(NSUInteger i=0; i<numberOfCells; i++) {
+  for(NSInteger i=0; i<numberOfCells; i++) {
     
     SkyduckGridViewCell *cell = [_dataSource gridView:self cellAtIndex:i];
     cell.delegate = self;
@@ -350,10 +399,8 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
     
     // 定位 cell
     const CGPoint origin = CGPointMake(((i % numberOfCellsInRow) * cellBounds.size.width), (i / numberOfCellsInRow * cellBounds.size.height));
-    CGPoint center = CGPointMake((NSUInteger)(origin.x + cellBounds.size.width / 2), (NSUInteger)(origin.y + cellBounds.size.height/2));
-    cell.frame = CGRectMake((NSUInteger)(center.x - cell.frame.size.width/2), (NSUInteger)(center.y - cell.frame.size.height/2), (NSUInteger)cell.frame.size.width, (NSUInteger)cell.frame.size.height);
-    //cell.center =
-    CGRect cellFrame = cell.frame;
+    CGPoint center = CGPointMake((NSInteger)(origin.x + cellBounds.size.width / 2), (NSInteger)(origin.y + cellBounds.size.height/2));
+    cell.frame = CGRectMake((NSInteger)(center.x - cell.frame.size.width/2), (NSInteger)(center.y - cell.frame.size.height/2), (NSInteger)cell.frame.size.width, (NSInteger)cell.frame.size.height);
     
     //
     [_scrollView addSubview:cell];
@@ -367,56 +414,56 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
 
 - (void)deleteCell:(NSInteger)index {
   
-//  [_cellList[index] removeFromSuperview];
-//  [_cellList removeObjectAtIndex:index];
-//  
-//  NSUInteger numCols = _numberOfColumns;
-//  NSUInteger numRows = _numberOfRows;
-//  NSUInteger cellsPerPage = numCols * numRows;
-//  
-//  if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
-//    numCols = _numberOfRows;
-//    numRows = _numberOfColumns;
-//  }
-//  
-//  CGRect gridBounds = _scrollView.bounds;
-//  CGRect cellBounds = CGRectMake(0, 0, gridBounds.size.width / (float) numCols, gridBounds.size.height / (float) numRows);
-//  CGSize contentSizeOfScrollView = CGSizeMake(self.numberOfPages * gridBounds.size.width, gridBounds.size.height);
-//  
-//  [UIView animateWithDuration:0.4
-//                   animations:^(void) {
-//                     [_scrollView setContentSize:contentSizeOfScrollView];
-//                   } ];
-//  
-//  for(NSUInteger i=index; i<_cellList.count; i++) {
-//    SkyduckGridViewCell *cell = [_cellList objectAtIndex:i];
-//    cell.index = i;
-//    
-//    NSUInteger page = (NSUInteger)((float)i / cellsPerPage);
-//    NSUInteger row = (NSUInteger)((float)i / numCols) - (page * numRows);
-//    
-//    CGPoint origin = {0};
-//    CGRect contractFrame = {0};
-//    if(_colPosX.count == numCols && _rowPosY.count == numRows) {
-//      NSNumber *rowPos = [_rowPosY objectAtIndex:row];
-//      NSNumber *col= [_colPosX objectAtIndex:(i % numCols)];
-//      origin = CGPointMake((page * gridBounds.size.width) + ( [col intValue]), [rowPos intValue]);
-//      contractFrame = CGRectMake((NSUInteger)origin.x, (NSUInteger)origin.y, (NSUInteger)cell.cellInitFrame.size.width, (NSUInteger)cell.cellInitFrame.size.height);
-//      [UIView beginAnimations:@"Move" context:nil];
-//      [UIView setAnimationDuration:0.2];
-//      [UIView setAnimationCurve: UIViewAnimationCurveEaseInOut];
-//      cell.frame = contractFrame;
-//      [UIView commitAnimations];
-//    } else {
-//      origin = CGPointMake((page * gridBounds.size.width) + ((i % numCols) * cellBounds.size.width), (row * cellBounds.size.height));
-//      contractFrame = CGRectMake((NSUInteger)origin.x, (NSUInteger)origin.y, (NSUInteger)cellBounds.size.width, (NSUInteger)cellBounds.size.height);
-//      [UIView beginAnimations:@"Move" context:nil];
-//      [UIView setAnimationDuration:0.2];
-//      [UIView setAnimationCurve: UIViewAnimationCurveEaseInOut];
-//      cell.frame = CGRectInset(contractFrame, _cellMargin, _cellMargin);
-//      [UIView commitAnimations];
-//    }
-//  }
+  //  [_cellList[index] removeFromSuperview];
+  //  [_cellList removeObjectAtIndex:index];
+  //
+  //  NSInteger numCols = _numberOfColumns;
+  //  NSInteger numRows = _numberOfRows;
+  //  NSInteger cellsPerPage = numCols * numRows;
+  //
+  //  if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+  //    numCols = _numberOfRows;
+  //    numRows = _numberOfColumns;
+  //  }
+  //
+  //  CGRect gridBounds = _scrollView.bounds;
+  //  CGRect cellBounds = CGRectMake(0, 0, gridBounds.size.width / (float) numCols, gridBounds.size.height / (float) numRows);
+  //  CGSize contentSizeOfScrollView = CGSizeMake(self.numberOfPages * gridBounds.size.width, gridBounds.size.height);
+  //
+  //  [UIView animateWithDuration:0.4
+  //                   animations:^(void) {
+  //                     [_scrollView setContentSize:contentSizeOfScrollView];
+  //                   } ];
+  //
+  //  for(NSInteger i=index; i<_cellList.count; i++) {
+  //    SkyduckGridViewCell *cell = [_cellList objectAtIndex:i];
+  //    cell.index = i;
+  //
+  //    NSInteger page = (NSInteger)((float)i / cellsPerPage);
+  //    NSInteger row = (NSInteger)((float)i / numCols) - (page * numRows);
+  //
+  //    CGPoint origin = {0};
+  //    CGRect contractFrame = {0};
+  //    if(_colPosX.count == numCols && _rowPosY.count == numRows) {
+  //      NSNumber *rowPos = [_rowPosY objectAtIndex:row];
+  //      NSNumber *col= [_colPosX objectAtIndex:(i % numCols)];
+  //      origin = CGPointMake((page * gridBounds.size.width) + ( [col intValue]), [rowPos intValue]);
+  //      contractFrame = CGRectMake((NSInteger)origin.x, (NSInteger)origin.y, (NSInteger)cell.cellInitFrame.size.width, (NSInteger)cell.cellInitFrame.size.height);
+  //      [UIView beginAnimations:@"Move" context:nil];
+  //      [UIView setAnimationDuration:0.2];
+  //      [UIView setAnimationCurve: UIViewAnimationCurveEaseInOut];
+  //      cell.frame = contractFrame;
+  //      [UIView commitAnimations];
+  //    } else {
+  //      origin = CGPointMake((page * gridBounds.size.width) + ((i % numCols) * cellBounds.size.width), (row * cellBounds.size.height));
+  //      contractFrame = CGRectMake((NSInteger)origin.x, (NSInteger)origin.y, (NSInteger)cellBounds.size.width, (NSInteger)cellBounds.size.height);
+  //      [UIView beginAnimations:@"Move" context:nil];
+  //      [UIView setAnimationDuration:0.2];
+  //      [UIView setAnimationCurve: UIViewAnimationCurveEaseInOut];
+  //      cell.frame = CGRectInset(contractFrame, _cellMargin, _cellMargin);
+  //      [UIView commitAnimations];
+  //    }
+  //  }
 }
 
 
@@ -452,14 +499,17 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
 
 - (void)gridViewCell:(SkyduckGridViewCell *)cell touchesBegan:(UITouch *)touch {
   
+  NSLog(@"点中的cell frame = %@", NSStringFromCGRect(cell.frame));
+  
   // 记录第一个 "触点" 点中的 cell 的中心点
   _beginTouchLocation = cell.center;
   _touchLocation = [touch locationInView:_scrollView];
   
-  // 改变被点中的 cell 的UI效果, 好体现被点中的效果
-  cell.alpha = 0.8;
-  // 记录第一个 "触点" 点中的 cell 对象
+  // 记录新的选中cell, 这个cell就是要发生拖动效果的cell
   _cellOfMoving = cell;
+  // 改变被点中的 cell 的UI效果, 好体现被点中的效果
+  _cellOfMoving.alpha = 0.8;
+  
 }
 
 - (void)gridViewCell:(SkyduckGridViewCell *)cell touchesMoved:(UITouch *)touch {
@@ -480,7 +530,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
 }
 
 // cell 单击事件监听
-- (void)gridViewCell:(SkyduckGridViewCell *)cell handleSingleTap:(NSUInteger)index {
+- (void)gridViewCell:(SkyduckGridViewCell *)cell handleSingleTap:(NSInteger)index {
   [_delegate gridView:self didSelectCellAtIndex:index];
 }
 
@@ -494,24 +544,18 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
 // 长按
 - (void)handleLongPress:(UILongPressGestureRecognizer *)recognizer {
   
-  NSLog(@"handleLongPress");
-  
   switch (recognizer.state) {
     case UIGestureRecognizerStateBegan:{// 手势开始
       _editable = YES;
-      
+      //
       _scrollView.scrollEnabled = NO;
       //Bring Subview to Front
       [_scrollView bringSubviewToFront:_cellOfMoving];
+      //
+      [UIView animateWithDuration:0.1 animations:^{
+        _cellOfMoving.transform = CGAffineTransformMakeScale(1.2, 1.2);
+      }];
       
-      [UIView animateWithDuration:0.1
-                            delay:0
-                          options:UIViewAnimationOptionCurveEaseIn
-                       animations:^{
-                         _cellOfMoving.transform = CGAffineTransformMakeScale(1.1, 1.1);
-                         //_cellOfMoving.alpha = 1.0;
-                       }
-                       completion:nil];
     }break;
       
     case UIGestureRecognizerStateChanged:{// 手势变化
@@ -527,62 +571,62 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
       // cell 发生碰撞时, 会引起后续的处理逻辑, 如果源cell是 file类型, 就会和发生碰撞的cell发生cell合并事件, 如果是 folder 类型的, 就会发生cell移动事件.
       [self cellsCollisionDetectionHandleWithSourceCell:_cellOfMoving moveDirection:[self moveDirectionFrom:_beginTouchLocation to:newTouchLocation]];
       
-//      // 页面移动(PageMove)
-//      NSInteger maxScrollwidth = _scrollView.contentOffset.x + _scrollView.bounds.size.width;
-//      NSInteger minScrollwidth = _scrollView.contentOffset.x;
-//      
-//      if (maxScrollwidth - _cellOfMoving.center.x < kPageMoveMargin) {
-//        // 向右滑动
-//        if(_timerOfMovePage == nil) {
-//          _timerOfMovePage = [RNTimer repeatingTimerWithTimeInterval:0.7 block:^{
-//            NSInteger maxScrollwidth = _scrollView.contentOffset.x + _scrollView.bounds.size.width;
-//            
-//            if(maxScrollwidth - _cellOfMoving.center.x < kPageMoveMargin) {
-//              
-//              if(self.numberOfPages - 1 > _currentPageIndex) {
-//                //
-//                //[self movePage:_currentPageIndex + 1 animated:YES];
-//                //
-//                [_cellOfMoving moveByOffset:CGPointMake(_scrollView.frame.size.width, 0)];
-//                //
-//                _touchLocation = CGPointMake(_touchLocation.x + _scrollView.frame.size.width, _touchLocation.y);
-//                
-//                if(self.numberOfPages - 1 == _currentPageIndex) {
-//                  // 已经滑到了最后一页
-//                  SkyduckGridViewCell *targetCell = [_cellList lastObject];
-//                  [self targetIndexForMoveFromPointAtIndex:_cellOfMoving.index toProposedIndex:targetCell.index];
-//                }
-//              }
-//            }
-//            
-//            _timerOfMovePage = nil;
-//          }];
-//        }
-//        
-//      } else if (_cellOfMoving.center.x - minScrollwidth < kPageMoveMargin) {
-//        // 向左滑动
-//        if(_timerOfMovePage == nil) {
-//          
-//          _timerOfMovePage = [RNTimer repeatingTimerWithTimeInterval:0.7 block:^{
-//            NSInteger minScrollwidth = _scrollView.contentOffset.x;
-//            if(_cellOfMoving.center.x - minScrollwidth < kPageMoveMargin) {
-//              if(_currentPageIndex > 0) {
-//                //
-//                //[self movePage:_currentPageIndex - 1 animated:YES];
-//                //
-//                [_cellOfMoving moveByOffset:CGPointMake(_scrollView.frame.size.width * -1, 0)];
-//                //
-//                _touchLocation = CGPointMake(_touchLocation.x - _scrollView.frame.size.width, _touchLocation.y);
-//              }
-//            }
-//            
-//            _timerOfMovePage = nil;
-//          }];
-//        }
-//        
-//      } else {
-//        [_timerOfMovePage invalidate], _timerOfMovePage = nil;
-//      }
+      //      // 页面移动(PageMove)
+      //      NSInteger maxScrollwidth = _scrollView.contentOffset.x + _scrollView.bounds.size.width;
+      //      NSInteger minScrollwidth = _scrollView.contentOffset.x;
+      //
+      //      if (maxScrollwidth - _cellOfMoving.center.x < kPageMoveMargin) {
+      //        // 向右滑动
+      //        if(_timerOfMovePage == nil) {
+      //          _timerOfMovePage = [RNTimer repeatingTimerWithTimeInterval:0.7 block:^{
+      //            NSInteger maxScrollwidth = _scrollView.contentOffset.x + _scrollView.bounds.size.width;
+      //
+      //            if(maxScrollwidth - _cellOfMoving.center.x < kPageMoveMargin) {
+      //
+      //              if(self.numberOfPages - 1 > _currentPageIndex) {
+      //                //
+      //                //[self movePage:_currentPageIndex + 1 animated:YES];
+      //                //
+      //                [_cellOfMoving moveByOffset:CGPointMake(_scrollView.frame.size.width, 0)];
+      //                //
+      //                _touchLocation = CGPointMake(_touchLocation.x + _scrollView.frame.size.width, _touchLocation.y);
+      //
+      //                if(self.numberOfPages - 1 == _currentPageIndex) {
+      //                  // 已经滑到了最后一页
+      //                  SkyduckGridViewCell *targetCell = [_cellList lastObject];
+      //                  [self targetIndexForMoveFromPointAtIndex:_cellOfMoving.index toProposedIndex:targetCell.index];
+      //                }
+      //              }
+      //            }
+      //
+      //            _timerOfMovePage = nil;
+      //          }];
+      //        }
+      //
+      //      } else if (_cellOfMoving.center.x - minScrollwidth < kPageMoveMargin) {
+      //        // 向左滑动
+      //        if(_timerOfMovePage == nil) {
+      //
+      //          _timerOfMovePage = [RNTimer repeatingTimerWithTimeInterval:0.7 block:^{
+      //            NSInteger minScrollwidth = _scrollView.contentOffset.x;
+      //            if(_cellOfMoving.center.x - minScrollwidth < kPageMoveMargin) {
+      //              if(_currentPageIndex > 0) {
+      //                //
+      //                //[self movePage:_currentPageIndex - 1 animated:YES];
+      //                //
+      //                [_cellOfMoving moveByOffset:CGPointMake(_scrollView.frame.size.width * -1, 0)];
+      //                //
+      //                _touchLocation = CGPointMake(_touchLocation.x - _scrollView.frame.size.width, _touchLocation.y);
+      //              }
+      //            }
+      //
+      //            _timerOfMovePage = nil;
+      //          }];
+      //        }
+      //
+      //      } else {
+      //        [_timerOfMovePage invalidate], _timerOfMovePage = nil;
+      //      }
       
       // 更新
       _touchLocation = newTouchLocation;
@@ -600,20 +644,16 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
       
       _scrollView.scrollEnabled = YES;
       
-      _cellOfMoving.alpha = 1.0;
       [_timerOfMovePage invalidate], _timerOfMovePage = nil;
       
-      [UIView animateWithDuration:0.1
-                            delay:0
-                          options:UIViewAnimationOptionCurveEaseIn
-                       animations:^{
-                         _cellOfMoving.transform = CGAffineTransformIdentity;
-                         _cellOfMoving.alpha = 1.0;
-                       }
-                       completion:nil];
+      if (_cellOfMerging != nil) {
+        [_delegate gridView:self targetIndexForMergeFromCellAtIndex:_cellOfMoving.index toProposedIndex:_cellOfMerging.index];
+        [self reloadData];
+      } else {
+        // 将移动中的cell 复位
+        [self resetMovingCellPosition];
+      }
       
-      // 将移动的cell 复位
-      [self cellSetPosition:_cellOfMoving];
     }break;
       
     default:
@@ -623,24 +663,19 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
 }
 
 // cell 长按事件监听
-- (void)gridViewCell:(SkyduckGridViewCell *)cell handleLongPress:(NSUInteger)index {
+- (void)gridViewCell:(SkyduckGridViewCell *)cell handleLongPress:(NSInteger)index {
   // 如果在 "编辑状态" 中, 点中一个 cell 时, 目的可能是移动这个cell, 那么必须先禁用 UIScrollView, 否则在拖动一个cell时, 后面的 UIScrollView也会一起运动.
   _scrollView.scrollEnabled = NO;
   // Bring Subview to Front
   [_scrollView bringSubviewToFront:cell];
   
   [UIView animateWithDuration:0.1
-                        delay:0
-                      options:UIViewAnimationOptionCurveEaseIn
                    animations:^{
-                     
                      // 设置缩放，及改变a、d的值
-                     cell.transform = CGAffineTransformMakeScale(1.1, 1.1);
+                     cell.transform = CGAffineTransformMakeScale(1.2, 1.2);
                      //cell.alpha = 0.8;
                      
-                   }
-                   completion:nil];
-  
+                   }];
 }
 
 @end

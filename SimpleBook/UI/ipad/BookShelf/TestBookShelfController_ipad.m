@@ -58,7 +58,7 @@
       bookInfo = [[BookInfo alloc] init];
       bookInfo.content_id = [[NSNumber numberWithInt:i] stringValue];
       bookInfo.name = @"初中叽叽报告";
-      //bookInfo.thumbnail = @"http://img.baidu.com/img/image/sy.jpg";
+      bookInfo.thumbnail = @"http://img.baidu.com/img/image/sy.jpg";
       localBook = [[LocalBook alloc] initWithBookInfo:bookInfo];
       [localBookFromBookshelf addBook:localBook];
       
@@ -134,7 +134,7 @@
 }
 // 一行显示最多多少个cell
 - (NSUInteger)numberOfCellsInRowOfGridView:(SkyduckGridView *)gridview {
-  if (UIInterfaceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
+  if (UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation])) {
     // 竖屏
     return 4;
   } else {
@@ -153,16 +153,37 @@
 
 #pragma mark- SkyduckGridViewDelegate
 // 单击一个cell
-- (void)gridView:(SkyduckGridView *)gridView didSelectCellAtIndex:(NSUInteger)index {
+- (void)gridView:(SkyduckGridView *)gridView didSelectCellAtIndex:(NSInteger)index {
   NSLog(@"点击了一个cell : %d", index);
 }
 // 合并两个cell
-- (void)gridView:(SkyduckGridView *)gridview targetIndexForMergeFromCellAtIndex:(NSUInteger)sourceIndex toProposedIndex:(NSUInteger)proposedDestinationIndex {
-  NSLog(@"合并两个cell : sourceIndex=%d, proposedDestinationIndex=%d", sourceIndex, proposedDestinationIndex);
+- (void)gridView:(SkyduckGridView *)gridview targetIndexForMergeFromCellAtIndex:(NSInteger)sourceIndex toProposedIndex:(NSInteger)proposedDestinationIndex {
+  //NSLog(@"合并两个cell : sourceIndex=%d, proposedDestinationIndex=%d", sourceIndex, proposedDestinationIndex);
+  SkyduckFile *rootDirectory = [BookShelfDataSourceSingleton sharedInstance].rootDirectory;
+  SkyduckFile *sourceFile = [rootDirectory.listFiles objectAtIndex:sourceIndex];
+  SkyduckFile *destinationFile = [rootDirectory.listFiles objectAtIndex:proposedDestinationIndex];
+  
+  //
+  if (destinationFile.isDirectory) {
+    [rootDirectory.listFiles removeObjectAtIndex:sourceIndex];
+    [destinationFile.listFiles addObject:sourceFile];
+  } else if (destinationFile.isFile) {
+    [rootDirectory.listFiles removeObjectAtIndex:sourceIndex];
+    [rootDirectory.listFiles removeObjectAtIndex:proposedDestinationIndex];
+    NSArray *files = [NSArray arrayWithObjects:sourceFile, destinationFile, nil];
+    SkyduckFile *newDirectory = [SkyduckFile createDirectoryWithValue:@"新建文件夹" files:files];
+    if (sourceIndex > proposedDestinationIndex) {
+      [rootDirectory.listFiles insertObject:newDirectory atIndex:proposedDestinationIndex];
+    } else {
+      [rootDirectory.listFiles insertObject:newDirectory atIndex:proposedDestinationIndex - 1];
+    }
+    
+  }
+  
 }
 // 移动两个cell
-- (void)gridView:(SkyduckGridView *)gridview targetIndexForMoveFromCellAtIndex:(NSUInteger)sourceIndex toProposedIndex:(NSUInteger)proposedDestinationIndex {
-  NSLog(@"移动两个cell :  sourceIndex=%d, proposedDestinationIndex=%d", sourceIndex, proposedDestinationIndex);
+- (void)gridView:(SkyduckGridView *)gridview targetIndexForMoveFromCellAtIndex:(NSInteger)sourceIndex toProposedIndex:(NSInteger)proposedDestinationIndex {
+  //NSLog(@"移动两个cell :  sourceIndex=%d, proposedDestinationIndex=%d", sourceIndex, proposedDestinationIndex);
   
   SkyduckFile *rootDirectory = [BookShelfDataSourceSingleton sharedInstance].rootDirectory;
   SkyduckFile *temp = [rootDirectory.listFiles objectAtIndex:sourceIndex];
@@ -170,7 +191,7 @@
   [rootDirectory.listFiles insertObject:temp atIndex:proposedDestinationIndex];
 }
 // 删除一个cell
-- (void)gridView:(SkyduckGridView *)gridview deleteCellAtIndex:(NSUInteger)index {
+- (void)gridView:(SkyduckGridView *)gridview deleteCellAtIndex:(NSInteger)index {
   NSLog(@"删除一个cell : %d", index);
   
   SkyduckFile *rootDirectory = [BookShelfDataSourceSingleton sharedInstance].rootDirectory;

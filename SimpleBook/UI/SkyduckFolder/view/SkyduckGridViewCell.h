@@ -20,7 +20,7 @@
 - (void)gridViewCell:(SkyduckGridViewCell *)cell touchesEnded:(UITouch *)touch;
 - (void)gridViewCell:(SkyduckGridViewCell *)cell touchesCancelled:(UITouch *)touch;
 // 单击
-- (void)gridViewCell:(SkyduckGridViewCell *)cell handleSingleTap:(NSUInteger)index;
+- (void)gridViewCell:(SkyduckGridViewCell *)cell handleSingleTap:(NSInteger)index;
 
 @end
 

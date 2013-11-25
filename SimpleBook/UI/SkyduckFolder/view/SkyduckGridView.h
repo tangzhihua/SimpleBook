@@ -15,11 +15,11 @@
 @protocol SkyduckGridViewDataSource <NSObject>
 @required
 // 在网格控件中cell总数量
-- (NSUInteger)numberOfCellsInGridView:(SkyduckGridView *)gridview;
+- (NSInteger)numberOfCellsInGridView:(SkyduckGridView *)gridview;
 //
-- (SkyduckGridViewCell *)gridView:(SkyduckGridView *)gridview cellAtIndex:(NSUInteger)index;
+- (SkyduckGridViewCell *)gridView:(SkyduckGridView *)gridview cellAtIndex:(NSInteger)index;
 // 一行显示最多多少个cell
-- (NSUInteger)numberOfCellsInRowOfGridView:(SkyduckGridView *)gridview;
+- (NSInteger)numberOfCellsInRowOfGridView:(SkyduckGridView *)gridview;
 // cell size
 - (CGSize)sizeOfCellInGridView:(SkyduckGridView *)gridview;
 // cell 之间上下空白处高度
@@ -32,13 +32,13 @@
 
 @optional
 // 单击一个cell
-- (void)gridView:(SkyduckGridView *)gridView didSelectCellAtIndex:(NSUInteger)index;
+- (void)gridView:(SkyduckGridView *)gridView didSelectCellAtIndex:(NSInteger)index;
 // 合并两个cell
-- (void)gridView:(SkyduckGridView *)gridview targetIndexForMergeFromCellAtIndex:(NSUInteger)sourceIndex toProposedIndex:(NSUInteger)proposedDestinationIndex;
+- (void)gridView:(SkyduckGridView *)gridview targetIndexForMergeFromCellAtIndex:(NSInteger)sourceIndex toProposedIndex:(NSInteger)proposedDestinationIndex;
 // 移动两个cell
-- (void)gridView:(SkyduckGridView *)gridview targetIndexForMoveFromCellAtIndex:(NSUInteger)sourceIndex toProposedIndex:(NSUInteger)proposedDestinationIndex;
+- (void)gridView:(SkyduckGridView *)gridview targetIndexForMoveFromCellAtIndex:(NSInteger)sourceIndex toProposedIndex:(NSInteger)proposedDestinationIndex;
 // 删除一个cell
-- (void)gridView:(SkyduckGridView *)gridview deleteCellAtIndex:(NSUInteger)index;
+- (void)gridView:(SkyduckGridView *)gridview deleteCellAtIndex:(NSInteger)index;
 
 @end
 

@@ -68,7 +68,7 @@
   
 	// 启动 "新版本信息检测" 子线程
   command = [CommandForNewAppVersionCheck commandForNewAppVersionCheck];
-  [[CommandInvokerSingleton sharedInstance] runCommandWithCommandObject:command];
+  //[[CommandInvokerSingleton sharedInstance] runCommandWithCommandObject:command];
   
   
   // 判断当前设备 iPhone or iPad 之后加载相对应的nib文件
