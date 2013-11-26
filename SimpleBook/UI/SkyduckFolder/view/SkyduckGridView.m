@@ -422,6 +422,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   
   // 增加删除按钮
   self.deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+  [_deleteButton setFrame:CGRectMake(20, _scrollView.bounds.size.height + 91, 70, 91)];
   [_deleteButton setImage:[UIImage imageNamed:@"button_trashbox"] forState:UIControlStateNormal];
   [_deleteButton setImage:[UIImage imageNamed:@"button_trashbox_active"] forState:UIControlStateSelected];
   [_deleteButton setImage:[UIImage imageNamed:@"button_trashbox_active"] forState:UIControlStateHighlighted];
@@ -546,7 +547,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
     rate = (kScroll_trigger_dis - (_scrollView.bounds.size.height - distanceFromTop));
   }
   
-  
+  //
   scrollDistance = rate * timeSinceLastScroll * kScroll_dis_scale; // Between 0 to around 20
   scrollDistance = [self safeHorizontalScrollDistanceWithDistance:scrollDistance isScrollUp:isScrollUp];
   if (scrollDistance >= 1) {
@@ -565,11 +566,14 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
     newDragViewCenter.y = newDragViewCenter.y + (isScrollUp ? -scrollDistance : scrollDistance);
     _dragCell.center = newDragViewCenter;
     
-    
+    // 在滚屏的过程中, 也要移动 cell
     [self moveCellsIfNecessary];
     
     // Refresh time only when it really scrolled
     _lastDragScrollTime = CACurrentMediaTime();
+    
+    // 更新 删除按钮的坐标
+    _deleteButton.frame = CGRectMake(20, _scrollView.contentOffset.y + _scrollView.bounds.size.height - _deleteButton.bounds.size.height, _deleteButton.bounds.size.width, _deleteButton.bounds.size.height);
   }
 }
 
@@ -654,16 +658,18 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
       _editable = YES;
       //
       _scrollView.scrollEnabled = NO;
-      //Bring Subview to Front
+      // Bring Subview to Front
       [_scrollView bringSubviewToFront:_dragCell];
+      [_scrollView bringSubviewToFront:_deleteButton];
       //
-      _deleteButton.frame = CGRectZero;
+      _deleteButton.hidden = NO;
+      _deleteButton.frame = CGRectMake(20, _scrollView.contentOffset.y + _scrollView.bounds.size.height + _deleteButton.bounds.size.height, _deleteButton.bounds.size.width, _deleteButton.bounds.size.height);
       //
       CGPoint touchPoint = [recognizer locationInView:_scrollView];
       [UIView animateWithDuration:0.1 animations:^{
         _dragCell.center = touchPoint;
         _dragCell.transform = CGAffineTransformMakeScale(1.2, 1.2);
-        _deleteButton.frame = CGRectMake(10, 100, 71, 90);
+        _deleteButton.frame = CGRectMake(20, _scrollView.contentOffset.y + _scrollView.bounds.size.height - _deleteButton.bounds.size.height, _deleteButton.bounds.size.width, _deleteButton.bounds.size.height);
       }];
       
     }break;
@@ -682,11 +688,16 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
       
       [self scrollIfNecessary];
       
-      
     }break;
       
     default:{// 手势结束
       [self stopScrollTimer];
+      
+      [UIView animateWithDuration:0.1 animations:^{
+        _deleteButton.frame = CGRectMake(20, _scrollView.contentOffset.y + _scrollView.bounds.size.height + _deleteButton.bounds.size.height, _deleteButton.bounds.size.width, _deleteButton.bounds.size.height);
+      } completion:^(BOOL finished) {
+        _deleteButton.hidden = YES;
+      }];
       
       _editable = NO;
       
@@ -706,7 +717,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
       }
       
     }break;
-
+      
   }
   
 }
