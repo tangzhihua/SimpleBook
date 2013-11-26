@@ -107,13 +107,6 @@
   }
   
 }
-// 将单元格移动到新的位置
-- (void)moveByOffset:(CGPoint)offset {
-	CGRect frame = [self frame];
-	frame.origin.x += offset.x;
-	frame.origin.y += offset.y;
-	[self setFrame:frame];
-}
 
 - (void)bind:(SkyduckFile *)file {
   self.file = file;

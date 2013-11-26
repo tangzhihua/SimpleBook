@@ -38,10 +38,6 @@
 @property (nonatomic, assign) NSInteger index;
 @property (nonatomic, assign) CGRect cellInitFrame;
 
-
-// 将单元格移动到新的位置
-- (void)moveByOffset:(CGPoint)offset;
-
 // 只能使用 bind方法 更换 file 属性.
 @property (nonatomic, strong, readonly) SkyduckFile *file;
 // "数据绑定 (data binding)"

@@ -113,7 +113,7 @@
   // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - 
+#pragma mark -
 #pragma mark - SkyduckGridViewDataSource
 // 在网格控件中cell总数量
 - (NSInteger)numberOfCellsInGridView:(SkyduckGridView *)gridview {
