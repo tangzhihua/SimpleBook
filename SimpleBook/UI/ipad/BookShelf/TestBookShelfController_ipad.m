@@ -53,7 +53,7 @@
     BookInfo *bookInfo = nil;
     LocalBook *localBook = nil;
     
-    for (int i=0; i<20; i++) {
+    for (int i=0; i<30; i++) {
       //
       bookInfo = [[BookInfo alloc] init];
       bookInfo.content_id = [[NSNumber numberWithInt:i] stringValue];
@@ -116,11 +116,11 @@
 #pragma mark - 
 #pragma mark - SkyduckGridViewDataSource
 // 在网格控件中cell总数量
-- (NSUInteger)numberOfCellsInGridView:(SkyduckGridView *)gridview {
+- (NSInteger)numberOfCellsInGridView:(SkyduckGridView *)gridview {
   return [BookShelfDataSourceSingleton sharedInstance].rootDirectory.listFiles.count;
 }
 //
-- (SkyduckGridViewCell *)gridView:(SkyduckGridView *)gridview cellAtIndex:(NSUInteger)index {
+- (SkyduckGridViewCell *)gridView:(SkyduckGridView *)gridview cellAtIndex:(NSInteger)index {
   SkyduckFile *file = [BookShelfDataSourceSingleton sharedInstance].rootDirectory.listFiles[index];
   if (file.isFile) {
     FileCell *cell = [FileCell cellFromNib:self.fileCellUINib];
@@ -133,7 +133,7 @@
   }
 }
 // 一行显示最多多少个cell
-- (NSUInteger)numberOfCellsInRowOfGridView:(SkyduckGridView *)gridview {
+- (NSInteger)numberOfCellsInRowOfGridView:(SkyduckGridView *)gridview {
   if (UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation])) {
     // 竖屏
     return 4;
@@ -152,9 +152,13 @@
 }
 
 #pragma mark- SkyduckGridViewDelegate
-// 单击一个cell
-- (void)gridView:(SkyduckGridView *)gridView didSelectCellAtIndex:(NSInteger)index {
-  NSLog(@"点击了一个cell : %d", index);
+// 单击一个 file cell
+- (void)gridView:(SkyduckGridView *)gridView didSelectFileCellAtIndex:(NSInteger)index {
+  
+}
+// 单击一个 directory cell
+- (void)gridView:(SkyduckGridView *)gridView didSelectDirectoryCellAtIndex:(NSInteger)index {
+  
 }
 // 合并两个cell
 - (void)gridView:(SkyduckGridView *)gridview targetIndexForMergeFromCellAtIndex:(NSInteger)sourceIndex toProposedIndex:(NSInteger)proposedDestinationIndex {

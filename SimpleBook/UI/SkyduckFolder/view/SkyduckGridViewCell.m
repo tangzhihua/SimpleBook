@@ -7,6 +7,7 @@
 
 #import "SkyduckGridViewCell.h"
 #import "SkyduckGridView.h"
+#import "SkyduckFile.h"
 
 @interface SkyduckGridViewCell ()
 @property (nonatomic, strong, readwrite) SkyduckFile *file;
@@ -93,9 +94,18 @@
 // 单击
 - (void)handleSingleTap {
   NSLog(@"handleSingleTap");
-  if(self.delegate != nil && [self.delegate respondsToSelector:@selector(gridViewCell:handleSingleTap:)]) {
-    [self.delegate gridViewCell:self handleSingleTap:self.index];
+  if (_file.isFile) {
+    // 点中的cell是 文件
+    if(self.delegate != nil && [self.delegate respondsToSelector:@selector(gridViewCell:handleSingleTapFile:)]) {
+      [self.delegate gridViewCell:self handleSingleTapFile:self.index];
+    }
+  } else if (_file.isDirectory) {
+    // 点中的cell是 文件夹
+    if(self.delegate != nil && [self.delegate respondsToSelector:@selector(gridViewCell:handleSingleTapDirectory:)]) {
+      [self.delegate gridViewCell:self handleSingleTapDirectory:self.index];
+    }
   }
+  
 }
 // 将单元格移动到新的位置
 - (void)moveByOffset:(CGPoint)offset {

@@ -19,9 +19,11 @@
 - (void)gridViewCell:(SkyduckGridViewCell *)cell touchesMoved:(UITouch *)touch;
 - (void)gridViewCell:(SkyduckGridViewCell *)cell touchesEnded:(UITouch *)touch;
 - (void)gridViewCell:(SkyduckGridViewCell *)cell touchesCancelled:(UITouch *)touch;
-// 单击
-- (void)gridViewCell:(SkyduckGridViewCell *)cell handleSingleTap:(NSInteger)index;
 
+// 单击 "文件"
+- (void)gridViewCell:(SkyduckGridViewCell *)cell handleSingleTapFile:(NSInteger)index;
+// 单击 "文件夹"
+- (void)gridViewCell:(SkyduckGridViewCell *)cell handleSingleTapDirectory:(NSInteger)index;
 @end
 
 

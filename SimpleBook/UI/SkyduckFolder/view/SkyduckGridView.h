@@ -31,8 +31,11 @@
 @protocol SkyduckGridViewDelegate <NSObject>
 
 @optional
-// 单击一个cell
-- (void)gridView:(SkyduckGridView *)gridView didSelectCellAtIndex:(NSInteger)index;
+// 单击一个 file cell
+- (void)gridView:(SkyduckGridView *)gridView didSelectFileCellAtIndex:(NSInteger)index;
+// 单击一个 directory cell
+- (void)gridView:(SkyduckGridView *)gridView didSelectDirectoryCellAtIndex:(NSInteger)index;
+
 // 合并两个cell
 - (void)gridView:(SkyduckGridView *)gridview targetIndexForMergeFromCellAtIndex:(NSInteger)sourceIndex toProposedIndex:(NSInteger)proposedDestinationIndex;
 // 移动两个cell

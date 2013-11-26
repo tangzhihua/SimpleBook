@@ -336,7 +336,8 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   // 视图是否延时调用开始滚动的方法
   _scrollView.delaysContentTouches = NO;
   // 控件滚动到顶部
-  _scrollView.scrollsToTop = NO;
+  //_scrollView.scrollsToTop = YES;
+  //_scrollView.pagingEnabled = YES;
   //
   _scrollView.multipleTouchEnabled = NO;
   [self addSubview:_scrollView];
@@ -529,9 +530,24 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   }
 }
 
-// cell 单击事件监听
-- (void)gridViewCell:(SkyduckGridViewCell *)cell handleSingleTap:(NSInteger)index {
-  [_delegate gridView:self didSelectCellAtIndex:index];
+// 单击 "文件"
+- (void)gridViewCell:(SkyduckGridViewCell *)cell handleSingleTapFile:(NSInteger)index {
+  [_delegate gridView:self didSelectFileCellAtIndex:index];
+}
+
+// 单击 "文件夹"
+- (void)gridViewCell:(SkyduckGridViewCell *)cell handleSingleTapDirectory:(NSInteger)index {
+  // contentOffset:滑动视图里面的内容的相对位置
+  CGPoint contentOffset = _scrollView.contentOffset;
+  CGPoint newOffset = CGPointMake(contentOffset.x, cell.frame.origin.y);
+  if (!CGPointEqualToPoint(contentOffset, newOffset)) {
+    // 现在发现使用UIView的核心动画改变contentOffset属性时, 如果cell在屏幕下方只显示了一半的范围,
+    // 那么点击cell 就不会跑到屏幕顶端, 而是正好进入屏幕, 且还在屏幕下方, 所以暂时使用
+    // setContentOffset:animated: 方法并且结合 delegate 的 scrollViewDidEndScrollingAnimation: 方法进行处理
+    // 在这里关闭 scrollEnabled 在 scrollViewDidEndScrollingAnimation: 打开 scrollEnabled
+    _scrollView.scrollEnabled = NO;
+    [_scrollView setContentOffset:newOffset animated:YES];
+  }
 }
 
 // called when a gesture recognizer attempts to transition out of UIGestureRecognizerStatePossible.
@@ -570,6 +586,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
       // 源cell 和 所有其他的cell之间的碰撞检测处理
       // cell 发生碰撞时, 会引起后续的处理逻辑, 如果源cell是 file类型, 就会和发生碰撞的cell发生cell合并事件, 如果是 folder 类型的, 就会发生cell移动事件.
       [self cellsCollisionDetectionHandleWithSourceCell:_cellOfMoving moveDirection:[self moveDirectionFrom:_beginTouchLocation to:newTouchLocation]];
+      
       
       //      // 页面移动(PageMove)
       //      NSInteger maxScrollwidth = _scrollView.contentOffset.x + _scrollView.bounds.size.width;
@@ -647,8 +664,11 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
       [_timerOfMovePage invalidate], _timerOfMovePage = nil;
       
       if (_cellOfMerging != nil) {
+        // 如果当前处于合并状态时, 就告知控制器合并目标cell, 并且重新加载数据
         [_delegate gridView:self targetIndexForMergeFromCellAtIndex:_cellOfMoving.index toProposedIndex:_cellOfMerging.index];
+        // 重新加载全部数据
         [self reloadData];
+        //[UIView an
       } else {
         // 将移动中的cell 复位
         [self resetMovingCellPosition];
@@ -676,6 +696,40 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
                      //cell.alpha = 0.8;
                      
                    }];
+}
+
+#pragma mark -
+#pragma mark - UIScrollView delegate
+// 1、只要view有滚动（不管是拖、拉、放大、缩小等导致）都会执行此函数
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  
+}
+// 2、将要开始拖拽，手指已经放在view上并准备拖动的那一刻
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+}
+// 3、将要结束拖拽，手指已拖动过view并准备离开手指的那一刻，注意：当属性pagingEnabled为YES时，此函数不被调用
+-(void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+  
+}
+// 4、已经结束拖拽，手指刚离开view的那一刻
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+  
+}
+// 5、view将要开始减速，view滑动之后有惯性
+-(void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+  
+}
+// 6、view已经停止滚动
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+  
+}
+// 7、view的缩放
+-(void)scrollViewDidZoom:(UIScrollView *)scrollView {
+  
+}
+// 8、有动画时调用
+-(void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+  _scrollView.scrollEnabled = YES;
 }
 
 @end
