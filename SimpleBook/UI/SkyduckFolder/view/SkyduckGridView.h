@@ -56,5 +56,5 @@
 
 - (id)initWithFrame:(CGRect)frame;
 - (void)reloadData;
-
+- (void)resetDragingCellPosition;
 @end

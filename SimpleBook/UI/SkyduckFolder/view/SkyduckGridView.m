@@ -22,8 +22,7 @@
 // 触点坐标
 @property (nonatomic, assign) CGPoint beginTouchLocation;// 本次触摸行为 源点
 @property (nonatomic, assign) CGPoint currentlyTouchLocation;// 本次触摸行为 最新触点
-// GridView Page move Timer
-@property (nonatomic, strong) RNTimer *timerOfMovePage;
+//
 @property (nonatomic, strong) SkyduckGridViewCell *dragCell;// 处于拖动状态的cell
 @property (nonatomic, strong) SkyduckGridViewCell *mergeCell;// 处于合并状态的cell
 
@@ -316,9 +315,20 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   }
 }
 
-
-
-
+- (void)deleteCellIfNecessary {
+  // 计算两个矩形的中心点距离(这是判断两个矩形是否相交的最简单方法)
+  CGFloat xDist = (_deleteButton.center.x - _dragCell.center.x);
+  CGFloat yDist = (_deleteButton.center.y - _dragCell.center.y);
+  CGFloat distance = sqrt((xDist * xDist) + (yDist * yDist));
+  
+  if(distance < kCellCollisionMergeMinDistance) {
+    [_deleteButton setSelected:YES];
+    _dragCell.alpha = 1.0;
+  } else {
+    [_deleteButton setSelected:NO];
+    _dragCell.alpha = 0.8;
+  }
+}
 
 // ----------------------------------------------------------------------------------
 #pragma - Layout/Draw
@@ -374,7 +384,6 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   _dragCell = nil;
   _mergeCell = nil;
   _editable = NO;
-  [_timerOfMovePage invalidate], _timerOfMovePage = nil;
   
   // 清理掉全部 cell view
   [_cellList removeAllObjects];
@@ -422,6 +431,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   
   // 增加删除按钮
   self.deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+  _deleteButton.hidden = YES;
   [_deleteButton setFrame:CGRectMake(20, _scrollView.bounds.size.height + 91, 70, 91)];
   [_deleteButton setImage:[UIImage imageNamed:@"button_trashbox"] forState:UIControlStateNormal];
   [_deleteButton setImage:[UIImage imageNamed:@"button_trashbox_active"] forState:UIControlStateSelected];
@@ -688,11 +698,13 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
       
       [self scrollIfNecessary];
       
+      [self deleteCellIfNecessary];
     }break;
       
     default:{// 手势结束
       [self stopScrollTimer];
       
+      // 隐藏删除按钮
       [UIView animateWithDuration:0.1 animations:^{
         _deleteButton.frame = CGRectMake(20, _scrollView.contentOffset.y + _scrollView.bounds.size.height + _deleteButton.bounds.size.height, _deleteButton.bounds.size.width, _deleteButton.bounds.size.height);
       } completion:^(BOOL finished) {
@@ -703,15 +715,24 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
       
       _scrollView.scrollEnabled = YES;
       
-      [_timerOfMovePage invalidate], _timerOfMovePage = nil;
       
-      if (_mergeCell != nil) {
+      if (_deleteButton.isSelected) {// 优先处理 "删除"
+        //
+        [_delegate gridView:self deleteCellAtIndex:_dragCell.index];
+        
+        //
+        [_deleteButton setSelected:NO];
+      } else if (_mergeCell != nil) {// 其次处理 "合并"
+        
         // 如果当前处于合并状态时, 就告知控制器合并目标cell, 并且重新加载数据
         [_delegate gridView:self targetIndexForMergeFromCellAtIndex:_dragCell.index toProposedIndex:_mergeCell.index];
+        
         // 重新加载全部数据
         [self reloadData];
+        
         //[UIView an
-      } else {
+        
+      } else {// 没有任何事件发生, 就复位处于拖动中的 cell
         // 复位拖动中的cell的位置坐标
         [self resetDragingCellPosition];
       }

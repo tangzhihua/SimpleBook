@@ -53,12 +53,45 @@
     BookInfo *bookInfo = nil;
     LocalBook *localBook = nil;
     
-    for (int i=0; i<30; i++) {
+    NSArray *imageUrlArray = @[@"http://d.hiphotos.baidu.com/pic/w%3D310/sign=474e7140faedab6474724bc1c737af81/e824b899a9014c088d47272e0b7b02087bf4f439.jpg",
+                               @"http://b.hiphotos.baidu.com/pic/w%3D310/sign=54d8d4db50da81cb4ee685cc6267d0a4/cefc1e178a82b901b326ff1c728da9773912ef12.jpg",
+                               @"http://b.hiphotos.baidu.com/pic/w%3D310/sign=694ce8049f3df8dca63d8990fd1072bf/d833c895d143ad4bc890a03382025aafa50f0682.jpg",
+                               @"http://a.hiphotos.baidu.com/pic/w%3D310/sign=0320b1f2cb8065387beaa212a7dca115/fcfaaf51f3deb48f1c679562f11f3a292df5787b.jpg",
+                               @"http://c.hiphotos.baidu.com/pic/w%3D310/sign=777cd344a686c91708035438f93c70c6/34fae6cd7b899e51ed050da843a7d933c9950d86.jpg",
+                               @"http://c.hiphotos.baidu.com/pic/w%3D310/sign=d371aaef5366d0167e199829a72ad498/4b90f603738da977d3b8af09b151f8198618e379.jpg",
+                               @"http://c.hiphotos.baidu.com/pic/w%3D310/sign=0805c87c6a63f6241c5d3f02b744eb32/5882b2b7d0a20cf4cbb7bd9a77094b36acaf9954.jpg",
+                               @"http://h.hiphotos.baidu.com/pic/w%3D310/sign=070287618718367aad8979dc1e728b68/3c6d55fbb2fb4316da71303221a4462309f7d308.jpg",
+                               @"http://h.hiphotos.baidu.com/pic/w%3D310/sign=96fd9e15314e251fe2f7e2f99787c9c2/0824ab18972bd407e233efd27a899e510fb3092c.jpg",
+                               @"http://f.hiphotos.baidu.com/pic/w%3D310/sign=c7a46a3863d0f703e6b293dd38fb5148/359b033b5bb5c9ea58793fccd439b6003af3b312.jpg",
+                               
+                               @"http://g.hiphotos.baidu.com/pic/w%3D310/sign=85cd8f8da08b87d65042ad1e37092860/08f790529822720e3a22df467acb0a46f31fab99.jpg",
+                               @"http://b.hiphotos.baidu.com/pic/w%3D310/sign=bb195e3310dfa9ecfd2e501652d1f754/6159252dd42a28347d510a245ab5c9ea15cebf2d.jpg",
+                               @"http://a.hiphotos.baidu.com/pic/w%3D310/sign=65a25d77b3fb43161a1f7c7b10a54642/e850352ac65c10380b8cf37eb3119313b17e899f.jpg",
+                               @"http://d.hiphotos.baidu.com/pic/w%3D310/sign=054a79c60e2442a7ae0efba4e143ad95/4bed2e738bd4b31c1c1ad7fe86d6277f9e2ff855.jpg",
+                               @"http://g.hiphotos.baidu.com/pic/w%3D310/sign=54ae9a741f178a82ce3c79a1c602737f/a8ec8a13632762d0218bc407a1ec08fa503dc6d5.jpg",
+                               @"http://a.hiphotos.baidu.com/pic/w%3D310/sign=58979f88bba1cd1105b674218913c8b0/ac4bd11373f08202fae4ea874afbfbedab641b17.jpg",
+                               @"http://c.hiphotos.baidu.com/pic/w%3D310/sign=61573758f603918fd7d13bcb613c264b/023b5bb5c9ea15ce34a380b1b7003af33a87b23c.jpg",
+                               @"http://h.hiphotos.baidu.com/pic/w%3D310/sign=ee55fc648b13632715edc432a18ea056/d52a2834349b033ba43f9c6214ce36d3d439bdd7.jpg",
+                               @"http://f.hiphotos.baidu.com/pic/w%3D310/sign=2ecab4bcd462853592e0d420a0ee76f2/b03533fa828ba61e1d4906614034970a314e59dd.jpg",
+                               @"http://a.hiphotos.baidu.com/pic/w%3D310/sign=6d959f4c50da81cb4ee685cc6267d0a4/cefc1e178a82b9018a6bb48b728da9773812ef40.jpg",
+                               
+                               @"http://c.hiphotos.baidu.com/pic/w%3D310/sign=edfca6dc78310a55c424d8f587444387/0b7b02087bf40ad17813fbcc562c11dfa9ecce2d.jpg",
+                               @"http://a.hiphotos.baidu.com/pic/w%3D310/sign=5f0d752c472309f7e76fab13420f0c39/faf2b2119313b07edac730b00dd7912397dd8c0b.jpg",
+                               @"http://b.hiphotos.baidu.com/pic/w%3D310/sign=643384b9e4dde711e7d245f797eecef4/838ba61ea8d3fd1ff0659686314e251f95ca5f19.jpg",
+                               @"http://h.hiphotos.baidu.com/pic/w%3D310/sign=d7820ba8aa18972ba33a06cbd6cc7b9d/a8773912b31bb051ff8d8494377adab44bede0e4.jpg",
+                               @"http://d.hiphotos.baidu.com/pic/w%3D310/sign=186b97ec024f78f0800b9cf249300a83/a8014c086e061d95e9fd3e807af40ad163d9cacb.jpg",
+                               @"http://h.hiphotos.baidu.com/pic/w%3D310/sign=c06fcc290b55b3199cf9847473a88286/03087bf40ad162d99d7fe23410dfa9ec8a13cd01.jpg",
+                               @"http://d.hiphotos.baidu.com/pic/w%3D310/sign=b8dab9908601a18bf0eb144eae2e0761/472309f7905298224100067fd6ca7bcb0a46d45e.jpg",
+                               @"http://e.hiphotos.baidu.com/pic/w%3D310/sign=55e5c070c2cec3fd8b3ea174e689d4b6/4afbfbedab64034f9407ffbaaec379310b551d47.jpg",
+                               @"http://a.hiphotos.baidu.com/pic/w%3D310/sign=0eea101a0d3387449cc5297d610ed937/0df431adcbef7609b3f8d7d52fdda3cc7dd99e8d.jpg",
+                               @"http://b.hiphotos.baidu.com/pic/w%3D310/sign=23ff9d96a9d3fd1f3609a43b004f25ce/38dbb6fd5266d016a8509090962bd40735fa3538.jpg"];
+    
+    for (int i=0; i<imageUrlArray.count; i++) {
       //
       bookInfo = [[BookInfo alloc] init];
       bookInfo.content_id = [[NSNumber numberWithInt:i] stringValue];
-      bookInfo.name = @"初中叽叽报告";
-      bookInfo.thumbnail = @"http://img.baidu.com/img/image/sy.jpg";
+      bookInfo.name = [NSString stringWithFormat:@"书籍 %d", i];
+      bookInfo.thumbnail = imageUrlArray[i];
       localBook = [[LocalBook alloc] initWithBookInfo:bookInfo];
       [localBookFromBookshelf addBook:localBook];
       
@@ -72,18 +105,18 @@
     //
     NSMutableArray *files = [NSMutableArray array];
     bookInfo = [[BookInfo alloc] init];
-    bookInfo.content_id = @"3";
+    bookInfo.content_id = [[NSNumber numberWithInt:imageUrlArray.count] stringValue];
     bookInfo.name = @"岸本齐史";
-    bookInfo.thumbnail = @"https://dreambook.retechcorp.com/dreambook/thumbnail/show/4";
+    bookInfo.thumbnail = @"http://f.hiphotos.baidu.com/pic/w%3D310/sign=db18c99ed0160924dc25a41ae405359b/f703738da9773912defe2ba9f8198618377ae21a.jpg";
     localBook = [[LocalBook alloc] initWithBookInfo:bookInfo];
     [localBookFromBookshelf addBook:localBook];
     file = [SkyduckFile createFileWithValue:bookInfo.content_id];
     [files addObject:file];
     //
     bookInfo = [[BookInfo alloc] init];
-    bookInfo.content_id = @"4";
+    bookInfo.content_id = [[NSNumber numberWithInt:imageUrlArray.count + 1] stringValue];
     bookInfo.name = @"火影忍者";
-    bookInfo.thumbnail = @"https://dreambook.retechcorp.com/dreambook/thumbnail/show/4";
+    bookInfo.thumbnail = @"http://b.hiphotos.baidu.com/pic/w%3D310/sign=5a255dac9313b07ebdbd56093cd59113/cf1b9d16fdfaaf5152095b328c5494eef11f7a51.jpg";
     localBook = [[LocalBook alloc] initWithBookInfo:bookInfo];
     [localBookFromBookshelf addBook:localBook];
     file = [SkyduckFile createFileWithValue:bookInfo.content_id];
@@ -154,7 +187,16 @@
 #pragma mark- SkyduckGridViewDelegate
 // 单击一个 file cell
 - (void)gridView:(SkyduckGridView *)gridView didSelectFileCellAtIndex:(NSInteger)index {
-  
+  [UIAlertView showAlertViewWithTitle:@"打开一本书"
+                              message:nil
+                    cancelButtonTitle:@"取消"
+                    otherButtonTitles:nil
+                       alertViewStyle:UIAlertViewStyleDefault
+                            onDismiss:^(UIAlertView *alertView, int buttonIndex) {
+                              
+                            } onCancel:^{
+                              
+                            }];
 }
 // 单击一个 directory cell
 - (void)gridView:(SkyduckGridView *)gridView didSelectDirectoryCellAtIndex:(NSInteger)index {
@@ -162,7 +204,7 @@
 }
 // 合并两个cell
 - (void)gridView:(SkyduckGridView *)gridview targetIndexForMergeFromCellAtIndex:(NSInteger)sourceIndex toProposedIndex:(NSInteger)proposedDestinationIndex {
-  //NSLog(@"合并两个cell : sourceIndex=%d, proposedDestinationIndex=%d", sourceIndex, proposedDestinationIndex);
+  
   SkyduckFile *rootDirectory = [BookShelfDataSourceSingleton sharedInstance].rootDirectory;
   SkyduckFile *sourceFile = [rootDirectory.listFiles objectAtIndex:sourceIndex];
   SkyduckFile *destinationFile = [rootDirectory.listFiles objectAtIndex:proposedDestinationIndex];
@@ -187,19 +229,77 @@
 }
 // 移动两个cell
 - (void)gridView:(SkyduckGridView *)gridview targetIndexForMoveFromCellAtIndex:(NSInteger)sourceIndex toProposedIndex:(NSInteger)proposedDestinationIndex {
-  //NSLog(@"移动两个cell :  sourceIndex=%d, proposedDestinationIndex=%d", sourceIndex, proposedDestinationIndex);
   
   SkyduckFile *rootDirectory = [BookShelfDataSourceSingleton sharedInstance].rootDirectory;
   SkyduckFile *temp = [rootDirectory.listFiles objectAtIndex:sourceIndex];
   [rootDirectory.listFiles removeObjectAtIndex:sourceIndex];
   [rootDirectory.listFiles insertObject:temp atIndex:proposedDestinationIndex];
 }
+
 // 删除一个cell
 - (void)gridView:(SkyduckGridView *)gridview deleteCellAtIndex:(NSInteger)index {
-  NSLog(@"删除一个cell : %d", index);
   
   SkyduckFile *rootDirectory = [BookShelfDataSourceSingleton sharedInstance].rootDirectory;
-  [rootDirectory.listFiles removeObjectAtIndex:index];
+  SkyduckFile *fileForDelete = rootDirectory.listFiles[index];
+  if (fileForDelete.isDirectory) {
+    
+    [UIAlertView showAlertViewWithTitle:@"删除分组"
+                                message:@"是否也同时删除分组内的图书?"
+                      cancelButtonTitle:@"取消"
+                      otherButtonTitles:[NSArray arrayWithObjects:@"删除图书", @"不删除图书", nil]
+                         alertViewStyle:UIAlertViewStyleDefault
+                              onDismiss:^(UIAlertView *alertView, int buttonIndex) {
+                                switch (buttonIndex) {
+                                  case 0:{// 删除图书
+                                    
+                                    LocalBookList *localBookFromBookshelf = [GlobalDataCacheForMemorySingleton sharedInstance].localBookList;
+                                    for (SkyduckFile *file in fileForDelete.listFiles) {
+                                      NSString *contentID = file.value;
+                                      [localBookFromBookshelf removeBookByContentID:contentID];
+                                    }
+                                    
+                                    [rootDirectory.listFiles removeObjectAtIndex:index];
+                                    [_gridView reloadData];
+                                  }break;
+                                    
+                                  case 1:{// 不删除图书
+                                    for (SkyduckFile *file in fileForDelete.listFiles) {
+                                      [rootDirectory.listFiles insertObject:file atIndex:index];
+                                    }
+                                    
+                                    [rootDirectory.listFiles removeObject:fileForDelete];
+                                    [_gridView reloadData];
+                                  }break;
+                                  default:
+                                    break;
+                                }
+                              } onCancel:^{
+                                [_gridView resetDragingCellPosition];
+                              }];
+    
+  } else if (fileForDelete.isFile) {
+    
+    [UIAlertView showAlertViewWithTitle:@"删除书籍"
+                                message:@"您确定删除这本书籍吗?"
+                      cancelButtonTitle:@"取消"
+                      otherButtonTitles:[NSArray arrayWithObjects:@"删除图书", nil]
+                         alertViewStyle:UIAlertViewStyleDefault
+                              onDismiss:^(UIAlertView *alertView, int buttonIndex) {
+                                NSString *contentID = fileForDelete.value;
+                                LocalBookList *localBookFromBookshelf = [GlobalDataCacheForMemorySingleton sharedInstance].localBookList;
+                                [localBookFromBookshelf removeBookByContentID:contentID];
+                                [rootDirectory.listFiles removeObjectAtIndex:index];
+                                [_gridView reloadData];
+                              } onCancel:^{
+                                [_gridView resetDragingCellPosition];
+                              }];
+  }
+  
+  
+  
+  
+  
+  
 }
 
 @end
