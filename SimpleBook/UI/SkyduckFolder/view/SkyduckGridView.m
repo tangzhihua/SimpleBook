@@ -30,7 +30,8 @@
 // 长按 cell 会进入 编辑状态(处于编辑状态时, 可以吸附移动cell)
 @property (nonatomic, assign) BOOL editable;
 
-
+// 倒计时 Timer
+@property (nonatomic, strong) RNTimer *timer;
 @end
 
 @implementation SkyduckGridView {
@@ -254,7 +255,8 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
       CGFloat yDist = (tempCell.center.y - _dragCell.center.y);
       CGFloat distance = sqrt((xDist * xDist) + (yDist * yDist));
       
-      if (_dragCell.file.isDirectory) {
+      // 如果没有激活 合并功能, 就只做两个cell的碰撞移动操作.
+      if (!_mergeEnabled || _dragCell.file.isDirectory) {
         
         if(distance < kCellCollisionMoveMinDistance) {
           // 要进行移动
@@ -650,6 +652,15 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
     // 在这里关闭 scrollEnabled 在 scrollViewDidEndScrollingAnimation: 打开 scrollEnabled
     _scrollView.scrollEnabled = NO;
     [_scrollView setContentOffset:newOffset animated:YES];
+    
+    [_timer invalidate], _timer = nil;
+    _timer = [RNTimer repeatingTimerWithTimeInterval:0.5 block:^{
+      _scrollView.scrollEnabled = YES;
+      
+      [_delegate gridView:self didSelectDirectoryCellAtIndex:index];
+      
+      _timer = nil;
+    }];
   }
 }
 

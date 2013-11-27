@@ -17,12 +17,14 @@
 #import "FolderCell.h"
 #import "FileCell.h"
 #import "SkyduckGridViewCell.h"
+#import "JWFolders.h"
+#import "ExpandFolderContentView.h"
 
 @interface TestBookShelfController_ipad () <SkyduckGridViewDelegate, SkyduckGridViewDataSource>
 @property (nonatomic, strong) SkyduckGridView *gridView;
 //
-@property (nonatomic, retain) UINib *fileCellUINib;
-@property (nonatomic, retain) UINib *folderCellUINib;
+@property (nonatomic, strong) UINib *fileCellUINib;
+@property (nonatomic, strong) UINib *folderCellUINib;
 @end
 
 @implementation TestBookShelfController_ipad
@@ -136,6 +138,7 @@
   _gridView = [[SkyduckGridView alloc] initWithFrame:self.view.frame];
   _gridView.delegate = self;
   _gridView.dataSource = self;
+  _gridView.mergeEnabled = YES;
   [self.view addSubview:_gridView];
   
   [_gridView reloadData];
@@ -198,10 +201,29 @@
                               
                             }];
 }
+
 // 单击一个 directory cell
 - (void)gridView:(SkyduckGridView *)gridView didSelectDirectoryCellAtIndex:(NSInteger)index {
+  SkyduckFile *rootDirectory = [BookShelfDataSourceSingleton sharedInstance].rootDirectory;
+  SkyduckFile *directory = [rootDirectory.listFiles objectAtIndex:index];
+  ExpandFolderContentView *contentView = [[ExpandFolderContentView alloc] initWithFrame:self.view.frame];
+  [contentView bind:directory];
+  CGPoint openPoint = CGPointMake(0, 200); //arbitrary point
   
+ 
+  
+  // you can also open the folder this way
+  // it could be potentially easier if you don't need the blocks
+  JWFolders *folder = [JWFolders folder];
+  folder.contentView = contentView;
+  folder.containerView = _gridView;
+  folder.position = openPoint;
+  folder.direction = JWFoldersOpenDirectionDown;
+  folder.transparentPane = YES;
+  [folder open];
+
 }
+
 // 合并两个cell
 - (void)gridView:(SkyduckGridView *)gridview targetIndexForMergeFromCellAtIndex:(NSInteger)sourceIndex toProposedIndex:(NSInteger)proposedDestinationIndex {
   

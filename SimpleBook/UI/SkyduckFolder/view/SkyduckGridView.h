@@ -54,6 +54,9 @@
 @property (nonatomic, weak) IBOutlet id<SkyduckGridViewDataSource> dataSource;
 @property (nonatomic, weak) IBOutlet id<SkyduckGridViewDelegate> delegate;
 
+// 是否激活 "合并" 功能
+@property (nonatomic, assign) BOOL mergeEnabled;// 默认是关闭的
+
 - (id)initWithFrame:(CGRect)frame;
 - (void)reloadData;
 - (void)resetDragingCellPosition;

@@ -12,14 +12,15 @@
 #import "GlobalDataCacheForNeedSaveToFileSystem.h"
 
 #import "LocalCacheDataPathConstant.h"
-
+#import "RNTimer.h"
 
 
 
 @interface CommandForGetImportantInfoFromServer ()
 // 这个命令只能执行一次
 @property (nonatomic, assign) BOOL isExecuted;
-
+// 倒计时 Timer
+@property (nonatomic, strong) RNTimer *timerForCountDown;
 @end
 
 
@@ -44,7 +45,9 @@
   if (!self.isExecuted) {
 		self.isExecuted = YES;
 		
-    
+    _timerForCountDown = [RNTimer repeatingTimerWithTimeInterval:1 block:^{
+      
+    }];
   }
 }
 
