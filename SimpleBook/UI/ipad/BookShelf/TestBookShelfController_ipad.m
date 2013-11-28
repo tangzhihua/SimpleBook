@@ -88,6 +88,29 @@
                                @"http://a.hiphotos.baidu.com/pic/w%3D310/sign=0eea101a0d3387449cc5297d610ed937/0df431adcbef7609b3f8d7d52fdda3cc7dd99e8d.jpg",
                                @"http://b.hiphotos.baidu.com/pic/w%3D310/sign=23ff9d96a9d3fd1f3609a43b004f25ce/38dbb6fd5266d016a8509090962bd40735fa3538.jpg"];
     
+    //
+    NSMutableArray *files = [NSMutableArray array];
+    bookInfo = [[BookInfo alloc] init];
+    bookInfo.content_id = [[NSNumber numberWithInt:imageUrlArray.count] stringValue];
+    bookInfo.name = @"蓝胖子";
+    bookInfo.thumbnail = @"http://f.hiphotos.baidu.com/pic/w%3D310/sign=db18c99ed0160924dc25a41ae405359b/f703738da9773912defe2ba9f8198618377ae21a.jpg";
+    localBook = [[LocalBook alloc] initWithBookInfo:bookInfo];
+    [localBookFromBookshelf addBook:localBook];
+    file = [SkyduckFile createFileWithValue:bookInfo.content_id];
+    [files addObject:file];
+    //
+    bookInfo = [[BookInfo alloc] init];
+    bookInfo.content_id = [[NSNumber numberWithInt:imageUrlArray.count + 1] stringValue];
+    bookInfo.name = @"风萧萧兮易水寒, 壮士一去兮不复还.";
+    bookInfo.thumbnail = @"http://b.hiphotos.baidu.com/pic/w%3D310/sign=5a255dac9313b07ebdbd56093cd59113/cf1b9d16fdfaaf5152095b328c5494eef11f7a51.jpg";
+    localBook = [[LocalBook alloc] initWithBookInfo:bookInfo];
+    [localBookFromBookshelf addBook:localBook];
+    file = [SkyduckFile createFileWithValue:bookInfo.content_id];
+    [files addObject:file];
+    
+    SkyduckFile *directory = [SkyduckFile createDirectoryWithValue:@"文件夹" files:files];
+    [rootDirectory addFile:directory];
+    
     for (int i=0; i<imageUrlArray.count; i++) {
       //
       bookInfo = [[BookInfo alloc] init];
@@ -104,28 +127,7 @@
     
     
     
-    //
-    NSMutableArray *files = [NSMutableArray array];
-    bookInfo = [[BookInfo alloc] init];
-    bookInfo.content_id = [[NSNumber numberWithInt:imageUrlArray.count] stringValue];
-    bookInfo.name = @"岸本齐史";
-    bookInfo.thumbnail = @"http://f.hiphotos.baidu.com/pic/w%3D310/sign=db18c99ed0160924dc25a41ae405359b/f703738da9773912defe2ba9f8198618377ae21a.jpg";
-    localBook = [[LocalBook alloc] initWithBookInfo:bookInfo];
-    [localBookFromBookshelf addBook:localBook];
-    file = [SkyduckFile createFileWithValue:bookInfo.content_id];
-    [files addObject:file];
-    //
-    bookInfo = [[BookInfo alloc] init];
-    bookInfo.content_id = [[NSNumber numberWithInt:imageUrlArray.count + 1] stringValue];
-    bookInfo.name = @"火影忍者";
-    bookInfo.thumbnail = @"http://b.hiphotos.baidu.com/pic/w%3D310/sign=5a255dac9313b07ebdbd56093cd59113/cf1b9d16fdfaaf5152095b328c5494eef11f7a51.jpg";
-    localBook = [[LocalBook alloc] initWithBookInfo:bookInfo];
-    [localBookFromBookshelf addBook:localBook];
-    file = [SkyduckFile createFileWithValue:bookInfo.content_id];
-    [files addObject:file];
     
-    SkyduckFile *directory = [SkyduckFile createDirectoryWithValue:@"文件夹" files:files];
-    [rootDirectory addFile:directory];
     
   }
   return self;
@@ -139,6 +141,7 @@
   _gridView.delegate = self;
   _gridView.dataSource = self;
   _gridView.mergeEnabled = YES;
+  
   [self.view addSubview:_gridView];
   
   [_gridView reloadData];
@@ -208,7 +211,7 @@
   SkyduckFile *directory = [rootDirectory.listFiles objectAtIndex:index];
   ExpandFolderContentView *contentView = [[ExpandFolderContentView alloc] initWithFrame:self.view.frame];
   [contentView bind:directory];
-  CGPoint openPoint = CGPointMake(0, 200); //arbitrary point
+  CGPoint openPoint = CGPointMake(200, 200); //arbitrary point
   
  
   
@@ -216,10 +219,14 @@
   // it could be potentially easier if you don't need the blocks
   JWFolders *folder = [JWFolders folder];
   folder.contentView = contentView;
-  folder.containerView = _gridView;
+  folder.containerView = self.view;
   folder.position = openPoint;
   folder.direction = JWFoldersOpenDirectionDown;
-  folder.transparentPane = YES;
+  folder.contentBackgroundColor = [UIColor colorWithWhite:0.90 alpha:1.0];
+  folder.shadowsEnabled = YES;
+  folder.shadowColor = [UIColor redColor];
+  folder.darkensBackground = NO;
+  //folder.showsNotch = YES;
   [folder open];
 
 }

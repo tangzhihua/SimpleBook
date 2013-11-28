@@ -15,8 +15,8 @@ typedef void (^JWFoldersCloseBlock)(UIView *contentView, CFTimeInterval duration
 typedef void (^JWFoldersOpenBlock)(UIView *contentView, CFTimeInterval duration, CAMediaTimingFunction *timingFunction);
 
 enum JWFoldersOpenDirection {
-    JWFoldersOpenDirectionUp = 1,
-    JWFoldersOpenDirectionDown = 2
+  JWFoldersOpenDirectionUp = 1,
+  JWFoldersOpenDirectionDown = 2
 };
 typedef NSInteger JWFoldersOpenDirection;
 
@@ -55,8 +55,8 @@ typedef NSInteger JWFoldersOpenDirection;
 @property (nonatomic, readwrite) JWFoldersOpenDirection direction;
 
 
-/* Sets whether a triangle is drawn pointing toward the 
- * opening position. NB: The background of the content view 
+/* Sets whether a triangle is drawn pointing toward the
+ * opening position. NB: The background of the content view
  * must be repeatable. Defaults to NO. */
 @property (nonatomic, assign) BOOL showsNotch;
 
@@ -116,17 +116,5 @@ typedef NSInteger JWFoldersOpenDirection;
 /* Closes the currently open folder. */
 - (void)closeCurrentFolder;
 
-
-#pragma mark -
-#pragma mark Deprecated methods
-
-/* Deprecated in favor of using properties. */
-+ (void)openFolderWithContentView:(UIView *)contentView
-                         position:(CGPoint)position
-                    containerView:(UIView *)containerView
-                        openBlock:(JWFoldersOpenBlock)openBlock
-                       closeBlock:(JWFoldersCloseBlock)closeBlock
-                  completionBlock:(JWFoldersCompletionBlock)completionBlock
-                        direction:(JWFoldersOpenDirection)direction __attribute__((deprecated));
 
 @end

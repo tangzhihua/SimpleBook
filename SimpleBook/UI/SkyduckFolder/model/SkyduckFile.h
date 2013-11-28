@@ -10,7 +10,7 @@
 
 @interface SkyduckFile : NSObject
 
-//
+// 如果是文件 value 可以保存 书籍的contentID, 如果是文件夹, 可以保存文件夹的名称
 @property (nonatomic, copy) NSString *value;
 //
 @property (nonatomic, strong, readonly) NSMutableArray *listFiles;

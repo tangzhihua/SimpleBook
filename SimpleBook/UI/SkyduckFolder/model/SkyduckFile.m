@@ -13,8 +13,10 @@
 @property (nonatomic, strong, readwrite) NSMutableArray *listFiles;
 @end
 
-@implementation SkyduckFile {
-  
+@implementation SkyduckFile
+
+- (NSString *)description {
+	return descriptionForDebug(self);
 }
 
 -(NSMutableArray *)listFiles{

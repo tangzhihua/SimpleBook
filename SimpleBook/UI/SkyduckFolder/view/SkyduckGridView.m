@@ -663,16 +663,16 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
     }];
   }
   
-  UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, self.bounds.size.height)];
-  view.backgroundColor = [UIColor blackColor];
-  view.userInteractionEnabled = YES;
-  [UIView animateWithDuration:0.5 animations:^{
-    view.frame = self.bounds;
-    view.alpha = 0.8;
-  } completion:^(BOOL finished) {
-    
-  }];
-  [self addSubview:view];
+//  UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, self.bounds.size.height)];
+//  view.backgroundColor = [UIColor blackColor];
+//  view.userInteractionEnabled = NO;
+//  [UIView animateWithDuration:0.5 animations:^{
+//    view.frame = self.bounds;
+//    view.alpha = 0.8;
+//  } completion:^(BOOL finished) {
+//  
+//  }];
+//  [self addSubview:view];
 }
 
 // called when a gesture recognizer attempts to transition out of UIGestureRecognizerStatePossible.
