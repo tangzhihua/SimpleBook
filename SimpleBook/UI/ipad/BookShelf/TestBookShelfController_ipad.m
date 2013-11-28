@@ -160,7 +160,8 @@
 }
 //
 - (SkyduckGridViewCell *)gridView:(SkyduckGridView *)gridview cellAtIndex:(NSInteger)index {
-  SkyduckFile *file = [BookShelfDataSourceSingleton sharedInstance].rootDirectory.listFiles[index];
+  SkyduckFile *rootDirectory = [BookShelfDataSourceSingleton sharedInstance].rootDirectory;
+  SkyduckFile *file = rootDirectory.listFiles[index];
   if (file.isFile) {
     FileCell *cell = [FileCell cellFromNib:self.fileCellUINib];
     [cell bind:file];
@@ -235,22 +236,22 @@
 - (void)gridView:(SkyduckGridView *)gridview targetIndexForMergeFromCellAtIndex:(NSInteger)sourceIndex toProposedIndex:(NSInteger)proposedDestinationIndex {
   
   SkyduckFile *rootDirectory = [BookShelfDataSourceSingleton sharedInstance].rootDirectory;
-  SkyduckFile *sourceFile = [rootDirectory.listFiles objectAtIndex:sourceIndex];
-  SkyduckFile *destinationFile = [rootDirectory.listFiles objectAtIndex:proposedDestinationIndex];
+  SkyduckFile *sourceFile = rootDirectory.listFiles[sourceIndex];
+  SkyduckFile *destinationFile = rootDirectory.listFiles[proposedDestinationIndex];
   
   //
   if (destinationFile.isDirectory) {
-    [rootDirectory.listFiles removeObjectAtIndex:sourceIndex];
-    [destinationFile.listFiles addObject:sourceFile];
+    [rootDirectory removeFile:sourceFile];
+    [destinationFile addFile:sourceFile];
   } else if (destinationFile.isFile) {
-    [rootDirectory.listFiles removeObjectAtIndex:sourceIndex];
-    [rootDirectory.listFiles removeObjectAtIndex:proposedDestinationIndex];
+    [rootDirectory removeFile:sourceFile];
+    [rootDirectory removeFile:destinationFile];
     NSArray *files = [NSArray arrayWithObjects:sourceFile, destinationFile, nil];
     SkyduckFile *newDirectory = [SkyduckFile createDirectoryWithValue:@"新建文件夹" files:files];
     if (sourceIndex > proposedDestinationIndex) {
-      [rootDirectory.listFiles insertObject:newDirectory atIndex:proposedDestinationIndex];
+      [rootDirectory insertFile:newDirectory atIndex:proposedDestinationIndex];
     } else {
-      [rootDirectory.listFiles insertObject:newDirectory atIndex:proposedDestinationIndex - 1];
+      [rootDirectory insertFile:newDirectory atIndex:proposedDestinationIndex - 1];
     }
     
   }
@@ -260,9 +261,9 @@
 - (void)gridView:(SkyduckGridView *)gridview targetIndexForMoveFromCellAtIndex:(NSInteger)sourceIndex toProposedIndex:(NSInteger)proposedDestinationIndex {
   
   SkyduckFile *rootDirectory = [BookShelfDataSourceSingleton sharedInstance].rootDirectory;
-  SkyduckFile *temp = [rootDirectory.listFiles objectAtIndex:sourceIndex];
-  [rootDirectory.listFiles removeObjectAtIndex:sourceIndex];
-  [rootDirectory.listFiles insertObject:temp atIndex:proposedDestinationIndex];
+  SkyduckFile *temp = rootDirectory.listFiles[sourceIndex];
+  [rootDirectory removeFileAtIndex:sourceIndex];
+  [rootDirectory insertFile:temp atIndex:proposedDestinationIndex];
 }
 
 // 删除一个cell
@@ -287,16 +288,16 @@
                                       [localBookFromBookshelf removeBookByContentID:contentID];
                                     }
                                     
-                                    [rootDirectory.listFiles removeObjectAtIndex:index];
+                                    [rootDirectory removeFileAtIndex:index];
                                     [_gridView reloadData];
                                   }break;
                                     
                                   case 1:{// 不删除图书
                                     for (SkyduckFile *file in fileForDelete.listFiles) {
-                                      [rootDirectory.listFiles insertObject:file atIndex:index];
+                                      [rootDirectory insertFile:file atIndex:index];
                                     }
                                     
-                                    [rootDirectory.listFiles removeObject:fileForDelete];
+                                    [rootDirectory removeFile:fileForDelete];
                                     [_gridView reloadData];
                                   }break;
                                   default:
@@ -317,7 +318,7 @@
                                 NSString *contentID = fileForDelete.value;
                                 LocalBookList *localBookFromBookshelf = [GlobalDataCacheForMemorySingleton sharedInstance].localBookList;
                                 [localBookFromBookshelf removeBookByContentID:contentID];
-                                [rootDirectory.listFiles removeObjectAtIndex:index];
+                                [rootDirectory removeFileAtIndex:index];
                                 [_gridView reloadData];
                               } onCancel:^{
                                 [_gridView resetDragingCellPosition];

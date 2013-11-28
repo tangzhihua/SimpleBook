@@ -10,7 +10,6 @@
 
 
 #import "SkyduckFile.h"
-#import "BookShelfDataSourceSingleton.h"
 #import "BookInfo.h"
 #import "LocalBook.h"
 #import "LocalBookList.h"
@@ -25,7 +24,7 @@
 //
 @property (nonatomic, strong) UINib *fileCellUINib;
 //
-@property (nonatomic, strong) SkyduckFile *directory;
+@property (nonatomic, weak) SkyduckFile *directory;
 @end
 
 
@@ -109,20 +108,16 @@
 // 移动两个cell
 - (void)gridView:(SkyduckGridView *)gridview targetIndexForMoveFromCellAtIndex:(NSInteger)sourceIndex toProposedIndex:(NSInteger)proposedDestinationIndex {
   
-  SkyduckFile *rootDirectory = [BookShelfDataSourceSingleton sharedInstance].rootDirectory;
-  SkyduckFile *temp = [rootDirectory.listFiles objectAtIndex:sourceIndex];
-  [rootDirectory.listFiles removeObjectAtIndex:sourceIndex];
-  [rootDirectory.listFiles insertObject:temp atIndex:proposedDestinationIndex];
+  SkyduckFile *temp = _directory.listFiles[sourceIndex];
+  [_directory removeFileAtIndex:sourceIndex];
+  [_directory insertFile:temp atIndex:proposedDestinationIndex];
 }
 
 // 删除一个cell
 - (void)gridView:(SkyduckGridView *)gridview deleteCellAtIndex:(NSInteger)index {
-  
-  SkyduckFile *rootDirectory = [BookShelfDataSourceSingleton sharedInstance].rootDirectory;
-  SkyduckFile *fileForDelete = rootDirectory.listFiles[index];
-  if (fileForDelete.isDirectory) {
-    
-  } else if (fileForDelete.isFile) {
+
+  SkyduckFile *fileForDelete = _directory.listFiles[index];
+  if (fileForDelete.isFile) {
     
     [UIAlertView showAlertViewWithTitle:@"删除书籍"
                                 message:@"您确定删除这本书籍吗?"
@@ -133,7 +128,7 @@
                                 NSString *contentID = fileForDelete.value;
                                 LocalBookList *localBookFromBookshelf = [GlobalDataCacheForMemorySingleton sharedInstance].localBookList;
                                 [localBookFromBookshelf removeBookByContentID:contentID];
-                                [rootDirectory.listFiles removeObjectAtIndex:index];
+                                [_directory removeFile:fileForDelete];
                                 [_gridView reloadData];
                               } onCancel:^{
                                 [_gridView resetDragingCellPosition];

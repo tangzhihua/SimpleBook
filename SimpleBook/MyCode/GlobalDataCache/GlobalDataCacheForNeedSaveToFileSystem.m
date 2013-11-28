@@ -239,7 +239,7 @@ static NSString *const kLocalCacheDataName_LocalAppVersion                = @"Lo
   
   [GlobalDataCacheForNeedSaveToFileSystem writeUserLoginInfoToFileSystem];
   [GlobalDataCacheForNeedSaveToFileSystem writeAppConfigInfoToFileSystem];
-  [GlobalDataCacheForNeedSaveToFileSystem writeLocalBookListToFileSystem];
+  //[GlobalDataCacheForNeedSaveToFileSystem writeLocalBookListToFileSystem];
   [GlobalDataCacheForNeedSaveToFileSystem writeLocalBookshelfCategoriesToFileSystem];
 }
 

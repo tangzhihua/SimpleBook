@@ -10,21 +10,13 @@
 
 @interface SkyduckFile ()
 @property (nonatomic, assign) BOOL isFile;
-@property (nonatomic, strong, readwrite) NSMutableArray *listFiles;
+@property (nonatomic, strong, readwrite) NSArray *listFiles;
 @end
 
 @implementation SkyduckFile
 
 - (NSString *)description {
 	return descriptionForDebug(self);
-}
-
--(NSMutableArray *)listFiles{
-  if (_listFiles == nil && self.isDirectory) {
-    _listFiles = [[NSMutableArray alloc] init];
-  }
-  
-  return _listFiles;
 }
 
 -(BOOL)isFile {
@@ -35,53 +27,56 @@
 }
 
 -(void)addFile:(SkyduckFile *)file {
-  do {
-    if (self.isFile) {
-      // 文件不能包含文件
-      break;
-    }
-    
-    if ([self containsSkyduckFile:file]) {
-      // 文件已经存在
-      break;
-    }
-    
-    [self.listFiles addObject:file];
-  } while (NO);
+  if (_isFile) {
+    // 文件不能包含文件
+    return;
+  }
+  
+  [(NSMutableArray *)_listFiles addObject:file];
+}
+
+-(void)insertFile:(SkyduckFile *)anFile atIndex:(NSUInteger)index {
+  if (_isFile) {
+    // 文件不能包含文件
+    return;
+  }
+  
+  [(NSMutableArray *)_listFiles insertObject:anFile atIndex:index];
 }
 
 -(void)removeFile:(SkyduckFile *)file {
-  do {
-    if (self.isFile) {
-      // 文件不能包含文件
-      break;
-    }
-    
-    for (SkyduckFile *tempFile in self.listFiles) {
-      if (tempFile.isFile && file.isFile && [tempFile.value isEqualToString:file.value]) {
-        [self.listFiles removeObject:tempFile];
-      } else if (tempFile.isDirectory && file.isDirectory && [tempFile.value isEqualToString:file.value]) {
-        [self.listFiles removeObject:tempFile];
-      }
-    }
-  } while (NO);
-}
-
-- (BOOL)containsSkyduckFile:(SkyduckFile *)file {
-  for (SkyduckFile *tempFile in self.listFiles) {
-    if (tempFile.isFile && file.isFile && [tempFile.value isEqualToString:file.value]) {
-      return YES;
-    } else if (tempFile.isDirectory && file.isDirectory && [tempFile.value isEqualToString:file.value]) {
-      return YES;
-    }
+  if (_isFile) {
+    // 文件不能包含文件
+    return;
   }
   
-  return NO;
+  [(NSMutableArray *)_listFiles removeObject:file];
+}
+
+-(void)removeFileAtIndex:(NSUInteger)index {
+  if (_isFile) {
+    // 文件不能包含文件
+    return;
+  }
+  
+  [(NSMutableArray *)_listFiles removeObjectAtIndex:index];
+}
+
+- (BOOL)isEqual:(id)object {
+  SkyduckFile *destFile = (SkyduckFile *)object;
+  if (_isFile) {
+    // 是文件时, 比较 value
+    return [_value isEqualToString:destFile.value];
+  } else {
+    // 是文件夹时, 只需要比较是否是同一个对象即可
+    return self == object;
+  }
 }
 
 +(SkyduckFile *)createFile {
   return [self createFileWithValue:nil];
 }
+
 +(SkyduckFile *)createDirectory {
   return [self createDirectoryWithValue:nil files:nil];
 }
@@ -90,15 +85,16 @@
   SkyduckFile *file = [[SkyduckFile alloc] init];
   file.isFile = YES;
   file.value = value;
+  file.listFiles = nil;
   return file;
 }
+
 +(SkyduckFile *)createDirectoryWithValue:(NSString *)value files:(NSArray *)files {
   SkyduckFile *directory = [[SkyduckFile alloc] init];
   directory.isFile = NO;
   directory.value = value;
-  for (SkyduckFile *file in files) {
-    [directory addFile:file];
-  }
+  directory.listFiles = [NSMutableArray array];
+  [(NSMutableArray *)directory.listFiles addObjectsFromArray:files];
   return directory;
 }
 
