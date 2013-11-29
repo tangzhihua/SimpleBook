@@ -12,6 +12,14 @@
 @class SkyduckFile;
 
 #pragma mark -
+#pragma mark - SkyduckGridViewMargeCellAnimationDelegate
+@protocol SkyduckGridViewMargeCellAnimationDelegate <NSObject>
+@required
+- (void)beginMargeCellAnimation;
+- (void)endMargeCellAnimation;
+@end
+
+#pragma mark -
 #pragma mark - SkyduckGridViewCellDelegate
 @protocol SkyduckGridViewCellDelegate <NSObject>
 //
@@ -29,14 +37,15 @@
 
 #pragma mark -
 #pragma mark - SkyduckGridViewCell
-@interface SkyduckGridViewCell : UIView
+@interface SkyduckGridViewCell : UIView <SkyduckGridViewMargeCellAnimationDelegate>
 
 //
 @property (nonatomic, weak) IBOutlet id<SkyduckGridViewCellDelegate> delegate;
 
+// 用于合并cell时使用的背景图片视图
+@property (nonatomic, strong) UIImageView *backgroundImageViewForMargeCell;
 //
 @property (nonatomic, assign) NSInteger index;
-@property (nonatomic, assign) CGRect cellInitFrame;
 
 // 只能使用 bind方法 更换 file 属性.
 @property (nonatomic, strong, readonly) SkyduckFile *file;

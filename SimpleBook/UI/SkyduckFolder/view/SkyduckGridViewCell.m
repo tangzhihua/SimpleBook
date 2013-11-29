@@ -15,6 +15,14 @@
 
 @implementation SkyduckGridViewCell
 
+static UIImage *kBackgroundImageForMargeCell= nil;
++ (void)initialize {
+  // 这是为了子类化当前类后, 父类的initialize方法会被调用2次
+  if (self == [SkyduckGridViewCell class]) {
+    kBackgroundImageForMargeCell = [UIImage imageNamed:@"file_merge_background"];
+  }
+}
+
 - (void)initCell {
    
   //self.backgroundColor = [UIColor orangeColor];
@@ -32,6 +40,13 @@
   UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap)];
   singleTap.numberOfTapsRequired = 1;
   [self addGestureRecognizer:singleTap];
+  
+  
+  // 加载默认的用于合并cell时使用的背景图片视图
+  _backgroundImageViewForMargeCell = [[UIImageView alloc] initWithImage:kBackgroundImageForMargeCell];
+  _backgroundImageViewForMargeCell.hidden = YES;
+  [self addSubview:_backgroundImageViewForMargeCell];
+  [self sendSubviewToBack:self.backgroundImageViewForMargeCell];
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -151,5 +166,14 @@
   NSArray *nibObjects = [[self nib] instantiateWithOwner:nil options:nil];
   UIView *view = [nibObjects objectAtIndex:0];
   return [view frame];
+}
+
+#pragma mark -
+#pragma mark - SkyduckGridViewMargeCellAnimationDelegate
+- (void)beginMargeCellAnimation {
+  
+}
+- (void)endMargeCellAnimation {
+  
 }
 @end

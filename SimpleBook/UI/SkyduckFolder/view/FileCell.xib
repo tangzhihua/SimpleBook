@@ -7,11 +7,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view clipsSubviews="YES" contentMode="scaleToFill" id="z5P-sz-qQt" customClass="FileCell">
+        <view contentMode="scaleToFill" id="z5P-sz-qQt" customClass="FileCell">
             <rect key="frame" x="0.0" y="0.0" width="128" height="190"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="bookcover_default.png" id="JP1-qR-eG5" userLabel="outlet->Image View - 书籍封面图片">
+                <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="bookcover_default~ipad.png" id="JP1-qR-eG5" userLabel="outlet->Image View - 书籍封面图片">
                     <rect key="frame" x="0.0" y="0.0" width="128" height="168"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                 </imageView>
@@ -30,6 +30,6 @@
         </view>
     </objects>
     <resources>
-        <image name="bookcover_default.png" width="141" height="192"/>
+        <image name="bookcover_default~ipad.png" width="141" height="192"/>
     </resources>
 </document>

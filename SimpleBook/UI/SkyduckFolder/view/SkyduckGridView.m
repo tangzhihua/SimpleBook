@@ -7,6 +7,7 @@
 
 #import "SkyduckGridView.h"
 #import "SkyduckFile.h"
+#import "SkyduckGridViewCell.h"
 
 #import "RNTimer.h"
 
@@ -38,6 +39,16 @@
   // Scroll While Drag
   CADisplayLink *_displayLink;
   double _lastDragScrollTime;
+}
+
+static UIImage *kButtonTrashboxImage= nil;
+static UIImage *kButtonTrashboxActiveImage= nil;
++ (void)initialize {
+  // 这是为了子类化当前类后, 父类的initialize方法会被调用2次
+  if (self == [SkyduckGridView class]) {
+    kButtonTrashboxImage = [UIImage imageNamed:@"button_trashbox"];
+    kButtonTrashboxActiveImage = [UIImage imageNamed:@"button_trashbox_active"];
+  }
 }
 
 // 两个单元格碰撞时, 发生 Move 效果时的最小触发间距
@@ -91,6 +102,69 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   
 }
 
+// 加载全部的 cell
+- (void)reloadAllCells {
+  
+  // 复位所有的状态变量
+  _dragCell = nil;
+  _mergeCell = nil;
+  _editable = NO;
+  
+  // 清理掉全部 cell view
+  [_cellList removeAllObjects];
+  // 清理掉 UIScrollView 中包含的 cell view
+  for(UIView *v in _scrollView.subviews) {
+    [v removeFromSuperview];
+  }
+  
+  // cell 总数
+  const NSInteger numberOfCells = [_dataSource numberOfCellsInGridView:self];
+  // 一行显示的cell的最大数量
+  const NSInteger numberOfCellsInRow = [_dataSource numberOfCellsInRowOfGridView:self];
+  // 总行数
+  const NSInteger numberOfRows = ceilf((float)numberOfCells / (float)numberOfCellsInRow);// ceilf 向上取整
+  // cell size
+  const CGSize sizeOfCell = [_dataSource sizeOfCellInGridView:self];
+  // cell 垂直方向的空白间距
+  const CGFloat marginOfVerticalCell = [_dataSource marginOfVerticalCellInGridView:self];
+  // 网格控件边界
+  const CGRect gridBounds = _scrollView.bounds;
+  // 单元格边界(这不是cell的真实边界, 而是用于计算每个cell 坐标)
+  const CGRect cellBounds = CGRectMake(0, 0, gridBounds.size.width / (CGFloat) numberOfCellsInRow, sizeOfCell.height + marginOfVerticalCell);
+  
+  // UIScrollView 的 contentSize
+  CGSize contentSizeOfScrollView = CGSizeMake(gridBounds.size.width, cellBounds.size.height * numberOfRows);
+  [_scrollView setContentSize:contentSizeOfScrollView];
+  
+  // 定位所有的cell
+  for(NSInteger i=0; i<numberOfCells; i++) {
+    
+    SkyduckGridViewCell *cell = [_dataSource gridView:self cellAtIndex:i];
+    cell.delegate = self;
+    cell.index = i;
+    
+    // 定位 cell
+    const CGPoint origin = CGPointMake(((i % numberOfCellsInRow) * cellBounds.size.width), (i / numberOfCellsInRow * cellBounds.size.height));
+    CGPoint center = CGPointMake((NSInteger)(origin.x + cellBounds.size.width / 2), (NSInteger)(origin.y + cellBounds.size.height/2));
+    // cell 的 frame 的坐标, 要根据 sizeOfCell 来计算, 好实现cell 的size不同时, cell 的x坐标相同的效果
+    cell.frame = CGRectMake((NSInteger)(center.x - sizeOfCell.width/2), (NSInteger)(center.y - sizeOfCell.height/2), (NSInteger)cell.frame.size.width, (NSInteger)cell.frame.size.height);
+    
+    //
+    [_scrollView addSubview:cell];
+    //
+    [_cellList addObject:cell];
+  }
+  
+  // 增加删除按钮
+  self.deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+  _deleteButton.hidden = YES;
+  [_deleteButton setFrame:CGRectMake(-kButtonTrashboxImage.size.width, self.bounds.size.height + kButtonTrashboxImage.size.height, kButtonTrashboxImage.size.width, kButtonTrashboxImage.size.height)];
+  [_deleteButton setImage:kButtonTrashboxImage forState:UIControlStateNormal];
+  [_deleteButton setImage:kButtonTrashboxActiveImage forState:UIControlStateSelected];
+  [_deleteButton setImage:kButtonTrashboxActiveImage forState:UIControlStateHighlighted];
+  [self addSubview:_deleteButton];
+}
+
 
 // 将一个单元格移动到另一个单元格的位置(会重新排列网格)
 // 将 sourceIndex 对应的单元格 移动到 proposedDestinationIndex 对应的位置, proposedDestinationIndex 之前的所有单元格 都向前推进, 填补 sourceIndex 空出的位置.
@@ -142,7 +216,8 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
     CGPoint center = CGPointMake((NSInteger)(origin.x + cellBounds.size.width / 2), (NSInteger)(origin.y + cellBounds.size.height/2));
     
     [UIView animateWithDuration:0.5 animations:^{
-      cell.frame = CGRectMake((NSInteger)(center.x - cell.frame.size.width/2), (NSInteger)(center.y - cell.frame.size.height/2), (NSInteger)cell.frame.size.width, (NSInteger)cell.frame.size.height);
+      cell.transform = CGAffineTransformIdentity;
+      cell.frame = CGRectMake((NSInteger)(center.x - sizeOfCell.width/2), (NSInteger)(center.y - sizeOfCell.height/2), (NSInteger)cell.frame.size.width, (NSInteger)cell.frame.size.height);
     }];
     
   }
@@ -155,13 +230,11 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   //
   [UIView animateWithDuration:0.1 animations:^{
     _dragCell.transform = CGAffineTransformMakeScale(1.2, 1.2);
+    _dragCell.alpha = 1.0;
   }];
   
-  //
-  [UIView animateWithDuration:0.1 animations:^{
-    _mergeCell.transform = CGAffineTransformIdentity;
-    _mergeCell = nil;
-  }];
+  // 恢复处于合并状态的cell的UI
+  [_mergeCell endMargeCellAnimation], _mergeCell = nil;
   
   return YES;
 }
@@ -180,18 +253,15 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   }
   NSLog(@"合并两个cell :  sourceIndex=%d, proposedDestinationIndex=%d", sourceIndex, proposedDestinationIndex);
   
-  _mergeCell.transform = CGAffineTransformIdentity;
   _mergeCell = proposedDestinationCell;
-  //
+  // 拖动中的 cell
   [UIView animateWithDuration:0.1 animations:^{
     sourceCell.transform = CGAffineTransformMakeScale(1.0, 1.0);
     sourceCell.alpha = 0.5;
   }];
   
-  //
-  [UIView animateWithDuration:0.1 animations:^{
-    proposedDestinationCell.transform = CGAffineTransformMakeScale(1.2, 1.2);
-  }];
+  // 处于合并状态的 cell, 在拖动中的 cell 底下.
+  [_mergeCell beginMargeCellAnimation];
   
   return YES;
 }
@@ -212,24 +282,21 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   // 单元格边界(这不是cell的真实边界, 而是用于计算每个cell 坐标)
   const CGRect cellBounds = CGRectMake(0, 0, gridBounds.size.width / (CGFloat) numberOfCellsInRow, sizeOfCell.height + marginOfVerticalCell);
   
-  // 定位 cell
+  // 定位所有的cell
   const CGPoint origin = CGPointMake(((_dragCell.index % numberOfCellsInRow) * cellBounds.size.width), (_dragCell.index / numberOfCellsInRow * cellBounds.size.height));
   CGPoint center = CGPointMake((NSInteger)(origin.x + cellBounds.size.width / 2), (NSInteger)(origin.y + cellBounds.size.height/2));
   
   [UIView animateWithDuration:0.1
                    animations:^{
-                     
-                     _dragCell.frame = CGRectMake((NSInteger)(center.x - _dragCell.frame.size.width/2), (NSInteger)(center.y - _dragCell.frame.size.height/2), (NSInteger)_dragCell.frame.size.width, (NSInteger)_dragCell.frame.size.height);
-                     
-                     //
+                     // 一定要先缩放回原始大小, 然后再改变 frame 的大小.
                      _dragCell.transform = CGAffineTransformIdentity;
                      _dragCell.alpha = 1.0;
+                     //
+                     _dragCell.frame = CGRectMake((NSInteger)(center.x - sizeOfCell.width/2), (NSInteger)(center.y - sizeOfCell.height/2), (NSInteger)_dragCell.frame.size.width, (NSInteger)_dragCell.frame.size.height);
                      _dragCell = nil;
                      
                      //
-                     _mergeCell.transform = CGAffineTransformIdentity;
-                     _dragCell.alpha = 1.0;
-                     _mergeCell = nil;
+                     [_mergeCell endMargeCellAnimation], _mergeCell = nil;
                    } completion:^(BOOL finished) {
                      
                    }];
@@ -298,10 +365,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
               }];
               
               //
-              [UIView animateWithDuration:0.1 animations:^{
-                _mergeCell.transform = CGAffineTransformIdentity;
-                _mergeCell = nil;
-              }];
+              [_mergeCell endMargeCellAnimation], _mergeCell = nil;
               
               break;
             }
@@ -313,9 +377,11 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
 }
 
 - (void)deleteCellIfNecessary {
+  // 因为 _deleteButton 是在 SkyduckGridView 中, 而 _dragCell 在 _scrollView 中, 所以要比较两个view的距离, 就要进行坐标转换
+  CGPoint dragCellCenterInGridView = [_scrollView convertPoint:_dragCell.center toView:self];
   // 计算两个矩形的中心点距离(这是判断两个矩形是否相交的最简单方法)
-  CGFloat xDist = (_deleteButton.center.x - _dragCell.center.x);
-  CGFloat yDist = (_deleteButton.center.y - _dragCell.center.y);
+  CGFloat xDist = (_deleteButton.center.x - dragCellCenterInGridView.x);
+  CGFloat yDist = (_deleteButton.center.y - dragCellCenterInGridView.y);
   CGFloat distance = sqrt((xDist * xDist) + (yDist * yDist));
   
   if(distance < kCellCollisionMergeMinDistance) {
@@ -331,10 +397,19 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
     
   } else {
     // 取消删除状态
-    
-    [_deleteButton setSelected:NO];
-    //_dragCell.alpha = 1.0;
-    //_dragCell.transform = CGAffineTransformMakeScale(1.2, 1.2);
+    if (_deleteButton.isSelected) {
+      [_deleteButton setSelected:NO];
+      
+      [UIView animateWithDuration:0.1 animations:^{
+        if (_mergeCell == nil) {
+          _dragCell.transform = CGAffineTransformMakeScale(1.2, 1.2);
+          _dragCell.alpha = 1.0;
+        } else {
+          _dragCell.transform = CGAffineTransformIdentity;
+          _dragCell.alpha = 0.5;
+        }
+      }];
+    }
   }
 }
 
@@ -349,9 +424,9 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   NSLog(@"SkyduckGridView bound:%@", NSStringFromCGRect(self.bounds));
   
   // 整个网格控件中, 填充着一个UIScrollView
-  _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height - 30)];
+  _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(20, 0, self.bounds.size.width - 40, self.bounds.size.height)];
   _scrollView.delegate = self;
-  _scrollView.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
+  _scrollView.backgroundColor = [UIColor clearColor];
   _scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   // 水平方向遇到边框是否反弹
   _scrollView.alwaysBounceHorizontal = NO;
@@ -367,6 +442,8 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   _scrollView.delaysContentTouches = NO;
   // 控件滚动到顶部
   //_scrollView.scrollsToTop = YES;
+  //
+  _scrollView.clipsToBounds = NO;
   //
   _scrollView.multipleTouchEnabled = NO;
   [self addSubview:_scrollView];
@@ -385,123 +462,13 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   [self setNeedsLayout];
 }
 
-// 加载全部的 cell
-- (void)reloadAllCells {
-  
-  // 复位所有的状态变量
-  _dragCell = nil;
-  _mergeCell = nil;
-  _editable = NO;
-  
-  // 清理掉全部 cell view
-  [_cellList removeAllObjects];
-  // 清理掉 UIScrollView 中包含的 cell view
-  for(UIView *v in _scrollView.subviews) {
-    [v removeFromSuperview];
-  }
-  
-  // cell 总数
-  const NSInteger numberOfCells = [_dataSource numberOfCellsInGridView:self];
-  // 一行显示的cell的最大数量
-  const NSInteger numberOfCellsInRow = [_dataSource numberOfCellsInRowOfGridView:self];
-  // 总行数
-  const NSInteger numberOfRows = ceilf((float)numberOfCells / (float)numberOfCellsInRow);// ceilf 向上取整
-  // cell size
-  const CGSize sizeOfCell = [_dataSource sizeOfCellInGridView:self];
-  // cell 垂直方向的空白间距
-  const CGFloat marginOfVerticalCell = [_dataSource marginOfVerticalCellInGridView:self];
-  // 网格控件边界
-  const CGRect gridBounds = _scrollView.bounds;
-  // 单元格边界(这不是cell的真实边界, 而是用于计算每个cell 坐标)
-  const CGRect cellBounds = CGRectMake(0, 0, gridBounds.size.width / (CGFloat) numberOfCellsInRow, sizeOfCell.height + marginOfVerticalCell);
-  
-  // UIScrollView 的 contentSize
-  CGSize contentSizeOfScrollView = CGSizeMake(gridBounds.size.width, cellBounds.size.height * numberOfRows);
-  [_scrollView setContentSize:contentSizeOfScrollView];
-  
-  // 定位所有的cell
-  for(NSInteger i=0; i<numberOfCells; i++) {
-    
-    SkyduckGridViewCell *cell = [_dataSource gridView:self cellAtIndex:i];
-    cell.delegate = self;
-    cell.index = i;
-    
-    // 定位 cell
-    const CGPoint origin = CGPointMake(((i % numberOfCellsInRow) * cellBounds.size.width), (i / numberOfCellsInRow * cellBounds.size.height));
-    CGPoint center = CGPointMake((NSInteger)(origin.x + cellBounds.size.width / 2), (NSInteger)(origin.y + cellBounds.size.height/2));
-    cell.frame = CGRectMake((NSInteger)(center.x - cell.frame.size.width/2), (NSInteger)(center.y - cell.frame.size.height/2), (NSInteger)cell.frame.size.width, (NSInteger)cell.frame.size.height);
-    
-    //
-    [_scrollView addSubview:cell];
-    //
-    [_cellList addObject:cell];
-  }
-  
-  // 增加删除按钮
-  self.deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-  _deleteButton.hidden = YES;
-  [_deleteButton setFrame:CGRectMake(20, _scrollView.bounds.size.height + 91, 70, 91)];
-  [_deleteButton setImage:[UIImage imageNamed:@"button_trashbox"] forState:UIControlStateNormal];
-  [_deleteButton setImage:[UIImage imageNamed:@"button_trashbox_active"] forState:UIControlStateSelected];
-  [_deleteButton setImage:[UIImage imageNamed:@"button_trashbox_active"] forState:UIControlStateHighlighted];
-  [_scrollView addSubview:_deleteButton];
-}
 
 // ----------------------------------------------------------------------------------
 #pragma - Cell/Page Control
 
 - (void)deleteCell:(NSInteger)index {
   
-  //  [_cellList[index] removeFromSuperview];
-  //  [_cellList removeObjectAtIndex:index];
-  //
-  //  NSInteger numCols = _numberOfColumns;
-  //  NSInteger numRows = _numberOfRows;
-  //  NSInteger cellsPerPage = numCols * numRows;
-  //
-  //  if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
-  //    numCols = _numberOfRows;
-  //    numRows = _numberOfColumns;
-  //  }
-  //
-  //  CGRect gridBounds = _scrollView.bounds;
-  //  CGRect cellBounds = CGRectMake(0, 0, gridBounds.size.width / (float) numCols, gridBounds.size.height / (float) numRows);
-  //  CGSize contentSizeOfScrollView = CGSizeMake(self.numberOfPages * gridBounds.size.width, gridBounds.size.height);
-  //
-  //  [UIView animateWithDuration:0.4
-  //                   animations:^(void) {
-  //                     [_scrollView setContentSize:contentSizeOfScrollView];
-  //                   } ];
-  //
-  //  for(NSInteger i=index; i<_cellList.count; i++) {
-  //    SkyduckGridViewCell *cell = [_cellList objectAtIndex:i];
-  //    cell.index = i;
-  //
-  //    NSInteger page = (NSInteger)((float)i / cellsPerPage);
-  //    NSInteger row = (NSInteger)((float)i / numCols) - (page * numRows);
-  //
-  //    CGPoint origin = {0};
-  //    CGRect contractFrame = {0};
-  //    if(_colPosX.count == numCols && _rowPosY.count == numRows) {
-  //      NSNumber *rowPos = [_rowPosY objectAtIndex:row];
-  //      NSNumber *col= [_colPosX objectAtIndex:(i % numCols)];
-  //      origin = CGPointMake((page * gridBounds.size.width) + ( [col intValue]), [rowPos intValue]);
-  //      contractFrame = CGRectMake((NSInteger)origin.x, (NSInteger)origin.y, (NSInteger)cell.cellInitFrame.size.width, (NSInteger)cell.cellInitFrame.size.height);
-  //      [UIView beginAnimations:@"Move" context:nil];
-  //      [UIView setAnimationDuration:0.2];
-  //      [UIView setAnimationCurve: UIViewAnimationCurveEaseInOut];
-  //      cell.frame = contractFrame;
-  //      [UIView commitAnimations];
-  //    } else {
-  //      origin = CGPointMake((page * gridBounds.size.width) + ((i % numCols) * cellBounds.size.width), (row * cellBounds.size.height));
-  //      contractFrame = CGRectMake((NSInteger)origin.x, (NSInteger)origin.y, (NSInteger)cellBounds.size.width, (NSInteger)cellBounds.size.height);
-  //      [UIView beginAnimations:@"Move" context:nil];
-  //      [UIView setAnimationDuration:0.2];
-  //      [UIView setAnimationCurve: UIViewAnimationCurveEaseInOut];
-  //      cell.frame = CGRectInset(contractFrame, _cellMargin, _cellMargin);
-  //      [UIView commitAnimations];
-  //    }
-  //  }
+  
 }
 
 
@@ -591,7 +558,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
     _lastDragScrollTime = CACurrentMediaTime();
     
     // 更新 删除按钮的坐标
-    _deleteButton.frame = CGRectMake(20, _scrollView.contentOffset.y + _scrollView.bounds.size.height - _deleteButton.bounds.size.height, _deleteButton.bounds.size.width, _deleteButton.bounds.size.height);
+    //_deleteButton.frame = CGRectMake(0, _scrollView.contentOffset.y + _scrollView.bounds.size.height - _deleteButton.bounds.size.height, _deleteButton.bounds.size.width, _deleteButton.bounds.size.height);
   }
 }
 
@@ -666,16 +633,16 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
     }];
   }
   
-//  UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, self.bounds.size.height)];
-//  view.backgroundColor = [UIColor blackColor];
-//  view.userInteractionEnabled = NO;
-//  [UIView animateWithDuration:0.5 animations:^{
-//    view.frame = self.bounds;
-//    view.alpha = 0.8;
-//  } completion:^(BOOL finished) {
-//  
-//  }];
-//  [self addSubview:view];
+  //  UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, self.bounds.size.height)];
+  //  view.backgroundColor = [UIColor blackColor];
+  //  view.userInteractionEnabled = NO;
+  //  [UIView animateWithDuration:0.5 animations:^{
+  //    view.frame = self.bounds;
+  //    view.alpha = 0.8;
+  //  } completion:^(BOOL finished) {
+  //
+  //  }];
+  //  [self addSubview:view];
 }
 
 // called when a gesture recognizer attempts to transition out of UIGestureRecognizerStatePossible.
@@ -698,13 +665,13 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
       [_scrollView bringSubviewToFront:_deleteButton];
       //
       _deleteButton.hidden = NO;
-      _deleteButton.frame = CGRectMake(20, _scrollView.contentOffset.y + _scrollView.bounds.size.height + _deleteButton.bounds.size.height, _deleteButton.bounds.size.width, _deleteButton.bounds.size.height);
+      _deleteButton.frame = CGRectMake(-_deleteButton.bounds.size.width, self.bounds.size.height + _deleteButton.bounds.size.height, _deleteButton.bounds.size.width, _deleteButton.bounds.size.height);
       //
       CGPoint touchPoint = [recognizer locationInView:_scrollView];
-      [UIView animateWithDuration:0.1 animations:^{
+      [UIView animateWithDuration:0.3 animations:^{
         _dragCell.center = touchPoint;
         _dragCell.transform = CGAffineTransformMakeScale(1.2, 1.2);
-        _deleteButton.frame = CGRectMake(20, _scrollView.contentOffset.y + _scrollView.bounds.size.height - _deleteButton.bounds.size.height, _deleteButton.bounds.size.width, _deleteButton.bounds.size.height);
+        _deleteButton.frame = CGRectMake(0, self.bounds.size.height - _deleteButton.bounds.size.height, _deleteButton.bounds.size.width, _deleteButton.bounds.size.height);
       }];
       
     }break;
@@ -730,8 +697,8 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
       [self stopScrollTimer];
       
       // 隐藏删除按钮
-      [UIView animateWithDuration:0.1 animations:^{
-        _deleteButton.frame = CGRectMake(20, _scrollView.contentOffset.y + _scrollView.bounds.size.height + _deleteButton.bounds.size.height, _deleteButton.bounds.size.width, _deleteButton.bounds.size.height);
+      [UIView animateWithDuration:0.3 animations:^{
+        _deleteButton.frame = CGRectMake(-_deleteButton.bounds.size.width, _scrollView.contentOffset.y + _scrollView.bounds.size.height + _deleteButton.bounds.size.height, _deleteButton.bounds.size.width, _deleteButton.bounds.size.height);
       } completion:^(BOOL finished) {
         _deleteButton.hidden = YES;
       }];
@@ -779,8 +746,6 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
                    animations:^{
                      // 设置缩放，及改变a、d的值
                      cell.transform = CGAffineTransformMakeScale(1.2, 1.2);
-                     
-                     
                    }];
 }
 
