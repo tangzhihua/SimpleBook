@@ -35,6 +35,8 @@
 		752A466518179DD00096925B /* UIColor+ColorSchemes.m in Sources */ = {isa = PBXBuildFile; fileRef = 752A465A18179DD00096925B /* UIColor+ColorSchemes.m */; };
 		752A466618179DD00096925B /* UIImage+ImageCompression.m in Sources */ = {isa = PBXBuildFile; fileRef = 752A465C18179DD00096925B /* UIImage+ImageCompression.m */; };
 		752A466918179EA00096925B /* UIImageView+MKNetworkKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 752A466818179EA00096925B /* UIImageView+MKNetworkKitAdditions.m */; };
+		7531D533184739EC00B865B8 /* folder_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 7531D532184739EC00B865B8 /* folder_background.png */; };
+		7531D53518473BFC00B865B8 /* book_number_label_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 7531D53418473BFC00B865B8 /* book_number_label_background.png */; };
 		753BF8FD180E2145005DECCA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 753BF8FC180E2145005DECCA /* Foundation.framework */; };
 		753BF8FF180E2145005DECCA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 753BF8FE180E2145005DECCA /* CoreGraphics.framework */; };
 		753BF901180E2145005DECCA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 753BF900180E2145005DECCA /* UIKit.framework */; };
@@ -404,6 +406,8 @@
 		752A465C18179DD00096925B /* UIImage+ImageCompression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageCompression.m"; sourceTree = "<group>"; };
 		752A466718179EA00096925B /* UIImageView+MKNetworkKitAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+MKNetworkKitAdditions.h"; sourceTree = "<group>"; };
 		752A466818179EA00096925B /* UIImageView+MKNetworkKitAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+MKNetworkKitAdditions.m"; sourceTree = "<group>"; };
+		7531D532184739EC00B865B8 /* folder_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = folder_background.png; sourceTree = "<group>"; };
+		7531D53418473BFC00B865B8 /* book_number_label_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = book_number_label_background.png; sourceTree = "<group>"; };
 		753BF8F9180E2145005DECCA /* SimpleBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		753BF8FC180E2145005DECCA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		753BF8FE180E2145005DECCA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1087,6 +1091,8 @@
 		754082A8183D96A900A9A009 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				7531D53418473BFC00B865B8 /* book_number_label_background.png */,
+				7531D532184739EC00B865B8 /* folder_background.png */,
 				754082D7183D99DD00A9A009 /* bookcover_default.png */,
 				754082FB183D9CB100A9A009 /* bookcover_default@2x.png */,
 				754082D5183D99DD00A9A009 /* alert_icon_delete.png */,
@@ -1876,6 +1882,7 @@
 			files = (
 				753BF913180E2145005DECCA /* Main_iPad.storyboard in Resources */,
 				75E49BE2180E30CA0050F1B9 /* icon_512x512.png in Resources */,
+				7531D53518473BFC00B865B8 /* book_number_label_background.png in Resources */,
 				75E49C85180E30CA0050F1B9 /* ht_iphone@2x.png in Resources */,
 				75E49C0A180E30CA0050F1B9 /* k@2x.png in Resources */,
 				75E49BE0180E30CA0050F1B9 /* icon_40x40.png in Resources */,
@@ -1973,6 +1980,7 @@
 				75E49C5B180E30CA0050F1B9 /* d_wdsj_iphone.png in Resources */,
 				75E49C4A180E30CA0050F1B9 /* sx_touch.png in Resources */,
 				75E49C65180E30CA0050F1B9 /* k_iphone.png in Resources */,
+				7531D533184739EC00B865B8 /* folder_background.png in Resources */,
 				75E49C8F180E30CA0050F1B9 /* ss_touch_iphone@2x.png in Resources */,
 				75E49C82180E30CA0050F1B9 /* fl_ty_iphone@2x.png in Resources */,
 				75E49C7A180E30CA0050F1B9 /* d_jrsy_iphone@2x.png in Resources */,

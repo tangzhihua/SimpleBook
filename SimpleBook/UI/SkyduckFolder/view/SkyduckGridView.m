@@ -155,13 +155,11 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   //
   [UIView animateWithDuration:0.1 animations:^{
     _dragCell.transform = CGAffineTransformMakeScale(1.2, 1.2);
-    _dragCell.alpha = 0.8;
   }];
   
   //
   [UIView animateWithDuration:0.1 animations:^{
     _mergeCell.transform = CGAffineTransformIdentity;
-    _mergeCell.alpha = 1.0;
     _mergeCell = nil;
   }];
   
@@ -183,18 +181,16 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   NSLog(@"合并两个cell :  sourceIndex=%d, proposedDestinationIndex=%d", sourceIndex, proposedDestinationIndex);
   
   _mergeCell.transform = CGAffineTransformIdentity;
-  _mergeCell.alpha = 1.0;
   _mergeCell = proposedDestinationCell;
   //
   [UIView animateWithDuration:0.1 animations:^{
     sourceCell.transform = CGAffineTransformMakeScale(1.0, 1.0);
-    sourceCell.alpha = 0.8;
+    sourceCell.alpha = 0.5;
   }];
   
   //
   [UIView animateWithDuration:0.1 animations:^{
     proposedDestinationCell.transform = CGAffineTransformMakeScale(1.2, 1.2);
-    proposedDestinationCell.alpha = 0.8;
   }];
   
   return YES;
@@ -232,7 +228,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
                      
                      //
                      _mergeCell.transform = CGAffineTransformIdentity;
-                     _mergeCell.alpha = 1.0;
+                     _dragCell.alpha = 1.0;
                      _mergeCell = nil;
                    } completion:^(BOOL finished) {
                      
@@ -298,13 +294,12 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
               //
               [UIView animateWithDuration:0.1 animations:^{
                 _dragCell.transform = CGAffineTransformMakeScale(1.2, 1.2);
-                _dragCell.alpha = 0.8;
+                _dragCell.alpha = 1.0;
               }];
               
               //
               [UIView animateWithDuration:0.1 animations:^{
                 _mergeCell.transform = CGAffineTransformIdentity;
-                _mergeCell.alpha = 1.0;
                 _mergeCell = nil;
               }];
               
@@ -324,11 +319,22 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   CGFloat distance = sqrt((xDist * xDist) + (yDist * yDist));
   
   if(distance < kCellCollisionMergeMinDistance) {
-    [_deleteButton setSelected:YES];
-    _dragCell.alpha = 1.0;
+    // 引发删除状态
+    if (!_deleteButton.isSelected) {
+      [_deleteButton setSelected:YES];
+      
+      [UIView animateWithDuration:0.1 animations:^{
+        _dragCell.alpha = 0.8;
+        _dragCell.transform = CGAffineTransformIdentity;
+      }];
+    }
+    
   } else {
+    // 取消删除状态
+    
     [_deleteButton setSelected:NO];
-    _dragCell.alpha = 0.8;
+    //_dragCell.alpha = 1.0;
+    //_dragCell.transform = CGAffineTransformMakeScale(1.2, 1.2);
   }
 }
 
@@ -345,7 +351,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   // 整个网格控件中, 填充着一个UIScrollView
   _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height - 30)];
   _scrollView.delegate = self;
-  _scrollView.backgroundColor = [UIColor clearColor];
+  _scrollView.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
   _scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   // 水平方向遇到边框是否反弹
   _scrollView.alwaysBounceHorizontal = NO;
@@ -613,14 +619,11 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   
   // 记录新的选中cell, 这个cell就是要发生拖动效果的cell
   _dragCell = cell;
-  // 改变被点中的 cell 的UI效果, 好体现被点中的效果
-  _dragCell.alpha = 0.8;
   
 }
 
 - (void)gridViewCell:(SkyduckGridViewCell *)cell touchesMoved:(UITouch *)touch {
   // 一旦发生移动时, 就取消了点中cell时的效果
-  cell.alpha = 1.0;
   _dragCell = nil;
 }
 
@@ -776,7 +779,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
                    animations:^{
                      // 设置缩放，及改变a、d的值
                      cell.transform = CGAffineTransformMakeScale(1.2, 1.2);
-                     //cell.alpha = 0.8;
+                     
                      
                    }];
 }

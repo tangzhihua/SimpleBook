@@ -30,7 +30,7 @@
   [super bind:file];
   
   self.nameLabel.text = file.value;
-  self.fileNumberLabel.text = [NSString stringWithFormat:@"共有 %d 本书", file.listFiles.count];
+  self.fileNumberLabel.text = [NSString stringWithFormat:@"%d", file.listFiles.count];
 }
 
 @end

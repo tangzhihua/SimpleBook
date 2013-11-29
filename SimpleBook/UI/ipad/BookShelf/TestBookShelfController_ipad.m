@@ -184,7 +184,7 @@
 }
 // cell size
 - (CGSize)sizeOfCellInGridView:(SkyduckGridView *)gridview {
-  return CGSizeMake(170, 237);
+  return CGSizeMake(142, 190);
 }
 // cell 之间上下空白处高度
 - (CGFloat)marginOfVerticalCellInGridView:(SkyduckGridView *)gridview {
