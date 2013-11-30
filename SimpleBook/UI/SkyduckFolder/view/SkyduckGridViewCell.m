@@ -44,7 +44,8 @@ static UIImage *kBackgroundImageForMargeCell= nil;
   
   // 加载默认的用于合并cell时使用的背景图片视图
   _backgroundImageViewForMargeCell = [[UIImageView alloc] initWithImage:kBackgroundImageForMargeCell];
-  _backgroundImageViewForMargeCell.hidden = YES;
+  _backgroundImageViewForMargeCell.center = self.center;
+  _backgroundImageViewForMargeCell.transform = CGAffineTransformMakeScale(0.5, 0.5);
   [self addSubview:_backgroundImageViewForMargeCell];
   [self sendSubviewToBack:self.backgroundImageViewForMargeCell];
 }

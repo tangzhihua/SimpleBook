@@ -52,8 +52,6 @@
 #pragma mark -
 #pragma mark - SkyduckGridViewMargeCellAnimationDelegate
 - (void)beginMargeCellAnimation {
-  super.backgroundImageViewForMargeCell.hidden = NO;
-  
   super.backgroundImageViewForMargeCell.center = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
   super.backgroundImageViewForMargeCell.transform = CGAffineTransformMakeScale(0.5, 0.5);
   [UIView animateWithDuration:0.3 animations:^{
@@ -67,7 +65,7 @@
     super.backgroundImageViewForMargeCell.transform = CGAffineTransformMakeScale(0.5, 0.5);
     _bookCoverImageView.transform = CGAffineTransformIdentity;
   } completion:^(BOOL finished) {
-    super.backgroundImageViewForMargeCell.hidden = YES;
+
   }];
 }
 @end

@@ -318,7 +318,8 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
       CGFloat yDist = (tempCell.center.y - _dragCell.center.y);
       CGFloat distance = sqrt((xDist * xDist) + (yDist * yDist));
       
-      // 如果没有激活 合并功能, 就只做两个cell的碰撞移动操作.
+      // 如果没有激活 "合并功能", 就只做两个cell的碰撞移动操作.
+      // 可以通过设置 self.mergeEnabled 属性来控制 网格控件中的cell是否具有合并功能.
       if (!_mergeEnabled || _dragCell.file.isDirectory) {
         
         if(distance < kCellCollisionMoveMinDistance) {
@@ -332,10 +333,8 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
         
         if(distance < kCellCollisionMergeMinDistance) {// 进入了可以合并的范围
           // 要进行合并
-          if ([self targetIndexForMergeFromPointAtIndex:_dragCell.index toProposedIndex:tempCell.index]) {
-            break;
-          }
-          
+          [self targetIndexForMergeFromPointAtIndex:_dragCell.index toProposedIndex:tempCell.index];
+          break;
         } else if (distance < kCellCollisionMoveMinDistance && distance > kCellCollisionMergeMinDistance + 10) {// 进入了可以移动的范围
           
           if (kMoveDirectionEnum_Left == moveDirectionEnum) {
@@ -357,7 +356,11 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
           }
         } else {// 此时都是可以取消, 合并状态的范围
           if (_mergeCell != nil) {
-            if (distance > kCellCollisionMergeMinDistance && distance < kCellCollisionMoveMinDistance) {
+            CGFloat xDist = (_mergeCell.center.x - _dragCell.center.x);
+            CGFloat yDist = (_mergeCell.center.y - _dragCell.center.y);
+            CGFloat distance = sqrt((xDist * xDist) + (yDist * yDist));
+            if (distance > kCellCollisionMergeMinDistance) {
+              
               //
               [UIView animateWithDuration:0.1 animations:^{
                 _dragCell.transform = CGAffineTransformMakeScale(1.2, 1.2);
@@ -556,9 +559,6 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
     
     // Refresh time only when it really scrolled
     _lastDragScrollTime = CACurrentMediaTime();
-    
-    // 更新 删除按钮的坐标
-    //_deleteButton.frame = CGRectMake(0, _scrollView.contentOffset.y + _scrollView.bounds.size.height - _deleteButton.bounds.size.height, _deleteButton.bounds.size.width, _deleteButton.bounds.size.height);
   }
 }
 
