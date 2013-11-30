@@ -71,6 +71,8 @@
 		754082C2183D96A900A9A009 /* FolderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 754082B6183D96A900A9A009 /* FolderCell.xib */; };
 		754082C3183D96A900A9A009 /* SkyduckGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 754082B8183D96A900A9A009 /* SkyduckGridView.m */; };
 		754082C4183D96A900A9A009 /* SkyduckGridViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 754082BA183D96A900A9A009 /* SkyduckGridViewCell.m */; };
+		755A98CF1849C666007D4018 /* loading_h8.gif in Resources */ = {isa = PBXBuildFile; fileRef = 755A98CE1849C666007D4018 /* loading_h8.gif */; };
+		755A98D71849DF85007D4018 /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 755A98D61849DF85007D4018 /* UIImage+animatedGIF.m */; };
 		7586E433180E9D5C007E6BAA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7586E432180E9D5C007E6BAA /* Localizable.strings */; };
 		759AB36818166006008D602D /* CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 759AB36718166006008D602D /* CoreData.m */; };
 		75B1B0B718459AFD007E46AD /* JWFolders.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 75B1B0B018459AFD007E46AD /* JWFolders.bundle */; };
@@ -444,6 +446,9 @@
 		754082B8183D96A900A9A009 /* SkyduckGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkyduckGridView.m; sourceTree = "<group>"; };
 		754082B9183D96A900A9A009 /* SkyduckGridViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkyduckGridViewCell.h; sourceTree = "<group>"; };
 		754082BA183D96A900A9A009 /* SkyduckGridViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkyduckGridViewCell.m; sourceTree = "<group>"; };
+		755A98CE1849C666007D4018 /* loading_h8.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading_h8.gif; sourceTree = "<group>"; };
+		755A98D51849DF85007D4018 /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
+		755A98D61849DF85007D4018 /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
 		7586E432180E9D5C007E6BAA /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		759AB36618166006008D602D /* CoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreData.h; sourceTree = "<group>"; };
 		759AB36718166006008D602D /* CoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreData.m; sourceTree = "<group>"; };
@@ -1075,6 +1080,7 @@
 		754082A8183D96A900A9A009 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				755A98CE1849C666007D4018 /* loading_h8.gif */,
 				753F30C2184897030047D89D /* alert_icon_delete.png */,
 				753F30C3184897030047D89D /* alert_icon_delete@2x.png */,
 				753F30C4184897030047D89D /* book_number_label_background.png */,
@@ -1462,6 +1468,8 @@
 		75E49CBF180E3C3B0050F1B9 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				755A98D51849DF85007D4018 /* UIImage+animatedGIF.h */,
+				755A98D61849DF85007D4018 /* UIImage+animatedGIF.m */,
 				752A466718179EA00096925B /* UIImageView+MKNetworkKitAdditions.h */,
 				752A466818179EA00096925B /* UIImageView+MKNetworkKitAdditions.m */,
 				752A464918179DD00096925B /* NSDictionary+Contain.h */,
@@ -2021,6 +2029,7 @@
 				75E49BF9180E30CA0050F1B9 /* bj@2x.png in Resources */,
 				75E49C53180E30CA0050F1B9 /* zt.png in Resources */,
 				75E49C29180E30CA0050F1B9 /* d_wdsj_H@2x.png in Resources */,
+				755A98CF1849C666007D4018 /* loading_h8.gif in Resources */,
 				75E49C1F180E30CA0050F1B9 /* zt_touch@2x.png in Resources */,
 				75E49C48180E30CA0050F1B9 /* ss_touch.png in Resources */,
 				75E49BF8180E30CA0050F1B9 /* bianji_touch@2x.png in Resources */,
@@ -2137,6 +2146,7 @@
 				75035B0B183F42CA007573FF /* BookSearchDomainBeanToolsFactory.m in Sources */,
 				75E49DA0180E3C3B0050F1B9 /* LocalCacheDataPathConstant.m in Sources */,
 				75E49D7D180E3C3B0050F1B9 /* CommandForInitMobClick.m in Sources */,
+				755A98D71849DF85007D4018 /* UIImage+animatedGIF.m in Sources */,
 				75E49DB0180E3C3B0050F1B9 /* OrderedDictionary.m in Sources */,
 				75E49CAF180E39B60050F1B9 /* GTMBase64.m in Sources */,
 				75226D4A1818AD9400601CDF /* BookCategoriesNetRequestBean.m in Sources */,

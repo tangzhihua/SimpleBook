@@ -8,6 +8,7 @@
 
 #import "FolderCell.h"
 #import "SkyduckFile.h"
+#import "UIImage+animatedGIF.h"
 
 @interface FolderCell ()
 
@@ -19,15 +20,15 @@
 // 前景视图
 @property (weak, nonatomic) IBOutlet UIView *foregroundContainerView;
 @property (weak, nonatomic) IBOutlet UIView *bookCoverThumbnailsView;
-@property (weak, nonatomic) IBOutlet UIWebView *gifView;
+@property (weak, nonatomic) IBOutlet UIImageView *gifImageView;
+
 
 
 @end
 
 @implementation FolderCell
 
-- (id)initWithFrame:(CGRect)frame
-{
+- (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
     // Initialization code
@@ -40,6 +41,9 @@
   
   self.nameLabel.text = file.value;
   self.fileNumberLabel.text = [NSString stringWithFormat:@"%d", file.listFiles.count];
+  
+  NSURL *url = [[NSBundle mainBundle] URLForResource:@"loading_h8" withExtension:@"gif"];
+  _gifImageView.image = [UIImage animatedImageWithAnimatedGIFURL:url];
 }
 
 #pragma mark -

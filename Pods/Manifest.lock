@@ -1,5 +1,4 @@
 PODS:
-  - DAPagesContainer (1.0.1)
   - MKNetworkKit (0.87):
     - Reachability (~> 3.1.0)
   - MKStoreKit (4.99)
@@ -11,7 +10,6 @@ PODS:
   - ZipArchive (1.2.0)
 
 DEPENDENCIES:
-  - DAPagesContainer (~> 1.0.1)
   - MKNetworkKit (~> 0.87)
   - MKStoreKit (~> 4.99)
   - RNTimer (~> 0.0.1)
@@ -20,7 +18,6 @@ DEPENDENCIES:
   - ZipArchive (~> 1.2.0)
 
 SPEC CHECKSUMS:
-  DAPagesContainer: c2fc85a244ef7024cf89385709af7951963451dd
   MKNetworkKit: f174100f92473012138b6b1c3040266af8d43a14
   MKStoreKit: 5dea8e2966c1218c0d0f0b5c749d2d9317141a2b
   Reachability: be4883bb93f31e38266ae3365e5600a317aae735
