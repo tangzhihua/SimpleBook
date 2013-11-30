@@ -43,6 +43,11 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
+                        <webView contentMode="scaleToFill" id="x6D-dZ-xsA" userLabel="outlet->Web View 文件夹中有未下载完的文件存在">
+                            <rect key="frame" x="36" y="148" width="55" height="8"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </webView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
@@ -57,8 +62,10 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="backgroundContainerView" destination="0R8-qH-jqb" id="0ag-DZ-09n"/>
+                <outlet property="bookCoverThumbnailsView" destination="XQ0-Gk-6B2" id="fn1-hA-lhc"/>
                 <outlet property="fileNumberLabel" destination="ToR-it-tfl" id="Sci-1O-Jac"/>
                 <outlet property="foregroundContainerView" destination="YGZ-x5-jV9" id="B7y-LX-ZuU"/>
+                <outlet property="gifView" destination="x6D-dZ-xsA" id="gh5-0o-0vN"/>
                 <outlet property="nameLabel" destination="WOs-yx-End" id="Ina-xT-bNy"/>
             </connections>
         </view>

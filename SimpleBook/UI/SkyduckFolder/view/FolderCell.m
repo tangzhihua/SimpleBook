@@ -11,12 +11,17 @@
 
 @interface FolderCell ()
 
-
+// 背景视图
 @property (weak, nonatomic) IBOutlet UIView *backgroundContainerView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *fileNumberLabel;
 
+// 前景视图
 @property (weak, nonatomic) IBOutlet UIView *foregroundContainerView;
+@property (weak, nonatomic) IBOutlet UIView *bookCoverThumbnailsView;
+@property (weak, nonatomic) IBOutlet UIWebView *gifView;
+
+
 @end
 
 @implementation FolderCell
