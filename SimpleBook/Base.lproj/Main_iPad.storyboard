@@ -1,21 +1,101 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4451" systemVersion="13A461" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="qwp-FO-KSn">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3676"/>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
-        <!--class Prefix:identifier View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--Navigation Controller-->
+        <scene sceneID="0sI-xx-1BA">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <navigationController definesPresentationContext="YES" id="qwp-FO-KSn" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bba-U1-0ih">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.95294117647058818" green="0.46274509803921571" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <color key="textShadowColor" red="0.95294117649999999" green="0.46274509800000002" blue="0.4039215686" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="2oX-90-cGN" kind="relationship" relationship="rootViewController" id="MxO-O2-SnC"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6zz-R5-j2Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-48" y="-1097"/>
+        </scene>
+        <!--Test Book Shelf Controller ipad - 我的书架-->
+        <scene sceneID="3Io-wZ-nZV">
+            <objects>
+                <viewController id="2oX-90-cGN" customClass="TestBookShelfController_ipad" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="iUq-OO-sQa"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZHB-Qg-ly0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hRN-Ix-MoN">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n19-Rb-qeF">
+                                <rect key="frame" x="0.0" y="980" width="768" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="AVs-b1-g0O"/>
+                                    <barButtonItem title="退出登录" id="eo6-y9-RXC">
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <action selector="logoutButtonOnClickListener:" destination="2oX-90-cGN" id="62a-O1-6nJ"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                                <color key="barTintColor" red="0.95294117649999999" green="0.46274509800000002" blue="0.4039215686" alpha="1" colorSpace="calibratedRGB"/>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ZHB-Qg-ly0" firstAttribute="top" secondItem="n19-Rb-qeF" secondAttribute="bottom" id="kAw-1m-1fT"/>
+                            <constraint firstAttribute="trailing" secondItem="n19-Rb-qeF" secondAttribute="trailing" id="oVa-78-49N"/>
+                            <constraint firstItem="n19-Rb-qeF" firstAttribute="leading" secondItem="hRN-Ix-MoN" secondAttribute="leading" id="yrG-eM-Atc"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="我的书架" id="hp1-QP-rzp">
+                        <barButtonItem key="leftBarButtonItem" title="书院" id="aLo-9T-zNM"/>
+                        <barButtonItem key="rightBarButtonItem" title="企业" id="lyq-K6-TPE"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="searchDisplayController" destination="kVA-05-kSR" id="LsN-iB-msU"/>
+                        <outlet property="toolbar" destination="n19-Rb-qeF" id="Nai-Et-mXL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ghr-OT-kYU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="igC-SH-aKa">
+                    <connections>
+                        <outlet property="delegate" destination="2oX-90-cGN" id="SEI-TZ-ZBR"/>
+                        <outlet property="searchContentsController" destination="2oX-90-cGN" id="CjO-Hq-pfV"/>
+                        <outlet property="searchResultsDataSource" destination="2oX-90-cGN" id="hJd-k6-JD4"/>
+                        <outlet property="searchResultsDelegate" destination="2oX-90-cGN" id="SBN-Oh-sA5"/>
+                    </connections>
+                </searchDisplayController>
+                <searchDisplayController id="fV5-VF-HdU">
+                    <connections>
+                        <outlet property="delegate" destination="2oX-90-cGN" id="ByZ-Vy-FSd"/>
+                        <outlet property="searchContentsController" destination="2oX-90-cGN" id="YsC-Yj-jsc"/>
+                        <outlet property="searchResultsDataSource" destination="2oX-90-cGN" id="uIv-JH-Bor"/>
+                        <outlet property="searchResultsDelegate" destination="2oX-90-cGN" id="0uT-oe-cvo"/>
+                    </connections>
+                </searchDisplayController>
+                <searchDisplayController id="kVA-05-kSR">
+                    <connections>
+                        <outlet property="delegate" destination="2oX-90-cGN" id="cNq-sg-HVq"/>
+                        <outlet property="searchContentsController" destination="2oX-90-cGN" id="mAE-2O-gl2"/>
+                        <outlet property="searchResultsDataSource" destination="2oX-90-cGN" id="G5w-z6-pdA"/>
+                        <outlet property="searchResultsDelegate" destination="2oX-90-cGN" id="WTu-dw-GU9"/>
+                    </connections>
+                </searchDisplayController>
+            </objects>
+            <point key="canvasLocation" x="903" y="-1089"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B8F9E103B9804A0181AC7EC9"
+               BlueprintIdentifier = "208EEC89D0C94E25B3DA7C7F"
                BuildableName = "libPods-RNTimer.a"
                BlueprintName = "Pods-RNTimer"
                ReferencedContainer = "container:Pods.xcodeproj">

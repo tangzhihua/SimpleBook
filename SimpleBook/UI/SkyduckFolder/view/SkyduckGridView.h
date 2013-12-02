@@ -57,6 +57,12 @@
 // 是否激活 "合并" 功能
 @property (nonatomic, assign) BOOL mergeEnabled;// 默认是关闭的
 
+// 内边填充
+@property (nonatomic, assign) CGFloat topPadding, bottomPadding, leftPadding, rightPadding;
+// 
+@property (nonatomic, strong) UIView *headerView;
+@property (nonatomic, strong) UIView *footerView;
+
 - (id)initWithFrame:(CGRect)frame;
 - (void)reloadData;
 - (void)resetDragingCellPosition;

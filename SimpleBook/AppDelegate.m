@@ -73,36 +73,36 @@
   
   // 判断当前设备 iPhone or iPad 之后加载相对应的nib文件
   
-  UIViewController *firstViewController = nil;
-  
-  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-    
-    /// iphone
-//    self.navigation = [[UINavigationController alloc] initWithRootViewController:(UIViewController *)[[BookShelfViewController_iPhone alloc] initWithNibName:@"BookShelfViewController_iPhone" bundle:nil]];
-    firstViewController = self.navigation;
-    
-  } else {
-    /// ipad
-    self.navigation = [[UINavigationController alloc] initWithRootViewController:(UIViewController *)[[TestBookShelfController_ipad alloc] initWithNibName:@"TestBookShelfController_ipad" bundle:nil]];
-    
-    if ([GlobalDataCacheForMemorySingleton sharedInstance].isFirstStartApp) {
-      
-      
-      firstViewController = self.navigation;
-    } else {
-      
-      //
-      firstViewController = self.navigation;
-    }
-  }
-  
-  [self.navigation.navigationBar setHidden:YES];
-  
-  // window
-  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-  self.window.rootViewController = firstViewController;
-  [self.window makeKeyAndVisible];
-  
+//  UIViewController *firstViewController = nil;
+//  
+//  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+//    
+//    /// iphone
+////    self.navigation = [[UINavigationController alloc] initWithRootViewController:(UIViewController *)[[BookShelfViewController_iPhone alloc] initWithNibName:@"BookShelfViewController_iPhone" bundle:nil]];
+//    firstViewController = self.navigation;
+//    
+//  } else {
+//    /// ipad
+//    self.navigation = [[UINavigationController alloc] initWithRootViewController:(UIViewController *)[[TestBookShelfController_ipad alloc] initWithNibName:@"TestBookShelfController_ipad" bundle:nil]];
+//    
+//    if ([GlobalDataCacheForMemorySingleton sharedInstance].isFirstStartApp) {
+//      
+//      
+//      firstViewController = self.navigation;
+//    } else {
+//      
+//      //
+//      firstViewController = self.navigation;
+//    }
+//  }
+//  
+//  [self.navigation.navigationBar setHidden:YES];
+//  
+//  // window
+//  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//  self.window.rootViewController = firstViewController;
+//  [self.window makeKeyAndVisible];
+//  
   return YES;
 }
 

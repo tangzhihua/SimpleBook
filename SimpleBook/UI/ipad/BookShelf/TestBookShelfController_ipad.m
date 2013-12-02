@@ -25,6 +25,10 @@
 //
 @property (nonatomic, strong) UINib *fileCellUINib;
 @property (nonatomic, strong) UINib *folderCellUINib;
+
+
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+
 @end
 
 @implementation TestBookShelfController_ipad
@@ -42,9 +46,8 @@
   return _folderCellUINib;
 }
 
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+- (id)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
   if (self) {
     // Custom initialization
     
@@ -133,24 +136,45 @@
   return self;
 }
 
+
 - (void)viewDidLoad {
   [super viewDidLoad];
   // Do any additional setup after loading the view from its nib.
   
-  _gridView = [[SkyduckGridView alloc] initWithFrame:self.view.frame];
+  _gridView = [[SkyduckGridView alloc] initWithFrame:CGRectMake(0, 20 + 44, self.view.bounds.size.width, self.view.bounds.size.height - (20 + 44 + 44))];
   _gridView.delegate = self;
   _gridView.dataSource = self;
   _gridView.mergeEnabled = YES;
+  UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+  searchButton.frame = CGRectMake(0, 0, _gridView.bounds.size.width, 44);
+  //设置button填充图片
+  //[searchButton setBackgroundImage:[UIImage imageNamed:@"search_bar_background"] forState:UIControlStateNormal];
+  [searchButton setImage:[UIImage imageNamed:@"search_bar_background"] forState:UIControlStateNormal];
+  _gridView.headerView = searchButton;
   
+  //
+  _gridView.topPadding = 20;
+  _gridView.leftPadding = 40;
+  _gridView.rightPadding = 40;
+  _gridView.bottomPadding = 20;
+  //
+  [_gridView reloadData];
   [self.view addSubview:_gridView];
   
-  [_gridView reloadData];
+  
+  [self.view bringSubviewToFront:_toolbar];
 }
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
   // Dispose of any resources that can be recreated.
 }
+
+- (IBAction)logoutButtonOnClickListener:(id)sender {
+  
+  [self.navigationController setNavigationBarHidden:YES animated:TRUE];
+}
+
 
 #pragma mark -
 #pragma mark - SkyduckGridViewDataSource
@@ -214,7 +238,7 @@
   [contentView bind:directory];
   CGPoint openPoint = CGPointMake(200, 200); //arbitrary point
   
- 
+  
   
   // you can also open the folder this way
   // it could be potentially easier if you don't need the blocks
@@ -229,7 +253,7 @@
   folder.darkensBackground = NO;
   //folder.showsNotch = YES;
   [folder open];
-
+  
 }
 
 // 合并两个cell
@@ -280,26 +304,26 @@
                          alertViewStyle:UIAlertViewStyleDefault
                               onDismiss:^(UIAlertView *alertView, int buttonIndex) {
                                 switch (buttonIndex) {
-                                  case 0:{// 删除图书
+                                    case 0:{// 删除图书
+                                      
+                                      LocalBookList *localBookFromBookshelf = [GlobalDataCacheForMemorySingleton sharedInstance].localBookList;
+                                      for (SkyduckFile *file in fileForDelete.listFiles) {
+                                        NSString *contentID = file.value;
+                                        [localBookFromBookshelf removeBookByContentID:contentID];
+                                      }
+                                      
+                                      [rootDirectory removeFileAtIndex:index];
+                                      [_gridView reloadData];
+                                    }break;
                                     
-                                    LocalBookList *localBookFromBookshelf = [GlobalDataCacheForMemorySingleton sharedInstance].localBookList;
-                                    for (SkyduckFile *file in fileForDelete.listFiles) {
-                                      NSString *contentID = file.value;
-                                      [localBookFromBookshelf removeBookByContentID:contentID];
-                                    }
-                                    
-                                    [rootDirectory removeFileAtIndex:index];
-                                    [_gridView reloadData];
-                                  }break;
-                                    
-                                  case 1:{// 不删除图书
-                                    for (SkyduckFile *file in fileForDelete.listFiles) {
-                                      [rootDirectory insertFile:file atIndex:index];
-                                    }
-                                    
-                                    [rootDirectory removeFile:fileForDelete];
-                                    [_gridView reloadData];
-                                  }break;
+                                    case 1:{// 不删除图书
+                                      for (SkyduckFile *file in fileForDelete.listFiles) {
+                                        [rootDirectory insertFile:file atIndex:index];
+                                      }
+                                      
+                                      [rootDirectory removeFile:fileForDelete];
+                                      [_gridView reloadData];
+                                    }break;
                                   default:
                                     break;
                                 }

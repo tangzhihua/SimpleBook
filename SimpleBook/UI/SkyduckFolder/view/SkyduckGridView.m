@@ -75,7 +75,6 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
 #pragma mark -
 #pragma - Property Override
 
-
 #pragma mark -
 #pragma mark
 
@@ -86,7 +85,39 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
     _editable = NO;
     _cellList = [[NSMutableArray alloc] init];
     
-    [self createLayout];
+    self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.contentMode = UIViewContentModeRedraw;
+    self.backgroundColor = [UIColor clearColor];
+    NSLog(@"SkyduckGridView bound:%@", NSStringFromCGRect(self.bounds));
+    
+    //
+    
+    /// 添加
+    // 整个网格控件中, 填充着一个UIScrollView
+    _scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
+    _scrollView.delegate = self;
+    _scrollView.backgroundColor = [UIColor clearColor];
+    _scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    // 水平方向遇到边框是否反弹
+    _scrollView.alwaysBounceHorizontal = NO;
+    // 垂直方向遇到边框是否反弹
+    _scrollView.alwaysBounceVertical = NO;
+    // 是否显示垂直方向的滚动条
+    _scrollView.showsVerticalScrollIndicator = YES;
+    // 是否显示水平方向的滚动条
+    _scrollView.showsHorizontalScrollIndicator = NO;
+    // 控件是否整页翻动
+    _scrollView.pagingEnabled = NO;
+    // 视图是否延时调用开始滚动的方法
+    _scrollView.delaysContentTouches = NO;
+    // 控件滚动到顶部
+    //_scrollView.scrollsToTop = YES;
+    //
+    _scrollView.clipsToBounds = NO;
+    //
+    _scrollView.multipleTouchEnabled = NO;
+    [self addSubview:_scrollView];
+    
     
     // 长按手势
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
@@ -117,6 +148,14 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
     [v removeFromSuperview];
   }
   
+  // 添加 headerView
+  CGFloat topOfCells = _topPadding;
+  if (_headerView != nil) {
+    topOfCells += _topPadding + _headerView.bounds.size.height;
+    _headerView.frame = CGRectMake(0, _topPadding, _scrollView.bounds.size.width, _headerView.bounds.size.height);
+    [_scrollView addSubview:_headerView];
+  }
+  
   // cell 总数
   const NSInteger numberOfCells = [_dataSource numberOfCellsInGridView:self];
   // 一行显示的cell的最大数量
@@ -127,13 +166,13 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   const CGSize sizeOfCell = [_dataSource sizeOfCellInGridView:self];
   // cell 垂直方向的空白间距
   const CGFloat marginOfVerticalCell = [_dataSource marginOfVerticalCellInGridView:self];
-  // 网格控件边界
-  const CGRect gridBounds = _scrollView.bounds;
+  // 单元格所在的边界
+  const CGRect boundOfCells = CGRectMake(_leftPadding, topOfCells, _scrollView.bounds.size.width - _leftPadding - _rightPadding, _scrollView.bounds.size.height - topOfCells - _bottomPadding);
   // 单元格边界(这不是cell的真实边界, 而是用于计算每个cell 坐标)
-  const CGRect cellBounds = CGRectMake(0, 0, gridBounds.size.width / (CGFloat) numberOfCellsInRow, sizeOfCell.height + marginOfVerticalCell);
+  const CGRect cellBounds = CGRectMake(0, 0, boundOfCells.size.width / (CGFloat) numberOfCellsInRow, sizeOfCell.height + marginOfVerticalCell);
   
   // UIScrollView 的 contentSize
-  CGSize contentSizeOfScrollView = CGSizeMake(gridBounds.size.width, cellBounds.size.height * numberOfRows);
+  CGSize contentSizeOfScrollView = CGSizeMake(_scrollView.bounds.size.width, cellBounds.size.height * numberOfRows + topOfCells + _bottomPadding);
   [_scrollView setContentSize:contentSizeOfScrollView];
   
   // 定位所有的cell
@@ -144,7 +183,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
     cell.index = i;
     
     // 定位 cell
-    const CGPoint origin = CGPointMake(((i % numberOfCellsInRow) * cellBounds.size.width), (i / numberOfCellsInRow * cellBounds.size.height));
+    const CGPoint origin = CGPointMake(((i % numberOfCellsInRow) * cellBounds.size.width) + _leftPadding, (i / numberOfCellsInRow * cellBounds.size.height) + topOfCells);
     CGPoint center = CGPointMake((NSInteger)(origin.x + cellBounds.size.width / 2), (NSInteger)(origin.y + cellBounds.size.height/2));
     // cell 的 frame 的坐标, 要根据 sizeOfCell 来计算, 好实现cell 的size不同时, cell 的x坐标相同的效果
     cell.frame = CGRectMake((NSInteger)(center.x - sizeOfCell.width/2), (NSInteger)(center.y - sizeOfCell.height/2), (NSInteger)cell.frame.size.width, (NSInteger)cell.frame.size.height);
@@ -184,6 +223,12 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   // 通知控制层 切换数据源中数据位置
   [_delegate gridView:self targetIndexForMoveFromCellAtIndex:sourceIndex toProposedIndex:proposedDestinationIndex];
   
+  // 留出 headerView 的高度
+  CGFloat topOfCells = _topPadding;
+  if (_headerView != nil) {
+    topOfCells += _topPadding + _headerView.bounds.size.height;
+  }
+  
   // cell 总数
   //const NSInteger numberOfCells = [_dataSource numberOfCellsInGridView:self];
   // 一行显示的cell的最大数量
@@ -194,10 +239,10 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   const CGSize sizeOfCell = [_dataSource sizeOfCellInGridView:self];
   // cell 垂直方向的空白间距
   const CGFloat marginOfVerticalCell = [_dataSource marginOfVerticalCellInGridView:self];
-  // 网格控件边界
-  const CGRect gridBounds = _scrollView.bounds;
+  // 单元格所在的边界
+  const CGRect boundOfCells = CGRectMake(_leftPadding, topOfCells, _scrollView.bounds.size.width - _leftPadding - _rightPadding, _scrollView.bounds.size.height - topOfCells - _bottomPadding);
   // 单元格边界(这不是cell的真实边界, 而是用于计算每个cell 坐标)
-  const CGRect cellBounds = CGRectMake(0, 0, gridBounds.size.width / (CGFloat) numberOfCellsInRow, sizeOfCell.height + marginOfVerticalCell);
+  const CGRect cellBounds = CGRectMake(0, 0, boundOfCells.size.width / (CGFloat) numberOfCellsInRow, sizeOfCell.height + marginOfVerticalCell);
   
   // 单元格重新排列(Cell Rearrange)
   // 定位所有的cell
@@ -212,7 +257,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
       continue;
     }
     // 定位 cell
-    const CGPoint origin = CGPointMake(((i % numberOfCellsInRow) * cellBounds.size.width), (i / numberOfCellsInRow * cellBounds.size.height));
+    const CGPoint origin = CGPointMake(((i % numberOfCellsInRow) * cellBounds.size.width) + _leftPadding, (i / numberOfCellsInRow * cellBounds.size.height) + topOfCells);
     CGPoint center = CGPointMake((NSInteger)(origin.x + cellBounds.size.width / 2), (NSInteger)(origin.y + cellBounds.size.height/2));
     
     [UIView animateWithDuration:0.5 animations:^{
@@ -267,6 +312,13 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
 }
 
 - (void)resetDragingCellPosition {
+  
+  // 留出 headerView 的高度
+  CGFloat topOfCells = _topPadding;
+  if (_headerView != nil) {
+    topOfCells += _topPadding + _headerView.bounds.size.height;
+  }
+  
   // cell 总数
   //const NSInteger numberOfCells = [_dataSource numberOfCellsInGridView:self];
   // 一行显示的cell的最大数量
@@ -277,13 +329,13 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
   const CGSize sizeOfCell = [_dataSource sizeOfCellInGridView:self];
   // cell 垂直方向的空白间距
   const CGFloat marginOfVerticalCell = [_dataSource marginOfVerticalCellInGridView:self];
-  // 网格控件边界
-  const CGRect gridBounds = _scrollView.bounds;
+  // 单元格所在的边界
+  const CGRect boundOfCells = CGRectMake(_leftPadding, topOfCells, _scrollView.bounds.size.width - _leftPadding - _rightPadding, _scrollView.bounds.size.height - topOfCells - _bottomPadding);
   // 单元格边界(这不是cell的真实边界, 而是用于计算每个cell 坐标)
-  const CGRect cellBounds = CGRectMake(0, 0, gridBounds.size.width / (CGFloat) numberOfCellsInRow, sizeOfCell.height + marginOfVerticalCell);
+  const CGRect cellBounds = CGRectMake(0, 0, boundOfCells.size.width / (CGFloat) numberOfCellsInRow, sizeOfCell.height + marginOfVerticalCell);
   
   // 定位所有的cell
-  const CGPoint origin = CGPointMake(((_dragCell.index % numberOfCellsInRow) * cellBounds.size.width), (_dragCell.index / numberOfCellsInRow * cellBounds.size.height));
+  const CGPoint origin = CGPointMake(((_dragCell.index % numberOfCellsInRow) * cellBounds.size.width) + _leftPadding, (_dragCell.index / numberOfCellsInRow * cellBounds.size.height) + topOfCells);
   CGPoint center = CGPointMake((NSInteger)(origin.x + cellBounds.size.width / 2), (NSInteger)(origin.y + cellBounds.size.height/2));
   
   [UIView animateWithDuration:0.1
@@ -419,39 +471,6 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
 // ----------------------------------------------------------------------------------
 #pragma - Layout/Draw
 
-- (void)createLayout {
-  
-  self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  self.contentMode = UIViewContentModeRedraw;
-  self.backgroundColor = [UIColor clearColor];
-  NSLog(@"SkyduckGridView bound:%@", NSStringFromCGRect(self.bounds));
-  
-  // 整个网格控件中, 填充着一个UIScrollView
-  _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(20, 0, self.bounds.size.width - 40, self.bounds.size.height)];
-  _scrollView.delegate = self;
-  _scrollView.backgroundColor = [UIColor clearColor];
-  _scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  // 水平方向遇到边框是否反弹
-  _scrollView.alwaysBounceHorizontal = NO;
-  // 垂直方向遇到边框是否反弹
-  _scrollView.alwaysBounceVertical = NO;
-  // 是否显示垂直方向的滚动条
-  _scrollView.showsVerticalScrollIndicator = YES;
-  // 是否显示水平方向的滚动条
-  _scrollView.showsHorizontalScrollIndicator = NO;
-  // 控件是否整页翻动
-  _scrollView.pagingEnabled = NO;
-  // 视图是否延时调用开始滚动的方法
-  _scrollView.delaysContentTouches = NO;
-  // 控件滚动到顶部
-  //_scrollView.scrollsToTop = YES;
-  //
-  _scrollView.clipsToBounds = NO;
-  //
-  _scrollView.multipleTouchEnabled = NO;
-  [self addSubview:_scrollView];
-}
-
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 // 只有覆盖此方法, 你才能执行自定义绘制.
@@ -461,6 +480,7 @@ typedef NS_ENUM(NSInteger, MoveDirectionEnum) {
 }
 
 - (void)reloadData {
+  //
   [self setNeedsDisplay]; //called drawRect:(CGRect)rect
   [self setNeedsLayout];
 }
