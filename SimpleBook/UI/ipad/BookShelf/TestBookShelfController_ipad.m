@@ -149,7 +149,8 @@
   searchButton.frame = CGRectMake(0, 0, _gridView.bounds.size.width, 44);
   //设置button填充图片
   //[searchButton setBackgroundImage:[UIImage imageNamed:@"search_bar_background"] forState:UIControlStateNormal];
-  [searchButton setImage:[UIImage imageNamed:@"search_bar_background"] forState:UIControlStateNormal];
+  [searchButton setImage:[UIImage imageNamed:@"search_bar_background_normal"] forState:UIControlStateNormal];
+  [searchButton setImage:[UIImage imageNamed:@"search_bar_background_highlighted"] forState:UIControlStateHighlighted];
   _gridView.headerView = searchButton;
   
   //
