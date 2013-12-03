@@ -4,17 +4,17 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-DAProgressOverlayView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-FFCircularProgressView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>Pods-MKNetworkKit.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-MKStoreKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -52,47 +52,47 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>2068EDB59DBC40B8A39435BC</key>
+		<key>1052D05FB40D4BDCA09717E4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>208EEC89D0C94E25B3DA7C7F</key>
+		<key>20AFB8FE5CC148D2ABBD48DB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>83DAB66BD28C484985DF7F75</key>
+		<key>2719185A30A541A690A5A702</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8FB09C66EF15435CBB0BA4CD</key>
+		<key>6A70759ECB9A473DAF9CC271</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A2EC750CAF7444A0A7D0236F</key>
+		<key>A2F3D0B94CA14FDC9B5D0D53</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CA26C3990EA54813B0CD1EBD</key>
+		<key>AF100438A1CF493BA756AEC8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CC9CB38A9FE8448AA2ED42F3</key>
+		<key>B7457AD53DDD4720B5B7EC64</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D8EE3881CFE3400D8F3B0372</key>
+		<key>D1D1899DF8284C10B4B10EDC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FEC09F7B253540C9A8F65A5E</key>
+		<key>F1D747D4121247DCBBD02695</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -6,6 +6,12 @@
 // project.
 
 
+// DAProgressOverlayView
+#define COCOAPODS_POD_AVAILABLE_DAProgressOverlayView
+#define COCOAPODS_VERSION_MAJOR_DAProgressOverlayView 1
+#define COCOAPODS_VERSION_MINOR_DAProgressOverlayView 0
+#define COCOAPODS_VERSION_PATCH_DAProgressOverlayView 2
+
 // FFCircularProgressView
 #define COCOAPODS_POD_AVAILABLE_FFCircularProgressView
 #define COCOAPODS_VERSION_MAJOR_FFCircularProgressView 0
@@ -17,12 +23,6 @@
 #define COCOAPODS_VERSION_MAJOR_MKNetworkKit 0
 #define COCOAPODS_VERSION_MINOR_MKNetworkKit 87
 #define COCOAPODS_VERSION_PATCH_MKNetworkKit 0
-
-// MKStoreKit
-#define COCOAPODS_POD_AVAILABLE_MKStoreKit
-#define COCOAPODS_VERSION_MAJOR_MKStoreKit 4
-#define COCOAPODS_VERSION_MINOR_MKStoreKit 99
-#define COCOAPODS_VERSION_PATCH_MKStoreKit 0
 
 // RNTimer
 #define COCOAPODS_POD_AVAILABLE_RNTimer

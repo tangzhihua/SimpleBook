@@ -221,6 +221,13 @@
           = [[NetEntityDataToolsFactoryMethodSingleton sharedInstance] getNetRespondDataToNSDictionaryStrategyAlgorithm];
 					if ([netRespondDataToNSDictionaryStrategyAlgorithm conformsToProtocol:@protocol(INetRespondDataToNSDictionary)]) {
             NSDictionary *netRespondDictionary = [netRespondDataToNSDictionaryStrategyAlgorithm netRespondDataToNSDictionary:netUnpackedDataOfUTF8String];
+            if (netRespondDictionary == nil) {
+              // 异常 (NullPointerException)
+              RNAssert(NO, @"-->服务器返回的数据, 不能被成功解析成数据字典!");
+              serverRespondDataError.errorCode = -1;
+              serverRespondDataError.message = @"服务器返回的数据, 不能被成功解析成数据字典!";
+              break;
+            }
             
             //
             id<IParseNetRespondDictionaryToDomainBean> parseNetRespondDictionaryToDomainBeanStrategy

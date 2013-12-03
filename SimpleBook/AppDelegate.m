@@ -12,7 +12,6 @@
 
 #import "BookShelfController_ipad.h"
 
-#import "MKStoreManager.h"
 //
 #import "GlobalDataCacheForNeedSaveToFileSystem.h"
 #import "LocalCacheDataPathConstant.h"

@@ -1,8 +1,8 @@
 PODS:
+  - DAProgressOverlayView (1.0.2)
   - FFCircularProgressView (0.3)
   - MKNetworkKit (0.87):
     - Reachability (~> 3.1.0)
-  - MKStoreKit (4.99)
   - Reachability (3.1.1)
   - RNTimer (0.0.1)
   - TBXML (1.5)
@@ -11,18 +11,18 @@ PODS:
   - ZipArchive (1.2.0)
 
 DEPENDENCIES:
+  - DAProgressOverlayView (~> 1.0.2)
   - FFCircularProgressView (~> 0.3)
   - MKNetworkKit (~> 0.87)
-  - MKStoreKit (~> 4.99)
   - RNTimer (~> 0.0.1)
   - TBXML (~> 1.5)
   - TBXML+NSDictionary (~> 0.0.1)
   - ZipArchive (~> 1.2.0)
 
 SPEC CHECKSUMS:
+  DAProgressOverlayView: abfd16f70476496e34176eeb94b139fc5e6d5f6b
   FFCircularProgressView: 972f8c316f6a612a9ca55d7800ade41b51efedf2
   MKNetworkKit: f174100f92473012138b6b1c3040266af8d43a14
-  MKStoreKit: 5dea8e2966c1218c0d0f0b5c749d2d9317141a2b
   Reachability: be4883bb93f31e38266ae3365e5600a317aae735
   RNTimer: 4d7ca0b4de6a1a9f525ebc529dfd4e5a1952a247
   TBXML: 0511ac325d83e59d3aefa4bc8cd6cbeff07a8d9e
