@@ -19,7 +19,7 @@ static UIImage *kBackgroundImageForMargeCell= nil;
 + (void)initialize {
   // 这是为了子类化当前类后, 父类的initialize方法会被调用2次
   if (self == [SkyduckGridViewCell class]) {
-    kBackgroundImageForMargeCell = [UIImage imageNamed:@"file_merge_background"];
+    kBackgroundImageForMargeCell = [UIImage imageNamed:@"wj_zh"];
   }
 }
 

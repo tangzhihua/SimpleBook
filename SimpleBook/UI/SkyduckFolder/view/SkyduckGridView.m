@@ -46,8 +46,8 @@ static UIImage *kButtonTrashboxActiveImage= nil;
 + (void)initialize {
   // 这是为了子类化当前类后, 父类的initialize方法会被调用2次
   if (self == [SkyduckGridView class]) {
-    kButtonTrashboxImage = [UIImage imageNamed:@"button_trashbox"];
-    kButtonTrashboxActiveImage = [UIImage imageNamed:@"button_trashbox_active"];
+    kButtonTrashboxImage = [UIImage imageNamed:@"sc"];
+    kButtonTrashboxActiveImage = [UIImage imageNamed:@"sc_dj"];
   }
 }
 

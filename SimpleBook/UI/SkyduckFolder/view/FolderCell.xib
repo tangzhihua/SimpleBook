@@ -15,12 +15,12 @@
                     <rect key="frame" x="0.0" y="0.0" width="142" height="168"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="folder_background.png" id="yXg-f3-ABf">
+                        <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="wj~ipad.png" id="yXg-f3-ABf">
                             <rect key="frame" x="0.0" y="0.0" width="142" height="168"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </imageView>
-                        <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" image="book_number_label_background.png" id="adL-aN-nvB">
+                        <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" image="bq~ipad.png" id="adL-aN-nvB">
                             <rect key="frame" x="130" y="138" width="18" height="17"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </imageView>
@@ -70,7 +70,7 @@
         </view>
     </objects>
     <resources>
-        <image name="book_number_label_background.png" width="18" height="17"/>
-        <image name="folder_background.png" width="134" height="168"/>
+        <image name="bq~ipad.png" width="141" height="192"/>
+        <image name="wj~ipad.png" width="141" height="192"/>
     </resources>
 </document>
