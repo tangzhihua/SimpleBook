@@ -7,7 +7,7 @@
 //
 
 #import "CommandForInitMobClick.h"
-//#import "MobClick.h"
+#import "MobClick.h"
 
 
 @interface CommandForInitMobClick ()
@@ -38,14 +38,14 @@
 		_isExecuted = YES;
 		
     // 开启CrashReport收集, 默认是开启状态.
-    //[MobClick setCrashReportEnabled:YES];
+    [MobClick setCrashReportEnabled:YES];
     
     // 打开友盟sdk调试，注意Release发布时需要注释掉此行,减少io消耗
-    //[MobClick setLogEnabled:YES];
+    [MobClick setLogEnabled:YES];
     
     // reportPolicy为枚举类型,可以为 REALTIME, BATCH,SENDDAILY,SENDWIFIONLY几种
     // channelId 为NSString * 类型，channelId 为nil或@""时,默认会被被当作@"App Store"渠道
-    //[MobClick startWithAppkey:UMENG_APPKEY reportPolicy:REALTIME channelId:kCoopid];
+    [MobClick startWithAppkey:UMENG_APPKEY reportPolicy:SENDWIFIONLY channelId:nil];
     
     // 按渠道自动更新检测 : 在友盟的网站上分渠道提交app的版本号，更新日志及openURL后，您只需添加一行代码来完成自动更新检查。
     // [MobClick checkUpdate];   //自动更新检查, 如果需要自定义更新请使用下面的方法,需要接收一个(NSDictionary *)appInfo的参数

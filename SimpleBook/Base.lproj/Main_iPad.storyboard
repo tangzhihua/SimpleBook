@@ -19,17 +19,17 @@
                         </textAttributes>
                     </navigationBar>
                     <connections>
-                        <segue destination="2oX-90-cGN" kind="relationship" relationship="rootViewController" id="MxO-O2-SnC"/>
+                        <segue destination="2oX-90-cGN" kind="relationship" relationship="rootViewController" id="uLZ-xf-oSx"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6zz-R5-j2Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-48" y="-1097"/>
+            <point key="canvasLocation" x="-52" y="-1097"/>
         </scene>
-        <!--Test Book Shelf Controller ipad - 我的书架-->
+        <!--Book Shelf Controller ipad - 我的书架-->
         <scene sceneID="3Io-wZ-nZV">
             <objects>
-                <viewController id="2oX-90-cGN" customClass="TestBookShelfController_ipad" sceneMemberID="viewController">
+                <viewController id="2oX-90-cGN" customClass="BookShelfController_ipad" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="iUq-OO-sQa"/>
                         <viewControllerLayoutGuide type="bottom" id="ZHB-Qg-ly0"/>
@@ -65,35 +65,10 @@
                         <barButtonItem key="rightBarButtonItem" title="企业" id="lyq-K6-TPE"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="searchDisplayController" destination="kVA-05-kSR" id="LsN-iB-msU"/>
-                        <outlet property="toolbar" destination="n19-Rb-qeF" id="Nai-Et-mXL"/>
+                        <outlet property="toolbar" destination="n19-Rb-qeF" id="M9T-aL-yJu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ghr-OT-kYU" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="igC-SH-aKa">
-                    <connections>
-                        <outlet property="delegate" destination="2oX-90-cGN" id="SEI-TZ-ZBR"/>
-                        <outlet property="searchContentsController" destination="2oX-90-cGN" id="CjO-Hq-pfV"/>
-                        <outlet property="searchResultsDataSource" destination="2oX-90-cGN" id="hJd-k6-JD4"/>
-                        <outlet property="searchResultsDelegate" destination="2oX-90-cGN" id="SBN-Oh-sA5"/>
-                    </connections>
-                </searchDisplayController>
-                <searchDisplayController id="fV5-VF-HdU">
-                    <connections>
-                        <outlet property="delegate" destination="2oX-90-cGN" id="ByZ-Vy-FSd"/>
-                        <outlet property="searchContentsController" destination="2oX-90-cGN" id="YsC-Yj-jsc"/>
-                        <outlet property="searchResultsDataSource" destination="2oX-90-cGN" id="uIv-JH-Bor"/>
-                        <outlet property="searchResultsDelegate" destination="2oX-90-cGN" id="0uT-oe-cvo"/>
-                    </connections>
-                </searchDisplayController>
-                <searchDisplayController id="kVA-05-kSR">
-                    <connections>
-                        <outlet property="delegate" destination="2oX-90-cGN" id="cNq-sg-HVq"/>
-                        <outlet property="searchContentsController" destination="2oX-90-cGN" id="mAE-2O-gl2"/>
-                        <outlet property="searchResultsDataSource" destination="2oX-90-cGN" id="G5w-z6-pdA"/>
-                        <outlet property="searchResultsDelegate" destination="2oX-90-cGN" id="WTu-dw-GU9"/>
-                    </connections>
-                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="903" y="-1089"/>
         </scene>

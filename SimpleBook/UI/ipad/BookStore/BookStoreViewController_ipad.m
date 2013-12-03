@@ -7,7 +7,7 @@
 
 #import "BookStoreViewController_ipad.h"
 
-//#import "StoreManager.h"
+#import "StoreManager.h"
 
 //#import "EAGLView.h"
 //#import "FlipsideViewController.h"
@@ -123,18 +123,18 @@
     // Custom initialization
     
     // 注册付费流程的监听消息
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(receiveTransactionSucceededNotification:)
-//                                                 name:kInAppPurchaseManagerTransactionSucceededNotification
-//                                               object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(receiveTransactionFailedNotification:)
-//                                                 name:kInAppPurchaseManagerTransactionFailedNotification
-//                                               object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(receiveTransactionCanceledNotification:)
-//                                                 name:kInAppPurchaseManagerTransactionCanceledNotification
-//                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveTransactionSucceededNotification:)
+                                                 name:kInAppPurchaseManagerTransactionSucceededNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveTransactionFailedNotification:)
+                                                 name:kInAppPurchaseManagerTransactionFailedNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveTransactionCanceledNotification:)
+                                                 name:kInAppPurchaseManagerTransactionCanceledNotification
+                                               object:nil];
     
     //
     _netRequestIndexForGetBookListInBookstores = NETWORK_REQUEST_ID_OF_IDLE;
@@ -515,19 +515,19 @@
         
       case kBookStateEnum_Unpaid:{
         
-//        if ([[StoreManager sharedInstance] canMakePayments]) {
-//          [[StoreManager sharedInstance] purchaseProductWithIdentifier:book.bookInfo.productid];
-//          // 更新状态->支付中...
-//          book.bookStateEnum = kBookStateEnum_Paiding;
-//        } else {
-//          UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
-//                                                              message:@"您的设备不支持应用内付费购买"
-//                                                             delegate:nil
-//                                                    cancelButtonTitle:@"确定"
-//                                                    otherButtonTitles:nil, nil];
-//          [alertView show];
-//          
-//        }
+        if ([[StoreManager sharedInstance] canMakePayments]) {
+          [[StoreManager sharedInstance] purchaseProductWithIdentifier:book.bookInfo.productid];
+          // 更新状态->支付中...
+          book.bookStateEnum = kBookStateEnum_Paiding;
+        } else {
+          UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                              message:@"您的设备不支持应用内付费购买"
+                                                             delegate:nil
+                                                    cancelButtonTitle:@"确定"
+                                                    otherButtonTitles:nil, nil];
+          [alertView show];
+          
+        }
         
       }break;
         
@@ -637,63 +637,63 @@
 #pragma mark - 交易完成通知
 - (void)receiveTransactionSucceededNotification:(NSNotification *)notification {
   @synchronized(self) {
-//    SKPaymentTransaction *transaction = [notification.userInfo objectForKey:@"transaction"];
-//    
-//    // 根据productID找到contentsData对象
-//    for (LocalBook *book in self.bookList.localBookList) {
-//      BookInfo *bookInfo = book.bookInfo;
-//      if ([bookInfo.productid isEqualToString:transaction.payment.productIdentifier]) {
-//        
-//        // 向本地书籍列表中, 插入一本书(localBookList 中已经做了放置重复插入的处理, 外部不用担心).
-//        [[GlobalDataCacheForMemorySingleton sharedInstance].localBookList addBook:book];
-//        
-//        // 支付成功后的收据
-//        NSData *receipt = transaction.transactionReceipt;
-//        [self requestBookDownlaodUrlWithContentID:bookInfo.content_id receipt:receipt bindAccount:book.bindAccount];
-//        
-//        break;
-//      }
-//    }
+    SKPaymentTransaction *transaction = [notification.userInfo objectForKey:@"transaction"];
+    
+    // 根据productID找到contentsData对象
+    for (LocalBook *book in self.bookList.localBookList) {
+      BookInfo *bookInfo = book.bookInfo;
+      if ([bookInfo.productid isEqualToString:transaction.payment.productIdentifier]) {
+        
+        // 向本地书籍列表中, 插入一本书(localBookList 中已经做了放置重复插入的处理, 外部不用担心).
+        [[GlobalDataCacheForMemorySingleton sharedInstance].localBookList addBook:book];
+        
+        // 支付成功后的收据
+        NSData *receipt = transaction.transactionReceipt;
+        [self requestBookDownlaodUrlWithContentID:bookInfo.content_id receipt:receipt bindAccount:book.bindAccount];
+        
+        break;
+      }
+    }
   }
 }
 
 - (void)receiveTransactionFailedNotification:(NSNotification *)notification {
   @synchronized(self) {
-//    SKPaymentTransaction *transaction = [notification.userInfo objectForKey:@"transaction"];
-//    // 根据productID找到contentsData对象
-//    for (LocalBook *localBook in self.bookList.localBookList) {
-//      BookInfo *bookInfo = localBook.bookInfo;
-//      if ([bookInfo.productid isEqualToString:transaction.payment.productIdentifier]) {
-//        // 更新状态 --> 未支付
-//        localBook.bookStateEnum = kBookStateEnum_Unpaid;
-//        
-//        break;
-//      }
-//    }
-//    
-//    NSString *message = [NSString stringWithFormat:@"ProductID:%@", transaction.payment.productIdentifier];
-//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"交易失败"
-//                                                        message:message
-//                                                       delegate:nil
-//                                              cancelButtonTitle:@"OK"
-//                                              otherButtonTitles:nil];
-//    [alertView show];
+    SKPaymentTransaction *transaction = [notification.userInfo objectForKey:@"transaction"];
+    // 根据productID找到contentsData对象
+    for (LocalBook *localBook in self.bookList.localBookList) {
+      BookInfo *bookInfo = localBook.bookInfo;
+      if ([bookInfo.productid isEqualToString:transaction.payment.productIdentifier]) {
+        // 更新状态 --> 未支付
+        localBook.bookStateEnum = kBookStateEnum_Unpaid;
+        
+        break;
+      }
+    }
+    
+    NSString *message = [NSString stringWithFormat:@"ProductID:%@", transaction.payment.productIdentifier];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"交易失败"
+                                                        message:message
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+    [alertView show];
   }
 }
 
 - (void)receiveTransactionCanceledNotification:(NSNotification *)notification{
   @synchronized(self) {
-//    SKPaymentTransaction *transaction = [notification.userInfo objectForKey:@"transaction"];
-//    // 根据productID找到contentsData对象
-//    for (LocalBook *localBook in self.bookList.localBookList) {
-//      BookInfo *bookInfo = localBook.bookInfo;
-//      if ([bookInfo.productid isEqualToString:transaction.payment.productIdentifier]) {
-//        // 更新状态 --> 未支付
-//        localBook.bookStateEnum = kBookStateEnum_Unpaid;
-//        
-//        break;
-//      }
-//    }
+    SKPaymentTransaction *transaction = [notification.userInfo objectForKey:@"transaction"];
+    // 根据productID找到contentsData对象
+    for (LocalBook *localBook in self.bookList.localBookList) {
+      BookInfo *bookInfo = localBook.bookInfo;
+      if ([bookInfo.productid isEqualToString:transaction.payment.productIdentifier]) {
+        // 更新状态 --> 未支付
+        localBook.bookStateEnum = kBookStateEnum_Unpaid;
+        
+        break;
+      }
+    }
   }
 }
 
