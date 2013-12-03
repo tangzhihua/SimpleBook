@@ -11,8 +11,7 @@
 
 //#import "EAGLView.h"
 //#import "FlipsideViewController.h"
-//#import "AppDelegate.h"
-
+#import "AppDelegate.h"
 
 //
 #import "MKNetworkKit.h"
@@ -32,6 +31,9 @@
 #import "LogonNetRespondBean.h"
 
 #import "BookStoreTableCell_ipad.h"
+
+
+#import "BookSearchNetRequestBean.h"
 
 @interface BookStoreViewController_ipad () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
@@ -57,8 +59,6 @@
 // 标识当前界面是 "公共账户" 还是企业账户, 根据不同的账号, UI会有所变化
 @property (nonatomic, assign) BOOL isPublicAccount;
 
-// controller 已经可以被释放的标志(可以通过监听此标志位, 来进行一些资源的释放, 比如在 tableview cell 中发起图片网络请求的 MKNetworkOperation, 应该在外部控制器被释放时, 也被停止)
-@property (nonatomic, assign) BOOL isControllerDealloc;
 @end
 
 
@@ -91,27 +91,27 @@
 }
 
 -(void)openBookWithBookSaveDirPath:(NSString *)bookSaveDirPath {
-//  self.eaglView = [[EAGLView alloc] init];
-//  
-//  [self.eaglView loadContents:bookSaveDirPath];
-//  
-//  [AppDelegate sharedAppDelegate].orientation = [self.eaglView GetOrientation];
-//  
-//  FlipsideViewController *flipsideView = [[FlipsideViewController alloc] initWithNibName:@"FlipsideView" bundle:nil];
-//  flipsideView.delegate = self;
-//  flipsideView.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-//  
-//  if ([self respondsToSelector:@selector(presentViewController:animated:completion:)]) {
-//    [self presentViewController:flipsideView animated:YES completion:NULL];
-//  } else {
-//    [self presentModalViewController:flipsideView animated:YES];
-//  }
-//  
-//  [flipsideView.glView loadContents:bookSaveDirPath];
-//  [flipsideView.glView startAnimation];
-//  
-//  [flipsideView reloadInputViews];
-//  flipsideView = nil;
+  //  self.eaglView = [[EAGLView alloc] init];
+  //
+  //  [self.eaglView loadContents:bookSaveDirPath];
+  //
+  //  [AppDelegate sharedAppDelegate].orientation = [self.eaglView GetOrientation];
+  //
+  //  FlipsideViewController *flipsideView = [[FlipsideViewController alloc] initWithNibName:@"FlipsideView" bundle:nil];
+  //  flipsideView.delegate = self;
+  //  flipsideView.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+  //
+  //  if ([self respondsToSelector:@selector(presentViewController:animated:completion:)]) {
+  //    [self presentViewController:flipsideView animated:YES completion:NULL];
+  //  } else {
+  //    [self presentModalViewController:flipsideView animated:YES];
+  //  }
+  //
+  //  [flipsideView.glView loadContents:bookSaveDirPath];
+  //  [flipsideView.glView startAnimation];
+  //
+  //  [flipsideView reloadInputViews];
+  //  flipsideView = nil;
   
 }
 
@@ -123,10 +123,18 @@
     // Custom initialization
     
     // 注册付费流程的监听消息
-    
-    
-    //
-    _isControllerDealloc = NO;
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(receiveTransactionSucceededNotification:)
+//                                                 name:kInAppPurchaseManagerTransactionSucceededNotification
+//                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(receiveTransactionFailedNotification:)
+//                                                 name:kInAppPurchaseManagerTransactionFailedNotification
+//                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(receiveTransactionCanceledNotification:)
+//                                                 name:kInAppPurchaseManagerTransactionCanceledNotification
+//                                               object:nil];
     
     //
     _netRequestIndexForGetBookListInBookstores = NETWORK_REQUEST_ID_OF_IDLE;
@@ -207,8 +215,8 @@
   [[DomainBeanNetworkEngineSingleton sharedInstance] cancelNetRequestByRequestIndex:&_netRequestIndexForGetBookDownloadUrl];
   [[DomainBeanNetworkEngineSingleton sharedInstance] cancelNetRequestByRequestIndex:&_netRequestIndexForGetBookListInBookstores];
   
-  // 当前 controller 可以被释放了
-  self.isControllerDealloc = YES;
+  // 释放table view cell 注册的KVO
+  [self removeAllObserversForTableView];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -230,7 +238,7 @@
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration; {
   NSLog(@"willRotateToInterfaceOrientation ifOrientation=%d", toInterfaceOrientation);
   
-  [self.bookTableView reloadData];
+  [_bookTableView reloadData];
   
   NSString *imageNameOfViewHeader = nil;
   if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
@@ -276,7 +284,7 @@
 -(BOOL)textFieldShouldClear:(UITextField*)textField {
   [self clearSearchCriteria];
   
-  [self.bookTableView reloadData];
+  [_bookTableView reloadData];
   return YES;
 }
 
@@ -333,8 +341,20 @@
   // 更新最新的搜索条件
   self.latestSearchCriteria = self.searchTextField.text;
   
+  
+  /*
+   // 测试搜索接口
+   BookSearchNetRequestBean *bookSearchNetRequestBean = [[BookSearchNetRequestBean alloc] init];
+   bookSearchNetRequestBean.search = self.latestSearchCriteria;
+   [[DomainBeanNetworkEngineSingleton sharedInstance] requestDomainProtocolWithRequestDomainBean:bookSearchNetRequestBean currentNetRequestIndexToOut:&_netRequestIndexForGetBookDownloadUrl successedBlock:^(id respondDomainBean) {
+   
+   
+   } failedBlock:^(NetRequestErrorBean *error) {
+   
+   }];
+   */
   // 重刷界面
-  [self.bookTableView reloadData];
+  [_bookTableView reloadData];
 }
 
 
@@ -368,19 +388,20 @@
     LocalBookList *localBookFromBookshelf = [GlobalDataCacheForMemorySingleton sharedInstance].localBookList;
     
     for (BookInfo *bookInfo in bookListInBookstoresNetRespondBean.bookInfoList) {
-      LocalBook *newBook = [localBookFromBookshelf bookByContentID:bookInfo.content_id];
-      if (newBook == nil) {
-        newBook = [[LocalBook alloc] initWithBookInfo:bookInfo];
+      LocalBook *bookAlreadyExists = [localBookFromBookshelf bookByContentID:bookInfo.content_id];
+      if (bookAlreadyExists != nil) {
+        // 对于已经存在的书籍, 需要更新当前书籍最新的bookInfo, 一定要及时更新, 因为服务器可能修改某本书的 bookInfo
+        bookAlreadyExists.bookInfo = bookInfo;
       } else {
-        // 更新当前书籍最新的bookInfo, 一定要及时更新, 因为服务器可能修改某本书的 bookInfo
-        newBook.bookInfo = bookInfo;
+        // 刷新到一本新书籍, 就插入到 书籍列表中
+        bookAlreadyExists = [[LocalBook alloc] initWithBookInfo:bookInfo];
       }
       
-      [weakSelf.bookList addBook:newBook];
+      [weakSelf.bookList addBook:bookAlreadyExists];
     }
     
     // 刷新界面
-    [self.bookTableView reloadData];
+    [_bookTableView reloadData];
     
     // 解禁 "刷新按钮".
     self.refurbishButton.enabled = YES;
@@ -434,6 +455,19 @@
 
 #pragma mark - Table view data source
 
+- (void)removeAllObserversForTableView {
+  NSArray *subviews = _bookTableView.subviews;
+  for (id v in subviews) {
+    if ([v isKindOfClass:[BookStoreTableCell_ipad class]]) {
+      BookStoreTableCell_ipad *cell = v;
+      // 注销监听下载KVO
+      LocalBook *book = [_bookList bookByContentID:cell.contentID];
+      [book removeObserver:cell forKeyPath:kLocalBookProperty_bookStateEnum context:(__bridge void *)cell];
+      [book removeObserver:cell forKeyPath:kLocalBookProperty_downloadProgress context:(__bridge void *)cell];
+    }
+  }
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   return self.bookList != nil ? [self.bookList bookCategoryTotalByBookNameSearch:self.latestSearchCriteria] : 0;
 }
@@ -455,7 +489,6 @@
     LocalBook *book = [self.bookList bookByContentID:cell.contentID];
     [book removeObserver:cell forKeyPath:kLocalBookProperty_bookStateEnum context:(__bridge void *)cell];
     [book removeObserver:cell forKeyPath:kLocalBookProperty_downloadProgress context:(__bridge void *)cell];
-    [self removeObserver:cell forKeyPath:kIsContrllerDealloc context:(__bridge void *)cell];
   }
   
   NSDictionary *bookCategoryDictionaryByBookNameSearch = [self.bookList bookCategoryDictionaryByBookNameSearch:self.latestSearchCriteria];
@@ -473,10 +506,6 @@
          forKeyPath:kLocalBookProperty_downloadProgress
             options:NSKeyValueObservingOptionNew
             context:(__bridge void *)cell];
-  [self addObserver:cell
-         forKeyPath:kIsContrllerDealloc
-            options:NSKeyValueObservingOptionNew
-            context:(__bridge void *)cell];
   
   __weak BookStoreViewController_ipad *weakSelf = self;
   cell.bookStoreTableCellFunctionButtonClickHandleBlock
@@ -486,6 +515,19 @@
         
       case kBookStateEnum_Unpaid:{
         
+//        if ([[StoreManager sharedInstance] canMakePayments]) {
+//          [[StoreManager sharedInstance] purchaseProductWithIdentifier:book.bookInfo.productid];
+//          // 更新状态->支付中...
+//          book.bookStateEnum = kBookStateEnum_Paiding;
+//        } else {
+//          UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
+//                                                              message:@"您的设备不支持应用内付费购买"
+//                                                             delegate:nil
+//                                                    cancelButtonTitle:@"确定"
+//                                                    otherButtonTitles:nil, nil];
+//          [alertView show];
+//          
+//        }
         
       }break;
         
@@ -516,11 +558,7 @@
       }break;
         
       case kBookStateEnum_NotInstalled:{
-        
-      }break;
-        
-      case kBookStateEnum_Unziping:{
-        
+        [book unzipBook];
       }break;
         
       case kBookStateEnum_Installed:{
@@ -595,6 +633,74 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
   return 31;
 }
- 
 
+#pragma mark - 交易完成通知
+- (void)receiveTransactionSucceededNotification:(NSNotification *)notification {
+  @synchronized(self) {
+//    SKPaymentTransaction *transaction = [notification.userInfo objectForKey:@"transaction"];
+//    
+//    // 根据productID找到contentsData对象
+//    for (LocalBook *book in self.bookList.localBookList) {
+//      BookInfo *bookInfo = book.bookInfo;
+//      if ([bookInfo.productid isEqualToString:transaction.payment.productIdentifier]) {
+//        
+//        // 向本地书籍列表中, 插入一本书(localBookList 中已经做了放置重复插入的处理, 外部不用担心).
+//        [[GlobalDataCacheForMemorySingleton sharedInstance].localBookList addBook:book];
+//        
+//        // 支付成功后的收据
+//        NSData *receipt = transaction.transactionReceipt;
+//        [self requestBookDownlaodUrlWithContentID:bookInfo.content_id receipt:receipt bindAccount:book.bindAccount];
+//        
+//        break;
+//      }
+//    }
+  }
+}
+
+- (void)receiveTransactionFailedNotification:(NSNotification *)notification {
+  @synchronized(self) {
+//    SKPaymentTransaction *transaction = [notification.userInfo objectForKey:@"transaction"];
+//    // 根据productID找到contentsData对象
+//    for (LocalBook *localBook in self.bookList.localBookList) {
+//      BookInfo *bookInfo = localBook.bookInfo;
+//      if ([bookInfo.productid isEqualToString:transaction.payment.productIdentifier]) {
+//        // 更新状态 --> 未支付
+//        localBook.bookStateEnum = kBookStateEnum_Unpaid;
+//        
+//        break;
+//      }
+//    }
+//    
+//    NSString *message = [NSString stringWithFormat:@"ProductID:%@", transaction.payment.productIdentifier];
+//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"交易失败"
+//                                                        message:message
+//                                                       delegate:nil
+//                                              cancelButtonTitle:@"OK"
+//                                              otherButtonTitles:nil];
+//    [alertView show];
+  }
+}
+
+- (void)receiveTransactionCanceledNotification:(NSNotification *)notification{
+  @synchronized(self) {
+//    SKPaymentTransaction *transaction = [notification.userInfo objectForKey:@"transaction"];
+//    // 根据productID找到contentsData对象
+//    for (LocalBook *localBook in self.bookList.localBookList) {
+//      BookInfo *bookInfo = localBook.bookInfo;
+//      if ([bookInfo.productid isEqualToString:transaction.payment.productIdentifier]) {
+//        // 更新状态 --> 未支付
+//        localBook.bookStateEnum = kBookStateEnum_Unpaid;
+//        
+//        break;
+//      }
+//    }
+  }
+}
+
+#pragma mark -
+#pragma mark FlipsideViewControllerDelegate 代理
+// flipsideView終了
+//- (void)flipsideViewControllerDidFinish:(FlipsideViewController *)controller {
+//  [self dismissViewControllerAnimated:YES completion:nil];
+//}
 @end

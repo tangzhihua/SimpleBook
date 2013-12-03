@@ -37,6 +37,8 @@
 
 @property (nonatomic, weak) MKNetworkOperation *bookCoverImageOperation;
 @property (nonatomic, copy, readwrite) NSString *contentID;
+
+@property (nonatomic, strong) LocalBook *book;
 @end
 
 @implementation BookStoreTableCell_ipad
@@ -67,19 +69,19 @@ static UIImage *kButtonHighlightedBGImageOfInstalled = nil;
 
 // 复写父类的 +(NSString *)nibName 方法, 是为了支持屏幕翻转时加载不同的 xib文件.
 /*
-+ (NSString *)nibName {
-  UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
-  NSString *nibNameString = [self cellIdentifier];
-  if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
-    // 竖屏
-    nibNameString = [NSString stringWithFormat:@"%@_vertical", nibNameString];
-  } else {
-    // 横屏
-    nibNameString = [NSString stringWithFormat:@"%@_horizontal", nibNameString];
-  }
-  
-  return nibNameString;
-}
+ + (NSString *)nibName {
+ UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+ NSString *nibNameString = [self cellIdentifier];
+ if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
+ // 竖屏
+ nibNameString = [NSString stringWithFormat:@"%@_vertical", nibNameString];
+ } else {
+ // 横屏
+ nibNameString = [NSString stringWithFormat:@"%@_horizontal", nibNameString];
+ }
+ 
+ return nibNameString;
+ }
  */
 
 - (void)dealloc {
@@ -133,7 +135,12 @@ static UIImage *kButtonHighlightedBGImageOfInstalled = nil;
       [self.functionButton setBackgroundImage:kButtonHighlightedBGImageOfPause forState:UIControlStateHighlighted];
     }break;
     case kBookStateEnum_NotInstalled:{
-      
+      [self.functionButton setTitleColor:[UIColor colorOfListCellPrice] forState:UIControlStateNormal];
+      [self.functionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+      [self.functionButton setTitle:@"未安装" forState:UIControlStateNormal];
+      [self.functionButton setTitle:@"未安装" forState:UIControlStateHighlighted];
+      [self.functionButton setBackgroundImage:kButtonDefaultBGImageOfBlank forState:UIControlStateNormal];
+      [self.functionButton setBackgroundImage:kButtonHighlightedBGImageOfBlank forState:UIControlStateHighlighted];
     }break;
     case kBookStateEnum_Unziping:{
       self.functionButton.enabled = NO;
@@ -165,22 +172,19 @@ static UIImage *kButtonHighlightedBGImageOfInstalled = nil;
 											context:(void *)context {
   
   if ((__bridge id)context == self) {// Our notification, not our superclass’s
-  
-    LocalBook *book = object;
+    
+    
     if([keyPath isEqualToString:kLocalBookProperty_bookStateEnum]) {
+      LocalBook *book = object;
       // 监听 "书籍状态"
       [self updateFunctionButtonUIWithBookObject:book];
       
     } else if([keyPath isEqualToString:kLocalBookProperty_downloadProgress]) {
-      
+      LocalBook *book = object;
       // 监听 "下载进度"
       NSString *downloadProgress = [NSString stringWithFormat:@"%.2f %%", book.downloadProgress * 100.0];
       [self.functionButton setTitle:downloadProgress forState:UIControlStateNormal];
       [self.functionButton setTitle:downloadProgress forState:UIControlStateHighlighted];
-    } else if ([keyPath isEqualToString:kIsContrllerDealloc]) {
-      // 外部控制器, 已经被释放了, 在这里释放cell占用的资源
-      [self.bookCoverImageOperation cancel];
-      self.bookCoverImageOperation = nil;
     }
   } else {
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
@@ -230,5 +234,8 @@ static UIImage *kButtonHighlightedBGImageOfInstalled = nil;
   
   // 更新 功能按钮UI
   [self updateFunctionButtonUIWithBookObject:bookInfoToBeDisplayed];
+  
+  //
+  self.book = bookInfoToBeDisplayed;
 }
 @end

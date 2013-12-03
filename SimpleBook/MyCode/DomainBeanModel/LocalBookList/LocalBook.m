@@ -83,7 +83,14 @@
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [aCoder encodeObject:_bookInfo forKey:kNSCodingField_bookInfo];
   [aCoder encodeFloat:_downloadProgress forKey:kNSCodingField_downloadProgress];
-  [aCoder encodeInteger:_bookStateEnum forKey:kNSCodingField_bookStateEnum];
+  if (_bookStateEnum == kBookStateEnum_Unziping) {
+    // 如果当前正在解压中, 用户按下home按键, 使app进入后台, 那么此时我们保存到文件系统中得状态不能是 Unziping, 应该是 NotInstalled(未安装).
+    // 因为用户可能会前行关闭app. 那我们就设计当用户下一次进入app时, 显示 "未安装" 这个状态, 当用户点下按钮时, 要重新安装书籍
+    [aCoder encodeInteger:kBookStateEnum_NotInstalled forKey:kNSCodingField_bookStateEnum];
+  } else {
+    [aCoder encodeInteger:_bookStateEnum forKey:kNSCodingField_bookStateEnum];
+  }
+  
   [aCoder encodeObject:_bindAccount forKey:kNSCodingField_bindAccount];
   [aCoder encodeObject:_folder forKey:kNSCodingField_folder];
 }
@@ -107,6 +114,8 @@
       // 如果保存时处于 "Downloading" 状态, 那么重新序列化回来时, 要改成 "Pause" 状态
       if (_bookStateEnum == kBookStateEnum_Downloading) {
         _bookStateEnum = kBookStateEnum_Pause;
+      } else if (_bookStateEnum == kBookStateEnum_Unziping) {
+        _bookStateEnum = kBookStateEnum_NotInstalled;
       }
     }
     //
@@ -132,6 +141,18 @@
 
 #pragma mark -
 #pragma mark 私有方法
+
+// 删除书籍下载临时文件
+- (void) removeBookTmpZipResFile {
+  
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  NSError *error = nil;
+  [fileManager removeItemAtPath:self.bookTmpZipResFilePath error:&error];
+  if (error != nil) {
+    NSLog(@"删除缓存的未下载完成的书籍数据失败! 错误描述:%@", error.localizedDescription);
+  }
+}
+
 - (void) cancelDownloadBookNetOperation {
   //
   [self.bookDownloadOperation cancel];
@@ -178,22 +199,17 @@
   } else {
     // 解压失败
     NSLog(@"解压失败");
-    if (self.bookDownloadErrorBlock != NULL) {
-      NSError *error = [NSError errorWithDomain:@"解压失败" code:-1 userInfo:nil];
-      self.bookDownloadErrorBlock(error);
-    }
+    //    if (self.bookDownloadErrorBlock != NULL) {
+    //      NSError *error = [NSError errorWithDomain:@"解压失败" code:-1 userInfo:nil];
+    //      self.bookDownloadErrorBlock(error);
+    //    }
     
     // 出现错误, 复位书籍状态为初始状态.
     self.bookStateEnum = kBookStateEnum_Paid;
   }
   
   // 删除临时文件
-  NSFileManager *fileManager = [NSFileManager defaultManager];
-  NSError *error = nil;
-  [fileManager removeItemAtPath:self.bookTmpZipResFilePath error:&error];
-  if (error != nil) {
-    NSLog(@"删除缓存的未下载完成的书籍数据失败! 错误描述:%@", error.localizedDescription);
-  }
+  [self removeBookTmpZipResFile];
 }
 
 #pragma mark -
@@ -204,7 +220,7 @@
 
 - (BOOL) startDownloadBookWithURLString:(NSString *)urlString {
   do {
-
+    
     if ([NSString isEmpty:urlString]) {
       // 参数非法
       RNAssert(NO, @"入参urlString为空!");
@@ -279,9 +295,9 @@
     [self.bookDownloadOperation addDownloadStream:[NSOutputStream outputStreamToFileAtPath:self.bookTmpZipResFilePath append:YES]];
     //
     [self.bookDownloadOperation onDownloadProgressChanged:^(double progress) {
-      //long long expectedContentLength = weakSelf.bookDownloadOperation.readonlyResponse.expectedContentLength;
+      long long expectedContentLength = weakSelf.bookDownloadOperation.readonlyResponse.expectedContentLength;
       weakSelf.downloadProgress = progress;
-      //NSLog(@"下载进度更新 %lld %f", expectedContentLength, progress * 100);
+      NSLog(@"下载进度更新 %lld %f", expectedContentLength, progress * 100);
     }];
     //
     [self.bookDownloadOperation addCompletionHandler:^(MKNetworkOperation* completedRequest) {
@@ -296,12 +312,15 @@
     } errorHandler:^(MKNetworkOperation *errorOp, NSError* error) {
       
       NSLog(@"下载失败 %@", error);
-      if (weakSelf.bookDownloadErrorBlock != NULL) {
-        weakSelf.bookDownloadErrorBlock(error);
-      }
+      //      if (weakSelf.bookDownloadErrorBlock != NULL) {
+      //        weakSelf.bookDownloadErrorBlock(error);
+      //      }
       
       // 出现错误, 复位书籍状态为初始状态.
       weakSelf.bookStateEnum = kBookStateEnum_Paid;
+      
+      // 删除临时文件
+      [weakSelf removeBookTmpZipResFile];
     }];
     [[MKNetworkEngineSingletonForUpAndDownLoadFile sharedInstance] enqueueOperation:self.bookDownloadOperation];
     
@@ -329,6 +348,31 @@
   [self cancelDownloadBookNetOperation];
 }
 
+// 解压一本书籍(只有当上次解压一本书籍, 没有完成时, 退出了app, 此时app的状态为 kBookStateEnum_Unziping 时, 这个方法才有意义
+- (void) unzipBook {
+  do {
+    if (_bookStateEnum != kBookStateEnum_NotInstalled) {
+      // 如果当前书籍不是 NotInstalled(未安装), 那么这个方法无效
+      break;
+    }
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager fileExistsAtPath:self.bookTmpZipResFilePath]) {
+      // 如果书籍临时压缩包已经不存在了, 此方法也无效
+      break;
+    }
+    
+    // 开始解压书籍
+    self.bookStateEnum = kBookStateEnum_Unziping;
+    // 在后台线程中解压缩书籍zip资源包.
+    [self performSelectorInBackground:@selector(unzipBookZipResSelectorInBackground) withObject:nil];
+    return;
+  } while (NO);
+  
+  // 复位书籍状态, 给用户重新下载书籍的机会
+  self.bookStateEnum = kBookStateEnum_Paid;
+  return;
+}
 #pragma mark -
 #pragma mark - 对于 LocalBook 来说, 判断两个 LocalBook 是否相等的条件就是 content_id
 - (BOOL)isEqual:(id)object{

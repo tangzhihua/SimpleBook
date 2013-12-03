@@ -54,7 +54,7 @@ typedef NS_ENUM(NSInteger, BookStateEnum) {
 @property (nonatomic, assign) BookStateEnum bookStateEnum;
 
 // 书籍下载解压过程中, 如果发生错误时, 通知控制层的块
-@property (nonatomic, copy) BookDownloadErrorBlock bookDownloadErrorBlock;
+//@property (nonatomic, copy) BookDownloadErrorBlock bookDownloadErrorBlock;
 
 // 书籍保存文件夹路径
 @property (nonatomic, readonly, copy) NSString *bookSaveDirPath;
@@ -83,5 +83,6 @@ typedef NS_ENUM(NSInteger, BookStateEnum) {
 - (BOOL) startDownloadBookWithURLString:(NSString *)urlString;
 // 停止下载一本书籍
 - (void) stopDownloadBook;
-
+// 解压一本书籍(只有当上次解压一本书籍, 没有完成时, 退出了app, 此时app的状态为 kBookStateEnum_Unziping 时, 这个方法才有意义
+- (void) unzipBook;
 @end

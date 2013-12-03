@@ -23,21 +23,21 @@
 static NSString *const TAG = @"<GlobalDataCacheForNeedSaveToFileSystem>";
 
 // 自动登录的标志
-static NSString *const kLocalCacheDataName_AutoLoginMark                  = @"AutoLoginMark";
-// 用户最后一次成功登录时得到的响应业务Bean
-static NSString *const kLocalCacheDataName_LogonNetRespondBean            = @"LogonNetRespondBean";
+static NSString *const kLocalCacheDataName_AutoLoginMark                     = @"AutoLoginMark";
+// 私有用户登录成功后, 服务器返回的信息(判断此对象是否为空, 来确定当前是否有企业账户处于登录状态)
+static NSString *const kLocalCacheDataName_PrivateAccountLogonNetRespondBean = @"PrivateAccountLogonNetRespondBean";
 // 用户是否是首次启动App
-static NSString *const kLocalCacheDataName_FirstStartApp                  = @"FirstStartApp";
+static NSString *const kLocalCacheDataName_FirstStartApp                     = @"FirstStartApp";
 // 是否需要显示 初学者指南
-static NSString *const kLocalCacheDataName_BeginnerGuide                  = @"BeginnerGuide";
+static NSString *const kLocalCacheDataName_BeginnerGuide                     = @"BeginnerGuide";
 
 // 本地书籍列表
-static NSString *const kLocalCacheDataName_LocalBookList                  = @"LocalBookList";
+static NSString *const kLocalCacheDataName_LocalBookList                     = @"LocalBookList";
 // 本地书籍分类列表
-static NSString *const kLocalCacheDataName_BookCategoriesNetRespondBean   = @"BookCategoriesNetRespondBean";
+static NSString *const kLocalCacheDataName_BookCategoriesNetRespondBean      = @"BookCategoriesNetRespondBean";
 
 // 当前app版本号, 用了防止升级app时, 本地缓存的序列化数据恢复出错.
-static NSString *const kLocalCacheDataName_LocalAppVersion                = @"LocalAppVersion";
+static NSString *const kLocalCacheDataName_LocalAppVersion                   = @"LocalAppVersion";
 
 @implementation GlobalDataCacheForNeedSaveToFileSystem
 
@@ -144,10 +144,10 @@ static NSString *const kLocalCacheDataName_LocalAppVersion                = @"Lo
   BOOL autoLoginMarkBOOL = [userDefaults boolForKey:(NSString *)kLocalCacheDataName_AutoLoginMark];
   [GlobalDataCacheForMemorySingleton sharedInstance].isNeedAutologin = autoLoginMarkBOOL;
   
-  // 用户最后一次成功登录时得到的响应业务Bean
-	LogonNetRespondBean *logonNetRespondBean = [LogonNetRespondBean deserializeObjectFromFileSystemWithFileName:kLocalCacheDataName_LogonNetRespondBean
-                                                                                                directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
-  [GlobalDataCacheForMemorySingleton sharedInstance].privateAccountLogonNetRespondBean = logonNetRespondBean;
+  // 私有用户登录成功后, 服务器返回的信息(判断此对象是否为空, 来确定当前是否有企业账户处于登录状态)
+	LogonNetRespondBean *privateAccountLogonNetRespondBean = [LogonNetRespondBean deserializeObjectFromFileSystemWithFileName:kLocalCacheDataName_PrivateAccountLogonNetRespondBean
+                                                                                                              directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
+  [GlobalDataCacheForMemorySingleton sharedInstance].privateAccountLogonNetRespondBean = privateAccountLogonNetRespondBean;
   
   //
   [self registerLogonNetRespondBeanKVO];
@@ -206,8 +206,10 @@ static NSString *const kLocalCacheDataName_LocalAppVersion                = @"Lo
   [userDefaults setBool:autoLoginMark forKey:(NSString *)kLocalCacheDataName_AutoLoginMark];
   
   // 用户最后一次成功登录时得到的响应业务Bean
-  LogonNetRespondBean *logonNetRespondBean = [GlobalDataCacheForMemorySingleton sharedInstance].privateAccountLogonNetRespondBean;
-  [self serializeObjectToFileSystemWithObject:logonNetRespondBean fileName:kLocalCacheDataName_LogonNetRespondBean directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
+  LogonNetRespondBean *privateAccountLogonNetRespondBean = [GlobalDataCacheForMemorySingleton sharedInstance].privateAccountLogonNetRespondBean;
+  [self serializeObjectToFileSystemWithObject:privateAccountLogonNetRespondBean
+                                     fileName:kLocalCacheDataName_PrivateAccountLogonNetRespondBean
+                                directoryPath:[LocalCacheDataPathConstant importantDataCachePath]];
 }
 
 + (void)writeAppConfigInfoToFileSystem {
@@ -239,7 +241,7 @@ static NSString *const kLocalCacheDataName_LocalAppVersion                = @"Lo
   
   [GlobalDataCacheForNeedSaveToFileSystem writeUserLoginInfoToFileSystem];
   [GlobalDataCacheForNeedSaveToFileSystem writeAppConfigInfoToFileSystem];
-  //[GlobalDataCacheForNeedSaveToFileSystem writeLocalBookListToFileSystem];
+  [GlobalDataCacheForNeedSaveToFileSystem writeLocalBookListToFileSystem];
   [GlobalDataCacheForNeedSaveToFileSystem writeLocalBookshelfCategoriesToFileSystem];
 }
 

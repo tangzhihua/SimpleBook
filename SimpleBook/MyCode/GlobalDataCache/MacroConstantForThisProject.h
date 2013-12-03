@@ -11,7 +11,7 @@
 // controller 已经可以被释放的标志(可以通过监听此标志位, 来进行一些资源的释放, 比如在 tableview cell 中发起图片网络请求的 MKNetworkOperation, 应该在外部控制器被释放时, 也被停止)
 // 可以在 controller 中定义一个 isControllerDealloc 属性, 然后 tableview cell 通过KVO 监听这个属性, 当控制器被释放时, table view cell 也可以同时释放它自己的资源
 // 这里不使用通知中心的原因是, 防止cell 在不同的界面被复用时, 出现互相影响.
-#define kIsContrllerDealloc @"isControllerDealloc"
+//#define kIsContrllerDealloc @"isControllerDealloc"
 
 /******************         服务器返回的错误枚举      *********************/
 typedef NS_ENUM(NSInteger, NetErrorCodeWithServerEnum) {
